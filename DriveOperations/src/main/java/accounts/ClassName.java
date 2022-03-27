@@ -63,7 +63,7 @@ public class ClassName extends JFrame {
 	public static JPanel panel;
 	public static JPanel panel_1;
 
-	/**
+	/**s
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
