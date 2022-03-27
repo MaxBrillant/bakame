@@ -1,0 +1,17 @@
+1//07:30 - 08:20//2nde PF Economique//Maths
+1//08:20 - 09:10//3eme PF Sciences//Maths
+1//10:30 - 11:20//3eme PF Economique//Maths
+2//08:20 - 09:10//3eme PF Sciences//Maths
+2//09:10 - 10:00//3eme PF Economique//Maths
+2//10:30 - 11:20//3eme PF Economique//Maths
+2//11:20 - 12:10//2nde PF Economique//Maths
+2//12:10 - 13:00//3eme PF Sciences//Maths
+3//08:20 - 09:10//3eme PF Economique//Maths
+3//09:10 - 10:00//3eme PF Sciences//Maths
+3//11:20 - 12:10//2nde PF Economique//Maths
+4//07:30 - 08:20//2nde PF Economique//Maths
+4//08:20 - 09:10//3eme PF Sciences//Maths
+4//11:20 - 12:10//3eme PF Sciences//Maths
+4//12:10 - 13:00//3eme PF Economique//Maths
+5//07:30 - 08:20//2nde PF Economique//Maths
+5//10:30 - 11:20//2nde PF Economique//Maths

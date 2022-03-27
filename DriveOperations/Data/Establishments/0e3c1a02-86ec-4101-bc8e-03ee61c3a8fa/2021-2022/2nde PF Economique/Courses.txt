@@ -1,0 +1,3 @@
+COGE//Comptabilite Generale//80//active
+Maths//Mathematiques Statistiques//100//active
+MAFINA//Mathematiques Financieres//80//active

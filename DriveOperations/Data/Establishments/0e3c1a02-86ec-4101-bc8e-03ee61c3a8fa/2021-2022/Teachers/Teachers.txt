@@ -1,0 +1,4 @@
+NIMUBONA::Alexis//0//noPhone//noMail//active
+MANIRAKIZA::Dismas//0//noPhone//noMail//active
+NIMUBONA::Ezechias//0//noPhone//noMail//active
+PROFESSEUR::Diomede//0//noPhone//noMail//active

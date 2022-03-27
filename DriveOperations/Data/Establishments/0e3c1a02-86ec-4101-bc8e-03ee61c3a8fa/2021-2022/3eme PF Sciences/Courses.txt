@@ -1,0 +1,4 @@
+Maths//Mathematiques//100//active
+Biologie//Biologie//80//active
+Chimie//Chimie//80//active
+Physiques//Physiques//60//active

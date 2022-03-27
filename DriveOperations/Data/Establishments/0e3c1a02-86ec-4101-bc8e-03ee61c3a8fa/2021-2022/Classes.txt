@@ -1,0 +1,11 @@
+7eme A//232,93,4//248,249,250//60//7eme Annee//active
+7eme B//255,143,163//102,7,8//none//7eme Annee//active
+7eme C//244,140,6//102,7,8//60//7eme Annee//active
+3eme PF Langues//255,204,213//164,22,26//60//Section Langues//active
+2nde PF Langues//51,51,0//255,255,102//60//Section Langues//active
+2nde PF Sciences//183,228,199//57,103,83//60//Section Economique//active
+1ere PF Sciences//255,144,2//102,41,0//60//Section Economique//active
+3eme PF Sciences//55,6,23//255,153,153//60//Section Economique//active
+2nde PF Economique//116,0,184//204,204,255//60//Section Economiques//active
+1ere PF Economique//8,28,21//255,186,8//60//Section Economiques//active
+3eme PF Economique//2,62,138//204,255,255//60//Section Economiques//active

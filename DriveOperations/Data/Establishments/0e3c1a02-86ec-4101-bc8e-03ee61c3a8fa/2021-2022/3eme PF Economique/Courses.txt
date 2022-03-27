@@ -1,0 +1,6 @@
+Maths//Mathematiques Statistiques//100//active
+COGE//Comptabilite Generale//80//active
+MAFINA//Mathematiques Financieres//80//active
+Economie//Economie//80//active
+Entrepreneuriat//Entrepreneuriat//60//active
+FPH//Formation Patriotique et Humaine//40//active
