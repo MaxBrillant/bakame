@@ -244,7 +244,7 @@ public class Test extends JPanel {
 		if(hasPreviousTests(test_id, getTestCourse(test_id), getTestClassroom(test_id), getTestTerm(test_id))) {
 			String previousNote = LPane.loadStudentNote(getPreviousTest(test_id, getTestCourse(test_id), getTestClassroom(test_id), getTestTerm(test_id)), student_id);
 			String note = LPane.loadStudentNote(test_id, student_id);
-			if(!previousNote.equals("0/0") && !note.equals("0/0")) {
+			if(!previousNote.equals("0/0") || !note.equals("0/0")) {
 			
 			List l = Arrays.asList(previousNote.split("/"));
 			List l1 = Arrays.asList(note.split("/"));

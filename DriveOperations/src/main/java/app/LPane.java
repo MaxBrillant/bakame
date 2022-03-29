@@ -389,6 +389,35 @@ public class LPane extends JPanel {
 	
 				return note;
 	}
+	
+	
+public static String loadStudentSerieNote(String serie_id, String student_id) {
+		
+		String note = "0/0";
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT * from series AS s "
+					+ "JOIN exam_information AS ei "
+					+ "JOIN students_grades_exams AS sge "
+					+ "WHERE ei.exam_id = s.exam_id AND s.serie_id = '"+serie_id+" AND s.serie_id = sge.serie_id AND ei.is_active = 1");
+		
+		while(rs.next())
+		{
+			if(rs.getString("sge.points").equals(null)) {
+				note = "0/0";
+			}else {
+			note = rs.getString("sge.points")+"/"+rs.getString("s.maxima");
+		}}
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+				return note;
+	}
 
 	public static void average() {
 		
