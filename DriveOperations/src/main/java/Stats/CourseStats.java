@@ -685,6 +685,10 @@ public class CourseStats extends JPanel {
 				List <String>courses = new ArrayList();
 				List <String>students = new ArrayList();
 				List <String>terms = new ArrayList();
+				List <String>listOfTests = new ArrayList();
+				List <String>listOfMissedTests = new ArrayList();
+				List <String>listOfEchecs = new ArrayList();
+				List <String>listOfTestProgress = new ArrayList();
 				
 					if(course_id == "All") {
 						courses.clear();
@@ -791,7 +795,7 @@ public class CourseStats extends JPanel {
 						echecs = echecs+1;
 						}else {
 							echecs = echecs+0;
-						}	
+						}
 						if(sum==0 && sum1==0) {
 							points = "0/0";
 						}else {
@@ -822,86 +826,50 @@ public class CourseStats extends JPanel {
 	}
 
 
-public static List<String> getStudentTests(String n, String c, String cn, String t) {
-		
-	List <String>classes = new ArrayList();
+public static List<String> getStudentTests(String student_id, String classroom_id, String course_id, String term_id) {
+	
+	List <String>studentTests = new ArrayList();
+
+	List <String>courses = new ArrayList();
 	List <String>students = new ArrayList();
 	List <String>terms = new ArrayList();
 	
-	List <String>studentTests = new ArrayList();
-	
-
-	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Courses.txt");
-
-	aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object [] lines1 = Home.loadActiveCourses(file1.getPath());
-			
-		if(lines1.length>0) {
-	if(cn == "All") {
-		classes.clear();
-		for(int j = 0; j<lines1.length;j++) {
-		List note1 = Arrays.asList(lines1[j].toString().trim().split("//"));
-		classes.add(note1.get(0).toString());
-		}}
-	else {
-		classes.clear();
-		classes.add(TestBox.getShortName(cn, c));
-	}
-		}else {
-			classes.clear();
+		if(course_id == "All") {
+			courses.clear();
+			Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+			for(int j = 0; j<lines1.length;j++) {
+				courses.add(lines1[j].toString());
+			}}
+		else {
+			courses.clear();
+			courses.add(course_id);
 		}
-	
+		if(student_id == "All") {
+			students.clear();
+			
+			Object[] lines11 = Home.loadActiveStudents(classroom_id, ay_id);
+			for(int j = 0; j<lines11.length;j++) {
+			students.add(lines11[j].toString());
+			}}
+		else {
+			students.clear();
+			students.add(student_id);
+		}
+			if(term_id == "Toute l'annee") {
+				terms.clear();
+			
+				Object[] lines11 = Home.loadActiveTerms(ay_id);
+				for(int j = 0; j<lines11.length;j++) {
+				students.add(lines11[j].toString());
+				}
+			}
+		else {
+			terms.clear();
+			terms.add(term_id);
+		}
 
-		File file11 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
-
-		aws.downloadContent(file11.getPath());
-		FileReader fr11;
-		try {
-			fr11 = new FileReader(file11);
-		
-		
-		BufferedReader br11 = new BufferedReader(fr11);
-		Object[] lines11 = Home.loadActiveStudents(file11.getPath());
-		
-		if(lines11.length>0) {
-	if(n == "All") {
-		students.clear();
-	
-	
-	
-	for(int j = 0; j<lines11.length;j++) {
-	List note1 = Arrays.asList(lines11[j].toString().trim().split("//"));
-	students.add(note1.get(0).toString());
-	}
-	}
-else {
-	students.clear();
-	students.add(n);
-}}else {
-	students.clear();
-}
-	
-	
-	if(t == "Toute l'annee") {
-		terms.clear();
-	
-	terms.add("1er Trimestre");
-	terms.add("2eme Trimestre");
-	terms.add("3eme Trimestre");
-	}
-else {
-	terms.clear();
-	terms.add(t);
-}
-
-	if(!classes.isEmpty()) {
-			for(int j = 0; j<classes.toArray().length;j++) {
+	if(!courses.isEmpty()) {
+			for(int j = 0; j<courses.toArray().length;j++) {
 				int tests = 0;
 				for(int l = 0; l<terms.toArray().length;l++) {
 		
