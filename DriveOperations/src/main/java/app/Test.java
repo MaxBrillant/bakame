@@ -46,6 +46,7 @@ import Stats.StudentStats;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
+import accounts.Users;
 
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
@@ -261,6 +262,19 @@ public class Test extends JPanel {
 		}
 		return progress.replaceAll(",", ".");
 	}
+	
+	
+	public static String getTestCourseProgression(String test_id, String ay_id) {
+		double progress = 0;
+		String classroom_id = Test.getTestClassroom(test_id);
+		Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
+		for(int i = 0; i< lines.length; i++) {
+			double studentProgress = Double.parseDouble(Test.getTestProgression(test_id, lines[i].toString()));
+			progress = progress+ studentProgress;
+		}
+		return new DecimalFormat("##.##").format(progress);
+	}
+	
 	
 	public static String getPreviousTest(String test_id, String course_id, String classroom_id, String term_id) {
 	 
