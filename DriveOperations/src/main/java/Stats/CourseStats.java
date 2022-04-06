@@ -96,7 +96,7 @@ public class CourseStats extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CourseStats() {
+	public CourseStats(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
 		setBackground(new Color(40, 40, 40));
 		setLayout(new WrapLayout(WrapLayout.CENTER, 5, 5));
 		
@@ -308,7 +308,9 @@ public class CourseStats extends JPanel {
 		add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
 		
-		XYDataset dataset = createDataset();
+
+		List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
+		XYDataset dataset = createDataset(l);
         JFreeChart chart = createChart(dataset);
 
         
@@ -437,7 +439,7 @@ public class CourseStats extends JPanel {
 	}
 	
 	
-	public static void loadCourseData() {
+	public static void loadCourseData(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
 
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
@@ -453,24 +455,22 @@ public class CourseStats extends JPanel {
 		}
 		loadStuff();
 		
-		List l = getStudentTestsStats(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-				, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
-		List l1 = getStudentExamStats(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-				, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
+		List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
+		List l1 = getStudentExamStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
 		
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 		List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
 		
 		String courseMaxima;
 		if(!StatsPane.course.getText().equals("All")) {
-		courseMaxima = ExamInfo.loadCourseMaxima(TestBox.getShortName(StatsPane.course.getText(), StatsPane.className.getText().toString()), StatsPane.className.getText().toString());
+		courseMaxima = ExamInfo.loadCourseMaxima(TestBox.getShortName(course_id), classroom_id, Login.selectedAcademicYearID);
 		}else {
 			courseMaxima = new DecimalFormat("##.##").format(Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", ".")));
 		}
 		
 		int students;
 		if(StatsPane.course.getText().equals("All")) {
-			students = StudentStats.getNumberOfStudents(StatsPane.className.getText().toString());
+			students = Home.loadActiveStudents(classroom_id, Login.selectedAcademicYearID).length;
 			courseMaxima = new DecimalFormat("##.##").format(Double.parseDouble(courseMaxima)/students);
 		}
 		
@@ -513,9 +513,9 @@ public class CourseStats extends JPanel {
 		//echecs.setText(l.get(3).toString());
 		
 
-		loadAllTests();
-		echecs();
-		rankStudentPerformances(StatsPane.className.getText().toString());
+		loadAllTests(l);
+		echecs(course_id, classroom_id, Login.selectedAcademicYearID, term_id);
+		rankStudentPerformances(course_id, classroom_id, Login.selectedAcademicYearID, term_id);
 		
 		
 		for(int i = 0; i<panelEchecs.getParent().getParent().getComponentCount(); i++) {
@@ -559,7 +559,8 @@ public class CourseStats extends JPanel {
 		 panel_8.removeAll();
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-			XYDataset dataset = createDataset();
+    			List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
+			XYDataset dataset = createDataset(l);
 	        JFreeChart chart = createChart(dataset);
 
 	        ChartPanel chartPanel = new ChartPanel(chart);
@@ -1255,19 +1256,15 @@ e.printStackTrace();
  */
 	
 	
-	 private static XYDataset createDataset() {
+	 private static XYDataset createDataset(List studentTestStats) {
 
-		 List progress = getCourseProgression(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-					, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
-
-		 System.out.println(StatsPane.name.getText().toString()+": "+progress);
 	        TimeSeries series = new TimeSeries("2019");
-		 for(int i = 0; i<progress.toArray().length; i++) {
-			 List l = Arrays.asList(progress.get(i).toString().split("//"));
+		 for(int i = 0; i<((List) studentTestStats.get(9)).toArray().length; i++) {
+			 List l = Arrays.asList(((List) studentTestStats.get(9)).get(i).toString().split("//"));
 		 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		 Date d1 = null;
 		try {
-			d1 = df.parse(l.get(0).toString());
+			d1 = df.parse(Test.getTestDate(l.get(0).toString()));
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -1424,28 +1421,19 @@ e.printStackTrace();
 		 * }
 		 */
 	    
-	    public static void echecs() {
+	    public static void echecs(String course_id, String classroom_id, String ay_id, String term_id) {
 	    	
 	    	
-	    	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+StatsPane.className.getText().toString()+"/Students.txt");
-
-			aws.downloadContent(file1.getPath());
-			FileReader fr1;
-			try {
-				fr1 = new FileReader(file1);
-			
-			BufferedReader br1 = new BufferedReader(fr1);
-			Object[] lines = Home.loadActiveStudents(file1.getPath());
+			Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
 			
 	    	
 			for(int i = 0; i<lines.length;i++) {
-	    	List name = Arrays.asList(lines[i].toString().split("//"));
 				
-	    	List l = StudentStats.getStudentTestsStats(name.get(0).toString(), StatsPane.className.getText().toString()
-					, StatsPane.course.getText().toString(), StatsPane.Term.getText().toString(), "All", "All");
+	    	List l = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
+					, course_id, term_id, "All", "All");
 	    	
-			List l1 = StudentStats.getStudentExamStats(name.get(0).toString(), StatsPane.className.getText().toString()
-					, StatsPane.course.getText().toString(), StatsPane.Term.getText().toString(), "All", "All");
+			List l1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
+					, course_id, term_id, "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -1461,7 +1449,7 @@ e.printStackTrace();
 				panel_6.setPreferredSize(new Dimension(400, 25));
 				panel_6.setLayout(null);
 				
-				JLabel lblNewLabel_1 = new JLabel(name.get(0).toString());
+				JLabel lblNewLabel_1 = new JLabel(lines[i].toString());
 				lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEADING);
 				lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 				lblNewLabel_1.setForeground(new Color(255, 255, 255));
@@ -1485,49 +1473,36 @@ e.printStackTrace();
 				successRate.setText(String.valueOf(100-panelEchecs.getComponentCount()*100/StudentStats.getNumberOfStudents(StatsPane.className.getText().toString()))+"%");
 			
 			for(int i = 0; i< panelEchecs.getComponentCount(); i++) {
-				if(((JLabel) ((Container) panelEchecs.getComponent(i)).getComponent(1)).getText().equals(StatsPane.course.getText())) {
+				if(((JLabel) ((Container) panelEchecs.getComponent(i)).getComponent(1)).getText().equals(course_id)) {
 				panelEchecs.getComponent(i).setBackground(new Color(20, 148, 198));
 			}
 			}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			}
 	    
 	    
 	    
-	    public static void rankStudentPerformances(String classroom_id, String ay_id) {
+	    public static void rankStudentPerformances(String course_id, String classroom_id, String ay_id, String term_id) {
 	    	panel1.removeAll();
 	    	panel11.removeAll();
 	    	
-	    	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+"/Students.txt");
 	    	int number = 0;
 
 			List<String> t1 = new ArrayList();
 
 			List<Double> percent = new ArrayList<Double>();
 			List<Double> percent1 = new ArrayList<Double>();
-
-			aws.downloadContent(file1.getPath());
-			FileReader fr1;
-			try {
-				fr1 = new FileReader(file1);
 			
-			
-			BufferedReader br1 = new BufferedReader(fr1);
 			Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
 			number = lines1.length;
 			
 			for(int i = 0; i<lines1.length;i++) {
-				List c = Arrays.asList(lines1[i].toString().split("//"));
 				
-				t1.add(c.get(0).toString());
-				
-			List l = StudentStats.getStudentTestsStats(c.get(0).toString(), StatsPane.className.getText().toString()
-					, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
-			List l1 = StudentStats.getStudentExamStats(c.get(0).toString(), StatsPane.className.getText().toString()
-					, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
+				t1.add(lines1[i].toString());
+			
+			List l = StudentStats.getStudentTestsStats(lines1[i].toString(), classroom_id
+					, course_id, term_id, "All", "All");
+			List l1 = StudentStats.getStudentExamStats(lines1[i].toString(), classroom_id
+					, course_id, term_id, "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -1544,11 +1519,6 @@ e.printStackTrace();
 			percent1.add(Double.parseDouble(percent.get(i).toString())+(Double.parseDouble(String.valueOf(i))*1/100));
 			
 			}
-			
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 
 			Collections.sort(percent, Collections.reverseOrder());
 			Collections.sort(percent1, Collections.reverseOrder());
@@ -1558,7 +1528,7 @@ e.printStackTrace();
 				JPanel panel_6 = new JPanel();
 				panel_6.setBackground(new Color(40, 40, 40));
 				panel_6.setPreferredSize(new Dimension(400, 25));
-				panel1.add(panel_6);
+				//panel1.add(panel_6);
 				panel_6.setLayout(null);
 				
 
@@ -1627,10 +1597,9 @@ e.printStackTrace();
 				
 			
 			for(int i = 0; i<panel1.getComponentCount(); i++) {
-				List tests = Arrays.asList(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString().split("//"));
 				((JLabel) ((Container) panel1.getComponent(i)).getComponent(2)).setText(new DecimalFormat("##.##").format(percent.get(i)).toString()+"%");
 				((JLabel) ((Container) panel1.getComponent(i)).getComponent(0)).setText(String.valueOf(i+1));
-				((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).setText(tests.get(0).toString());
+				((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).setText(App.getStudentName(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString()));
 			}
 			for(int i = number-1; i>9; i--) {
 				panel1.remove(i);
@@ -1638,14 +1607,14 @@ e.printStackTrace();
 			
 			for(int i = panel11.getComponentCount()-1; i>-1; i--) {
 
-				List tests = Arrays.asList(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString().split("//"));
+				//List tests = Arrays.asList(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString().split("//"));
 				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(2)).setText(new DecimalFormat("##.##").format(percent.get(i)).toString()+"%");
 				((JLabel) ((Container) panel11.getComponent(i)).getComponent(0)).setText(String.valueOf(i+1));
-				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).setText(tests.get(0).toString());
+				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).setText(App.getStudentName(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString()));
 
 			}
-			((JLabel) panel1.getParent().getComponent(0)).setText(TestBox.getShortName(((JLabel) ((JComponent) panel1.getComponent(0)).getComponent(1)).getText(), className));
-			((JLabel) panel11.getParent().getComponent(0)).setText(TestBox.getShortName(((JLabel) ((JComponent) panel11.getComponent(0)).getComponent(1)).getText(), className));
+			((JLabel) panel1.getParent().getComponent(0)).setText(TestBox.getShortName(course_id));
+			((JLabel) panel11.getParent().getComponent(0)).setText(TestBox.getShortName(course_id));
 			
 			for(int i = number-1; i>9; i--) {
 				panel11.remove(i);
