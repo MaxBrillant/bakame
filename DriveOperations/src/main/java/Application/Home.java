@@ -601,6 +601,72 @@ public static List<Color> getClassColors(String classroom_id, String ay_id) {
 		
 		return allColors;
 		}
+
+public static String getClassName(String classroom_id) {
+		
+	String name = null;
+	
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from classrooms "
+					+ "WHERE classroom_id = '"+classroom_id+"' AND LIMIT 1");
+			while(rs.next())
+			{
+				name = rs.getString("classroom_name");
+			}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		
+		}
+		return name;
+		}
+
+public static String getStudentName(String student_id) {
+	
+	String name = null;
+	
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from students "
+					+ "WHERE student_id = '"+student_id+"' AND LIMIT 1");
+			while(rs.next())
+			{
+				name = rs.getString("last_name").toUpperCase()+" "+rs.getString("first_name");
+			}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		
+		}
+		return name;
+		}
+
+public static String getTermName(String term_id) {
+	
+	String name = null;
+	
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from terms "
+					+ "WHERE term_id = '"+term_id+"' AND LIMIT 1");
+			while(rs.next())
+			{
+				name = rs.getString("term_name");
+			}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		
+		}
+		return name;
+		}
 	
 	public static void deselect() {
 	}
@@ -618,7 +684,7 @@ public static List<Color> getClassColors(String classroom_id, String ay_id) {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("select * from terms "
-					+ "WHERE ay_id = '"+ay_id+"'");
+					+ "WHERE ay_id = '"+ay_id+"' AND is_active = 1");
 			while(rs.next())
 			{
 				termsText.add(ScholarYears.getAcademicYearName(rs.getString("term_id")));
@@ -645,7 +711,6 @@ public static List<Color> getClassColors(String classroom_id, String ay_id) {
 			Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 			}
 	}
-	
 	
 
 public static Object[] loadActiveStudents(String classroom_id, String ay_id) {

@@ -16,6 +16,7 @@ import CloudOperations.aws;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
+import app.LPane;
 import app.WrapLayout;
 
 import java.awt.Dimension;
@@ -83,7 +84,7 @@ public class StatsPane extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StatsPane frame = new StatsPane(3, 0, 1, 0);
+					StatsPane frame = new StatsPane("0", "0", "0", "0", "0");
 					frame.setVisible(true);
 					System.gc();
 					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
@@ -97,7 +98,7 @@ public class StatsPane extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StatsPane(int st, int sc, int sco, int sn) {
+	public StatsPane(String student_id, String course_id, String classroom_id, String term_id, String ay_id) {
 		setResizable(false);
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(400, 600));
@@ -288,7 +289,7 @@ public class StatsPane extends JFrame {
 		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 		
 		JPanel panel_2 = new JPanel();
-		StudentStats s = new StudentStats();
+		StudentStats s = new StudentStats(student_id, classroom_id, course_id, term_id, "All", "All");
 		scrollPane.setViewportView(s);
 		panel_2.setLayout(new WrapLayout(WrapLayout.CENTER, 3, 3));
 		setLocationRelativeTo(null);
@@ -327,25 +328,24 @@ public class StatsPane extends JFrame {
 		panel_1.add(number);
 
 
-		displayStats(st, sc, sco, sn);
+		displayStats(student_id, course_id, classroom_id, term_id, ay_id);
 		
-
+/*
 		new SwingWorker<Void, Void>() {
-            public Void doInBackground() throws Exception{
-		if(sn == 0) {
-			CourseStats cs = new CourseStats();
+            public Void doInBackground() throws Exception{*/
+		if(selectedStudent == 0) {
+			CourseStats cs = new CourseStats(student_id, classroom_id, course_id, term_id, "All", "All");
 			scrollPane.setViewportView(cs);
-			CourseStats.loadCourseData();
+			CourseStats.loadCourseData(student_id, classroom_id, course_id, term_id, "All", "All");
 			number.setVisible(false);
 		}else {
-			StudentStats cs = new StudentStats();
+			StudentStats cs = new StudentStats(student_id, classroom_id, course_id, term_id, "All", "All");
 			scrollPane.setViewportView(cs);
-			StudentStats.loadStudentData();
+			StudentStats.loadStudentData(student_id, classroom_id, course_id, term_id, "All", "All");
 			number.setVisible(false);
-		}
-		 return null;
-            }
-         }.execute();
+		} /*
+			 * return null; } }.execute();
+			 */
 
 		right1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -359,10 +359,10 @@ public class StatsPane extends JFrame {
 
 				if(selectedStudent == 0) {
 					number.setVisible(false);
-					CourseStats.loadCourseData();
+					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}else {
 					number.setVisible(true);
-					StudentStats.loadStudentData();
+					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}
 				revalidate();
 				repaint();
@@ -378,13 +378,13 @@ public class StatsPane extends JFrame {
 				selectedStudent = 1;
 				selectedCourse = 1;
 				
-					StudentStats cs = new StudentStats();
+					StudentStats cs = new StudentStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					scrollPane.setViewportView(cs);
 					number.setVisible(true);
 					
-				displayStats(selectedTerm, selectedClass, selectedCourse, selectedStudent);
+				displayStats(students.get(selectedStudent), courses.get(selectedCourse), classes.get(selectedClass), terms.get(selectedTerm), ay_id);
 
-				StudentStats.loadStudentData();
+				StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				revalidate();
 				repaint();
 			}
@@ -397,9 +397,9 @@ public class StatsPane extends JFrame {
 				}
 				course.setText(courses.get(selectedCourse));
 				if(selectedStudent == 0) {
-					CourseStats.loadCourseData();
+					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}else {
-					StudentStats.loadStudentData();
+					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}
 				revalidate();
 				repaint();
@@ -410,19 +410,19 @@ public class StatsPane extends JFrame {
 				if(selectedStudent == students.toArray().length-1) {
 					selectedStudent = 0;
 					name.setText(students.get(selectedStudent));
-					CourseStats cs = new CourseStats();
+					CourseStats cs = new CourseStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					scrollPane.setViewportView(cs);
-					CourseStats.loadCourseData();
+					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					number.setVisible(false);
 				}else {
 					if(selectedStudent == 0) {
-					StudentStats cs = new StudentStats();
+					StudentStats cs = new StudentStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					scrollPane.setViewportView(cs);
 					number.setVisible(true);
 					}
 					selectedStudent++;
 					name.setText(students.get(selectedStudent));
-					StudentStats.loadStudentData();
+					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}
 
 				revalidate();
@@ -443,10 +443,10 @@ public class StatsPane extends JFrame {
 
 				if(selectedStudent == 0) {
 					number.setVisible(false);
-					CourseStats.loadCourseData();
+					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}else {
 					number.setVisible(true);
-					StudentStats.loadStudentData();
+					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}
 				revalidate();
 				repaint();
@@ -461,13 +461,13 @@ public class StatsPane extends JFrame {
 				selectedStudent = 1;
 				selectedCourse = 1;
 				
-					StudentStats cs = new StudentStats();
+					StudentStats cs = new StudentStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					scrollPane.setViewportView(cs);
 					number.setVisible(true);
 					
-				displayStats(selectedTerm, selectedClass, selectedCourse, selectedStudent);
+				displayStats(students.get(selectedStudent), courses.get(selectedCourse), classes.get(selectedClass), terms.get(selectedTerm), ay_id);
 
-				StudentStats.loadStudentData();
+				StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				revalidate();
 				repaint();
 			
@@ -482,9 +482,9 @@ public class StatsPane extends JFrame {
 				
 				course.setText(courses.get(selectedCourse));
 				if(selectedStudent == 0) {
-					CourseStats.loadCourseData();
+					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}else {
-					StudentStats.loadStudentData();
+					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}
 				revalidate();
 				repaint();
@@ -495,21 +495,21 @@ public class StatsPane extends JFrame {
 				if(selectedStudent == 0) {
 					selectedStudent = students.toArray().length-1;
 					name.setText(students.get(selectedStudent));
-					StudentStats cs = new StudentStats();
+					StudentStats cs = new StudentStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					scrollPane.setViewportView(cs);
-					StudentStats.loadStudentData();
+					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					number.setVisible(true);
 
 				}else {
 					selectedStudent--;
 					name.setText(students.get(selectedStudent));
 					if(selectedStudent == 0) {
-						CourseStats cs = new CourseStats();
+						CourseStats cs = new CourseStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 						scrollPane.setViewportView(cs);
-						CourseStats.loadCourseData();
+						CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 						number.setVisible(false);
 						}else {
-							StudentStats.loadStudentData();
+							StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 						}
 				}
 
@@ -535,196 +535,146 @@ public class StatsPane extends JFrame {
 	
 	
 	
-	public static void displayStats(int st, int sc, int sco, int sn) {
-		selectedStudent = sn;
-		selectedCourse = sco;
-		selectedClass = sc;
-		selectedTerm = st;
+	public static void displayStats(String student_id, String course_id, String classroom_id, String term_id, String ay_id) {
 		
-		
-
-		populateTermsList();
-		populateClassList();
-		populateCourseList(classes.get(selectedClass));
-		populateStudentList(classes.get(selectedClass));
-		
-		className.setText(classes.get(selectedClass));
-		Term.setText(terms.get(selectedTerm));
+		populateTermsList(ay_id);
+		populateClassList(ay_id);
+		populateCourseList(classroom_id, ay_id);
+		populateStudentList(classroom_id, ay_id);
 		
 
-		name.setText(students.get(sn));
-		course.setText(courses.get(sco));
+		for(int i = 0; i< students.toArray().length; i++) {
+			if(students.get(i).equals(student_id)) {
+		selectedStudent = i;
+		break;
+		}}
+		for(int i = 0; i< courses.toArray().length; i++) {
+			if(courses.get(i).equals(course_id)) {
+				selectedCourse = i;
+		break;
+		}}
+		for(int i = 0; i< classes.toArray().length; i++) {
+			if(classes.get(i).equals(classroom_id)) {
+				selectedClass = i;
+		break;
+		}}
+		for(int i = 0; i< terms.toArray().length; i++) {
+			if(terms.get(i).equals(term_id)) {
+				selectedTerm = i;
+		break;
+		}}
+		
+		className.setText(Home.getClassName(classes.get(selectedClass)));
+		Term.setText(Home.getTermName(terms.get(selectedTerm)));
+		
+
+		name.setText(Home.getStudentName(students.get(selectedStudent)));
+		course.setText(TestBox.getFullName(courses.get(selectedCourse)));
 	}
 	
-	public static void populateTermsList() {
-		terms.add("1er Trimestre");
-		terms.add("2eme Trimestre");
-		terms.add("3eme Trimestre");
+	public static void populateTermsList(String ay_id) {
+		terms.clear();
+		Object[] l = Home.loadActiveTerms(ay_id);
+		for(int i = 0; i< l.length; i++) {
+		terms.add(l[i].toString());
+		}
 		terms.add("Toute l'annee");
 	}
 	
-	public static void populateClassList() {
-		
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Classes.txt");
-
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = Home.loadActiveClasses(file1.getPath());
-		
-		for(int i = 0; i< lines1.length; i++) {
-			List name = Arrays.asList(lines1[i].toString().split("//"));
-
-			if(hasCourses(name.get(0).toString()) && hasStudents(name.get(0).toString())) {
-			classes.add(name.get(0).toString());
-			}
+	public static void populateClassList(String ay_id) {
+		classes.clear();
+		Object[] l = Home.loadActiveClasses(ay_id);
+		for(int i = 0; i< l.length; i++) {
+		classes.add(l[i].toString());
 		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
-	}
-	
-public static int getClassIndex(String className) {
-		
-	int index = 0;
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Classes.txt");
 
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = Home.loadActiveClasses(file1.getPath());
-		
-		for(int i = 0; i< lines1.length; i++) {
-			List name = Arrays.asList(lines1[i].toString().split("//"));
-
-			if(hasCourses(name.get(0).toString()) && hasStudents(name.get(0).toString())) {
-				index = index+1;
-			if(name.get(0).toString().equals(className)) {
-				index = index-1;
-				break;
-			}}
-		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return index;
-	}
-	public static void populateCourseList(String c) {
+		/*
+		 * public static int getClassIndex(String className) {
+		 * 
+		 * int index = 0; File file1 = new
+		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+		 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Classes.txt");
+		 * 
+		 * aws.downloadContent(file1.getPath()); FileReader fr1; try { fr1 = new
+		 * FileReader(file1);
+		 * 
+		 * 
+		 * BufferedReader br1 = new BufferedReader(fr1); Object[] lines1 =
+		 * Home.loadActiveClasses(file1.getPath());
+		 * 
+		 * for(int i = 0; i< lines1.length; i++) { List name =
+		 * Arrays.asList(lines1[i].toString().split("//"));
+		 * 
+		 * if(hasCourses(name.get(0).toString()) && hasStudents(name.get(0).toString()))
+		 * { index = index+1; if(name.get(0).toString().equals(className)) { index =
+		 * index-1; break; }} } } catch (FileNotFoundException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); } return index; }
+		 */
+	public static void populateCourseList(String classroom_id, String ay_id) {
 		courses.clear();
 		courses.add("All");
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Courses.txt");
-
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = Home.loadActiveCourses(file1.getPath());
+		Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
 		
 		for(int i = 0; i< lines1.length; i++) {
-			List name = Arrays.asList(lines1[i].toString().split("//"));
-			courses.add(name.get(1).toString());
-		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			courses.add(lines1[i].toString());
 		}
 	}
 	
+	/*
+	 * public static int getCourseIndex(String shortName, String className) {
+	 * 
+	 * int index = 0; File file1 = new
+	 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+	 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+
+	 * "/Courses.txt");
+	 * 
+	 * aws.downloadContent(file1.getPath()); FileReader fr1; try { fr1 = new
+	 * FileReader(file1);
+	 * 
+	 * 
+	 * BufferedReader br1 = new BufferedReader(fr1); Object[] lines1 =
+	 * Home.loadActiveCourses(file1.getPath());
+	 * 
+	 * for(int i = 0; i< lines1.length; i++) { List name =
+	 * Arrays.asList(lines1[i].toString().split("//"));
+	 * 
+	 * if(name.get(0).toString().equals(shortName)) { index = i+1; break; } } }
+	 * catch (FileNotFoundException e1) { // TODO Auto-generated catch block
+	 * e1.printStackTrace(); } return index; }
+	 */
 	
-	public static int getCourseIndex(String shortName, String className) {
-
-		int index = 0;
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+"/Courses.txt");
-
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = Home.loadActiveCourses(file1.getPath());
-		
-		for(int i = 0; i< lines1.length; i++) {
-			List name = Arrays.asList(lines1[i].toString().split("//"));
-
-			if(name.get(0).toString().equals(shortName)) {
-				index = i+1;
-				break;		
-			}
-		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return index;
-	}
-	
-	public static void populateStudentList(String c) {
+	public static void populateStudentList(String classroom_id, String ay_id) {
 		students.clear();
 		students.add("All");
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
-
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = Home.loadActiveStudents(file1.getPath());
+		Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
 		
 		for(int i = 0; i< lines1.length; i++) {
-			List name = Arrays.asList(lines1[i].toString().split("//"));
-			students.add(name.get(0).toString());
+			students.add(lines1[i].toString());
 		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-	
-	public static int getStudentIndex(String studentName, String className) {
-
-		int index = 0;
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+"/Students.txt");
-
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = Home.loadActiveStudents(file1.getPath());
-		
-		for(int i = 0; i< lines1.length; i++) {
-			List name = Arrays.asList(lines1[i].toString().split("//"));
-
-			if(name.get(0).toString().replaceAll("::", " ").equals(studentName)) {
-				index = i+1;
-				break;		
-			}
-		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return index;
-	}
+	}/*
+		 * 
+		 * public static int getStudentIndex(String studentName, String className) {
+		 * 
+		 * int index = 0; File file1 = new
+		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+		 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+
+		 * "/Students.txt");
+		 * 
+		 * aws.downloadContent(file1.getPath()); FileReader fr1; try { fr1 = new
+		 * FileReader(file1);
+		 * 
+		 * 
+		 * BufferedReader br1 = new BufferedReader(fr1); Object[] lines1 =
+		 * Home.loadActiveStudents(file1.getPath());
+		 * 
+		 * for(int i = 0; i< lines1.length; i++) { List name =
+		 * Arrays.asList(lines1[i].toString().split("//"));
+		 * 
+		 * if(name.get(0).toString().replaceAll("::", " ").equals(studentName)) { index
+		 * = i+1; break; } } } catch (FileNotFoundException e1) { // TODO Auto-generated
+		 * catch block e1.printStackTrace(); } return index; }
+		 */
 	
 	
 	public static boolean hasCourses(String classroom_id, String ay_id) {
