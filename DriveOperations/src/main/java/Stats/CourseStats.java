@@ -946,6 +946,7 @@ public static void loadAllTests(List studentTestStats) {
 	for(int i = 0; i< t.toArray().length;i++) {
 		String course_id = Test.getTestCourse(t.get(i).toString());
 		if(!usedCourses.contains(course_id)) {
+			usedCourses.add(course_id);
 		JPanel panel_61 = new JPanel();
 		panel_61.setBackground(new Color(40, 40, 40));
 		panel_61.setPreferredSize(new Dimension(400, 25));
@@ -1470,7 +1471,7 @@ e.printStackTrace();
 			}
 			}
 				((JLabel) panelEchecs.getParent().getComponent(0)).setText(String.valueOf(panelEchecs.getComponentCount()));
-				successRate.setText(String.valueOf(100-panelEchecs.getComponentCount()*100/StudentStats.getNumberOfStudents(StatsPane.className.getText().toString()))+"%");
+				successRate.setText(String.valueOf(100-panelEchecs.getComponentCount()*100/StudentStats.getNumberOfStudents(classroom_id, ay_id))+"%");
 			
 			for(int i = 0; i< panelEchecs.getComponentCount(); i++) {
 				if(((JLabel) ((Container) panelEchecs.getComponent(i)).getComponent(1)).getText().equals(course_id)) {

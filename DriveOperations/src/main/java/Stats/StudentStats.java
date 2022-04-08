@@ -96,7 +96,7 @@ public class StudentStats extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public StudentStats() {
+	public StudentStats(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
 		setBackground(new Color(40, 40, 40));
 		setLayout(new WrapLayout(WrapLayout.CENTER, 5, 5));
 		
@@ -433,9 +433,9 @@ public class StudentStats extends JPanel {
 	}
 	
 	
-	public static void loadStudentData() {
+	public static void loadStudentData(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
 		
-		
+		String ay_id = Login.selectedAcademicYearID;
 
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
@@ -452,10 +452,8 @@ public class StudentStats extends JPanel {
 		}
 		loadStuff();
 		
-		List l = getStudentTestsStats(StatsPane.name.getText().toString(), StatsPane.className.getText()
-				, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
-		List l1 = getStudentExamStats(StatsPane.name.getText().toString(), StatsPane.className.getText()
-				, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
+		List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
+		List l1 = getStudentExamStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
 		
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 		List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -504,12 +502,12 @@ public class StudentStats extends JPanel {
 		missedTests.setText(l.get(4).toString());
 		
 
-		StatsPane.number.setText(loadStudentNumber(StatsPane.name.getText(), StatsPane.className.getText()));
+		StatsPane.number.setText(loadStudentNumber(student_id, classroom_id, ay_id));
 		
 
-		loadAllTests();
-		echecs();
-		rankStudentPerformances(StatsPane.className.getText());
+		loadAllTests(l);
+		echecs(student_id, course_id, classroom_id, ay_id, term_id);
+		rankStudentPerformances(student_id, course_id, classroom_id, ay_id, term_id);
 		
 		
 		
@@ -558,8 +556,10 @@ public class StudentStats extends JPanel {
         panel_8.removeAll();
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
+    	
+         List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
             	
-		XYDataset dataset = createDataset();
+		XYDataset dataset = createDataset(l);
         JFreeChart chart = createChart(dataset);
 
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -573,31 +573,24 @@ public class StudentStats extends JPanel {
 }.execute();
 	}
 	
-	public static String loadStudentNumber(String s ,String c) {
+	public static String loadStudentNumber(String student_id, String classroom_id, String ay_id) {
 
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
-		aws.downloadContent(file.getPath());
 		String number = "";
-			
-			FileReader fr;
-			try {
-				fr = new FileReader(file);
-			
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object lines [] = Home.loadActiveStudents(file.getPath());
-			
-			for(int i = 0;i<lines.length; i++) {
-				List note = Arrays.asList(lines[i].toString().trim().split("//"));
-				
-				if(note.get(0).equals(s)) {
-					number = note.get(1).toString();
-				}
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT * from students_in_classrooms "
+					+ "WHERE student_id = '"+student_id+"' AND classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' AND is_active = 1");
+			while(rs.next())
+			{
+				number = rs.getString("number");
 			}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		
+		}
 			return number;
 			
 	}
@@ -689,7 +682,8 @@ public class StudentStats extends JPanel {
 	}
 	
 	
-	public static List<String> getStudentTestsStats(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
+	@SuppressWarnings("unchecked")
+	public static List getStudentTestsStats(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
 		
 		String ay_id;
 		ay_id = Login.selectedAcademicYearID;
@@ -699,7 +693,7 @@ public class StudentStats extends JPanel {
 			String Tests = "0";
 			String Echecs = "0";
 			String missed = "0";
-			List <String>stats = new ArrayList();
+			List stats = new ArrayList();
 			Double progress = 0.0;
 				
 				Double sum = (double) 0;
@@ -715,6 +709,10 @@ public class StudentStats extends JPanel {
 				List <String>courses = new ArrayList();
 				List <String>students = new ArrayList();
 				List <String>terms = new ArrayList();
+				List <String>listOfTests = new ArrayList();
+				List <String>listOfMissedTests = new ArrayList();
+				List <String>listOfEchecs = new ArrayList();
+				List <String>listOfTestProgress = new ArrayList();
 				
 					if(course_id == "All") {
 						courses.clear();
@@ -785,8 +783,14 @@ public class StudentStats extends JPanel {
 							Double d = Double.parseDouble((String) note.get(0));
 							Double e = Double.parseDouble((String) note.get(1));
 							
-
-							progress = progress+ Double.parseDouble(Test.getTestProgression(rs.getString("ti.test_id"), students.get(k)));
+							for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
+								List f = Arrays.asList(listOfTestProgress.get(z).split("//"));
+							//	if(!f.get(0).equals(rs.getString("ti.test_id"))) {
+							Double testProgress = Double.parseDouble(Test.getTestProgression(rs.getString("ti.test_id"), students.get(k)));
+							progress = progress+ testProgress;
+							listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
+							break;
+							}
 
 							tot = tot+ d;
 							tot1 = tot1+e;
@@ -794,9 +798,13 @@ public class StudentStats extends JPanel {
 							if(d == 0 && e == 0) {
 								test = test+0;
 								missedTests = missedTests+1;
+								listOfMissedTests.add(students.get(k)+"//"+rs.getString("ti.test_id"));
 							}else {
 								test++;
 								missedTests = missedTests+0;
+								if(!listOfTests.contains(rs.getString("ti.test_id"))) {
+								listOfTests.add(rs.getString("ti.test_id"));
+							}
 							}
 							
 							sum = sum+tot;
@@ -805,6 +813,9 @@ public class StudentStats extends JPanel {
 							
 								if(tot<(tot1/2)) {
 								echec = true;
+								if(!listOfEchecs.contains(students.get(k)+"//"+rs.getString("ti.test_id"))) {
+									listOfEchecs.add(students.get(k)+"//"+rs.getString("ti.test_id"));
+							}
 							}else {
 								echec = false;
 							}
@@ -844,143 +855,108 @@ public class StudentStats extends JPanel {
 		stats.add(Echecs);
 		stats.add(missed);
 		stats.add(new DecimalFormat("##.##").format(progress/students.toArray().length).replaceAll(",", "."));
+		stats.add(listOfTests);
+		stats.add(listOfMissedTests);
+		stats.add(listOfEchecs);
+		stats.add(listOfTestProgress);
 		
 		return stats;
 		
 	}
 	
-public static List<String> getStudentTests(String n, String c, String cn, String t) {
-		
-	List <String>classes = new ArrayList();
-	List <String>students = new ArrayList();
-	List <String>terms = new ArrayList();
-	
-	List <String>studentTests = new ArrayList();
-	
+	/*
+	 * public static List<String> getStudentTests(String n, String c, String cn,
+	 * String t) {
+	 * 
+	 * List <String>classes = new ArrayList(); List <String>students = new
+	 * ArrayList(); List <String>terms = new ArrayList();
+	 * 
+	 * List <String>studentTests = new ArrayList();
+	 * 
+	 * 
+	 * File file1 = new
+	 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+	 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Courses.txt");
+	 * 
+	 * aws.downloadContent(file1.getPath()); FileReader fr1; try { fr1 = new
+	 * FileReader(file1);
+	 * 
+	 * 
+	 * BufferedReader br1 = new BufferedReader(fr1); Object [] lines1 =
+	 * Home.loadActiveCourses(file1.getPath());
+	 * 
+	 * if(lines1.length>0) { if(cn == "All") { classes.clear(); for(int j = 0;
+	 * j<lines1.length;j++) { List note1 =
+	 * Arrays.asList(lines1[j].toString().trim().split("//"));
+	 * classes.add(note1.get(0).toString()); }} else { classes.clear();
+	 * classes.add(TestBox.getShortName(cn, c)); } }else { classes.clear(); }
+	 * 
+	 * 
+	 * File file11 = new
+	 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+	 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
+	 * 
+	 * aws.downloadContent(file11.getPath()); FileReader fr11; try { fr11 = new
+	 * FileReader(file11);
+	 * 
+	 * 
+	 * BufferedReader br11 = new BufferedReader(fr11); Object[] lines11 =
+	 * Home.loadActiveStudents(file11.getPath());
+	 * 
+	 * if(lines11.length>0) { if(n == "All") { students.clear();
+	 * 
+	 * 
+	 * 
+	 * for(int j = 0; j<lines11.length;j++) { List note1 =
+	 * Arrays.asList(lines11[j].toString().trim().split("//"));
+	 * students.add(note1.get(0).toString()); } } else { students.clear();
+	 * students.add(n); }}else { students.clear(); }
+	 * 
+	 * 
+	 * if(t == "Toute l'annee") { terms.clear();
+	 * 
+	 * terms.add("1er Trimestre"); terms.add("2eme Trimestre");
+	 * terms.add("3eme Trimestre"); } else { terms.clear(); terms.add(t); }
+	 * 
+	 * if(!students.isEmpty()) { for(int l = 0; l<terms.toArray().length;l++) {
+	 * for(int j = 0; j<classes.toArray().length;j++) { for(int k = 0;
+	 * k<students.toArray().length;k++) {
+	 * 
+	 * 
+	 * int tests = 0; int missedTests = 0; File file111 = new
+	 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+	 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/"+students.get(k
+	 * ).toString()+"/"+terms.get(l).toString()+"/"+classes.get(j).toString()+".txt"
+	 * );
+	 * 
+	 * aws.downloadContent(file111.getPath()); FileReader fr111; try { fr111 = new
+	 * FileReader(file111);
+	 * 
+	 * 
+	 * BufferedReader br111 = new BufferedReader(fr111); Object []lines =
+	 * br111.lines().toArray();
+	 * 
+	 * for(int k1 = 1; k1<lines.length; k1++) { List l1 =
+	 * Arrays.asList(lines[k1].toString().trim().split("//"));
+	 * if(l1.get(1).toString().equals("0/0")) { missedTests++; }else { tests++; } }
+	 * 
+	 * } catch (FileNotFoundException e1) { // TODO Auto-generated catch block
+	 * e1.printStackTrace(); }
+	 * studentTests.add(classes.get(j).toString()+"//"+String.valueOf(tests)+"//"+
+	 * missedTests);
+	 * 
+	 * }}}}
+	 * 
+	 * } catch (FileNotFoundException e1) { // TODO Auto-generated catch block
+	 * e1.printStackTrace(); } } catch (FileNotFoundException e1) { // TODO
+	 * Auto-generated catch block e1.printStackTrace(); } return studentTests; }
+	 */
 
-	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Courses.txt");
-
-	aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object [] lines1 = Home.loadActiveCourses(file1.getPath());
-			
-		if(lines1.length>0) {
-	if(cn == "All") {
-		classes.clear();
-		for(int j = 0; j<lines1.length;j++) {
-		List note1 = Arrays.asList(lines1[j].toString().trim().split("//"));
-		classes.add(note1.get(0).toString());
-		}}
-	else {
-		classes.clear();
-		classes.add(TestBox.getShortName(cn, c));
-	}
-		}else {
-			classes.clear();
-		}
+public static void loadAllTests(List studentTestStats) {
 	
-
-		File file11 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
-
-		aws.downloadContent(file11.getPath());
-		FileReader fr11;
-		try {
-			fr11 = new FileReader(file11);
-		
-		
-		BufferedReader br11 = new BufferedReader(fr11);
-		Object[] lines11 = Home.loadActiveStudents(file11.getPath());
-		
-		if(lines11.length>0) {
-	if(n == "All") {
-		students.clear();
+	List t = (List) studentTestStats.get(6);
 	
-	
-	
-	for(int j = 0; j<lines11.length;j++) {
-	List note1 = Arrays.asList(lines11[j].toString().trim().split("//"));
-	students.add(note1.get(0).toString());
-	}
-	}
-else {
-	students.clear();
-	students.add(n);
-}}else {
-	students.clear();
-}
-	
-	
-	if(t == "Toute l'annee") {
-		terms.clear();
-	
-	terms.add("1er Trimestre");
-	terms.add("2eme Trimestre");
-	terms.add("3eme Trimestre");
-	}
-else {
-	terms.clear();
-	terms.add(t);
-}
-
-	if(!students.isEmpty()) {
-		for(int l = 0; l<terms.toArray().length;l++) {
-			for(int j = 0; j<classes.toArray().length;j++) {
-				for(int k = 0; k<students.toArray().length;k++) {
-		
-
-		int tests = 0;
-		int missedTests = 0;
-				File file111 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/"+students.get(k).toString()+"/"+terms.get(l).toString()+"/"+classes.get(j).toString()+".txt");
-
-				aws.downloadContent(file111.getPath());
-					FileReader fr111;
-					try {
-						fr111 = new FileReader(file111);
-					
-					
-					BufferedReader br111 = new BufferedReader(fr111);
-					Object []lines = br111.lines().toArray();
-					
-					for(int k1 = 1; k1<lines.length; k1++) {
-						List l1 = Arrays.asList(lines[k1].toString().trim().split("//"));
-						if(l1.get(1).toString().equals("0/0")) {
-							missedTests++;
-						}else {
-							tests++;
-						}
-					}
-					
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					studentTests.add(classes.get(j).toString()+"//"+String.valueOf(tests)+"//"+missedTests);
-					
-	}}}}
-	
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		} catch (FileNotFoundException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-	return studentTests;
-	}
-
-public static void loadAllTests() {
-	
-	List t = getStudentTests(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-			, StatsPane.course.getText(), StatsPane.Term.getText().toString());
-	
-	List t1 = getMissedTests(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-			, StatsPane.course.getText(), StatsPane.Term.getText().toString());
+	List t1 = (List) studentTestStats.get(7);
 	
 	for(int i = 0; i< t1.toArray().length;i++) {
 		List tests = Arrays.asList(t1.get(i).toString().split("//"));
@@ -992,46 +968,55 @@ public static void loadAllTests() {
 		panel_11.add(panel_6);
 		panel_6.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel(tests.get(0).toString());
+		JLabel lblNewLabel_1 = new JLabel(Test.getTestTerm(tests.get(1).toString()));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEADING);
 		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 15));
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(10, 0, 200, 25);
 		panel_6.add(lblNewLabel_1);
 		
-		JLabel p1 = new JLabel(tests.get(1).toString());
+		JLabel p1 = new JLabel(Test.getTestCourse(tests.get(1).toString()));
 		p1.setHorizontalAlignment(SwingConstants.CENTER);
 		p1.setForeground(Color.WHITE);
 		p1.setFont(new Font("Roboto", Font.PLAIN, 15));
 		p1.setBounds(90, 0, 250, 25);
 		panel_6.add(p1);
 		
-		JLabel p11 = new JLabel("Interro no "+tests.get(2).toString());
+		JLabel p11 = new JLabel(Test.getTestName(tests.get(1).toString()));
 		p11.setHorizontalAlignment(SwingConstants.CENTER);
 		p11.setForeground(Color.WHITE);
 		p11.setFont(new Font("Roboto", Font.PLAIN, 15));
 		p11.setBounds(270, 0, 143, 25);
 		panel_6.add(p11);
 		}}
-		
+
+	List<String> usedCourses = new ArrayList();
 	for(int i = 0; i< t.toArray().length;i++) {
-		List tests = Arrays.asList(t.get(i).toString().split("//"));
-		
-		if(!tests.get(1).toString().equals("0")) {
+
+		String course_id = Test.getTestCourse(t.get(i).toString());
+		if(!usedCourses.contains(course_id)) {
+			usedCourses.add(course_id);
 		JPanel panel_61 = new JPanel();
 		panel_61.setBackground(new Color(40, 40, 40));
 		panel_61.setPreferredSize(new Dimension(400, 25));
 		panel_13.add(panel_61);
 		panel_61.setLayout(null);
 		
-		JLabel lblNewLabel_11 = new JLabel(TestBox.getFullName(tests.get(0).toString(), StatsPane.className.getText().toString()));
+		JLabel lblNewLabel_11 = new JLabel(TestBox.getFullName(Test.getTestName(t.get(i).toString())));
 		lblNewLabel_11.setHorizontalAlignment(SwingConstants.LEADING);
 		lblNewLabel_11.setFont(new Font("Roboto", Font.PLAIN, 17));
 		lblNewLabel_11.setForeground(new Color(255, 255, 255));
 		lblNewLabel_11.setBounds(10, 0, 270, 25);
 		panel_61.add(lblNewLabel_11);
 		
-		JLabel p1 = new JLabel(tests.get(1).toString());
+		int numberOfTests = 0;
+		for(int j = 0; j< t.toArray().length;j++) {
+			String c_id = Test.getTestCourse(t.get(j).toString());
+			if(c_id == course_id) {
+				numberOfTests++;
+			}
+		}
+		JLabel p1 = new JLabel(String.valueOf(numberOfTests));
 		p1.setHorizontalAlignment(SwingConstants.CENTER);
 		p1.setForeground(Color.WHITE);
 		p1.setFont(new Font("Roboto", Font.PLAIN, 17));
@@ -1267,12 +1252,10 @@ e.printStackTrace();
 }
 	
 	
-	 private static XYDataset createDataset() {
+	 private static XYDataset createDataset(List studentTestStats) {
 
-		 List progress = getStudentProgression(StatsPane.name.getText().toString(), StatsPane.className.getText()
-					, StatsPane.course.getText(), StatsPane.Term.getText().toString(), "All", "All");
-
-		 System.out.println(StatsPane.name.getText().toString()+": "+progress);
+		 List progress = (List) studentTestStats.get(9);
+		 
 	        TimeSeries series = new TimeSeries("2019");
 
 		 for(int i = 0; i<progress.toArray().length; i++) {
@@ -1280,7 +1263,7 @@ e.printStackTrace();
 		 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		 Date d1 = null;
 		try {
-			d1 = df.parse(l.get(0).toString());
+			d1 = df.parse(Test.getTestDate(l.get(0).toString()));
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -1350,23 +1333,14 @@ e.printStackTrace();
 	        return chart;
 	    }
 	    
-	    public static int getNumberOfechecs(String studentName, String className, String term, String start, String end) {
+	    public static int getNumberOfechecs(String student_id, String course_id, String classroom_id, String ay_id, String term_id, String start, String end) {
 
 	    	int echec = 0;
 	    	
-	    	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+"/Courses.txt");
-
-			aws.downloadContent(file1.getPath());
-			FileReader fr1;
-			try {
-				fr1 = new FileReader(file1);
-			
-			BufferedReader br1 = new BufferedReader(fr1);
-			Object[] lines1 = Home.loadActiveCourses(file1.getPath());
+			Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
 			
 	    	
 			for(int i = 0; i<lines1.length;i++) {
-	    	List course = Arrays.asList(lines1[i].toString().split("//"));
 				
 	    	
 
@@ -1377,12 +1351,12 @@ e.printStackTrace();
 			l1.add("0");
 			l1.add("0/0");
 			if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-		    	l = getStudentTestsStats(studentName, className
-						, course.get(1).toString(), term, start, end);}
+		    	l = getStudentTestsStats(student_id, classroom_id
+						, course_id, term_id, start, end);}
 
 			if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			 l1 = getStudentExamStats(studentName, className
-						, course.get(1).toString(), term, start, end);
+			 l1 = getStudentExamStats(student_id, classroom_id
+						, course_id, term_id, start, end);
 				}
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -1396,36 +1370,23 @@ e.printStackTrace();
 			echec++;
 			}
 			}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			
 	    	return echec;
 	    }
 	    
-	    public static void echecs() {
+	    public static void echecs(String student_id, String course_id, String classroom_id, String ay_id, String term_id) {
 	    	
 	    	
-	    	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+StatsPane.className.getText().toString()+"/Courses.txt");
-
-			aws.downloadContent(file1.getPath());
-			FileReader fr1;
-			try {
-				fr1 = new FileReader(file1);
-			
-			BufferedReader br1 = new BufferedReader(fr1);
-			Object[] lines1 = Home.loadActiveCourses(file1.getPath());
+			Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
 			
 	    	
 			for(int i = 0; i<lines1.length;i++) {
-	    	List course = Arrays.asList(lines1[i].toString().split("//"));
 				
-	    	List l = getStudentTestsStats(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-					, course.get(1).toString(), StatsPane.Term.getText().toString(), "All", "All");
+	    	List l = getStudentTestsStats(student_id, classroom_id
+					, course_id, term_id, "All", "All");
 	    	
-			List l1 = getStudentExamStats(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-					, course.get(1).toString(), StatsPane.Term.getText().toString(), "All", "All");
+			List l1 = getStudentExamStats(student_id, classroom_id
+					, course_id, term_id, "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -1440,14 +1401,15 @@ e.printStackTrace();
 				panel_6.setPreferredSize(new Dimension(400, 25));
 				panel_6.setLayout(null);
 				
-				JLabel lblNewLabel_1 = new JLabel(course.get(1).toString());
+				JLabel lblNewLabel_1 = new JLabel(lines1[i].toString());
 				lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEADING);
 				lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 				lblNewLabel_1.setForeground(new Color(255, 255, 255));
 				lblNewLabel_1.setBounds(10, 0, 250, 25);
 				panel_6.add(lblNewLabel_1);
+				lblNewLabel_1.setName(lines1[i].toString());
 				
-				if(course.get(1).toString().equals(StatsPane.course.getText())) {
+				if(lines1[i].toString().equals(course_id)) {
 					panel_6.setBackground(new Color(20, 148, 198));
 				}
 				
@@ -1466,26 +1428,22 @@ e.printStackTrace();
 			((JLabel) panelEchecs.getParent().getComponent(0)).setText(String.valueOf(panelEchecs.getComponentCount()));
 			
 			for(int i = 0; i< panelEchecs.getComponentCount(); i++) {
-				if(((JLabel) ((Container) panelEchecs.getComponent(i)).getComponent(1)).getText().equals(StatsPane.course.getText())) {
+				if(((JLabel) ((Container) panelEchecs.getComponent(i)).getComponent(1)).getName().equals(course_id)) {
 				panelEchecs.getComponent(i).setBackground(new Color(20, 148, 198));
 			}
 			}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			}
 	    
 	    
-	    public static String getEchecsInPoints(String name, String className, String courseName,  String term, String start, String end) {
+	    public static String getEchecsInPoints(String student_id, String course_id, String classroom_id, String ay_id, String term_id, String start, String end) {
 
 	    	
 				
-	    	List l = getStudentTestsStats(name, className
-					, courseName, term, start, end);
+	    	List l = getStudentTestsStats(student_id, classroom_id
+					, course_id, term_id, start, end);
 	    	
-			List l1 = getStudentExamStats(name, className
-					, courseName, term, start, end);
+			List l1 = getStudentExamStats(student_id, classroom_id
+					, course_id, term_id, start, end);
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -1504,36 +1462,22 @@ e.printStackTrace();
 	    }
 	    
 	    
-	    public static void rankStudentPerformances(String s) {
+	    public static void rankStudentPerformances(String student_id, String course_id, String classroom_id, String ay_id, String term_id) {
 	    	
 	    	panel1.removeAll();
 	    	panel11.removeAll();
-	    	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+s+"/Courses.txt");
-	    	int number = 0;
-			
-
 			List<Double> percent = new ArrayList<Double>();
 			List<Double> percent1 = new ArrayList<Double>();
-
-			aws.downloadContent(file1.getPath());
-			FileReader fr1;
-			try {
-				fr1 = new FileReader(file1);
+			Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+			int number = lines1.length;
 			
-			
-			BufferedReader br1 = new BufferedReader(fr1);
-			Object[] lines1 = Home.loadActiveCourses(file1.getPath());
-			number = lines1.length;
-			
-			if(lines1.length>0) {
 			
 			for(int i = 0; i<lines1.length;i++) {
-				List c = Arrays.asList(lines1[i].toString().split("//"));
 				
-			List l = getStudentTestsStats(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-					, c.get(1).toString(), StatsPane.Term.getText().toString(), "All", "All");
-			List l1 = getStudentExamStats(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-					, c.get(1).toString(), StatsPane.Term.getText().toString(), "All", "All");
+			List l = getStudentTestsStats(student_id, classroom_id
+					, lines1[i].toString(), term_id, "All", "All");
+			List l1 = getStudentExamStats(student_id, classroom_id
+					, lines1[i].toString(), term_id, "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -1549,20 +1493,14 @@ e.printStackTrace();
 			}
 			percent.add((percentage));
 			percent1.add(Double.parseDouble(percent.get(i).toString())+(Double.parseDouble(String.valueOf(i))*1/100));
-			
-			}}
-			
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
 
 			Collections.sort(percent, Collections.reverseOrder());
 			Collections.sort(percent1, Collections.reverseOrder());
 		
 
-			List t1 = getStudentTests(StatsPane.name.getText().toString(), StatsPane.className.getText().toString()
-					, "All", StatsPane.Term.getText().toString());
+			List t1 = (List) getStudentTestsStats(student_id, classroom_id
+					, course_id, term_id, "All", "All").get(6);
 			
 			for(int i = 0; i<percent.toArray().length;i++) {
 
@@ -1638,12 +1576,13 @@ e.printStackTrace();
 				
 			
 			for(int i = 0; i<panel1.getComponentCount(); i++) {
-				List tests = Arrays.asList(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString().split("//"));
+				String tests = t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString();
 				((JLabel) ((Container) panel1.getComponent(i)).getComponent(2)).setText(new DecimalFormat("##.##").format(percent.get(i)).toString()+"%");
 				((JLabel) ((Container) panel1.getComponent(i)).getComponent(0)).setText(String.valueOf(i+1));
-				((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).setText(TestBox.getFullName(tests.get(0).toString(), s));
+				((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).setText(TestBox.getFullName(Test.getTestCourse(tests)));
+				((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).setName(Test.getTestCourse(tests));
 				
-				if(((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).getText().equals(StatsPane.course.getText())) {
+				if(((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).getName().equals(course_id)) {
 					panel1.getComponent(i).setBackground(new Color(20, 148, 198));
 				}
 			}
@@ -1654,18 +1593,19 @@ e.printStackTrace();
 			
 			for(int i = panel11.getComponentCount()-1; i>-1; i--) {
 
-				List tests = Arrays.asList(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString().split("//"));
+				String tests = t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString();
 				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(2)).setText(new DecimalFormat("##.##").format(percent.get(i)).toString()+"%");
 				((JLabel) ((Container) panel11.getComponent(i)).getComponent(0)).setText(String.valueOf(i+1));
-				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).setText(TestBox.getFullName(tests.get(0).toString(), s));
+				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).setText(TestBox.getFullName(Test.getTestCourse(tests)));
+				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).setName(Test.getTestCourse(tests));
 
-				if(((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).getText().equals(StatsPane.course.getText())) {
+				if(((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).getName().equals(course_id)) {
 					panel11.getComponent(panel11.getComponentCount()-1-i).setBackground(new Color(20, 148, 198));
 					
 				}
 			}
-			((JLabel) panel1.getParent().getComponent(0)).setText(TestBox.getShortName(((JLabel) ((JComponent) panel1.getComponent(0)).getComponent(1)).getText(), s));
-			((JLabel) panel11.getParent().getComponent(0)).setText(TestBox.getShortName(((JLabel) ((JComponent) panel11.getComponent(0)).getComponent(1)).getText(), s));
+			((JLabel) panel1.getParent().getComponent(0)).setText(TestBox.getShortName(((JLabel) ((JComponent) panel1.getComponent(0)).getComponent(1)).getName()));
+			((JLabel) panel11.getParent().getComponent(0)).setText(TestBox.getShortName(((JLabel) ((JComponent) panel11.getComponent(0)).getComponent(1)).getName()));
 			
 	    
 			for(int i = number-1; i>9; i--) {
@@ -1674,398 +1614,97 @@ e.printStackTrace();
 	    }
 	    
 	   
-public static List<String> getMissedTests(String n, String c, String cn, String t) {
-		
-		List <String>missedTests = new ArrayList();
-		
-			
-			Object[] lines1 = null;
-			List <String>Courses = new ArrayList();
-			List <String>students = new ArrayList();
-			List <String>terms = new ArrayList();
-			
-				if(cn == "All") {
-					Courses.clear();
-				File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Courses.txt");
+		/*
+		 * public static List<String> getMissedTests(String n, String c, String cn,
+		 * String t) {
+		 * 
+		 * List <String>missedTests = new ArrayList();
+		 * 
+		 * 
+		 * Object[] lines1 = null; List <String>Courses = new ArrayList(); List
+		 * <String>students = new ArrayList(); List <String>terms = new ArrayList();
+		 * 
+		 * if(cn == "All") { Courses.clear(); File file1 = new
+		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+		 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Courses.txt");
+		 * 
+		 * aws.downloadContent(file1.getPath()); FileReader fr1; try { fr1 = new
+		 * FileReader(file1);
+		 * 
+		 * 
+		 * BufferedReader br1 = new BufferedReader(fr1); lines1 =
+		 * Home.loadActiveCourses(file1.getPath()); for(int j = 0; j<lines1.length;j++)
+		 * { List note1 = Arrays.asList(lines1[j].toString().trim().split("//"));
+		 * Courses.add(note1.get(0).toString()); } } catch (FileNotFoundException e1) {
+		 * // TODO Auto-generated catch block e1.printStackTrace(); }} else {
+		 * Courses.clear(); Courses.add(TestBox.getShortName(cn, c)); }if(n == "All") {
+		 * students.clear();
+		 * 
+		 * File file11 = new
+		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+		 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
+		 * 
+		 * aws.downloadContent(file11.getPath()); FileReader fr11; try { fr11 = new
+		 * FileReader(file11);
+		 * 
+		 * 
+		 * BufferedReader br11 = new BufferedReader(fr11); Object[] lines11 =
+		 * Home.loadActiveStudents(file11.getPath()); for(int j = 0;
+		 * j<lines11.length;j++) { List note1 =
+		 * Arrays.asList(lines11[j].toString().trim().split("//"));
+		 * students.add(note1.get(0).toString()); } } catch (FileNotFoundException e1) {
+		 * // TODO Auto-generated catch block e1.printStackTrace(); }} else {
+		 * students.clear(); students.add(StatsPane.name.getText()); } if(t ==
+		 * "Toute l'annee") { terms.clear();
+		 * 
+		 * terms.add("1er Trimestre"); terms.add("2eme Trimestre");
+		 * terms.add("3eme Trimestre"); } else { terms.clear();
+		 * terms.add(StatsPane.Term.getText()); }
+		 * 
+		 * if(!terms.isEmpty()&& !Courses.isEmpty() && !students.isEmpty()) { for(int l
+		 * = 0; l<terms.toArray().length;l++) { for(int j = 0;
+		 * j<Courses.toArray().length;j++) { for(int k = 0;
+		 * k<students.toArray().length;k++) {
+		 * 
+		 * String missed ;
+		 * 
+		 * 
+		 * File file = new
+		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+		 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/"+students.get(k
+		 * ).toString()+"/"+terms.get(l).toString()+"/"+Courses.get(j).toString()+".txt"
+		 * );
+		 * 
+		 * aws.downloadContent(file.getPath()); try {
+		 * 
+		 * FileReader fr = new FileReader(file);
+		 * 
+		 * BufferedReader br = new BufferedReader(fr); Object[] lines =
+		 * br.lines().toArray();
+		 * 
+		 * 
+		 * 
+		 * for(int i = 1; i<lines.length; i++) { List l1 =
+		 * Arrays.asList(lines[i].toString().trim().split("//"));
+		 * if(l1.get(1).toString().equals("0/0")) {
+		 * 
+		 * missed = terms.get(l).toString()+"//"+Courses.get(j).toString()+"//"+
+		 * String.valueOf(i); missedTests.add(missed); } }
+		 * 
+		 * } catch (FileNotFoundException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } } }} }
+		 * 
+		 * return missedTests;
+		 * 
+		 * }
+		 */
 
-				aws.downloadContent(file1.getPath());
-					FileReader fr1;
-					try {
-						fr1 = new FileReader(file1);
-					
-					
-					BufferedReader br1 = new BufferedReader(fr1);
-					lines1 = Home.loadActiveCourses(file1.getPath());
-					for(int j = 0; j<lines1.length;j++) {
-					List note1 = Arrays.asList(lines1[j].toString().trim().split("//"));
-					Courses.add(note1.get(0).toString());
-					}
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}}
-				else {
-					Courses.clear();
-					Courses.add(TestBox.getShortName(cn, c));
-				}if(n == "All") {
-					students.clear();
-					
-					File file11 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
-
-					aws.downloadContent(file11.getPath());
-					FileReader fr11;
-					try {
-						fr11 = new FileReader(file11);
-					
-					
-					BufferedReader br11 = new BufferedReader(fr11);
-					Object[] lines11 = Home.loadActiveStudents(file11.getPath());
-					for(int j = 0; j<lines11.length;j++) {
-					List note1 = Arrays.asList(lines11[j].toString().trim().split("//"));
-					students.add(note1.get(0).toString());
-					}
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}}
-				else {
-					students.clear();
-					students.add(StatsPane.name.getText());
-				}
-					if(t == "Toute l'annee") {
-						terms.clear();
-					
-					terms.add("1er Trimestre");
-					terms.add("2eme Trimestre");
-					terms.add("3eme Trimestre");
-					}
-				else {
-					terms.clear();
-					terms.add(StatsPane.Term.getText());
-				}
-
-					if(!terms.isEmpty()&& !Courses.isEmpty() && !students.isEmpty()) {
-						for(int l = 0; l<terms.toArray().length;l++) {
-							for(int j = 0; j<Courses.toArray().length;j++) {
-								for(int k = 0; k<students.toArray().length;k++) {
-
-									String missed ;
-
-					
-					File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/"+students.get(k).toString()+"/"+terms.get(l).toString()+"/"+Courses.get(j).toString()+".txt");
-
-					aws.downloadContent(file.getPath());
-						try {
-
-							FileReader fr = new FileReader(file);
-							
-							BufferedReader br = new BufferedReader(fr);
-							Object[] lines = br.lines().toArray();
-						
-								
-								
-							for(int i = 1; i<lines.length; i++) {
-								List l1 = Arrays.asList(lines[i].toString().trim().split("//"));
-								if(l1.get(1).toString().equals("0/0")) {
-
-									missed = terms.get(l).toString()+"//"+Courses.get(j).toString()+"//"+ String.valueOf(i);
-									missedTests.add(missed);
-								}
-							}
-							
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-					}
-				}
-							}}
-					}
-		
-		return missedTests;
-		
-	}
-	    
-
-public static int getNumberOfStudents(String s) {
+public static int getNumberOfStudents(String classroom_id, String ay_id) {
 	
-	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+s+"/Students.txt");
 	int no = 0;
-
-	aws.downloadContent(file1.getPath());
-	FileReader fr1;
-	try {
-		fr1 = new FileReader(file1);
-	
-	BufferedReader br1 = new BufferedReader(fr1);
-	Object[] lines1 = Home.loadActiveStudents(file1.getPath());
+	Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
 	no = lines1.length;
-	
-	} catch (FileNotFoundException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
 	return no;
 }
-
-
-public static List <String> getStudentProgression(String n, String c, String cn, String t, String firstDate, String lastDate) {
-		Object[] lines1 = null;
-		List <String>classes = new ArrayList();
-		List <String>students = new ArrayList();
-		List <String>terms = new ArrayList();
-		
-		List <String> progression = new ArrayList();
-		
-		
-
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Courses.txt");
-		aws.downloadContent(file1.getPath());
-			
-			FileReader fr1;
-			try {
-				fr1 = new FileReader(file1);
-			
-			
-			BufferedReader br1 = new BufferedReader(fr1);
-			lines1 = Home.loadActiveCourses(file1.getPath());
-		
-			if(lines1.length>0) {
-			if(cn == "All") {
-				classes.clear();
-				for(int j = 0; j<lines1.length;j++) {
-				List note1 = Arrays.asList(lines1[j].toString().trim().split("//"));
-				classes.add(note1.get(0).toString());
-				}
-				}
-			else {
-				classes.clear();
-				classes.add(TestBox.getShortName(cn, c));
-			}
-			}else {
-				classes.clear();
-			}
-			
-			
-File file11 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/Students.txt");
-
-aws.downloadContent(file11.getPath());
-			FileReader fr11;
-			try {
-				fr11 = new FileReader(file11);
-			
-			
-			BufferedReader br11 = new BufferedReader(fr11);
-			Object[] lines11 = Home.loadActiveStudents(file11.getPath());
-
-			if(lines11.length>0) {
-			if(n == "All") {
-				students.clear();
-			
-			for(int j = 0; j<lines11.length;j++) {
-			List note1 = Arrays.asList(lines11[j].toString().trim().split("//"));
-			students.add(note1.get(0).toString());
-			}}
-		else {
-			students.clear();
-			students.add(n);
-		}}else {
-			students.clear();
-		}
-			
-			if(t == "Toute l'annee") {
-				terms.clear();
-			
-			
-			terms.add("1er Trimestre");
-			terms.add("2eme Trimestre");
-			terms.add("3eme Trimestre");
-			}
-		else {
-			terms.clear();
-			terms.add(t);
-		}
-			
-			String firstTerm = "";
-			String lastTerm = "";
-			
-			if(terms.toArray().length>1) {
-				for(int i = 0; i<terms.toArray().length; i++) {
-					if(termHasTests(c, terms.get(i).toString())) {
-						firstTerm = terms.get(i).toString();
-						break;
-			}
-					}
-				for(int i = terms.toArray().length-1; i>=0; i--) {
-					if(termHasTests(c, terms.get(i).toString())) {
-						lastTerm = terms.get(i).toString();
-						break;
-			}
-			}
-			}else {
-				firstTerm = t;
-				lastTerm = t;
-			}
-				if(classes.toArray().length>1) {
-					String firstTestInTerm = "0";
-					String lastTestInTerm = "0";
-					for(int i = 0; i< classes.toArray().length; i++) {
-						
-						if(CourseStats.courseHasTests(classes.get(i).toString(), c, lastTerm) || CourseStats.courseHasTests(classes.get(i).toString(), c, firstTerm)) {
-						String coursefirstDate = getTestDate(c, classes.get(i).toString(), "1", lastTerm);
-						
-						String courselastDate = getTestDate(c, classes.get(i).toString(), getLastTestNumber(c, classes.get(i).toString(), firstTerm), firstTerm);
-						
-						 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-						 Date d1 = null;
-						 Date d2 = null;
-						 Date d3 = null;
-						 Date d4 = null;
-						try {
-							d1 = df.parse(coursefirstDate);
-							d2 = df.parse(courselastDate);
-							if(!firstTestInTerm.equals("0")&&!lastTestInTerm.equals("0")) {
-							d3 = df.parse(firstTestInTerm);
-							d4 = df.parse(lastTestInTerm);
-							}else {
-								d3 = df.parse(coursefirstDate);
-								d4 = df.parse(courselastDate);
-							}
-						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} 
-						
-						Calendar c1 = Calendar.getInstance();
-						Calendar c2 = Calendar.getInstance();
-						Calendar c3 = Calendar.getInstance();
-						Calendar c4 = Calendar.getInstance();
-						c1.setTime(d1);
-						c2.setTime(d2);
-						c3.setTime(d3);
-						c4.setTime(d4);
-						
-						if(!firstTestInTerm.equals("0")){
-						if(c1.before(c3)) {
-							firstTestInTerm = coursefirstDate;
-						}
-						}else {
-							firstTestInTerm = coursefirstDate;
-						}
-
-						if(!lastTestInTerm.equals("0")){
-						if(c2.after(c4)) {
-							lastTestInTerm = courselastDate;
-						}}else {
-							lastTestInTerm = courselastDate;
-						}
-					}
-					}
-					if(firstDate.equals("All")) {
-					firstDate = firstTestInTerm;
-					}if(lastDate.equals("All")) {
-					lastDate = lastTestInTerm;
-				}}
-				
-				if(!students.isEmpty()) {
-				for(int l = 0; l<terms.toArray().length;l++) {
-					for(int j = 0; j<classes.toArray().length;j++) {
-						for(int k = 0; k<students.toArray().length;k++) {
-							
-
-				
-				File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+c+"/"+students.get(k).toString()+"/"+terms.get(l).toString()+"/"+classes.get(j).toString()+".txt");
-
-				aws.downloadContent(file.getPath());
-					try {
-
-						FileReader fr = new FileReader(file);
-						
-						BufferedReader br = new BufferedReader(fr);
-						Object[] lines = br.lines().toArray();
-					
-						if(lines.length>1) {
-							if(classes.toArray().length==1) {
-							if(firstDate.equals("All")) {
-								firstDate = getTestDate(c, classes.get(j).toString(), "1", lastTerm);
-							}
-							if(lastDate.equals("All")) {
-								lastDate = getTestDate(c, classes.get(j).toString(), getLastTestNumber(c, classes.get(j).toString(), firstTerm), firstTerm);
-							}}
-							//System.out.println(firstDate+"--"+lastDate);
-							 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-							 Date d1 = null;
-							 Date d2 = null;
-							try {
-								d1 = df.parse(firstDate);
-								d2 = df.parse(lastDate);
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} 
-							
-							Calendar c1 = Calendar.getInstance();
-							Calendar c2 = Calendar.getInstance();
-							c1.setTime(d1);
-							c2.setTime(d2);
-						
-							
-						for(int i = 1; i<lines.length; i++) {
-						
-							 SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yyyy");
-							 Date d3 = null;
-							try {
-								d3 = df1.parse(getTestDate(c, classes.get(j).toString(), String.valueOf(i), terms.get(l).toString()));
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} 
-							
-							Calendar c3 = Calendar.getInstance();
-							c3.setTime(d3);
-							
-							System.out.println(getTestDate(c, classes.get(j).toString(), String.valueOf(i), terms.get(l).toString()));
-							System.out.println("Progression starting at "+c1.getTime().getDate()+"/"+(c1.getTime().getMonth()+1)+"/"+(c1.getTime().getYear()+1900)+"---"+c3.getTime().getDate()+"/"+(c3.getTime().getMonth()+1)+"/"+(c3.getTime().getYear()+1900));
-							System.out.println("Progression ending at "+c3.getTime().getDate()+"/"+(c3.getTime().getMonth()+1)+"/"+(c3.getTime().getYear()+1900)+"---"+c2.getTime().getDate()+"/"+(c2.getTime().getMonth()+1)+"/"+(c2.getTime().getYear()+1900));
-							
-							if(c3.after(c1) && c3.before(c2) || c3.equals(c1) && c3.before(c2) || c3.after(c1) && c3.equals(c2) || c3.equals(c1)&& c3.equals(c2)) {
-								System.out.println("true");
-								List list1 = StudentStats.getStudentTestsStats(students.get(k), c
-										,classes.get(j).toString(), "Toute l'annee"
-										,getTestDate(c, classes.get(j).toString(), String.valueOf(i), terms.get(l).toString()), getTestDate(c, classes.get(j).toString(), String.valueOf(i), terms.get(l).toString()));
-								List<String> note = Arrays.asList(list1.get(1).toString().split("/"));
-								
-								Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."));
-								Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."));
-								
-								Double percentage;
-								if(points1==0 && maxima==0 ) {
-									percentage = 0.00;
-								}else {
-									percentage = points1*100/maxima;
-									progression.add(getTestDate(c, classes.get(j).toString(), String.valueOf(i), terms.get(l).toString())+"//"+percentage);
-								}
-								
-							}}}
-						
-						
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-				}
-			}
-					}
-				}}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	
-return progression;
-}
-
 
 }
