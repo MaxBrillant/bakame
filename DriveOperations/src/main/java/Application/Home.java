@@ -610,7 +610,7 @@ public static String getClassName(String classroom_id) {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("select * from classrooms "
-					+ "WHERE classroom_id = '"+classroom_id+"' AND LIMIT 1");
+					+ "WHERE classroom_id = '"+classroom_id+"' LIMIT 1");
 			while(rs.next())
 			{
 				name = rs.getString("classroom_name");
@@ -632,7 +632,7 @@ public static String getStudentName(String student_id) {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("select * from students "
-					+ "WHERE student_id = '"+student_id+"' AND LIMIT 1");
+					+ "WHERE student_id = '"+student_id+"' LIMIT 1");
 			while(rs.next())
 			{
 				name = rs.getString("last_name").toUpperCase()+" "+rs.getString("first_name");
@@ -653,11 +653,33 @@ public static String getTermName(String term_id) {
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("select * from terms "
-					+ "WHERE term_id = '"+term_id+"' AND LIMIT 1");
+			ResultSet rs=stmt.executeQuery("SELECT * from terms "
+					+ "WHERE term_id = '"+term_id+"' LIMIT 1");
 			while(rs.next())
 			{
 				name = rs.getString("term_name");
+			}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		
+		}
+		return name;
+		}
+
+public static String getTermYear(String term_id) {
+	
+	String name = null;
+	
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from terms "
+					+ "WHERE term_id = '"+term_id+"' LIMIT 1");
+			while(rs.next())
+			{
+				name = rs.getString("ay_id");
 			}
 
 		} catch (SQLException e) {
@@ -716,13 +738,13 @@ public static String getTermName(String term_id) {
 public static Object[] loadActiveStudents(String classroom_id, String ay_id) {
 	
 	List<String> s = new ArrayList();
-	BufferedReader
+	//BufferedReader
 
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs=stmt.executeQuery("SELECT * from students_in_classrooms AS sic "
-				+ "JOIN students AS s"
+		ResultSet rs=stmt.executeQuery("SELECT * FROM students_in_classrooms AS sic "
+				+ "JOIN students AS s "
 				+ "WHERE sic.classroom_id = '"+classroom_id+"' AND sic.ay_id = '"+ay_id+"' AND sic.student_id = s.student_id AND s.is_active = 1 AND sic.is_active = 1");
 		while(rs.next())
 		{
@@ -850,7 +872,7 @@ public static boolean courseExists(String courseId, String ay_id) {
 		Statement stmt= mysql.con.createStatement();
 
 		ResultSet rs=stmt.executeQuery("select * from courses_in_classroom AS cic"
-				+ "JOIN courses AS c"
+				+ "JOIN courses AS c "
 				+ "WHERE c.course_id = '"+courseId+"' AND c.is_active = 1 AND cic.ay_id = '"+ay_id+"' AND cic.course_id = '"+courseId+"' AND cic.is_active = 1");
 
 		int i = 0;
@@ -879,7 +901,7 @@ public static Object[] loadActiveCourses(String ay_id, String classroom_id) {
 		Statement stmt= mysql.con.createStatement();
 
 		ResultSet rs=stmt.executeQuery("select * from courses_in_classroom AS cic "
-				+ "JOIN courses AS c"
+				+ "JOIN courses AS c "
 				+ "WHERE cic.ay_id = '"+ay_id+"' AND cic.classroom_id = '"+classroom_id+"' AND cic.course_id = c.course_id AND c.is_active = 1 AND cic.is_active = 1");
 		while(rs.next())
 		{

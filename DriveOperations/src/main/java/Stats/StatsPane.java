@@ -13,6 +13,7 @@ import Class.Animations;
 import Class.CustomVerticalScrollBarUI;
 import Class.TestBox;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -84,7 +85,9 @@ public class StatsPane extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StatsPane frame = new StatsPane("0", "0", "0", "0", "0");
+
+					mysql.connectToDB();
+					StatsPane frame = new StatsPane("0", "0", "1", "1", "8");
 					frame.setVisible(true);
 					System.gc();
 					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
@@ -355,7 +358,11 @@ public class StatsPane extends JFrame {
 					selectedTerm++;
 				}
 
-				Term.setText(terms.get(selectedTerm));
+				if(selectedTerm == terms.toArray().length) {
+					Term.setText(Home.getTermName(terms.get(selectedTerm)));
+				}else {
+					Term.setText(terms.get(selectedTerm));
+					}
 
 				if(selectedStudent == 0) {
 					number.setVisible(false);
@@ -395,7 +402,11 @@ public class StatsPane extends JFrame {
 				}else {
 					selectedCourse++;
 				}
-				course.setText(courses.get(selectedCourse));
+				if(selectedCourse > 0) {
+					course.setText(TestBox.getFullName(courses.get(selectedCourse)));
+				}else {
+					course.setText(courses.get(selectedCourse));
+					}
 				if(selectedStudent == 0) {
 					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}else {
@@ -409,7 +420,7 @@ public class StatsPane extends JFrame {
 				
 				if(selectedStudent == students.toArray().length-1) {
 					selectedStudent = 0;
-					name.setText(students.get(selectedStudent));
+					name.setText("All");
 					CourseStats cs = new CourseStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					scrollPane.setViewportView(cs);
 					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
@@ -421,7 +432,7 @@ public class StatsPane extends JFrame {
 					number.setVisible(true);
 					}
 					selectedStudent++;
-					name.setText(students.get(selectedStudent));
+					name.setText(Home.getStudentName(students.get(selectedStudent)));
 					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}
 
@@ -439,7 +450,11 @@ public class StatsPane extends JFrame {
 					selectedTerm--;
 				}
 
-				Term.setText(terms.get(selectedTerm));
+				if(selectedTerm == terms.toArray().length) {
+					Term.setText(Home.getTermName(terms.get(selectedTerm)));
+				}else {
+					Term.setText(terms.get(selectedTerm));
+					}
 
 				if(selectedStudent == 0) {
 					number.setVisible(false);
@@ -479,8 +494,11 @@ public class StatsPane extends JFrame {
 				}else {
 					selectedCourse--;
 				}
-				
-				course.setText(courses.get(selectedCourse));
+				if(selectedCourse > 0) {
+					course.setText(TestBox.getFullName(courses.get(selectedCourse)));
+				}else {
+					course.setText(courses.get(selectedCourse));
+					}
 				if(selectedStudent == 0) {
 					CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				}else {
@@ -494,7 +512,7 @@ public class StatsPane extends JFrame {
 
 				if(selectedStudent == 0) {
 					selectedStudent = students.toArray().length-1;
-					name.setText(students.get(selectedStudent));
+					name.setText(Home.getStudentName(students.get(selectedStudent)));
 					StudentStats cs = new StudentStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 					scrollPane.setViewportView(cs);
 					StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
@@ -502,8 +520,9 @@ public class StatsPane extends JFrame {
 
 				}else {
 					selectedStudent--;
-					name.setText(students.get(selectedStudent));
+					name.setText(Home.getStudentName(students.get(selectedStudent)));
 					if(selectedStudent == 0) {
+						name.setText("All");
 						CourseStats cs = new CourseStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 						scrollPane.setViewportView(cs);
 						CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
@@ -567,9 +586,16 @@ public class StatsPane extends JFrame {
 		className.setText(Home.getClassName(classes.get(selectedClass)));
 		Term.setText(Home.getTermName(terms.get(selectedTerm)));
 		
-
+		if(selectedStudent>0) {
 		name.setText(Home.getStudentName(students.get(selectedStudent)));
+		}else {
+			name.setText("All");
+		}
+		if(selectedCourse>0) {
 		course.setText(TestBox.getFullName(courses.get(selectedCourse)));
+		}else {
+			course.setText("All");	
+		}
 	}
 	
 	public static void populateTermsList(String ay_id) {

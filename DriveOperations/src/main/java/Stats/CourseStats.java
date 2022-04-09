@@ -741,14 +741,14 @@ public class CourseStats extends JPanel {
 									ResultSet rs;
 									
 									if(firstDate == "All") {
-										rs= stmt.executeQuery("SELECT * test_information AS ti "
+										rs= stmt.executeQuery("SELECT * FROM test_information AS ti "
 											+ "JOIN course_tests AS ct "
-											+ "WHERE ti.exam_id = ct.exam_id AND ti.is_active = 1 "
+											+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 "
 													+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"'");
 									}else {
-										rs= stmt.executeQuery("SELECT * test_information AS ti "
+										rs= stmt.executeQuery("SELECT * FROM test_information AS ti "
 												+ "JOIN course_tests AS ct "
-												+ "WHERE ti.exam_id = ct.exam_id AND ti.is_active = 1 "
+												+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 "
 														+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"' AND ei.date BETWEEN '"+firstDate+"' and '"+lastDate+"'");
 									}
 								while(rs.next())

@@ -372,7 +372,7 @@ public class LPane extends JPanel {
 
 			ResultSet rs=stmt.executeQuery("SELECT * from test_information AS ti "
 					+ "JOIN students_grades_tests AS sgt "
-					+ "WHERE ti.test_id = '"+test_id+" AND ti.test_id = sgt.test_id AND ti.is_active = 1");
+					+ "WHERE ti.test_id = '"+test_id+"' AND sgt.student_id = '"+student_id+"' AND ti.test_id = sgt.test_id AND ti.is_active = 1");
 		
 		while(rs.next())
 		{
@@ -401,7 +401,7 @@ public static String loadStudentSerieNote(String serie_id, String student_id) {
 			ResultSet rs=stmt.executeQuery("SELECT * from series AS s "
 					+ "JOIN exam_information AS ei "
 					+ "JOIN students_grades_exams AS sge "
-					+ "WHERE ei.exam_id = s.exam_id AND s.serie_id = '"+serie_id+" AND s.serie_id = sge.serie_id AND ei.is_active = 1");
+					+ "WHERE ei.exam_id = s.exam_id AND s.serie_id = '"+serie_id+"' AND sgt.student_id = '"+student_id+" AND s.serie_id = sge.serie_id AND ei.is_active = 1");
 		
 		while(rs.next())
 		{

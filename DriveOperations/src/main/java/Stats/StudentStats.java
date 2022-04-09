@@ -610,7 +610,7 @@ public class StudentStats extends JPanel {
 		lblNewLabel_1.setBounds(10, 0, 208, 25);
 		panel_6.add(lblNewLabel_1);
 		
-		p1 = new JLabel("78,5%");
+		p1 = new JLabel("...%");
 		p1.setHorizontalAlignment(SwingConstants.CENTER);
 		p1.setForeground(Color.WHITE);
 		p1.setFont(new Font("Roboto", Font.PLAIN, 17));
@@ -623,7 +623,7 @@ public class StudentStats extends JPanel {
 		panel_15.setBackground(new Color(40, 40, 40));
 		panelPercent.add(panel_15);
 		
-		p2 = new JLabel("84%");
+		p2 = new JLabel("...%");
 		p2.setHorizontalAlignment(SwingConstants.CENTER);
 		p2.setForeground(Color.WHITE);
 		p2.setFont(new Font("Roboto", Font.PLAIN, 17));
@@ -651,7 +651,7 @@ public class StudentStats extends JPanel {
 		label.setBounds(10, 0, 208, 25);
 		panel_16.add(label);
 		
-		points1 = new JLabel("78,5%");
+		points1 = new JLabel("...%");
 		points1.setHorizontalAlignment(SwingConstants.CENTER);
 		points1.setForeground(Color.WHITE);
 		points1.setFont(new Font("Roboto", Font.PLAIN, 17));
@@ -664,7 +664,7 @@ public class StudentStats extends JPanel {
 		panel_17.setBackground(new Color(40, 40, 40));
 		panelPoints.add(panel_17);
 		
-		points2 = new JLabel("84%");
+		points2 = new JLabel("...%");
 		points2.setHorizontalAlignment(SwingConstants.CENTER);
 		points2.setForeground(Color.WHITE);
 		points2.setFont(new Font("Roboto", Font.PLAIN, 17));
@@ -714,7 +714,7 @@ public class StudentStats extends JPanel {
 				List <String>listOfEchecs = new ArrayList();
 				List <String>listOfTestProgress = new ArrayList();
 				
-					if(course_id == "All") {
+					if(course_id.equals("All")) {
 						courses.clear();
 						lines1 = Home.loadActiveCourses(ay_id, classroom_id);
 						for(int j = 0; j<lines1.length;j++) {
@@ -724,7 +724,7 @@ public class StudentStats extends JPanel {
 						courses.clear();
 						courses.add(course_id);
 					}
-					if(student_id == "All") {
+					if(student_id.equals("All")) {
 						students.clear();
 						
 						Object[] lines11 = Home.loadActiveStudents(classroom_id, ay_id);
@@ -735,7 +735,7 @@ public class StudentStats extends JPanel {
 						students.clear();
 						students.add(student_id);
 					}
-						if(term_id == "Toute l'annee") {
+						if(term_id.equals("Toute l'annee")) {
 							terms.clear();
 						
 							Object[] lines11 = Home.loadActiveTerms(ay_id);
@@ -761,14 +761,14 @@ public class StudentStats extends JPanel {
 									ResultSet rs;
 									
 									if(firstDate == "All") {
-										rs= stmt.executeQuery("SELECT * test_information AS ti "
+										rs= stmt.executeQuery("SELECT * FROM test_information AS ti "
 											+ "JOIN course_tests AS ct "
-											+ "WHERE ti.exam_id = ct.exam_id AND ti.is_active = 1 "
+											+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 "
 													+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"'");
 									}else {
-										rs= stmt.executeQuery("SELECT * test_information AS ti "
+										rs= stmt.executeQuery("SELECT * FROM test_information AS ti "
 												+ "JOIN course_tests AS ct "
-												+ "WHERE ti.exam_id = ct.exam_id AND ti.is_active = 1 "
+												+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 "
 														+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"' AND ei.date BETWEEN '"+firstDate+"' and '"+lastDate+"'");
 									}
 								while(rs.next())
@@ -783,14 +783,15 @@ public class StudentStats extends JPanel {
 							Double d = Double.parseDouble((String) note.get(0));
 							Double e = Double.parseDouble((String) note.get(1));
 							
-							for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
+							/*for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
 								List f = Arrays.asList(listOfTestProgress.get(z).split("//"));
-							//	if(!f.get(0).equals(rs.getString("ti.test_id"))) {
+								if(!f.get(0).equals(rs.getString("ti.test_id"))) {*/
 							Double testProgress = Double.parseDouble(Test.getTestProgression(rs.getString("ti.test_id"), students.get(k)));
 							progress = progress+ testProgress;
 							listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
-							break;
-							}
+							/*
+							 * break; }
+							 */
 
 							tot = tot+ d;
 							tot1 = tot1+e;

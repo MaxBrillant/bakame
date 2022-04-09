@@ -385,12 +385,12 @@ public static String getTestDate(String test_id) {
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("SELECT * from test_information "
+			ResultSet rs=stmt.executeQuery("SELECT DAY(date), MONTH(date), YEAR(date) from test_information "
 					+ "WHERE is_active = 1 AND test_id = '"+test_id+"' LIMIT 1");
 		
 		while(rs.next())
 		{
-			date = rs.getString("date");
+			date = rs.getString("DAY(date)")+"/"+rs.getString("MONTH(date)")+"/"+rs.getString("YEAR(date)");
 		}
 		
 		} catch (SQLException e1) {
