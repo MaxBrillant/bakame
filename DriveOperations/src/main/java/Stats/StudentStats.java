@@ -435,10 +435,11 @@ public class StudentStats extends JPanel {
 	
 	public static void loadStudentData(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
 		
-		String ay_id = Login.selectedAcademicYearID;
 
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
+
+        		String ay_id = Login.selectedAcademicYearID;
             	
 				//CourseStats.loadCourseData();
 		for(int i = 0; i<((Container) StatsPane.scrollPane.getComponent(0)).getComponentCount(); i++) {
@@ -498,8 +499,8 @@ public class StudentStats extends JPanel {
 		
 		percent.setText(new DecimalFormat("##.##").format(percentage)+"%");
 		points.setText(new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
-		tests.setText(l.get(2).toString());
-		missedTests.setText(l.get(4).toString());
+		tests.setText(String.valueOf(((List) l.get(6)).toArray().length));
+		missedTests.setText(String.valueOf(((List) l.get(7)).toArray().length));
 		
 
 		StatsPane.number.setText(loadStudentNumber(student_id, classroom_id, ay_id));
@@ -553,9 +554,9 @@ public class StudentStats extends JPanel {
 }.execute();
 
 
-        panel_8.removeAll();
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
+                panel_8.removeAll();
     	
          List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
             	
@@ -678,7 +679,8 @@ public class StudentStats extends JPanel {
 		label_4.setBounds(10, 0, 208, 25);
 		panel_17.add(label_4);
 		
-
+		panelPercent.getParent().revalidate();
+		panelPercent.getParent().repaint();
 	}
 	
 	
@@ -1027,6 +1029,8 @@ public static void loadAllTests(List studentTestStats) {
 		
 	}
 	
+	StatsPane.scrollPane.revalidate();
+	StatsPane.scrollPane.repaint();
 }
 
 

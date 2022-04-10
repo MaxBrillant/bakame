@@ -29,6 +29,11 @@
   <version>8.0.28</version>
 </dependency>
 
+		<dependency>
+			<groupId>com.formdev</groupId>
+			<artifactId>flatlaf</artifactId>
+			<version>2.1</version>
+		</dependency>
 	</dependencies>
     <properties>
         <maven.compiler.source>13</maven.compiler.source>
