@@ -280,8 +280,8 @@ public static void showStudentTests(String course_id, String student_id, String 
 		Double tot1 = (double) 0;
 			
 			
-			List l = CourseStats.getStudentTestsStats(App.getStudentName(App.n), Home.className, courseName, Home.termsText.get(Home.selectedTermIndex), "All", "All");
-			List l1 = CourseStats.getStudentExamStats(App.getStudentName(App.n), Home.className, courseName, Home.termsText.get(Home.selectedTermIndex), "All", "All");
+			List l = CourseStats.getStudentTestsStats(student_id, classroom_id, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
+			List l1 = CourseStats.getStudentExamStats(student_id, classroom_id, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));

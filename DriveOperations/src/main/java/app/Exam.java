@@ -23,6 +23,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,9 +42,13 @@ import javax.swing.plaf.metal.MetalProgressBarUI;
 import Application.Home;
 import Application.ResizeImages;
 import Class.ExamBox;
+import Class.ExamInfo;
 import Class.NewExam;
 import Class.TestBox;
 import CloudOperations.aws;
+import CloudOperations.mysql;
+import Stats.StudentStats;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -60,7 +67,7 @@ public class Exam extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Exam() {
+	public Exam(String course_id, String student_id, String classroom_id, String term_id) {
 		setBackground(new Color(80, 80, 80));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(new Dimension((int) screensize.getWidth()*31/100,(int) (screensize.getHeight()*82/100*7/100))));
@@ -131,7 +138,7 @@ public class Exam extends JPanel {
 
 
 				//setBorder(new LineBorder(Color.white, 2));
-				Test.deselect();
+				Test.deselect(course_id, student_id, classroom_id);
 
 				isSelected = true;
 				String str = ((JProgressBar)getComponent(0)).getString().replaceAll("[^0.00-9.00]+", "/");
@@ -164,51 +171,19 @@ public class Exam extends JPanel {
 				LPane.panel_2.repaint();
 				
 				if(e.getClickCount()==2){
-					int j = Integer.parseInt(LPane.no.getText().replaceAll("[^0-9]", ""));
-					String str1 = ((JProgressBar) ((Container) LPane.panel_2.getComponent(j-1)).getComponent(0)).getString().replaceAll("[^0.00-9.00]+", "/");
-					List note1 = Arrays.asList(str1.trim().split("/"));
-					
-					NewTest nt = new NewTest();
+					NewTest nt = new NewTest(getName());
 				nt.setVisible(true);
 					NewTest.update.setVisible(false);
 					NewTest.upExam.setVisible(true);
 					
 					
-					
-					File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Exam List/3eme Trimestre/ExamList.txt");
-					aws.downloadContent(file.getPath());
-							try {
 
-								
-								FileReader fr = new FileReader(file);
-								
-								BufferedReader br = new BufferedReader(fr);
-								Object[] lines = br.lines().toArray();
-								int index = 0;
-								
-								for(int i = 0;i<lines.length;i++) {
-								List parts = Arrays.asList(lines[i].toString().split("//"));
-								if(parts.get(0).equals(TestBox.getShortName(nt.cours.getText(), Home.className))) {
-									index = i;
-								}
-								}
-								
-								List parts = Arrays.asList(lines[index].toString().split("//"));
-								List parts1 = Arrays.asList(parts.get(3+Integer.parseInt(LPane.no.getText().replaceAll("[^0-9]", ""))).toString().split("::"));
-								
+					List note1 = Arrays.asList(LPane.loadStudentSerieNote(getName(), student_id).trim().split("/"));
 					
 					
 					NewTest.PO.setText((String) note1.get(0));
-					NewTest.TP.setText(String.valueOf(Integer.parseInt(parts1.get(1).toString())*Integer.parseInt(parts.get(1).toString())/100));
-					int i = Integer.parseInt(LPane.no.getText().replaceAll("[^0-9]", ""));
-					NewTest.interro.setText(parts1.get(0).toString());
-							} catch (FileNotFoundException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-								
-						}
-					
-					
+					NewTest.TP.setText(getSerieMaxima(getName()));
+					NewTest.interro.setText(getSerieName(getName()));
 				}
 				
 				if(isSelected) {
@@ -274,13 +249,8 @@ public class Exam extends JPanel {
 		
 	}
 	
-	public static void deselect() {
+	public static void deselect(String course_id, String student_id, String classroom_id) {
 		
-		Exam.loadExams();
-		
-		Double sum = (double) 0;
-		Double sum1 = (double) 0;
-		int ev = 0;
 		for(int i = 0; i < LPane.panel_2.getComponents().length;i++) {
 			
 			Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -296,69 +266,54 @@ public class Exam extends JPanel {
 		((Container) LPane.panel_2.getComponent(i)).getComponent(1).setForeground(Color.white);
 		((Container) LPane.panel_2.getComponent(i)).getComponent(2).setForeground(Color.white);
 			}
-		
-		String str = ((JProgressBar) ((Container)LPane.panel_2.getComponent(i)).getComponent(0)).getString().replaceAll("[^0.00-9.00]+", "/");
-		List note = Arrays.asList(str.trim().split("/"));
-		Double d = Double.parseDouble((String) note.get(0));
-		Double e = Double.parseDouble((String) note.get(1));
-		
-		sum = sum+ d;
-		sum1 = sum1+e;
-		
-		
 	}
+		
+List l = StudentStats.getStudentExamStats(student_id, classroom_id, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
+		
+		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
+		
+		Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."));
+		Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."));
+		
+		Double percentage;
+		if(points1 == Double.parseDouble("0") && maxima == Double.parseDouble("0")) {
+			percentage = (double) 0;
+		}else {
+			percentage = points1*100/maxima;
+		}
+		
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
 		
 
 		LPane.supprimer.setVisible(false);
 		LPane.modifier.setVisible(false);
-		LPane.no.setText(String.valueOf(LPane.panel_2.getComponentCount())+" Series effectuees");
+		LPane.no.setText(l.get(2).toString()+" Series effectuees");
 		
-		if(sum==0 && sum1==0) {
 
-			LPane.points.setText("0/0");
+		
+
+		LPane.prog.setText("Progression: "+ l.get(5).toString()+"%");
+		LPane.pourcent.setText("Pourcentage: "+new DecimalFormat("##.##").format(percentage)+"%");
+		LPane.points.setText(l.get(1).toString());
+		if(percentage>=50) {
+		LPane.echec.setText("Augmentation: "+new DecimalFormat("##.##").format((Double.parseDouble(note.get(0).toString())-(Double.parseDouble(note.get(1).toString())/2)))+" points");
 		}else {
-			
-			int j = Integer.parseInt(App.number.getText());
-			LPane.points.setText(new DecimalFormat("##.##").format(sum)+"/"+new DecimalFormat("##.##").format(sum1));
-			((JLabel) ((Container) ((Container) App.panel_5.getComponent(j-1)).getComponent(1)).getComponent(1)).setText("Points: "+new DecimalFormat("##.##").format(sum)+"/"+new DecimalFormat("##.##").format(sum1));
-			if(LPane.panel_2.getComponentCount()<=0) {
-				LPane.points.setText("Points: 0/10");
-				((JLabel) ((Container) ((Container) App.panel_5.getComponent(j-1)).getComponent(1)).getComponent(1)).setText("Points:");
-				
-
-			}
-			LPane.points.setForeground(Color.white);
-			LPane.mention.setForeground(Color.white);
-			if(String.valueOf(LPane.points.getText()).contains(",")) {
-				String s = LPane.points.getText().replace(",", ".");
-				LPane.points.setText(s);
-			}
-			
-
-			LPane.panel_2.revalidate();
-			LPane.panel_2.repaint();
-			
+			LPane.echec.setText("Echec: "+new DecimalFormat("##.##").format((Double.parseDouble(note.get(1).toString())/2)-Double.parseDouble(note.get(0).toString()))+" points");
+		}
+		
+		LPane.points.setForeground(new Color(255, 33, 94));
+		LPane.mention.setForeground(new Color(255, 33, 94));
+		LPane.mention();
+		
+		LPane.average.setVisible(true);
+		LPane.comboBox.setVisible(true);
+		//selectedTests.clear();
+		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_id, classroom_id, Login.selectedAcademicYearID));
+		
 			LPane.mention();
 			LPane.average();
-
-			
-			String str = LPane.points.getText().replaceAll("[^0.00-9.00]+", " ");
-			List note = Arrays.asList(str.trim().split(" "));
-			Double i =   Double.parseDouble((String) note.get(0))/Double.parseDouble((String) note.get(1))*100;
-			
-			
-			if(App.panel_5.getComponentCount()>0) {
-			int j1 = Integer.parseInt(App.number.getText());
-			((JLabel) ((Container) ((Container) App.panel_5.getComponent(j1-1)).getComponent(1)).getComponent(2)).setText(LPane.average.getText()+LPane.comboBox.getSelectedItem());
-			((JLabel) ((Container) ((Container) App.panel_5.getComponent(j1-1)).getComponent(1)).getComponent(0)).setText("Pourcentage: "+new DecimalFormat("##.##").format(i)+"%");
-			((JLabel) ((Container) ((Container) App.panel_5.getComponent(j1-1)).getComponent(1)).getComponent(3)).setText(LPane.echec.getText().replace("Augmentation", "Augm. "));
-
 		}
-		}
-
-	}
 	
 	
 	public static void saveExistingExam() {
@@ -442,106 +397,138 @@ public class Exam extends JPanel {
 	}
 	
 	
-	public static void loadExams() {
-		
-		if(App.panel_5.getComponentCount()>0) {
-		int i = Integer.parseInt(App.number.getText().replace(" ", ""));
-		
-		LPane.panel_2.removeAll();
-		LPane.no.setText("0");
-		
-		String name = ((JLabel) (((Container) ((Container) App.panel_5.getComponent(i-1)).getComponent(0)).getComponent(0))).getText();
+	
 
-
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/"+App.name.getText()+"/3eme Trimestre/"+name.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "")+".txt");
-		aws.downloadContent(file.getPath());
+	public static String getSerieMaxima(String serie_id) {
+		 
+			String maxima = null;
+			
 			try {
-				
-				FileReader fr = new FileReader(file);
-				
-				BufferedReader br = new BufferedReader(fr);
-				Object[] lines = br.lines().toArray();
-				
-				if(lines[0].toString().contains("//") && !lines[0].toString().equals("0")) {
-					List note = Arrays.asList(lines[0].toString().split("//"));
-					
-					for(int j = 0;j<note.toArray().length;j++) {
-						List note2 = Arrays.asList(note.get(j).toString().split("/"));
-						
-						create((String) note2.get(1),(String) note2.get(0));
+				Statement stmt= mysql.con.createStatement();
 
-						LPane.panel_2.revalidate();
-						LPane.panel_2.repaint();
-					}
-					
-				}else if(!lines[0].toString().contains("//") && !lines[0].toString().equals("0")) {
-					List note2 = Arrays.asList(lines[0].toString().split("/"));
-					create((String) note2.get(1),(String) note2.get(0));
-
-					LPane.panel_2.revalidate();
-					LPane.panel_2.repaint();
-					
-				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ResultSet rs=stmt.executeQuery("SELECT * from series "
+						+ "WHERE serie_id = '"+serie_id+"' LIMIT 1");
+			
+			while(rs.next())
+			{
+				maxima = rs.getString("maxima");
 			}
+			
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return maxima;
 		}
-		//ExamBox.loadExams();
+	
+public static String getExamDate(String exam_id) {
+	 
+		String date = null;
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT DAY(date), MONTH(date), YEAR(date) from exam_information "
+					+ "WHERE is_active = 1 AND exam_id = '"+exam_id+"' LIMIT 1");
+		
+		while(rs.next())
+		{
+			date = rs.getString("DAY(date)")+"/"+rs.getString("MONTH(date)")+"/"+rs.getString("YEAR(date)");
+		}
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return date;
 	}
 	
-	
+public static String getSerieName(String serie_id) {
+	 
+		String name = null;
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
 
-	public static void create(String s,String g) {
+			ResultSet rs=stmt.executeQuery("SELECT * from series "
+					+ "WHERE serie_id = '"+serie_id+"' LIMIT 1");
 		
-		Exam t = new Exam();
-		
-		t.progress.setString(g+"/"+ s);
-		
-		//t.getComponent(4).setVisible(false);
-		int i = Integer.parseInt(LPane.no.getText().replaceAll("[^0-9]", ""));
-		LPane.panel_2.add(t, i);
-		
-		number.setText(String.valueOf(LPane.panel_2.getComponentCount()));
-		
-		if(t.progress.getString().equals("0/0")) {
-			t.setBackground(LPane.panel_3.getBackground());
-			t.setBorder(new LineBorder(Color.white, 2));
-			for(int j = 0;j<3;j++) {
-				t.getComponent(j).setVisible(false);
-			}
-			//t.getComponent(4).setVisible(true);
-			t.number.setVisible(true);
-		}
-		else {
-		t.progress.setValue((int) (100*Double.parseDouble(g)/Double.parseDouble(s)));
-		if(100*Double.parseDouble(g)/Double.parseDouble(s)<50) {
-			t.progress.setForeground(new Color(255, 33, 94));
-			color();
-		}else {
-			t.progress.setForeground(new Color(0, 168, 96));
-			color();
-		}
+		while(rs.next())
+		{
+			name = rs.getString("serie_name");
 		}
 		
-		LPane.no.setText(((JLabel) t.getComponent(1)).getText());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return name;
+	}
 
-		//LPane.percent();
-	
-		//LPane.ranking();
-		//LPane.progression();
+public static String getExamCourse(String exam_id) {
+	 
+		String course = null;
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
 
-		LPane.scrollPane2.revalidate();
-		LPane.scrollPane2.repaint();
-		LPane.panel_2.revalidate();
-		LPane.panel_2.repaint();
+			ResultSet rs=stmt.executeQuery("SELECT * from exam_information AS ei "
+					+ "JOIN course_examss AS ce "
+					+ "WHERE ei.test_id = ce.test_id AND ei.is_active = 1 AND ei.exam_id = '"+exam_id+"' LIMIT 1");
 		
-		//Exam.deselect();
+		while(rs.next())
+		{
+			course = rs.getString("ce.course_id");
+		}
 		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return course;
+	}
+
+public static String getExamClassroom(String exam_id) {
+	 
+		String classroom = null;
 		
-		 SwingUtilities.invokeLater(() -> {
-	            JScrollBar bar = LPane.scrollPane2.getVerticalScrollBar();
-	            bar.setValue(bar.getMaximum());
-	    });
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT * from exam_information "
+					+ "WHERE is_active = 1 AND exam_id = '"+exam_id+"' LIMIT 1");
+		
+		while(rs.next())
+		{
+			classroom = rs.getString("classroom_id");
+		}
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return classroom;
+	}
+
+public static String getExamTerm(String exam_id) {
+	 
+		String term = null;
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT * from exam_information "
+					+ "WHERE is_active = 1 AND exam_id = '"+exam_id+"' LIMIT 1");
+		
+		while(rs.next())
+		{
+			term = rs.getString("term_id");
+		}
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return term;
 	}
 }

@@ -182,7 +182,7 @@ public class App {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				deselect();
+				deselect(classroom_id, ay_id);
 			}
 		});
 		panel.setBackground(new Color(40, 40, 40));
@@ -368,7 +368,7 @@ public class App {
 						Cours.setSelected(App.panel_5.getComponent(j));
 					}}
 			}else{
-				General.totalScore();
+				General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
 			}}
 		});
 		button.setPreferredSize(new Dimension(30, 30));
@@ -418,7 +418,7 @@ public class App {
 					if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 						Cours.setSelected(App.panel_5.getComponent(j));
 					}}}else{
-						General.totalScore();
+						General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}
 				
 			}
@@ -562,7 +562,7 @@ public class App {
 				}else{
 					n = 0;
 				}
-				General.loadName(n);
+				General.loadName(students.get(n), classroom_id, ay_id);
 				
 				loadCourses(ay_id, classroom_id, students.get(n));
 
@@ -583,7 +583,7 @@ public class App {
 					if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 						Cours.setSelected(App.panel_5.getComponent(j));
 					}}}else{
-						General.totalScore();
+						General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}
 				App.panel_5.revalidate();
 				App.panel_5.repaint();
@@ -616,7 +616,7 @@ public class App {
 				}else{
 				n = students.toArray().length-1;
 				}
-				General.loadName(n);
+				General.loadName(students.get(n), classroom_id, ay_id);
 
 				loadCourses(ay_id, classroom_id, students.get(n));
 
@@ -635,7 +635,7 @@ public class App {
 						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 							Cours.setSelected(App.panel_5.getComponent(j));
 						}}}else{
-							General.totalScore();
+							General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
 						}
 				
 				
@@ -649,7 +649,7 @@ public class App {
 		
 		
 		
-		General g = new General();
+		General g = new General(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
 		JPanel lp = new JPanel();
 		panel_1.add(lp, BorderLayout.CENTER);
 		
@@ -687,7 +687,7 @@ public class App {
 		panel_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				deselect();
+				deselect(classroom_id, ay_id);
 			}
 		});
 		scrollPane.setViewportView(panel_5);
@@ -695,13 +695,13 @@ public class App {
 		
 		panel_5.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
 		
-		deselect();
+		deselect(classroom_id, ay_id);
 
 		
 		loadCourses(ay_id, classroom_id, students.get(n));
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deselect();
+				deselect(classroom_id, ay_id);
 				createBox();
 				NewCourse.create.setVisible(true);
 				NewCourse.actualiser.setVisible(false);
@@ -721,14 +721,14 @@ public class App {
 			public void actionPerformed(ActionEvent e) {
 				count--;
 				String i = number.getText().replaceAll("[^0-9]", "");
-				App.delete();
+				//App.delete();
 				panel_5.revalidate();
 				 panel_5.repaint();
 				panel_5.remove(Integer.valueOf(i)-1);
 				number.setText(String.valueOf(count));
 				  panel_5.revalidate();
 				     panel_5.repaint();
-						deselect();
+						deselect(classroom_id, ay_id);
 
 			}
 		});
@@ -758,7 +758,7 @@ public class App {
 		button.setBackground(new Color(80, 80, 80));
 		button.setName(String.valueOf(i));
 		JLabel num = new JLabel();
-		num.setText((String) note.get(1));
+		num.setText(getStudentNumber(lines[i].toString(), classroom_id, ay_id));
 		num.setBounds(button.getBounds());
 		button.add(num);
 		
@@ -790,7 +790,7 @@ public class App {
 				
 
 				n= Integer.parseInt(button.getName());
-				General.loadName(n);
+				General.loadName(students.get(n), classroom_id, ay_id);
 
 				loadCourses(ay_id, classroom_id, students.get(n));
 				loadnumbers(classroom_id, ay_id);
@@ -808,7 +808,7 @@ public class App {
 						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 							Cours.setSelected(App.panel_5.getComponent(j));
 						}}}else{
-							General.totalScore();
+							General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
 						}
 
 				num.setForeground(Color.white);
@@ -837,7 +837,7 @@ public class App {
 		nc.setVisible(true);
         
 	}
-	public static void deselect() {
+	public static void deselect(String classroom_id, String ay_id) {
 		
 		Cours.isSelected = false;
 		
@@ -851,7 +851,7 @@ public class App {
 		App.delete.setBackground(App.panel.getBackground());
 		App.edit.setBackground(App.panel.getBackground());
 		
-		General g = new General();
+		General g = new General(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
 		panel_1.remove(1);
 		panel_1.add(g);
 		Cours.selectedCourses.clear();
@@ -883,17 +883,17 @@ public class App {
 
 }
 	
-	public static String getStudentName(String student_id) {
-		 String name = null;
+	public static String getStudentNumber(String student_id, String classroom_id, String ay_id) {
+		 String number = null;
 		 
 		 try {
 				Statement stmt= mysql.con.createStatement();
 
-				ResultSet rs=stmt.executeQuery("SELECT * FROM students "
-						+ "WHERE student_id = '"+student_id+"'");
+				ResultSet rs=stmt.executeQuery("SELECT * FROM students_in_classrooms AS sic "
+						+ "WHERE student_id = '"+student_id+"' AND classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' AND is_active = 1");
 				while(rs.next())
 				{
-			name = rs.getString("first_name")+ rs.getString("last_name");
+					number = rs.getString("number");
 		
 		}} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -901,7 +901,7 @@ public class App {
 			
 			}
 		
-	return name;
+	return number;
 	}
 	
 	public static void loadCourses(String ay_id, String classroom_id, String student_id) {
@@ -918,7 +918,7 @@ public class App {
 				
 				App.panel_5.revalidate();
 				App.panel_5.repaint();
-				Cours.loaddata(c, lines[i].toString(), student_id);
+				Cours.loaddata(c, lines[i].toString(), classroom_id, student_id, ay_id);
 				}
 		}
 }

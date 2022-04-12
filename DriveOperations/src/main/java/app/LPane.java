@@ -2,6 +2,7 @@ package app;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollBar;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -19,6 +20,7 @@ import java.awt.Container;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -286,6 +288,15 @@ public class LPane extends JPanel {
 		LPane.panel_3.repaint();
 	}
 	
+	public static void loadAllExams(String course_id, String student_id, String classroom_id) {
+		LPane.panel_2.removeAll();
+		for(int i = 0; i< Home.terms.toArray().length; i++) {
+			loadExams(course_id, student_id, classroom_id, Home.terms.get(i));
+		}
+		LPane.panel_2.revalidate();
+		LPane.panel_2.repaint();
+	}
+	
 	public static void loadTests(String course_id, String student_id, String classroom_id, String term_id) {
 		
 		JLabel lblNdashimyeMaxBrillant = new JLabel(term_id);
@@ -390,6 +401,92 @@ public class LPane extends JPanel {
 				return note;
 	}
 	
+	
+	
+	
+public static void loadExams(String course_id, String student_id, String classroom_id, String term_id) {
+		
+		if(App.panel_5.getComponentCount()>0) {
+		
+		LPane.panel_2.removeAll();
+
+
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT * from exam_information AS ei "
+					+ "JOIN course_exams AS ce "
+					+ "JOIN series AS s "
+					+ "WHERE ei.exam_id = ce.exam_id AND ei.is_active = 1 AND ei.classroom_id = '"+classroom_id+"' AND ei.term_id = '"+term_id+"' AND ce.course_id = '"+course_id+"' "
+							+ "AND ei.exam_id = s.exam_id");
+			
+		
+		while(rs.next())
+		{
+
+			String n = loadStudentSerieNote(rs.getString("s.serie_id"), student_id);
+		List note = Arrays.asList(n.split("/"));
+		String s = (String) note.get(1);
+		String g = (String) note.get(0);
+		
+						Exam t = new Exam(course_id, student_id, classroom_id, term_id);
+						t.setName(rs.getString("s.serie_id"));
+						
+						t.progress.setString(g+"/"+ s);
+						
+						//t.getComponent(4).setVisible(false);
+						int i = Integer.parseInt(LPane.no.getText().replaceAll("[^0-9]", ""));
+						LPane.panel_2.add(t, i);
+						
+						if(t.progress.getString().equals("0/0")) {
+							t.setBackground(LPane.panel_3.getBackground());
+							t.setBorder(new LineBorder(Color.white, 2));
+							for(int j = 0;j<3;j++) {
+								t.getComponent(j).setVisible(false);
+							}
+							//t.getComponent(4).setVisible(true);
+							t.number.setVisible(true);
+						}
+						else {
+						t.progress.setValue((int) (100*Double.parseDouble(g)/Double.parseDouble(s)));
+						if(100*Double.parseDouble(g)/Double.parseDouble(s)<50) {
+							t.progress.setForeground(new Color(255, 33, 94));
+							Exam.color();
+						}else {
+							t.progress.setForeground(new Color(0, 168, 96));
+							Exam.color();
+						}
+						}
+						
+
+						//LPane.percent();
+					
+						//LPane.ranking();
+						//LPane.progression();
+
+						LPane.scrollPane2.revalidate();
+						LPane.scrollPane2.repaint();
+						LPane.panel_2.revalidate();
+						LPane.panel_2.repaint();
+						
+						//Exam.deselect();
+						
+						
+						 SwingUtilities.invokeLater(() -> {
+					            JScrollBar bar = LPane.scrollPane2.getVerticalScrollBar();
+					            bar.setValue(bar.getMaximum());
+					    });
+
+						LPane.panel_2.revalidate();
+						LPane.panel_2.repaint();
+					}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//ExamBox.loadExams();
+	}
 	
 public static String loadStudentSerieNote(String serie_id, String student_id) {
 		

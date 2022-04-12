@@ -35,6 +35,7 @@ import javax.swing.SwingConstants;
 
 import Application.Home;
 import Class.CustomVerticalScrollBarUI;
+import Class.TestBox;
 import CloudOperations.aws;
 import Stats.CourseStats;
 import Stats.StudentStats;
@@ -72,7 +73,7 @@ public class General extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public General() {
+	public General(String student_id, String classroom_id, String ay_id, String term_id) {
 		setBackground(new Color(235, 255, 244));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth()*33/100,(int) (screensize.getHeight()*82/100)));
@@ -254,8 +255,8 @@ public class General extends JPanel {
 		panelPoints.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
 		panelProgress.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
 		
-		loadName(App.n);
-		totalScore();
+		loadName(student_id, classroom_id, ay_id);
+		totalScore(student_id, classroom_id, ay_id, term_id);
 		
 
 		for(int i = 0;i<panel_2.getComponentCount(); i++) {
@@ -386,30 +387,29 @@ public class General extends JPanel {
 	
 	
 	
-	public static void loadName(int i) {
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-		aws.downloadContent(file.getPath());
-		FileReader fr;
-		try {
-			fr = new FileReader(file);
-		
-		
-		BufferedReader br = new BufferedReader(fr);
-		Object[] lines = Home.loadActiveStudents(file.getPath());
-		List note1;
-		
-		if(App.n<lines.length) {
-		note1 = Arrays.asList(lines[i].toString().trim().split("//"));
-		}else{
-		note1 = Arrays.asList(lines[0].toString().trim().split("//"));
-		}
-		App.name.setText((String) note1.get(0));
-		App.num.setText((String) note1.get(1));
-		
+	public static void loadName(String student_id, String classroom_id, String ay_id) {
+		/*
+		 * File file = new
+		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+		 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+
+		 * "/Students.txt"); aws.downloadContent(file.getPath()); FileReader fr; try {
+		 * fr = new FileReader(file);
+		 * 
+		 * 
+		 * BufferedReader br = new BufferedReader(fr); Object[] lines =
+		 * Home.loadActiveStudents(file.getPath()); List note1;
+		 * 
+		 * if(App.n<lines.length) { note1 =
+		 * Arrays.asList(lines[i].toString().trim().split("//")); }else{ note1 =
+		 * Arrays.asList(lines[0].toString().trim().split("//")); }
+		 */
+		App.name.setText(Home.getStudentName(student_id));
+		App.num.setText(App.getStudentNumber(student_id, classroom_id, ay_id));
+		/*
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		
 		if(App.numbers.getComponentCount()>0) {
 			for(int j = 0; j<App.numbers.getComponentCount(); j++) {
@@ -423,34 +423,30 @@ public class General extends JPanel {
 	
 
 	
-	public static void totalScore() {
+	public static void totalScore(String student_id, String classroom_id, String ay_id, String term_id) {
 	panelPoints.removeAll();
 	panelPercent.removeAll();
 	panelTests.removeAll();
 	panelEchec.removeAll();
 	panelProgress.removeAll();;
 
-	File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Courses.txt");
-
-	Object[] lines = Home.loadActiveCourses(file.getPath());
+	Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
 		for(int i = 0; i<lines.length;i++) {
-			
-			List comp = Arrays.asList(lines[i].toString().split("//"));
 			List<String> l = new ArrayList();
 			l.add("0");
 			l.add("0/0");
 			List<String> l1 = new ArrayList();
 			l1.add("0");
 			l1.add("0/0");
-			//if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-				l = StudentStats.getStudentTestsStats(App.getStudentName(App.n), Home.className
-						,comp.get(0).toString(), Home.termsText.get(Home.selectedTermIndex),"All", "All");
-				//}
+			if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
+				l = StudentStats.getStudentTestsStats(student_id, classroom_id
+						,lines[i].toString(), term_id,"All", "All");
+				}
 
-			//if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-				l1 = StudentStats.getStudentExamStats(App.getStudentName(App.n), Home.className
-						,comp.get(0).toString(), Home.termsText.get(Home.selectedTermIndex),"All", "All");
-				//}
+			if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
+				l1 = StudentStats.getStudentExamStats(student_id, classroom_id
+						,lines[i].toString(), term_id,"All", "All");
+				}
 	List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 	List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
 
@@ -465,14 +461,14 @@ public class General extends JPanel {
 	}
 	if(points1==0 && maxima==0 ) {}
 	else {
-			JLabel label1 = new JLabel("- "+comp.get(0).toString()
+			JLabel label1 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 					.toUpperCase()+": "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima)+"	   ");
 					label1.setFont(new Font("Arial", Font.BOLD, 17));
 					label1.setForeground(Color.white);
 					panelPoints.add(label1);
 					
 					
-					JLabel label11 = new JLabel("- "+comp.get(0).toString()
+					JLabel label11 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 							.toUpperCase()+": "+new DecimalFormat("##.##").format(percentage)+"%	   ");
 							label11.setFont(new Font("Arial", Font.BOLD, 17));
 							label11.setForeground(Color.white);
@@ -480,13 +476,13 @@ public class General extends JPanel {
 							
 							
 							if(l.toArray().length>2) {
-					JLabel label111 = new JLabel("- "+comp.get(0).toString()
+					JLabel label111 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 							.toUpperCase()+": "+l.get(2)+"	   ");
 							label111.setFont(new Font("Arial", Font.BOLD, 17));
 							label111.setForeground(Color.white);
 							panelTests.add(label111);
 
-							JLabel label = new JLabel("- "+comp.get(0).toString()
+							JLabel label = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 									.toUpperCase()+": "+l.get(5)+"%	   ");
 									label.setFont(new Font("Arial", Font.BOLD, 17));
 									label.setForeground(Color.white);
@@ -495,7 +491,7 @@ public class General extends JPanel {
 							
 							
 							if(percentage<50) {
-						JLabel label1111 = new JLabel("- "+comp.get(0).toString()
+						JLabel label1111 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 								.toUpperCase()+": "+new DecimalFormat("##.##").format(maxima/2-points1)+"pts    ");
 								label1111.setFont(new Font("Arial", Font.BOLD, 17));
 								label1111.setForeground(Color.white);
@@ -510,15 +506,15 @@ public class General extends JPanel {
 		List<String> l1 = new ArrayList();
 		l1.add("0");
 		l1.add("0/0");
-		//if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-			l = StudentStats.getStudentTestsStats(App.getStudentName(App.n), Home.className
-					,"All", Home.termsText.get(Home.selectedTermIndex),"All", "All");
-			//}
+		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
+			l = StudentStats.getStudentTestsStats(student_id, classroom_id
+					,"All", term_id,"All", "All");
+			}
 
-//		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			l1 = StudentStats.getStudentExamStats(App.getStudentName(App.n), Home.className
-					,"All", Home.termsText.get(Home.selectedTermIndex),"All", "All");
-	//		}
+		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
+			l1 = StudentStats.getStudentExamStats(student_id, classroom_id
+					,"All", term_id,"All", "All");
+			}
 List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
 
@@ -534,8 +530,8 @@ if(points1==0 && maxima==0 ) {
 		lblPoints.setText("Points: "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
 		
 		General.percentage.setText("Pourcentage: "+new DecimalFormat("##.##").format(percentage)+"%");
-		lblEchecs.setText(String.valueOf("Echecs: "+StudentStats.getNumberOfechecs(App.getStudentName(App.n), Home.className
-					, Home.termsText.get(Home.selectedTermIndex),"All", "All")));
+		lblEchecs.setText(String.valueOf("Echecs: "+StudentStats.getNumberOfechecs(student_id, "All",
+				  classroom_id, ay_id, term_id, "All", "All")));
 		if(panelEchec.getComponentCount() == 0) {
 			JLabel label = new JLabel("Pas d'echecs");
 					label.setFont(new Font("Arial", Font.BOLD, 20));

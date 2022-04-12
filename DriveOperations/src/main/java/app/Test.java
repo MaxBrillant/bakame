@@ -43,6 +43,7 @@ import Class.TestBox;
 import CloudOperations.aws;
 import CloudOperations.mysql;
 import Stats.StudentStats;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -565,7 +566,7 @@ public static String getTestTerm(String test_id) {
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
 		selectedTests.clear();
-		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_id, Home.className));
+		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_id, classroom_id, Login.selectedAcademicYearID));
 		
 			LPane.mention();
 			LPane.average();
