@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
@@ -52,6 +53,8 @@ import java.awt.Color;
 import java.awt.Container;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+
+import com.formdev.flatlaf.FlatLightLaf;
 
 import Application.ResizeImages;
 import Class.NewCourse;
@@ -98,6 +101,11 @@ public class Login extends JFrame {
 	 */
 	public Login() {
 		
+		try {
+		    UIManager.setLookAndFeel( new FlatLightLaf() );
+		} catch( Exception ex ) {
+		    System.err.println( "Failed to initialize LaF" );
+		}
 
 		mysql.connectToDB();
 		

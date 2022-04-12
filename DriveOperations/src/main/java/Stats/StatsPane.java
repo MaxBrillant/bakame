@@ -358,10 +358,10 @@ public class StatsPane extends JFrame {
 					selectedTerm++;
 				}
 
-				if(selectedTerm == terms.toArray().length) {
-					Term.setText(Home.getTermName(terms.get(selectedTerm)));
-				}else {
+				if(selectedTerm == terms.toArray().length-1) {
 					Term.setText(terms.get(selectedTerm));
+				}else {
+					Term.setText(Home.getTermName(terms.get(selectedTerm)));
 					}
 
 				if(selectedStudent == 0) {
@@ -450,10 +450,10 @@ public class StatsPane extends JFrame {
 					selectedTerm--;
 				}
 
-				if(selectedTerm == terms.toArray().length) {
-					Term.setText(Home.getTermName(terms.get(selectedTerm)));
-				}else {
+				if(selectedTerm == terms.toArray().length-1) {
 					Term.setText(terms.get(selectedTerm));
+				}else {
+					Term.setText(Home.getTermName(terms.get(selectedTerm)));
 					}
 
 				if(selectedStudent == 0) {

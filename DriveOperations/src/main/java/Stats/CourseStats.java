@@ -441,6 +441,7 @@ public class CourseStats extends JPanel {
 	
 	public static void loadCourseData(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
 
+		String ay_id = Login.selectedAcademicYearID;
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
             	
@@ -461,17 +462,17 @@ public class CourseStats extends JPanel {
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 		List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
 		
-		String courseMaxima;
-		if(!StatsPane.course.getText().equals("All")) {
-		courseMaxima = ExamInfo.loadCourseMaxima(TestBox.getShortName(course_id), classroom_id, Login.selectedAcademicYearID);
-		}else {
-			courseMaxima = new DecimalFormat("##.##").format(Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", ".")));
-		}
+		String courseMaxima = "0";
 		
-		int students;
-		if(StatsPane.course.getText().equals("All")) {
-			students = Home.loadActiveStudents(classroom_id, Login.selectedAcademicYearID).length;
-			courseMaxima = new DecimalFormat("##.##").format(Double.parseDouble(courseMaxima)/students);
+		Object[] list;
+		if(StatsPane.selectedCourse == 0) {
+			list = Home.loadActiveCourses(ay_id, classroom_id);
+			
+		for(int i = 0; i< list.length; i++) {
+			Double max = Double.parseDouble(courseMaxima.replaceAll(",", "."));
+		courseMaxima = new DecimalFormat("##.##").format(max + Double.parseDouble(ExamInfo.loadCourseMaxima(list[i].toString(), classroom_id, Login.selectedAcademicYearID).replaceAll(",", ".")));
+		}}else {
+			courseMaxima = new DecimalFormat("##.##").format(Double.parseDouble(ExamInfo.loadCourseMaxima(course_id, classroom_id, Login.selectedAcademicYearID).replaceAll(",", ".")));
 		}
 		
 		if(Double.parseDouble(note.get(0).replaceAll(",", ".")) != 0 && Double.parseDouble(note.get(1).replaceAll(",", ".")) !=0) {
@@ -909,21 +910,20 @@ public static void loadAllTests(List studentTestStats) {
 	for(int i = 0; i< t1.toArray().length;i++) {
 		List tests = Arrays.asList(t1.get(i).toString().split("//"));
 		
-		if(!t1.isEmpty()) {
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(40, 40, 40));
 		panel_6.setPreferredSize(new Dimension(400, 25));
 		panel_11.add(panel_6);
 		panel_6.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel(App.getStudentName(tests.get(0).toString()));
+		JLabel lblNewLabel_1 = new JLabel(Home.getStudentName(tests.get(0).toString()));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEADING);
 		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(10, 0, 300, 25);
 		panel_6.add(lblNewLabel_1);
 		
-		JLabel p1 = new JLabel(Test.getTestCourse(tests.get(1).toString())+"("+Test.getTestTerm(tests.get(1).toString()).substring(0, 10)+")");
+		JLabel p1 = new JLabel(TestBox.getShortName(Test.getTestCourse(tests.get(1).toString()))+"("+Home.getTermName(Test.getTestTerm(tests.get(1).toString())).substring(0, 10)+")");
 		p1.setHorizontalAlignment(SwingConstants.RIGHT);
 		p1.setForeground(Color.WHITE);
 		p1.setFont(new Font("Roboto", Font.PLAIN, 15));
@@ -939,7 +939,7 @@ public static void loadAllTests(List studentTestStats) {
 		
 
 		missedTests.setText(String.valueOf(panel_11.getComponentCount()));
-		}}
+		}
 	
 
 	List<String> usedCourses = new ArrayList();
@@ -963,7 +963,7 @@ public static void loadAllTests(List studentTestStats) {
 		int numberOfTests = 0;
 		for(int j = 0; j< t.toArray().length;j++) {
 			String c_id = Test.getTestCourse(t.get(j).toString());
-			if(c_id == course_id) {
+			if(c_id.equals(course_id)) {
 				numberOfTests++;
 			}
 		}
@@ -1450,12 +1450,17 @@ e.printStackTrace();
 				panel_6.setPreferredSize(new Dimension(400, 25));
 				panel_6.setLayout(null);
 				
-				JLabel lblNewLabel_1 = new JLabel(lines[i].toString());
+				JLabel lblNewLabel_1 = new JLabel(Home.getStudentName(lines[i].toString()));
 				lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEADING);
 				lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 				lblNewLabel_1.setForeground(new Color(255, 255, 255));
 				lblNewLabel_1.setBounds(10, 0, 270, 25);
 				panel_6.add(lblNewLabel_1);
+				lblNewLabel_1.setName(lines[i].toString());
+				
+				if(lines[i].toString().equals(StatsPane.students.get(StatsPane.selectedStudent))) {
+					panel_6.setBackground(new Color(20, 148, 198));
+				}
 
 
 				String echec = new DecimalFormat("##.##").format(maxima/2-points1).replaceAll(",", ".");
@@ -1473,11 +1478,6 @@ e.printStackTrace();
 				((JLabel) panelEchecs.getParent().getComponent(0)).setText(String.valueOf(panelEchecs.getComponentCount()));
 				successRate.setText(String.valueOf(100-panelEchecs.getComponentCount()*100/StudentStats.getNumberOfStudents(classroom_id, ay_id))+"%");
 			
-			for(int i = 0; i< panelEchecs.getComponentCount(); i++) {
-				if(((JLabel) ((Container) panelEchecs.getComponent(i)).getComponent(1)).getText().equals(course_id)) {
-				panelEchecs.getComponent(i).setBackground(new Color(20, 148, 198));
-			}
-			}
 			}
 	    
 	    
@@ -1488,17 +1488,12 @@ e.printStackTrace();
 	    	
 	    	int number = 0;
 
-			List<String> t1 = new ArrayList();
-
-			List<Double> percent = new ArrayList<Double>();
-			List<Double> percent1 = new ArrayList<Double>();
+			List<String> percent = new ArrayList<String>();
 			
 			Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
 			number = lines1.length;
 			
 			for(int i = 0; i<lines1.length;i++) {
-				
-				t1.add(lines1[i].toString());
 			
 			List l = StudentStats.getStudentTestsStats(lines1[i].toString(), classroom_id
 					, course_id, term_id, "All", "All");
@@ -1516,16 +1511,15 @@ e.printStackTrace();
 			}else {
 				percentage = points1*100/maxima;
 			}
-			percent.add((percentage));
-			percent1.add(Double.parseDouble(percent.get(i).toString())+(Double.parseDouble(String.valueOf(i))*1/100));
+			percent.add((percentage+"//"+lines1[i].toString()));
 			
 			}
 
 			Collections.sort(percent, Collections.reverseOrder());
-			Collections.sort(percent1, Collections.reverseOrder());
 		
 			
 			for(int i = 0; i<percent.toArray().length;i++) {
+				List l = Arrays.asList(percent.get(i).split("//"));
 				JPanel panel_6 = new JPanel();
 				panel_6.setBackground(new Color(40, 40, 40));
 				panel_6.setPreferredSize(new Dimension(400, 25));
@@ -1533,89 +1527,78 @@ e.printStackTrace();
 				panel_6.setLayout(null);
 				
 
-				JLabel lblNewLabel_1 = new JLabel();
+				JLabel lblNewLabel_1 = new JLabel(String.valueOf(i+1));
 				lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 				lblNewLabel_1.setForeground(new Color(255, 255, 255));
 				lblNewLabel_1.setBounds(0, 0, 40, 25);
 				panel_6.add(lblNewLabel_1);
 				
-				JLabel lblNewLabel_11 = new JLabel();
+				JLabel lblNewLabel_11 = new JLabel(Home.getStudentName(l.get(1).toString()));
 				lblNewLabel_11.setHorizontalAlignment(SwingConstants.LEADING);
 				lblNewLabel_11.setFont(new Font("Roboto", Font.PLAIN, 17));
 				lblNewLabel_11.setForeground(new Color(255, 255, 255));
 				lblNewLabel_11.setBounds(50, 0, 270, 25);
 				panel_6.add(lblNewLabel_11);
 				
-				p1 = new JLabel();
+				p1 = new JLabel(new DecimalFormat("##.##").format(Double.parseDouble(((String) l.get(0)).replaceAll(",", ".").toString()))+"%");
 				p1.setHorizontalAlignment(SwingConstants.CENTER);
 				p1.setForeground(Color.WHITE);
 				p1.setFont(new Font("Roboto", Font.PLAIN, 17));
 				p1.setBounds(290, 0, 143, 25);
 				panel_6.add(p1);
-				
+
+				if(i == 0) {
+				((JLabel) panel1.getParent().getComponent(0)).setText(Home.getStudentName(l.get(1).toString()));
+				}
 				panel1.add(panel_6);
 				panel1.revalidate();
 				panel1.repaint();
+			}
 				
-				
-				
+			for(int i = percent.toArray().length-1; i>-1; i--) {
+				List l = Arrays.asList(percent.get(i).split("//"));
 				JPanel panel_61 = new JPanel();
 				panel_61.setBackground(new Color(40, 40, 40));
 				panel_61.setPreferredSize(new Dimension(400, 25));
 				panel_61.setLayout(null);
 				
 
-				JLabel lblNewLabel_111 = new JLabel();
+				JLabel lblNewLabel_111 = new JLabel(String.valueOf(i+1));
 				lblNewLabel_111.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNewLabel_111.setFont(new Font("Roboto", Font.PLAIN, 17));
 				lblNewLabel_111.setForeground(new Color(255, 255, 255));
 				lblNewLabel_111.setBounds(0, 0, 40, 25);
 				panel_61.add(lblNewLabel_111);
 				
-				JLabel lblNewLabel_1111 = new JLabel();
+				JLabel lblNewLabel_1111 = new JLabel(Home.getStudentName(l.get(1).toString()));
 				lblNewLabel_1111.setHorizontalAlignment(SwingConstants.LEADING);
 				lblNewLabel_1111.setFont(new Font("Roboto", Font.PLAIN, 17));
 				lblNewLabel_1111.setForeground(new Color(255, 255, 255));
 				lblNewLabel_1111.setBounds(50, 0, 270, 25);
 				panel_61.add(lblNewLabel_1111);
 				
-				p1 = new JLabel();
+				p1 = new JLabel(new DecimalFormat("##.##").format(Double.parseDouble(((String) l.get(0)).replaceAll(",", ".").toString()))+"%");
 				p1.setHorizontalAlignment(SwingConstants.CENTER);
 				p1.setForeground(Color.WHITE);
 				p1.setFont(new Font("Roboto", Font.PLAIN, 17));
 				p1.setBounds(290, 0, 143, 25);
 				panel_61.add(p1);
 				
+
+				if(i == percent.toArray().length-1) {
+					((JLabel) panel11.getParent().getComponent(0)).setText(Home.getStudentName(l.get(1).toString()));
+					}
+				
 				panel11.add(panel_61);
 				panel11.revalidate();
 				panel11.repaint();
-
-				System.out.println(Math.round((percent1.get(i)-percent.get(i))*100));
-				System.out.println((percent));
-				System.out.println((percent1));
 			}
-				
 			
-			for(int i = 0; i<panel1.getComponentCount(); i++) {
-				((JLabel) ((Container) panel1.getComponent(i)).getComponent(2)).setText(new DecimalFormat("##.##").format(percent.get(i)).toString()+"%");
-				((JLabel) ((Container) panel1.getComponent(i)).getComponent(0)).setText(String.valueOf(i+1));
-				((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).setText(App.getStudentName(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString()));
-			}
+
 			for(int i = number-1; i>9; i--) {
 				panel1.remove(i);
 			}
-			
-			for(int i = panel11.getComponentCount()-1; i>-1; i--) {
-
-				//List tests = Arrays.asList(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString().split("//"));
-				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(2)).setText(new DecimalFormat("##.##").format(percent.get(i)).toString()+"%");
-				((JLabel) ((Container) panel11.getComponent(i)).getComponent(0)).setText(String.valueOf(i+1));
-				((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).setText(App.getStudentName(t1.get((int) Math.round((percent1.get(i)-percent.get(i))*100)).toString()));
-
-			}
-			((JLabel) panel1.getParent().getComponent(0)).setText(TestBox.getShortName(course_id));
-			((JLabel) panel11.getParent().getComponent(0)).setText(TestBox.getShortName(course_id));
 			
 			for(int i = number-1; i>9; i--) {
 				panel11.remove(i);

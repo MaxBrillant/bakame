@@ -518,7 +518,7 @@ public class Class extends JPanel {
 		Statement stmt= mysql.con.createStatement();
 
 		ResultSet rs= stmt.executeQuery("select * from classroom_parents AS cp "
-				+ "JOIN parents_of_classrooms AS poc"
+				+ "JOIN parents_of_classrooms AS poc "
 				+ "WHERE cp.classroom_id = '"+classroom_id+"' AND poc.parent_id = cp.parent_id AND poc.ay_id = '"+ay_id+"' LIMIT 1");
 		
 		int i = 0;
@@ -592,7 +592,7 @@ public class Class extends JPanel {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("select * from classroom_parents AS cp "
-					+ "JOIN parents_of_classrooms AS poc"
+					+ "JOIN parents_of_classrooms AS poc "
 					+ "WHERE cp.classroom_id = '"+classroom_id+"' AND poc.parent_id = cp.parent_id AND poc.ay_id = '"+ay_id+"' LIMIT 1");
 			while(rs.next())
 			{
