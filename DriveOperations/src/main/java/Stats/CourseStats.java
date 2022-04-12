@@ -506,7 +506,6 @@ public class CourseStats extends JPanel {
 		if(points1 == 0 && maxima == 0) {
 			points.setText("0/"+courseMaxima);
 		}else {
-
 			points.setText(new DecimalFormat("##.##").format(points1/maxima*Double.parseDouble(courseMaxima.replaceAll(",", ".")))+"/"+courseMaxima);
 		}
 		tests.setText(l.get(2).toString());

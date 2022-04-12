@@ -505,8 +505,8 @@ public class StudentStats extends JPanel {
 		
 
 		loadAllTests(l);
-		rankStudentPerformances(student_id, course_id, classroom_id, ay_id, term_id);
 		echecs(student_id, course_id, classroom_id, Login.selectedAcademicYearID, term_id);
+		rankStudentPerformances(student_id, course_id, classroom_id, ay_id, term_id);
 		
 		
 		
