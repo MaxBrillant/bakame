@@ -39,6 +39,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +56,7 @@ import javax.swing.border.MatteBorder;
 
 import Class.NewCourse;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -157,7 +161,7 @@ public class ClassesAndCourses extends JFrame {
 	lblajoutezLesClasses.setBounds(10, 0, 404, 48);
 	contentPane.add(lblajoutezLesClasses);
 	
-	lblManirakizaDiomede = new JLabel(teacherName);
+	lblManirakizaDiomede = new JLabel(Teacher.getTeacherName(teacher_id));
 	lblManirakizaDiomede.setHorizontalAlignment(SwingConstants.CENTER);
 	lblManirakizaDiomede.setForeground(Color.WHITE);
 	lblManirakizaDiomede.setFont(new Font("Roboto", Font.BOLD, 22));
@@ -203,7 +207,7 @@ public class ClassesAndCourses extends JFrame {
 	});
 	plus.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			ClassSelection cs = new ClassSelection();
+			ClassSelection cs = new ClassSelection(ay_id);
 			cs.setVisible(true);
 			for(int m = 0; m<  ClassesAndCourses.panel.getComponentCount()-1; m++) {
 				for(int i = 0; i< ((Container) ((Container) ClassesAndCourses.panel.getComponent(m)).getComponent(1)).getComponentCount()-1; i++) {
@@ -220,7 +224,7 @@ public class ClassesAndCourses extends JFrame {
 	plus.setBackground(panel.getBackground());
 
 	setLocationRelativeTo(null);
-	load(teacherName);
+	load(teacher_id, ay_id);
 
 	}
 	
@@ -276,19 +280,36 @@ public class ClassesAndCourses extends JFrame {
 			aws.upload(file1.getPath());
 	}
 	
-	public static void load(String teacher_id) {
+	public static void load(String teacher_id, String ay_id) {
 		
-File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Teachers/"+name+"/ClassesAndCourses.txt");
-aws.downloadContent(file.getPath());
+		List<String> s = new ArrayList();
+		List<String> s1 = new ArrayList();
+
 		try {
-			
-			FileReader fr = new FileReader(file);
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object[] lines = br.lines().toArray();
-			
-			for(int i = 0; i< lines.length; i++) {
-				List l = Arrays.asList(lines[i].toString().split("//"));
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms as tic "
+					+ "JOIN courses_in_classroom AS cic "
+					+ "JOIN classrooms as c "
+					+ "JOIN courses as co "
+					+ "JOIN classrooms_in_ay as cia "
+					+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+							+ " AND cic.course_id = co.course_id AND co.is_active = 1");
+			while(rs.next())
+			{
+				s.add(rs.getString("cic.classroom_id")+"//"+rs.getString("cic.course_id")+":"+rs.getString("tic.sessions_per_week"));
+			}
+
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		
+		}
+
+					Object[] lines = s.toArray();
+					
+					for(int i = 0; i< lines.length; i++) {
+						List l = Arrays.asList(lines[i].toString().split("//"));
 				
 				JPanel panel_1 = new JPanel();
 				panel_1.setBackground(new Color(80, 80, 80));
@@ -311,6 +332,7 @@ aws.downloadContent(file.getPath());
 				label.setForeground(Color.WHITE);
 				label.setFont(new Font("Roboto", Font.BOLD, 20));
 				panel_4.add(label, BorderLayout.CENTER);
+				label.setName(l.get(0).toString());
 				
 				JButton button_1 = new JButton("");
 				button_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
@@ -365,7 +387,7 @@ aws.downloadContent(file.getPath());
 
 					btnNewButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							courseSelection cs = new courseSelection(((JLabel) ((Container) btnNewButton.getParent().getParent().getComponent(0)).getComponent(0)).getText());
+							courseSelection cs = new courseSelection(((JLabel) ((Container) btnNewButton.getParent().getParent().getComponent(0)).getComponent(0)).getName(), ay_id);
 							cs.setVisible(true);
 							
 							for(int m = 0; m<  ClassesAndCourses.panel.getComponentCount()-1; m++) {
@@ -419,7 +441,7 @@ aws.downloadContent(file.getPath());
 
 									panel_3.setBorder(new LineBorder(Color.white, 1));
 									if(e.getClickCount()==2) {
-										courseSelection cs = new courseSelection(((JLabel) ((Container) panel_3.getParent().getParent().getComponent(0)).getComponent(0)).getText());
+										courseSelection cs = new courseSelection(((JLabel) ((Container) panel_3.getParent().getParent().getComponent(0)).getComponent(0)).getName(), ay_id);
 										cs.setVisible(true);
 										cs.create.setVisible(false);
 										cs.actualiser.setVisible(true);
@@ -481,11 +503,6 @@ aws.downloadContent(file.getPath());
 				ClassesAndCourses.panel.revalidate();
 				ClassesAndCourses.panel.repaint();
 			}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-	}
 		
 		
 		

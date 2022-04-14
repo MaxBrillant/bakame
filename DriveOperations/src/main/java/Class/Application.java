@@ -132,14 +132,14 @@ public class Application {
 	/**
 	 * Create the application.
 	 */
-	public Application() {
-		initialize();
+	public Application(String classroom_id, String ay_id) {
+		initialize(classroom_id, ay_id);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(String classroom_id, String ay_id) {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(80, 80, 80));
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
@@ -162,12 +162,12 @@ public class Application {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Home.getClassColors(Home.className).get(0));
+		panel_1.setBackground(Home.getClassColors(classroom_id, ay_id).get(0));
 		panel_1.setPreferredSize(new Dimension(10, frame.getHeight()*20/100*30/100));
 		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		classe = new JLabel(Home.className);
+		classe = new JLabel(Home.getClassName(classroom_id));
 		classe.setHorizontalAlignment(SwingConstants.CENTER);
 		classe.setForeground(new Color(255, 255, 255));
 		classe.setFont(new Font("Futura Hv BT", Font.BOLD, 30));
@@ -183,7 +183,7 @@ public class Application {
 		JButton label = new JButton("2020-2021");
 		label.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Home window = new Home(NewEstablishment.getSchoolID(UserPanel.selectedSchool), Login.getUserId(Login.selectedUserName));
+				Home window = new Home(Login.selectedSchoolID, Login.selectedUserID, Login.selectedAcademicYearID);
 				window.frame.setVisible(true);
 				frame.setVisible(false);
 			}
@@ -741,7 +741,7 @@ public class Application {
 		panel_2.add(comboBox);
 		
 		for(int i = 0; i< panel_1.getComponentCount(); i++) {
-			panel_1.getComponent(i).setForeground(Home.getClassColors(Home.className).get(1));
+			panel_1.getComponent(i).setForeground(Home.getClassColors(classroom_id, ay_id).get(1));
 		}
 
 
@@ -787,7 +787,7 @@ public class Application {
         
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-        		ExamBox.loadExams();
+        		ExamBox.loadAllExams(classroom_id, ay_id);
             	 return null;
             }
         }.execute();

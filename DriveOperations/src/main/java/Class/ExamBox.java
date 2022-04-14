@@ -25,6 +25,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,9 +41,12 @@ import Application.ResizeImages;
 import Class.OptionsMenu.StudentMenu;
 import Class.OptionsMenu.TestMenu;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
+import app.Exam;
+import app.LPane;
 import app.WrapLayout;
 
 import java.awt.GridLayout;
@@ -58,7 +64,6 @@ public class ExamBox extends JPanel {
 	public static JPanel Box1;
 	public static JLabel lblNdashimyeMaxBrillant;
 	public static JLabel label_5;
-	public static List<String> examList = new ArrayList();
 	public static boolean isSelected;
 	public static JPanel series;
 	public static boolean isCollapsed;
@@ -287,63 +292,129 @@ public class ExamBox extends JPanel {
 	
 	}
 	
-public static void loadExams() {
-		
+	public static void loadAllExams(String classroom_id, String ay_id) {
 		Application.panelExams.removeAll();
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Exam List/3eme Trimestre/ExamList.txt");
-		aws.downloadContent(file.getPath());
-		examList.clear();
+		for(int i = 0; i< Home.terms.toArray().length; i++) {
+			loadExams(classroom_id, Home.terms.get(i), ay_id);
+		}
+		Application.panelExams.revalidate();
+		Application.panelExams.repaint();
+		
+		if(Application.panelExams.getComponentCount()==0) {
+			System.out.println("Vide");
+			isEmpty = true;
+			((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(false);
+			
+			JPanel panel_10 = new JPanel();
+			panel_10.setBorder(new MatteBorder(1, 3, 5, 3, (Color) new Color(0, 0, 0, 120)));
+			panel_10.setBackground(new Color(0, 0, 0, 20));
+			panel_10.setPreferredSize(new Dimension(300, 400));
+			Application.panelExams.add(panel_10);
+			panel_10.setLayout(null);
+			
+			JPanel panel_11 = new JPanel();
+			panel_11.setBorder(new MatteBorder(0, 3, 5, 3, (Color) new Color(0, 0, 0, 190)));
+			panel_11.setBackground(new Color(80,80,80));
+			panel_11.setBounds(0, 233, 300, 167);
+			panel_10.add(panel_11);
+			panel_11.setLayout(null);
+			
+			JLabel lblNewLabel = new JLabel("<html>Cette classe n'a pas encore effectue d'interrogations.</html>");
+			lblNewLabel.setForeground(new Color(255, 255, 255));
+			lblNewLabel.setBounds(10, 0, 280, 106);
+			panel_11.add(lblNewLabel);
+			lblNewLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+			
+			JButton btnNewButton_1 = new JButton("Ajouter une interrogation");
+			btnNewButton_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TestInfo nt = new TestInfo();
+					nt.setVisible(true);
+				}
+			});
+			btnNewButton_1.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnNewButton_1.setBackground(Color.white);
+					btnNewButton_1.setForeground(Color.black);
+				}public void mouseExited(MouseEvent e) {
+					btnNewButton_1.setBackground(panel_11.getBackground());
+					btnNewButton_1.setForeground(Color.WHITE);
+					
+				}
+			});
+			btnNewButton_1.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
+			btnNewButton_1.setFocusPainted(false);
+			btnNewButton_1.setBackground(panel_11.getBackground());
+			btnNewButton_1.setForeground(Color.WHITE);
+			btnNewButton_1.setBounds(10, 116, 280, 40);
+			if(Home.selectedTermIndex!=Home.termsText.toArray().length) {
+			panel_11.add(btnNewButton_1);
+			}
+			btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 20));
+			
+			JLabel lblNewLabel_2 = new JLabel("");
+			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_welcome.png"));
+			lblNewLabel_2.setBackground(new Color(0, 0, 0));
+			lblNewLabel_2.setBounds(0, 0, 300, 235);
+			panel_10.add(lblNewLabel_2);
+			
+		}
+
+		Application.panelExams.revalidate();
+		Application.panelExams.repaint();
+	}
+	
+public static void loadExams(String classroom_id, String term_id, String ay_id) {
+		
 		isEmpty = false;
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(3)).getComponent(0).setVisible(true);
 				
-				try {
+		try {
+			Statement stmt= mysql.con.createStatement();
 
-					
-					FileReader fr = new FileReader(file);
-					
-					BufferedReader br = new BufferedReader(fr);
-					Object[] lines = br.lines().toArray();
-					
-					for(int i = 0;i<lines.length;i++) {
-						examList.add(lines[i].toString());
-					}
-					
-					for(int i = 0;i<examList.toArray().length; i++) {
-						List note = Arrays.asList(examList.get(i).split("//"));
-						if(Home.courseExists((String) note.get(0), Home.className)) {
+			ResultSet rs=stmt.executeQuery("SELECT * from exam_info "
+					+ "WHERE is_active = 1 AND classroom_id = '"+classroom_id+"' AND term_id = '"+term_id+"'");
+		
+		while(rs.next())
+		{
 						ExamBox eb = new ExamBox();
 						Application.panelExams.add(eb);
-						((Container) Application.panelExams.getComponent(i)).setName(String.valueOf(i+1));
-						((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(1)).setText((String) note.get(2));
-						String s = (String) note.get(0);
-						String name = TestBox.getFullName(s, Home.className);
-						((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(2)).setText(name);
-						((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(3)).setText((String) note.get(3));
-						JPanel jp = (JPanel) ((Container) Application.panelExams.getComponent(i)).getComponent(0);
-						if(Integer.parseInt(note.get(2).toString())>1) {
+						
+						eb.setName(rs.getString("exam_id"));
+						List<String> listOfSeries = Exam.getExamSeries(rs.getString("exam_id"));
+						((JLabel) (eb).getComponent(1)).setText(String.valueOf(listOfSeries.toArray().length));
+						String name = TestBox.getFullName(Exam.getExamCourse(rs.getString("exam_id")));
+						((JLabel) (eb).getComponent(2)).setText(name);
+						((JLabel) (eb).getComponent(3)).setText(Exam.getExamDate(rs.getString("exam_id")));
+						JPanel jp = (JPanel) (eb).getComponent(0);
 							int k = 0;
-							for(int j = 4; j<note.toArray().length;j++) {
+							for(int j = 0; j<listOfSeries.toArray().length;j++) {
 								k++;
-								List note1 = Arrays.asList(((String) note.get(j)).split("::"));
 								ExamBox eb1 = new ExamBox();
 								jp.add(eb1);
 								
-								jp.getComponent(k-1).setName(String.valueOf(k));
+								jp.getComponent(k-1).setName(listOfSeries.get(j));
 								((JLabel) ((Container) jp.getComponent(k-1)).getComponent(1)).setText(String.valueOf(k));
-								((JLabel) ((Container) jp.getComponent(k-1)).getComponent(2)).setText((String) note1.get(0));
+								((JLabel) ((Container) jp.getComponent(k-1)).getComponent(2)).setText(Exam.getSerieName(listOfSeries.get(j)));
 								((JLabel) ((Container) jp.getComponent(k-1)).getComponent(3)).setText("");
 								
 								eb1.setPreferredSize(new Dimension(1325*99/100,40*99/100));
 								((JLabel) eb1.getComponent(8)).setIcon(null);
 							}
-						}if(((Container) eb.getComponent(0)).getComponentCount()>0) {
-						((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(8)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+							if(((Container) eb.getComponent(0)).getComponentCount()>0) {
+						((JLabel) (eb).getComponent(8)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
 					}else{
-						((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(8)).setIcon(null);
-					}}}
+						((JLabel) (eb).getComponent(8)).setIcon(null);
+					}
+
+						loadExamData(eb, listOfSeries, eb.getName(), classroom_id, ay_id);
+						}
+					
 					Application.panelExams.revalidate();
 					Application.panelExams.repaint();
-				} catch (FileNotFoundException e) {
+				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					
@@ -406,37 +477,14 @@ public static void loadExams() {
 					panel_10.add(lblNewLabel_2);
 					
 				}else {
-				loadExamData();
 				}
 }
 
 
 
-public static void loadExamData() { 
+public static void loadExamData(Component c, List<String> listOfSeries, String exam_id, String classroom_id, String ay_id) {
 	if(Application.panelExams.getComponentCount()>0) {
-
-		Object[] lines = null;
-		
-			File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Exam List/3eme Trimestre/ExamList.txt");
-			aws.downloadContent(file.getPath());
-				FileReader fr;
-				try {
-					fr = new FileReader(file);
-				
-				
-				BufferedReader br = new BufferedReader(fr);
-				lines = br.lines().toArray();
-				
-
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				for(int i = lines.length-1; i>-1; i--) {
 					
-					List l1 = Arrays.asList(lines[i].toString().split("//"));
-					if(Home.courseExists(l1.get(0).toString(), Home.className)) {
 					Double sum = (double) 0;
 					Double sum1 = (double) 0;
 					int participants = 0;
@@ -444,27 +492,10 @@ public static void loadExamData() {
 					int echecs = 0;
 
 					Object[] lines1 = null;
-					
-					File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-					aws.downloadContent(file1.getPath());
-						FileReader fr1;
-						try {
-							fr1 = new FileReader(file1);
+						lines1 = Home.loadActiveStudents(classroom_id, ay_id);
 						
-						
-						BufferedReader br1 = new BufferedReader(fr1);
-						lines1 = Home.loadActiveStudents(file1.getPath());
-						
-
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					
-					List note1 = Arrays.asList(lines[i].toString().split("//"));
-					String s = (String) note1.get(0);
-					String cours = TestBox.getShortName(s,Home.className);
-					int series = Integer.parseInt(note1.get(2).toString());
+					String cours = TestBox.getShortName(Exam.getExamCourse(exam_id));
+					int series = Exam.getExamSeries(exam_id).toArray().length;
 					
 					
 
@@ -476,19 +507,8 @@ public static void loadExamData() {
 					for(int j = 0; j<lines1.length; j++) {
 						Double sum21 = (double) 0;
 						Double sum31 = (double) 0;
-						List name = Arrays.asList(lines1[j].toString().split("//"));
-						File file2 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/"+name.get(0)+"/3eme Trimestre/"+cours+".txt");
-						aws.downloadContent(file2.getPath());
-						FileReader fr2;
-						try {
-							fr2 = new FileReader(file2);
 						
-						BufferedReader br2 = new BufferedReader(fr2);
-						Object[] lines2 = br2.lines().toArray();
-						
-						List note = Arrays.asList(lines2[0].toString().split("//"));
-						
-						List note2 = Arrays.asList(note.get(k).toString().split("/"));
+						List note2 = Arrays.asList(LPane.loadStudentSerieNote(listOfSeries.get(k), lines1[j].toString()).split("/"));
 						
 						Double d = Double.parseDouble(note2.get(0).toString());
 						Double e = Double.parseDouble(note2.get(1).toString());
@@ -517,9 +537,8 @@ public static void loadExamData() {
 						}
 						
 						for(int l = 0; l<series;l++) {
-							List note11 = Arrays.asList(lines2[0].toString().split("//"));
-							
-							List note21 = Arrays.asList(note11.get(l).toString().split("/"));
+
+							List note21 = Arrays.asList(LPane.loadStudentSerieNote(listOfSeries.get(l), lines1[j].toString()).split("/"));
 							
 							Double d1 = Double.parseDouble(note21.get(0).toString());
 							Double e1 = Double.parseDouble(note21.get(1).toString());
@@ -540,10 +559,6 @@ public static void loadExamData() {
 						}else{
 							participants = participants+0;
 						}
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 						if(echec) {
 							echecs++;
 						}else {
@@ -552,29 +567,26 @@ public static void loadExamData() {
 					
 				}
 
-
-					if(((Container) ((Container) ((Container) Application.panelExams.getComponent(i))).getComponent(0)).getComponentCount()>0) {
-					List points = Arrays.asList(note1.get(k+4).toString().split("::"));
-					int max = Integer.parseInt(note1.get(1).toString())*Integer.parseInt(points.get(1).toString())/100;
-					((JLabel) ((Container) ((Container) ((Container) Application.panelExams.getComponent(i)).getComponent(0)).getComponent(k)).getComponent(4)).setText((new DecimalFormat("##.##").format(sum2/participants1))+"/"+max);
+					if(((Container) ((Container) (c)).getComponent(0)).getComponentCount()>0) {
+					int max = Integer.parseInt(Exam.getSerieMaxima(listOfSeries.get(k)));
+					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(4)).setText((new DecimalFormat("##.##").format(sum2/participants1))+"/"+max);
 					System.out.println(participants1);
-					((JLabel) ((Container) ((Container) ((Container) Application.panelExams.getComponent(i)).getComponent(0)).getComponent(k)).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum2/participants1)/max)+"%"));
-					((JLabel) ((Container) ((Container) ((Container) Application.panelExams.getComponent(i)).getComponent(0)).getComponent(k)).getComponent(6)).setText(String.valueOf(echecs1));
+					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum2/participants1)/max)+"%"));
+					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(6)).setText(String.valueOf(echecs1));
 					String reussite = new DecimalFormat("##.##").format(100-(Double.parseDouble(String.valueOf(echecs1))/Double.parseDouble(String.valueOf(participants1))*100));
-					((JLabel) ((Container) ((Container) ((Container) Application.panelExams.getComponent(i)).getComponent(0)).getComponent(k)).getComponent(7)).setText(reussite+"%");
+					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(7)).setText(reussite+"%");
 
 
-					((JLabel) ((Container) ((Container) ((Container) Application.panelExams.getComponent(i)).getComponent(0)).getComponent(k)).getComponent(3)).setText(participants1+" eleves");
+					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(3)).setText(participants1+" eleves");
 					}
 					}
-					((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(4)).setText((new DecimalFormat("##.##").format(sum/participants))+"/"+note1.get(1).toString());
+					((JLabel) ((Container) c).getComponent(4)).setText((new DecimalFormat("##.##").format(sum/participants))+"/"+Exam.getExamMaxima(exam_id));
 					System.out.println(participants);
-					((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum/participants)/Integer.parseInt(note1.get(1).toString()))+"%"));
-					((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(6)).setText(String.valueOf(echecs));
+					((JLabel) ((Container) c).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum/participants)/Integer.parseInt(Exam.getExamMaxima(exam_id)))+"%"));
+					((JLabel) ((Container) c).getComponent(6)).setText(String.valueOf(echecs));
 					String reussite = new DecimalFormat("##.##").format(100-(Double.parseDouble(String.valueOf(echecs))/Double.parseDouble(String.valueOf(participants))*100));
-					((JLabel) ((Container) Application.panelExams.getComponent(i)).getComponent(7)).setText(reussite+"%");
+					((JLabel) ((Container) c).getComponent(7)).setText(reussite+"%");
 					
-				}}
 				
 	}
 	

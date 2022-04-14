@@ -51,6 +51,7 @@ import CloudOperations.mysql;
 import Stats.CourseStats;
 import Stats.StatsPane;
 import Stats.StudentStats;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -153,7 +154,7 @@ public class Teacher extends JPanel {
 			for(int k = 0; k< lines1.length;k++) {
 				
 				Teacher te = new Teacher();
-				te.name.setText(getTeacherName(lines1[k].toString()));
+				te.name.setText(lines1[k].toString());
 				te.setName(lines1[k].toString());
 				Home.panelProf.add(te);
 				collapse(k);
@@ -178,7 +179,7 @@ public class Teacher extends JPanel {
 				}else {
 					if(((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(1)).getComponentCount()==0) {
 					loadClassesAndCourses(lines1[k].toString(), ay_id, ((Container) Home.panelProf.getComponent(k)).getComponent(1));
-					loadData(((Container) Home.panelProf.getComponent(k)).getComponent(1));
+					loadData(((Container) Home.panelProf.getComponent(k)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}
 					expand(k);
 					}
@@ -292,27 +293,18 @@ public class Teacher extends JPanel {
 		HomeMenu3.deselect();
 	}
 	
-	public static int successRate(String ay_id, String className_id, String course_id) {
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+"/Students.txt");
-		aws.downloadContent(file.getPath());
+	public static int successRate(String ay_id, String classroom_id, String course_id) {
 		int echecs = 0;
 		int rate = 0;
 			
-			FileReader fr;
-			try {
-				fr = new FileReader(file);
-			
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object lines [] = Home.loadActiveStudents(file.getPath());
+			Object lines [] = Home.loadActiveStudents(classroom_id, ay_id);
 		
 			for(int i = 0; i< lines.length; i++) {
-				List list = Arrays.asList(lines[i].toString().split("//"));
 
-				List l = StudentStats.getStudentTestsStats(list.get(0).toString(), className
-						, course, "Toute l'annee", "All", "All");
-				List l1 = StudentStats.getStudentExamStats(list.get(0).toString(), className
-						, course, "Toute l'annee", "All", "All");
+				List l = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
+						, course_id, "Toute l'annee", "All", "All");
+				List l1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
+						, course_id, "Toute l'annee", "All", "All");
 				
 				List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 				List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -331,10 +323,6 @@ public class Teacher extends JPanel {
 			}}else {
 				rate = 0;
 			}}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			return rate;
 	}
 	
@@ -378,6 +366,7 @@ public class Teacher extends JPanel {
 						panel_2.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
 						
 						JLabel lblemeEconomique = new JLabel(Class.getClassName(lines[i].toString()));
+						lblemeEconomique.setName(lines[i].toString());
 						lblemeEconomique.setHorizontalAlignment(SwingConstants.CENTER);
 						lblemeEconomique.setForeground(Color.WHITE);
 						lblemeEconomique.setFont(new Font("Roboto", Font.BOLD, 20));
@@ -413,7 +402,7 @@ public class Teacher extends JPanel {
 									Object[] lines1 = s1.toArray();
 									
 						
-						for(int j = 1; j< lines1.length; j++) {
+						for(int j = 0; j< lines1.length; j++) {
 									
 								JPanel panel_3 = new JPanel();
 								panel_2.add(panel_3);
@@ -422,6 +411,7 @@ public class Teacher extends JPanel {
 								panel_3.setLayout(null);
 								
 								JLabel lblFormationPatriotiqueEt = new JLabel();
+								lblFormationPatriotiqueEt.setName(lines1[j].toString());
 								lblFormationPatriotiqueEt.setForeground(Color.WHITE);
 								lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.BOLD, 18));
 								lblFormationPatriotiqueEt.setBorder(null);
@@ -477,7 +467,7 @@ public class Teacher extends JPanel {
 						public void mouseClicked(MouseEvent e) {
 
 							deselectAll();
-							selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getText();
+							selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getName();
 							((JComponent) c.getParent()).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 							
 							Home.side.removeAll();
@@ -548,7 +538,7 @@ public class Teacher extends JPanel {
 							public void mouseClicked(MouseEvent e) {
 
 									deselectAll();
-									selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getText();
+									selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getName();
 									((JComponent) c.getParent()).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 									
 									Home.side.removeAll();
@@ -581,13 +571,9 @@ public class Teacher extends JPanel {
 									
 									
 									if(e.getClickCount() == 2) {
-
-
-
-										StatsPane frame = new StatsPane(3, StatsPane.getClassIndex(((((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(0))).getText()))), StatsPane.getCourseIndex(TestBox.getShortName(((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(m)).getComponent(0)).getText(), ((((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(0))).getText()))), ((((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(0))).getText()))), 0);
+										StatsPane frame = new StatsPane("All", ((((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(0))).getName())), ((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(m)).getComponent(0)).getName(),
+												Login.selectedAcademicYearID, ay_id);
 										frame.setVisible(true);
-									
-									
 									}
 								}
 								public void mouseEntered(MouseEvent e) {
@@ -632,7 +618,8 @@ public class Teacher extends JPanel {
 } 
 	return name;
 	}
-	public static void loadData(Component c) {
+	public static void loadData(Component c, String ay_id, String term_id) {
+		
 			for(int j = 0; j< ((Container) c).getComponentCount(); j++) {
 				for(int m = 1; m<((Container) ((Container) c).getComponent(j)).getComponentCount(); m++) {
 					List<String> l = new ArrayList();
@@ -642,14 +629,13 @@ public class Teacher extends JPanel {
 					l1.add("0");
 					l1.add("0/0");
 					if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-						l = CourseStats.getStudentTestsStats("All", ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getText()
-								,((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getText(), Home.termsText.get(Home.selectedTermIndex)
-								,"All", "All");
+						l = CourseStats.getStudentTestsStats("All", ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getName()
+								, ((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getName(), term_id,"All", "All");
 						}
 
 					if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-						l1 = CourseStats.getStudentExamStats("All", ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getText()
-								,((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getText(), Home.termsText.get(Home.selectedTermIndex), "All", "All");
+						l1 = CourseStats.getStudentExamStats("All", ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getName()
+								, ((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getName(), term_id,"All", "All");
 						}
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -666,8 +652,8 @@ public class Teacher extends JPanel {
 			((JLabel) ((Container) ((Container) ((Container) c).getComponent(j)).getComponent(m)).getComponent(1)).setText("Moyenne: "+new DecimalFormat("##.##").format(percentage)+"%");
 				
 				
-				int rate = successRate(((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getText()
-						,((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getText());
+				int rate = successRate(ay_id, ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getName()
+						, ((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getName());
 		
 				((JLabel) ((Container) ((Container) ((Container) c).getComponent(j)).getComponent(m)).getComponent(2)).setText("Taux de reussite: "+rate+"%");
 				

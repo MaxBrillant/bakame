@@ -42,7 +42,7 @@ public class MainInfo extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MainInfo() {
+	public MainInfo(String ay_id) {
 		setBorder(new LineBorder(Color.WHITE));
 		setBackground(new Color(40, 40, 40));
 		setPreferredSize(new Dimension(400, 550));
@@ -207,17 +207,16 @@ public class MainInfo extends JPanel {
 			}
 		});
 
-		loadStudentInfo();
+		loadStudentInfo(ay_id);
 	}
 	
-	public static void loadStudentInfo() {
-		Object[] classes = Home.loadActiveClasses("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Classes.txt");
-		Object[] profs = Home.loadActiveProfs("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Teachers/Teachers.txt");
+	public static void loadStudentInfo(String ay_id) {
+		Object[] classes = Home.loadActiveClasses(ay_id);
+		Object[] profs = Home.loadActiveProfs(ay_id);
 		int students = 0;
 		int tests;
 		for(int i = 0; i< classes.length; i++) {
-			List l = Arrays.asList(classes[i].toString().split("//"));
-			int st = StudentStats.getNumberOfStudents(l.get(0).toString());
+			int st = StudentStats.getNumberOfStudents(classes[i].toString(), ay_id);
 			students = students+st;
 		}
 
@@ -225,9 +224,9 @@ public class MainInfo extends JPanel {
 		numberOfStudents.setText(students+"");
 		numberOfClasses.setText(classes.length+"");
 }	
-	public static void deselect() {
+	public static void deselect(String ay_id) {
 
-		MainInfo m = new MainInfo();
+		MainInfo m = new MainInfo(ay_id);
 		m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
 		Home.side.removeAll();
 		Home.side.add(m);

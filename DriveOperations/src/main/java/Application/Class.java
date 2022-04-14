@@ -93,7 +93,7 @@ public class Class extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Class() {
+	public Class(String term_id, String ay_id) {
 		
 		
 		
@@ -195,7 +195,7 @@ public class Class extends JPanel {
 					if(selectedClasses.contains(getComponent(0).getParent())) {
 					alreadyExists = true;
 					}
-				deselectAll();
+				deselectAll(ay_id);
 				HomeMenu1.deselect();
 				selectedClasses.add(getComponent(0).getParent());
 				}
@@ -252,7 +252,7 @@ public class Class extends JPanel {
 				
 				
 				if(selectedClasses.toArray().length>1) {
-					MainInfo m = new MainInfo();
+					MainInfo m = new MainInfo(ay_id);
 					m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
 					Home.side.removeAll();
 					Home.side.add(m);
@@ -356,7 +356,7 @@ public class Class extends JPanel {
 	
 	
 
-	public static void loadClasses(String ay_id) {
+	public static void loadClasses(String term_id, String ay_id) {
 		
 		Class.selectedClasses.clear();
 		classList.clear();
@@ -368,24 +368,23 @@ public class Class extends JPanel {
 				String parentId = getParentId(lines[i].toString(), ay_id);
 				String parentName = getParentName(parentId);
 			if(!hasParent(lines[i].toString(), ay_id)) {
-			Class c = new Class();
+			Class c = new Class(term_id, ay_id);
 			Home.panelClasses.add(c);
 			c.className.setText("<html><div style='text-align: center;'>"+getClassName(lines[i].toString())+"</div></html>");
 			c.setName(lines[i].toString());
+
+			Class.Actions(Home.panelClasses, term_id, ay_id);
 			
-			List<Color> words = Home.getClassColors(lines[i].toString(), ay_id);
-			List<String> colors = Arrays.asList(words.get(0).toString().split(","));
-			List<String> colors2 = Arrays.asList(words.get(1).toString().split(","));
-			c.courseBox.setBackground(new Color(Integer.parseInt(colors.get(0)), Integer.parseInt(colors.get(1)), Integer.parseInt(colors.get(2))));
+			c.courseBox.setBackground(Home.getClassColors(lines[i].toString(), ay_id).get(0));
 			
-			c.className.setForeground(new Color(Integer.parseInt(colors2.get(0)), Integer.parseInt(colors2.get(1)), Integer.parseInt(colors2.get(2))));
+			c.className.setForeground(Home.getClassColors(lines[i].toString(), ay_id).get(1));
 			
 
 			c.expand.setBackground(c.courseBox.getBackground().darker());
 			
 			}else {
 				if(!groupExists(parentId)) {
-				Group g = new Group();
+				Group g = new Group(term_id, ay_id);
 				Home.panelClasses.add(g);
 				g.groupName.setText(parentName);
 				g.setName(parentId);
@@ -395,7 +394,7 @@ public class Class extends JPanel {
 					
 					@Override
 					public void mouseClicked(MouseEvent e) {
-				Group.deselectGroup(((Container) g.getComponent(0)));
+				Group.deselectGroup(((Container) g.getComponent(0)), ay_id);
 				
 					}
 					@Override
@@ -451,7 +450,7 @@ public class Class extends JPanel {
 									AddToGroup.replaceGroup(((JLabel) ((Container) ((Container) g.getComponent(1)).getComponent(0)).getComponent(0)).getText(), 
 											ng.className.getText());
 									ng.setVisible(false);
-									Class.loadClasses(ay_id);
+									Class.loadClasses(term_id, ay_id);
 								}
 							});
 						
@@ -469,20 +468,20 @@ public class Class extends JPanel {
 								AddToGroup.changeGroup(((JLabel) ((Container) (((Container) selectedClasses.get(i)).getComponent(0))).getComponent(0)).getText()
 										.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""), "none");
 						}
-						Class.loadClasses(ay_id);
+						Class.loadClasses(term_id, ay_id);
 							((JScrollPane) Home.panelClasses.getParent().getParent()).getVerticalScrollBar().setValue(j); 
 						}
 					
 				});
 				g.addButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Class.deselectAll();
+					Class.deselectAll(ay_id);
 					AddToGroup a = new AddToGroup(parentId);
 					a.setVisible(true);
 				}
 				});
 
-				Group.loadGroupComponents(parentId, ay_id);
+				Group.loadGroupComponents(parentId, term_id, ay_id);
 			}
 			}
 			
@@ -490,12 +489,11 @@ public class Class extends JPanel {
 			}
 			Home.panelClasses.revalidate();
 			Home.panelClasses.repaint();
-			Class.Actions(Home.panelClasses);
 
 			//loadData();
 		
 
-		Class.deselectAll();
+		Class.deselectAll(ay_id);
 		HomeMenu1.deselect();
 
 		if(Home.panelClasses.getComponentCount() == 0) {
@@ -622,7 +620,7 @@ public class Class extends JPanel {
 		
 	}
 	
-	public static void Actions(Component c) {
+	public static void Actions(Component c, String term_id, String ay_id) {
 		
 		for(int i = 0; i< ((Container) c).getComponentCount(); i++) {
 			int k = i;
@@ -642,7 +640,7 @@ public class Class extends JPanel {
 					((Container) c).getComponent(k).setPreferredSize(new Dimension(370, 140));
 					((Container) c).getComponent(k).revalidate();
 					((Container) c).getComponent(k).repaint();
-					loadData(((Container) (((Container) c).getComponent(k))));
+					loadData(((Container) (((Container) c).getComponent(k))), ((Container) (((Container) c).getComponent(k))).getName(), term_id, ay_id);
 				}
 				if(!((Container) c).getParent().equals(Home.panelClasses)) {
 					Group.resizeGroup(((Container) c).getParent());
@@ -670,11 +668,10 @@ public class Class extends JPanel {
 				if(e.getClickCount()==2) {
 					Home.className = ((JLabel) ((JPanel) ((((Container) (((Container) c).getComponent(k))).getComponent(0)))).getComponent(0)).getText()
 							.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "");
-					Application a = new Application();
+					Application a = new Application(((Container) (((Container) c).getComponent(k))).getName(), ay_id);
 					a.frame.setVisible(true);
 					
 					Home.frame.setVisible(false);
-					
 					
 				}
 				
@@ -691,7 +688,7 @@ public class Class extends JPanel {
 		}}
 	}
 	
-public static void loadData(Component c) {
+public static void loadData(Component c, String classroom_id, String term_id, String ay_id) {
 		if(c instanceof Class) {
 			
 			List<String> l = new ArrayList();
@@ -701,15 +698,13 @@ public static void loadData(Component c) {
 			l1.add("0");
 			l1.add("0/0");
 			if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-	l = StudentStats.getStudentTestsStats("All", ((JLabel) ((Container) ((Container) c).getComponent(0)).getComponent(0)).getText()
-			.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""), "All", Home.termsText.get(Home.selectedTermIndex), "All", "All");
+	l = StudentStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
 			
 
 	}
 
 			if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-	l1 = StudentStats.getStudentExamStats("All", ((JLabel) ((Container) ((Container) c).getComponent(0)).getComponent(0)).getText()
-			.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""), "All", Home.termsText.get(Home.selectedTermIndex), "All", "All");
+	l1 = StudentStats.getStudentExamStats("All", classroom_id, "All", term_id, "All", "All");
 
 	}
 
@@ -728,16 +723,14 @@ public static void loadData(Component c) {
 	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(0)).setText("Moyenne: "+new DecimalFormat("##.##").format(percentage)+"%");
 	
 	
-	int number = StudentStats.getNumberOfStudents(((JLabel) ((Container) ((Container) c).getComponent(0)).getComponent(0)).getText().replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
+	int number = StudentStats.getNumberOfStudents(classroom_id, ay_id);
 	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(1)).setText("Nombre d'eleves: "+number);
 	
-	int courses = CourseStats.getNumberOfCourses(((JLabel) ((Container) ((Container) c).getComponent(0)).getComponent(0)).getText()
-			.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
+	int courses = CourseStats.getNumberOfCourses(classroom_id, ay_id);
 	
 	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(2)).setText("Nombre de cours: "+courses);
 	
-	List l20 = CourseStats.getStudentTestsStats("All", ((JLabel) ((Container) ((Container) c).getComponent(0)).getComponent(0)).getText()
-			.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""), "All", Home.termsText.get(Home.selectedTermIndex), "All", "All");
+	List l20 = CourseStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
 	
 	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(3)).setText("Nombre d'interros: "+l20.get(2));
 
@@ -755,11 +748,9 @@ public static void loadData(Component c) {
 			l1.add("0");
 			l1.add("0/0");
 			if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-		l = StudentStats.getStudentTestsStats("All", ((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(0)).getText()
-				.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""), "All", Home.termsText.get(Home.selectedTermIndex), "All", "All");
+		l = StudentStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
 		}if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-		l1 = StudentStats.getStudentExamStats("All", ((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(0)).getText()
-				.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""), "All", Home.termsText.get(Home.selectedTermIndex), "All", "All");
+		l1 = StudentStats.getStudentExamStats("All", classroom_id, "All", term_id, "All", "All");
 		}
 		
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -778,16 +769,14 @@ public static void loadData(Component c) {
 		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(0)).setText("Moyenne: "+new DecimalFormat("##.##").format(percentage)+"%");
 		
 		
-		int number = StudentStats.getNumberOfStudents(((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(0)).getText().replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
+		int number = StudentStats.getNumberOfStudents(classroom_id, ay_id);
 		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(1)).setText("Nombre d'eleves: "+number);
 
-		int courses = CourseStats.getNumberOfCourses(((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(0)).getText()
-				.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
+		int courses = CourseStats.getNumberOfCourses(classroom_id, ay_id);
 		
 		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(2)).setText("Nombre de cours: "+courses);
 		
-		List l20 = CourseStats.getStudentTestsStats("All", ((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(0)).getText()
-				.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""), "All", Home.termsText.get(Home.selectedTermIndex), "All", "All");
+		List l20 = CourseStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
 		
 		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(3)).setText("Nombre d'interros: "+l20.get(2));
 
@@ -802,7 +791,7 @@ public static void loadData(Component c) {
 	}
 
 
-public static void deselectAll() {
+public static void deselectAll(String ay_id) {
 	for(int i = 0; i< ((Container) Home.panelClasses).getComponentCount(); i++) {
 		if(((Container) Home.panelClasses).getComponent(i) instanceof Class) {
 		if(Class.selectedClasses.contains(((Container) Home.panelClasses).getComponent(i))) {
@@ -819,13 +808,13 @@ public static void deselectAll() {
 			Home.panelClasses.repaint();
 	
 		}else {
-			Group.deselectGroup(((Container) ((Container) Home.panelClasses).getComponent(i)).getComponent(0));
+			Group.deselectGroup(((Container) ((Container) Home.panelClasses).getComponent(i)).getComponent(0), ay_id);
 		}
 	}
 
 	Class.selectedClasses.clear();
 
-	MainInfo m = new MainInfo();
+	MainInfo m = new MainInfo(ay_id);
 	m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
 	if(Home.side.getComponentCount()>0) {
 	Home.side.removeAll();

@@ -586,7 +586,7 @@ public class ScholarYears {
 							    public void run(){
 							    	
 								Login.selectedAcademicYearID = btnOuvrir.getParent().getParent().getName();
-								Home h = new Home(Login.selectedSchoolID, Login.selectedUserID);
+								Home h = new Home(Login.selectedSchoolID, Login.selectedUserID, Login.selectedAcademicYearID);
 								h.frame.setVisible(true);
 								ScholarYears.frame.setVisible(false);
 								
@@ -614,7 +614,7 @@ public class ScholarYears {
 							    public void run(){
 							    	
 							    	Login.selectedAcademicYearID = lblNewLabel_1.getParent().getParent().getName();
-								Home h = new Home(Login.selectedSchoolID, Login.selectedUserID);
+								Home h = new Home(Login.selectedSchoolID, Login.selectedUserID, Login.selectedAcademicYearID);
 								h.frame.setVisible(true);
 								ScholarYears.frame.setVisible(false);
 								

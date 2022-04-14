@@ -421,6 +421,16 @@ List l = StudentStats.getStudentExamStats(student_id, classroom_id, course_id, H
 			return maxima;
 		}
 	
+	public static String getExamMaxima(String exam_id) {
+		int maxima = 0;
+		List<String> l = getExamSeries(exam_id);
+		for(int i = 0; i< l.toArray().length; i++) {
+			maxima = maxima+ Integer.parseInt(getSerieMaxima(l.get(i)));
+		}
+		return String.valueOf(maxima);
+	}
+	
+	
 public static String getExamDate(String exam_id) {
 	 
 		String date = null;
@@ -474,7 +484,7 @@ public static String getExamCourse(String exam_id) {
 
 			ResultSet rs=stmt.executeQuery("SELECT * from exam_information AS ei "
 					+ "JOIN course_examss AS ce "
-					+ "WHERE ei.test_id = ce.test_id AND ei.is_active = 1 AND ei.exam_id = '"+exam_id+"' LIMIT 1");
+					+ "WHERE ei.exam_id = ce.exam_id AND ei.is_active = 1 AND ei.exam_id = '"+exam_id+"' LIMIT 1");
 		
 		while(rs.next())
 		{
@@ -530,5 +540,28 @@ public static String getExamTerm(String exam_id) {
 			e1.printStackTrace();
 		}
 		return term;
+	}
+
+
+public static List<String> getExamSeries(String exam_id) {
+	 
+		List<String> series = new ArrayList();
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT * from series "
+					+ "WHERE exam_id = '"+exam_id+"'");
+		
+		while(rs.next())
+		{
+			series.add(rs.getString("serie_id"));
+		}
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return series;
 	}
 }

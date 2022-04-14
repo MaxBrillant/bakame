@@ -117,7 +117,7 @@ public class ClassSelection extends JFrame {
 	create = new JButton("Continuer");
 	create.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			addClass(((JLabel) ((Container) panel.getComponent(selectedClass)).getComponent(0)).getText());
+			addClass(((JLabel) ((Container) panel.getComponent(selectedClass)).getComponent(0)).getName(), ay_id);
 			setVisible(false);
 			isSelectable = false;
 			
@@ -221,7 +221,7 @@ public class ClassSelection extends JFrame {
 	}
 	}
 	
-	public static void addClass(String s) {
+	public static void addClass(String classroom_id, String ay_id) {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(80, 80, 80));
@@ -237,7 +237,7 @@ public class ClassSelection extends JFrame {
 
 		panel_4.setBackground(panel_4.getParent().getBackground());
 		
-		JLabel label = new JLabel(s);
+		JLabel label = new JLabel(Home.getClassName(classroom_id));
 		label.setBackground(Color.DARK_GRAY);
 		label.setPreferredSize(new Dimension(46, 30));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -275,7 +275,7 @@ public class ClassSelection extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 			//	SwingUtilities.getRoot(courseSelection.contentPane).setVisible(false);
-				courseSelection cs = new courseSelection(((JLabel) ((Container) btnNewButton.getParent().getParent().getComponent(0)).getComponent(0)).getText());
+				courseSelection cs = new courseSelection(((JLabel) ((Container) btnNewButton.getParent().getParent().getComponent(0)).getComponent(0)).getName(), ay_id);
 				cs.setVisible(true);
 				
 				for(int m = 0; m<  ClassesAndCourses.panel.getComponentCount()-1; m++) {
@@ -331,6 +331,7 @@ public class ClassSelection extends JFrame {
 			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 17));
 			lblNewLabel.setBounds(10, 0, 265, 20);
 			lblNewLabel.setForeground(Color.white);
+			lblNewLabel.setName(lines[i].toString());
 			
 			JLabel lblCours = new JLabel(lines1.length+" cours");
 			lblCours.setHorizontalAlignment(SwingConstants.CENTER);

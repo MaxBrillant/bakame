@@ -497,7 +497,7 @@ public class HomeMenu2 extends JPanel {
 				
         		for(int i = 0; i< Home.panelStudents.getComponentCount(); i++) {
         			if(Home.panelStudents.getComponent(i).getPreferredSize().height > 50) {
-        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ((JLabel) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(0)).getText(), start, end);
+        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ((JLabel) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(0)).getName(), start, end);
         			if(((AbstractButton) ((Container) (((Container) Home.panelStudents.getComponent(i)).getComponent(2))).getComponent(1)).getText().equals("Decroissant")){
         				ClassStudents.rankFromLastToFirst((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(i))).getComponent(1))));
         				}else{

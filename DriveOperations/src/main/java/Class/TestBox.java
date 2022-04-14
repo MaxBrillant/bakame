@@ -422,7 +422,7 @@ public static String getShortName(String course_id) {
 			btnNewButton_1.setBackground(panel_11.getBackground());
 			btnNewButton_1.setForeground(Color.WHITE);
 			btnNewButton_1.setBounds(10, 116, 280, 40);
-			if(Home.selectedTermIndex!=3) {
+			if(Home.selectedTermIndex!=Home.termsText.toArray().length) {
 			panel_11.add(btnNewButton_1);
 			}
 			btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 20));

@@ -1602,4 +1602,12 @@ e.printStackTrace();
 			for(int i = number-1; i>9; i--) {
 				panel11.remove(i);
 			}}
+	    
+	    public static int getNumberOfCourses(String classroom_id, String ay_id) {
+	    	
+	    	int no = 0;
+	    	Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+	    	no = lines1.length;
+	    	return no;
+	    }
 }

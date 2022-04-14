@@ -54,6 +54,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import Class.NewCourse;
+import Class.TestBox;
 import CloudOperations.aws;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
@@ -105,7 +106,7 @@ public class courseSelection extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public courseSelection(String className) {
+	public courseSelection(String classroom_id, String ay_id) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -126,7 +127,7 @@ public class courseSelection extends JFrame {
 
 			for(int i = 0; i< ClassesAndCourses.panel.getComponentCount()-1;i++) {
 				
-				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(0)).getComponent(0)).getText().equals(className)) {
+				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(0)).getComponent(0)).getText().equals(Home.getClassName(classroom_id))) {
 					
 					
 					JPanel panel_3 = new JPanel();
@@ -168,7 +169,7 @@ public class courseSelection extends JFrame {
 							panel_3.setBorder(new LineBorder(Color.white, 1));
 							if(e.getClickCount()==2) {
 
-								courseSelection cs = new courseSelection(((JLabel) ((Container) panel_3.getParent().getParent().getComponent(0)).getComponent(0)).getText());
+								courseSelection cs = new courseSelection(classroom_id, ay_id);
 								SwingUtilities.getRoot(cs.contentPane).setVisible(false);
 								cs.setVisible(true);
 								cs.create.setVisible(false);
@@ -334,7 +335,7 @@ public class courseSelection extends JFrame {
 	notice.setBounds(10, 191, 404, 18);
 	contentPane.add(notice);
 	
-	lblemePfEconomique = new JLabel(className);
+	lblemePfEconomique = new JLabel(Home.getClassName(classroom_id));
 	lblemePfEconomique.setHorizontalAlignment(SwingConstants.CENTER);
 	lblemePfEconomique.setForeground(Color.WHITE);
 	lblemePfEconomique.setFont(new Font("Roboto", Font.BOLD, 22));
@@ -342,7 +343,7 @@ public class courseSelection extends JFrame {
 	contentPane.add(lblemePfEconomique);
 	setLocationRelativeTo(null);
 	
-	populateBox(className);
+	populateBox(classroom_id, ay_id);
 	}
 	
 	
@@ -356,38 +357,26 @@ public class courseSelection extends JFrame {
 		((JPanel)((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(1)).revalidate();
 		((JPanel)((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(1)).repaint();
 	}}
-	public static void populateBox(String s) {
-File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+s+"/Courses.txt");
-aws.downloadContent(file1.getPath());	
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines = Home.loadActiveCourses(file1.getPath());
+	
+	public static void populateBox(String classroom_id, String ay_id) {
+		Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
 		
 		
 		for(int i = 0; i< lines.length; i++) {
-			List l = Arrays.asList(lines[i].toString().split("//"));
-			comboBox.addItem(l.get(1).toString());
+			comboBox.addItem(TestBox.getFullName(lines[i].toString()));
 			boolean exists = true;
 			for(int j = 0; j< ClassesAndCourses.panel.getComponentCount()-1; j++) {
-				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(0)).getComponent(0)).getText().equals(s)) {
+				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(0)).getComponent(0)).getText().equals(Home.getClassName(classroom_id))) {
 					for(int k = 0; k< ((Container) (((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(1))).getComponentCount()-1; k++) {
 					if(((JLabel) ((Container) ((Container) ((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(1)).getComponent(k)).getComponent(0)).getText()
-								.equals(l.get(1).toString())) {
-							comboBox.removeItem(l.get(1).toString());
+								.equals(TestBox.getFullName(lines[i].toString()))) {
+							comboBox.removeItem(TestBox.getFullName(lines[i].toString()));
 						}
 					}
 				}
 			}
 			if(exists) {
 			}
-		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		}
 }

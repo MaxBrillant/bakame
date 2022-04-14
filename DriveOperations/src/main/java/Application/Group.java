@@ -55,7 +55,7 @@ public class Group extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Group() {
+	public Group(String term_id, String ay_id) {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -184,7 +184,7 @@ public class Group extends JPanel {
 	}
 	
 	
-	public static void deselectGroup(Component c) {
+	public static void deselectGroup(Component c, String ay_id) {
 		
 		int number = 0;
 		for(int i = 0; i< ((Container) c).getComponentCount(); i++) {
@@ -206,7 +206,7 @@ public class Group extends JPanel {
 				((Container) ((Container) ((JComponent) ((Container) c).getParent()).getComponent(1)).getComponent(0)).getComponent(2).setVisible(true);
 				
 
-				number = number+StudentStats.getNumberOfStudents(((JLabel) ((Container) ((Container) ((Container) c).getComponent(i)).getComponent(0)).getComponent(0)).getText().replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
+				number = number+StudentStats.getNumberOfStudents(((JLabel) ((Container) ((Container) ((Container) c).getComponent(i)).getComponent(0)).getComponent(0)).getName(), ay_id);
 					
 				Home.panelClasses.revalidate();
 
@@ -220,7 +220,7 @@ public class Group extends JPanel {
 
 		if(Class.selectedClasses.toArray().length == 0) {
 
-			MainInfo m = new MainInfo();
+			MainInfo m = new MainInfo(ay_id);
 			m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
 			Home.side.removeAll();
 			Home.side.add(m);
@@ -298,7 +298,7 @@ public class Group extends JPanel {
 		Home.panelClasses.revalidate();
 		Home.panelClasses.repaint();
 	}
-	public static void loadGroupComponents(String parent_id, String ay_id) {
+	public static void loadGroupComponents(String parent_id, String term_id, String ay_id) {
 		
 		for(int j = 0; j< Home.panelClasses.getComponentCount(); j++) {
 			if(Home.panelClasses.getComponent(j) instanceof Group) {
@@ -320,10 +320,11 @@ public class Group extends JPanel {
 					{
 				
 							
-				Class c = new Class();
+				Class c = new Class(term_id, ay_id);
 				((JPanel)((Container) Home.panelClasses.getComponent(j)).getComponent(0)).add(c);
 				c.className.setText("<html><div style='text-align: center;'>"+Class.getClassName(rs.getString("cp.classroom_id"))+"</div></html>");
 				c.setName(rs.getString("cp.classroom_id"));
+				Class.Actions(((Container) Home.panelClasses.getComponent(j)).getComponent(0), term_id, ay_id);
 				
 				List<Color> words = Home.getClassColors(rs.getString("cp.classroom_id"), ay_id);
 				List<String> colors = Arrays.asList(words.get(0).toString().split(","));
@@ -342,8 +343,6 @@ public class Group extends JPanel {
 					Home.panelClasses.revalidate();
 					Home.panelClasses.repaint();
 					
-
-					Class.Actions(((Container) Home.panelClasses.getComponent(j)).getComponent(0));
 					
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block

@@ -40,6 +40,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,6 +60,7 @@ import javax.swing.border.MatteBorder;
 
 import Class.NewCourse;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -94,7 +98,7 @@ public class Schedule extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Schedule frame = new Schedule("1ere PF Sciences");
+					Schedule frame = new Schedule("1", "8");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,7 +110,9 @@ public class Schedule extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Schedule(String ClassName) {
+	public Schedule(String classroom_id, String ay_id) {
+
+		mysql.connectToDB();
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -154,25 +160,24 @@ public class Schedule extends JFrame {
 			}
 			System.out.println(s1);
 			
-			File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+ClassName+"/Schedule/Schedule structure.txt");
-			
-			if(file.exists()) {
-						file.delete();
-					}
-			
-				try {
-					file.createNewFile();
-					PrintWriter pw = new PrintWriter(file);
-					pw.println(s1);
-					pw.println(s);
-					
-					pw.close();
-				
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				
-			}
+			/*
+			 * File file = new
+			 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
+			 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+
+			 * ClassName+"/Schedule/Schedule structure.txt");
+			 * 
+			 * if(file.exists()) { file.delete(); }
+			 * 
+			 * try { file.createNewFile(); PrintWriter pw = new PrintWriter(file);
+			 * pw.println(s1); pw.println(s);
+			 * 
+			 * pw.close();
+			 * 
+			 * } catch (IOException e1) { // TODO Auto-generated catch block
+			 * e1.printStackTrace();
+			 * 
+			 * }
+			 */
 			setVisible(true);
 		}
 	});
@@ -530,7 +535,7 @@ public class Schedule extends JFrame {
 	btnImporter.setBounds(10, 446, 108, 23);
 	contentPane.add(btnImporter);
 	
-	JLabel lbleeEconomique = new JLabel(ClassName);
+	JLabel lbleeEconomique = new JLabel(Home.getClassName(classroom_id));
 	lbleeEconomique.setHorizontalAlignment(SwingConstants.CENTER);
 	lbleeEconomique.setForeground(Color.WHITE);
 	lbleeEconomique.setFont(new Font("Roboto", Font.BOLD, 20));
@@ -546,7 +551,7 @@ public class Schedule extends JFrame {
 
 	setLocationRelativeTo(null);
 	
-	load(ClassName);
+	load(classroom_id, ay_id);
 	
 	
 	for(int i = 1; i<Schedule.panel.getComponentCount(); i++) {
@@ -715,6 +720,7 @@ public class Schedule extends JFrame {
 		for(int i = 0; i<Schedule.hours.getComponentCount()-1; i++) {
 			for(int j = 1; j<Schedule.panel.getComponentCount(); j++) {
 					
+				if(Schedule.hours.getComponent(i) instanceof JLabel) {
 					if(((JLabel) Schedule.hours.getComponent(i)).getText().equals("Pause")) {
 					if(((Container) Schedule.panel.getComponent(j)).getComponentCount()-1>=i) {
 						JPanel panel_1 = new JPanel();
@@ -723,7 +729,7 @@ public class Schedule extends JFrame {
 					((Container) Schedule.panel.getComponent(j)).add(panel_1, i);
 					panel_1.setBackground(panel_1.getParent().getParent().getBackground());
 				}
-			}}
+			}}}
 			Schedule.panel.revalidate();
 			Schedule.panel.repaint();
 		}
@@ -768,26 +774,23 @@ public class Schedule extends JFrame {
 		
 	}
 	
-	public static void load(String className) {
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+"/Schedule/Schedule structure.txt");
-		aws.downloadContent(file.getPath());
-try {
-			FileReader fr = new FileReader(file);
-			BufferedReader br = new BufferedReader(fr);
-			Object[] lines = br.lines().toArray();
-			
-			if(lines.length>0) {
-			if(!lines[0].toString().isBlank()){
-			List l1 = Arrays.asList(lines[0].toString().split("//"));
-			for(int i = 0; i< l1.toArray().length; i++) {
-			JLabel lblNewLabel_2 = new JLabel(l1.get(i).toString());
+	public static void load(String classroom_id, String ay_id) {
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("SELECT HOUR(start_time), MINUTE(start_time), HOUR(end_time), MINUTE(end_time), day_of_the_week from schedule_class "
+					+ "WHERE classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' ORDER BY start_time ASC");
+			while(rs.next())
+			{
+			JLabel lblNewLabel_2 = new JLabel(rs.getString("HOUR(start_time)")+":"+rs.getString("MINUTE(start_time)")+" - "+
+					(rs.getString("HOUR(end_time)")+":"+rs.getString("MINUTE(end_time)")));
 			lblNewLabel_2.setBorder(new LineBorder(new Color(255, 255, 255)));
 			lblNewLabel_2.setForeground(new Color(255, 255, 255));
 			lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 18));
 			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2.setPreferredSize(new Dimension(150, 30));
 			
-			Schedule.hours.add(lblNewLabel_2, i);
+			Schedule.hours.add(lblNewLabel_2, Schedule.hours.getComponentCount()-1);
 				
 			
 			Schedule.hours.revalidate();
@@ -795,14 +798,55 @@ try {
 
 			lblNewLabel_2.setBackground(lblNewLabel_2.getParent().getBackground());
 			
+				JPanel panel_1 = new JPanel();
+				panel_1.setBackground(new Color(80, 80, 80));
+				panel_1.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+				panel_1.setPreferredSize(new Dimension(83, 30));
+				((JPanel)Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week"))))
+			.add(panel_1, ((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).getComponentCount()-1);
+				
+				((AbstractButton) ((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).getComponent(((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).getComponentCount()-1))
+				.setEnabled(true);
+				if(hours.getComponentCount()<=((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).getComponentCount()) {
+					((AbstractButton) ((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).getComponent(((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).getComponentCount()-1))
+					.setEnabled(false);
+				}
+
+
+				delete.setEnabled(false);
+
+				if(Schedule.hours.getComponentCount()==1) {
+					Schedule.selectedSession = 0;
+				}else {
+				Schedule.selectedSession = Schedule.hours.getComponentCount()-2;
+				}
+				for(int j1 = 0; j1<Schedule.hours.getComponentCount()-1; j1++) {
+					if((Schedule.hours.getComponent(j1)) instanceof JLabel) {
+					if(!((JLabel) Schedule.hours.getComponent(j1)).getText().equals("Pause")) {
+				((JLabel) Schedule.hours.getComponent(j1)).setBorder(new LineBorder(new Color(255, 255, 255)));
+					}else {
+						((JLabel) Schedule.hours.getComponent(j1)).setBorder(null);
+					}
+				}}
+				
+				panel1.getComponent(Integer.parseInt(rs.getString("day_of_the_week"))-1).setEnabled(true);
+				panel1.getComponent(Integer.parseInt(rs.getString("day_of_the_week"))-1).revalidate();
+				panel1.getComponent(Integer.parseInt(rs.getString("day_of_the_week"))-1).repaint();
+				((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).revalidate();
+				((Container) Schedule.panel.getComponent(Integer.parseInt(rs.getString("day_of_the_week")))).repaint();
+			
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			Schedule.selectedSession = Schedule.hours.getComponentCount()-2;
 
 			Schedule.delete.setEnabled(false);
 			
 			for(int i = 0; i<Schedule.hours.getComponentCount()-1; i++) {
 				int k = i;
-					((JLabel) Schedule.hours.getComponent(i)).addMouseListener(new MouseAdapter() {
+					(Schedule.hours.getComponent(i)).addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							Schedule.hours.revalidate();;
@@ -854,58 +898,8 @@ try {
 						}}
 					}
 				});
-			}}
-			
-			
-			if(!lines[1].toString().isBlank()) {
-			List l2 = Arrays.asList(lines[1].toString().split("//"));
-			for(int i = 0; i< l2.toArray().length; i++) {
-				List l3 = Arrays.asList(l2.get(i).toString().split(":"));
-				for(int j = 0; j< Integer.parseInt(l3.get(1).toString()); j++) {
-					JPanel panel_1 = new JPanel();
-					panel_1.setBackground(new Color(80, 80, 80));
-					panel_1.setBorder(new LineBorder(new Color(255, 255, 255), 2));
-					panel_1.setPreferredSize(new Dimension(83, 30));
-					((JPanel)Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString())))
-				.add(panel_1, ((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).getComponentCount()-1);
-					
-					((AbstractButton) ((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).getComponent(((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).getComponentCount()-1))
-					.setEnabled(true);
-					if(hours.getComponentCount()<=((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).getComponentCount()) {
-						((AbstractButton) ((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).getComponent(((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).getComponentCount()-1))
-						.setEnabled(false);
-					}
-
-
-					delete.setEnabled(false);
-
-					if(Schedule.hours.getComponentCount()==1) {
-						Schedule.selectedSession = 0;
-					}else {
-					Schedule.selectedSession = Schedule.hours.getComponentCount()-2;
-					}
-					for(int j1 = 0; j1<Schedule.hours.getComponentCount()-1; j1++) {
-						if(!((JLabel) Schedule.hours.getComponent(j1)).getText().equals("Pause")) {
-					((JLabel) Schedule.hours.getComponent(j1)).setBorder(new LineBorder(new Color(255, 255, 255)));
-						}else {
-							((JLabel) Schedule.hours.getComponent(j1)).setBorder(null);
-						}
-					}
-					
-					panel1.getComponent(Integer.parseInt(l3.get(0).toString())-1).setEnabled(true);
-					panel1.getComponent(Integer.parseInt(l3.get(0).toString())-1).revalidate();
-					panel1.getComponent(Integer.parseInt(l3.get(0).toString())-1).repaint();
-					((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).revalidate();
-					((Container) Schedule.panel.getComponent(Integer.parseInt(l3.get(0).toString()))).repaint();
-				}
-			}}
-			pause();
 			}
-} catch (FileNotFoundException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-		
+			pause();
 	}
 	
 	public static void refresh() {

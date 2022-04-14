@@ -164,8 +164,8 @@ public class Home {
 	/**
 	 * Create the application.
 	 */
-	public Home(String SchoolID, String UserID) {
-		initialize(SchoolID, UserID);
+	public Home(String SchoolID, String UserID, String ay_id) {
+		initialize(SchoolID, UserID, ay_id);
 	}
 	//Metal
 	//Nimbus
@@ -175,7 +175,7 @@ public class Home {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String SchoolID, String UserID) {
+	private void initialize(String SchoolID, String UserID, String ay_id) {
 
 //
 //		
@@ -194,7 +194,7 @@ public class Home {
 //			// TODO Auto-generated catch block
 //			e2.printStackTrace();
 //		}
-		loadTerms(Login.selectedAcademicYearID);
+		loadTerms(ay_id);
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(40, 40, 40));
@@ -245,7 +245,7 @@ public class Home {
 		classe.setFont(new Font("Futura Hv BT", Font.BOLD, 30));
 		panel_1.add(classe, BorderLayout.CENTER);
 		
-		JButton button_2 = new JButton(ScholarYears.getAcademicYearName(Login.selectedAcademicYearID));
+		JButton button_2 = new JButton(ScholarYears.getAcademicYearName(ay_id));
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
@@ -280,10 +280,10 @@ public class Home {
 		panelClasses.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Class.deselectAll();
+				Class.deselectAll(ay_id);
 				HomeMenu1.deselect();
 				if(Class.selectedClasses.toArray().length == 0) {
-					MainInfo m = new MainInfo();
+					MainInfo m = new MainInfo(ay_id);
 					m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
 					Home.side.removeAll();
 					Home.side.add(m);
@@ -447,7 +447,7 @@ public class Home {
 				panel_2.add(h, BorderLayout.CENTER);
 				panel_2.revalidate();
 				panel_2.repaint();
-				Class.deselectAll();
+				Class.deselectAll(ay_id);
 				ClassStudents.deselectAll();
 				Teacher.deselectAll();
 			}
@@ -467,7 +467,7 @@ public class Home {
 				panel_2.add(h, BorderLayout.CENTER);
 				panel_2.revalidate();
 				panel_2.repaint();
-				Class.deselectAll();
+				Class.deselectAll(ay_id);
 				ClassStudents.deselectAll();
 				Teacher.deselectAll();
 			}
@@ -488,7 +488,7 @@ public class Home {
 				panel_2.revalidate();
 				panel_2.repaint();
 				//Teacher.loadData();
-				Class.deselectAll();
+				Class.deselectAll(ay_id);
 				ClassStudents.deselectAll();
 				Teacher.deselectAll();
 			}
@@ -516,9 +516,9 @@ public class Home {
 
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-        		Class.loadClasses(Login.selectedAcademicYearID);
+        		Class.loadClasses(Home.termsText.get(Home.selectedTermIndex), ay_id);
 
-				MainInfo m = new MainInfo();
+				MainInfo m = new MainInfo(ay_id);
 				m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
 				Home.side.removeAll();
 				Home.side.add(m);
@@ -529,7 +529,7 @@ public class Home {
 
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-        		Teacher.loadTeachers(Login.selectedAcademicYearID);
+        		Teacher.loadTeachers(ay_id);
         		 return null;
     }
 }.execute();
@@ -538,7 +538,7 @@ public class Home {
             public Void doInBackground() throws Exception{
         		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
         		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
-        		ClassStudents.loadStudents(start, end, Login.selectedAcademicYearID);
+        		ClassStudents.loadStudents(start, end, ay_id);
             	 return null;
             }
         }.execute();
@@ -709,7 +709,7 @@ public static String getTermYear(String term_id) {
 					+ "WHERE ay_id = '"+ay_id+"' AND is_active = 1");
 			while(rs.next())
 			{
-				termsText.add(ScholarYears.getAcademicYearName(rs.getString("term_id")));
+				termsText.add(rs.getString("term_id"));
 			}
 
 		} catch (SQLException e) {

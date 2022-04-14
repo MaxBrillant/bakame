@@ -96,6 +96,8 @@ public class ClassStudents extends JPanel {
 	private JPanel panel_5;
 	public static JButton reverse;
 	public static String selectedStudent = "";
+	private static List<String>courses = new ArrayList();
+	public static int selectedCourse;
 	
 
 	/**
@@ -243,7 +245,7 @@ public class ClassStudents extends JPanel {
 
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
-				loadData(te.combo1.getParent().getParent(), lines1[l].toString(), ay_id, start, end);
+				loadData(te.combo1.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
 				rankFromLastToFirst((((JPanel)((JPanel) te).getComponent(1))));
 				((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Decroissant");
 
@@ -251,7 +253,7 @@ public class ClassStudents extends JPanel {
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
-					loadData(te.combo1.getParent().getParent(), lines1[l].toString(), ay_id, start, end);
+					loadData(te.combo1.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
 					rankFromFirstToLast((((JPanel)((JPanel) te).getComponent(1))));
 					((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Croissant");
 				}
@@ -262,12 +264,13 @@ public class ClassStudents extends JPanel {
 			public void itemStateChanged(ItemEvent e) {
 			//	loadData(te, t.get(0).toString());
 				deselectAll();
+				selectedCourse = te.combo2.getSelectedIndex();
 
 				if(((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).getText().equals("Croissant")) {
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
-				loadData(te.combo2.getParent().getParent(), lines1[l].toString(), ay_id, start, end);
+				loadData(te.combo2.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
 				rankFromLastToFirst((((JPanel)((JPanel) te).getComponent(1))));
 				((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Decroissant");
 
@@ -275,7 +278,7 @@ public class ClassStudents extends JPanel {
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
-					loadData(te.combo2.getParent().getParent(), lines1[l].toString(), ay_id, start, end);
+					loadData(te.combo2.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
 					rankFromFirstToLast((((JPanel)((JPanel) te).getComponent(1))));
 					((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Croissant");
 				}
@@ -287,14 +290,14 @@ public class ClassStudents extends JPanel {
         		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
         		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 				
-				loadData(te.combo3.getParent().getParent(), lines1[l].toString(), ay_id, start, end);
+				loadData(te.combo3.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
 				deselectAll();
 
 				if(((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).getText().equals("Croissant")) {
 	        		String start1 = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end1 = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
-				loadData(te.combo3.getParent().getParent(), lines1[l].toString(), ay_id, start1, end1);
+				loadData(te.combo3.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start1, end1);
 				rankFromLastToFirst((((JPanel)((JPanel) te).getComponent(1))));
 				((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Decroissant");
 
@@ -302,7 +305,7 @@ public class ClassStudents extends JPanel {
 	        		String start1 = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end1 = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
-					loadData(te.combo3.getParent().getParent(), lines1[l].toString(), ay_id, start1, end1);
+					loadData(te.combo3.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start1, end1);
 					rankFromFirstToLast((((JPanel)((JPanel) te).getComponent(1))));
 					((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Croissant");
 				}
@@ -316,7 +319,7 @@ public class ClassStudents extends JPanel {
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
-				loadData(te, lines1[l].toString(), ay_id, start, end);
+				loadData(te, courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
 				rankFromLastToFirst((((JPanel)((JPanel) te).getComponent(1))));
 				((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Decroissant");
 
@@ -325,7 +328,7 @@ public class ClassStudents extends JPanel {
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
-					loadData(te, lines1[l].toString(), ay_id, start, end);
+					loadData(te, courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
 					rankFromFirstToLast((((JPanel)((JPanel) te).getComponent(1))));
 					((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Croissant");
 				}
@@ -371,7 +374,7 @@ public class ClassStudents extends JPanel {
 				}else {
 					expand(k);
 					if((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(k))).getComponent(1))).getComponentCount()==0) {
-					loadData(((Container) Home.panelStudents.getComponent(k)), Home.panelStudents.getComponent(k).getName(), ay_id, start, end);
+					loadData(((Container) Home.panelStudents.getComponent(k)), courses.get(selectedCourse), Home.panelStudents.getComponent(k).getName(), ay_id, start, end);
 
 					rankFromFirstToLast((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(k))).getComponent(1))));
 					}
@@ -390,7 +393,7 @@ public class ClassStudents extends JPanel {
 	
 	
 	
-	public static void loadData(Component te, String classroom_id, String ay_id, String start, String end) {
+	public static void loadData(Component te, String course_id, String classroom_id, String ay_id, String start, String end) {
 		(((JPanel)((JPanel) te).getComponent(1))).removeAll();
 		
 			Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
@@ -412,7 +415,8 @@ public class ClassStudents extends JPanel {
 				lbler.setBounds(10, 0, 69, 25);
 				panel_5.add(lbler);
 				
-				JLabel lblUmuhozaChrisKoen = new JLabel(App.getStudentName(lines[i].toString()));
+				JLabel lblUmuhozaChrisKoen = new JLabel(Home.getStudentName(lines[i].toString()));
+				lblUmuhozaChrisKoen.setName(lines[i].toString());
 				lblUmuhozaChrisKoen.setForeground(Color.WHITE);
 				lblUmuhozaChrisKoen.setFont(new Font("Roboto", Font.PLAIN, 16));
 				lblUmuhozaChrisKoen.setBorder(null);
@@ -435,18 +439,18 @@ public class ClassStudents extends JPanel {
 					if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
 						
 						if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()>0) {
-						list  = StudentStats.getStudentTestsStats(l.get(0).toString(), s
-								, ((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedItem().toString(), "Toute l'annee", start, end);
+						list  = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
+								, course_id, "Toute l'annee", start, end);
 						}else{
-							list  = StudentStats.getStudentTestsStats(l.get(0).toString(), s
+							list  = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
 									, "All", "Toute l'annee", start, end);
 						}}
 					if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
 						if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()>0) {
-							list1 = StudentStats.getStudentExamStats(l.get(0).toString(), s
-								, ((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedItem().toString(), "Toute l'annee", start, end);
+							list1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
+								, course_id, "Toute l'annee", start, end);
 						}else{
-							list1 = StudentStats.getStudentExamStats(l.get(0).toString(), s
+							list1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
 								, "All", "Toute l'annee", start, end);
 							}
 						}
@@ -475,15 +479,14 @@ public class ClassStudents extends JPanel {
 					
 					if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(2)).getSelectedIndex()==2) {
 						if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()==0) {
-							value = String.valueOf(StudentStats.getNumberOfechecs(l.get(0).toString(), s, "Toute l'annee", start, end));
+							value = String.valueOf(StudentStats.getNumberOfechecs(lines[i].toString(), course_id, classroom_id, ay_id, "Toute l'annee", start, end));
 						}
 						
 					}
 				}
 				
 				if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()>0 && ((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(2)).getSelectedIndex()==2) {
-					value = StudentStats.getEchecsInPoints(l.get(0).toString(), s
-							, ((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedItem().toString(), "Toute l'annee", start, end)+" pts";
+					value = StudentStats.getEchecsInPoints(lines[i].toString(), course_id, classroom_id, ay_id, "Toute l'annee", start, end)+" pts";
 				}
 				
 				JLabel label = new JLabel(value);
@@ -504,8 +507,8 @@ public class ClassStudents extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					deselectAll();
 					((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).setBackground(new Color(20, 148, 198));
-					selectedStudent = ((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getText();
-					StudentInfo s = new StudentInfo(((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getText(),
+					selectedStudent = ((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getName();
+					StudentInfo s = new StudentInfo(((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getName(),
 							(((JLabel) ((JPanel) ((JPanel) te).getComponent(0)).getComponent(0)).getText()), start, end);
 					Home.side.removeAll();
 					Home.side.add(s);
@@ -530,13 +533,16 @@ public class ClassStudents extends JPanel {
 
 	public static void populateBox(String classroom_id, String ay_id, JComboBox c) {
 c.removeAllItems();
+courses.clear();
+courses.add("Tous");
 c.addItem("Tous");
 
 		Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
 		
 		
 		for(int i = 0; i< lines.length; i++) {
-			c.addItem(lines[i].toString());
+			c.addItem(TestBox.getFullName(lines[i].toString()));
+			courses.add(lines[i].toString());
 		}
 		}
 	
