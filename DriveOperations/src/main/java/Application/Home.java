@@ -150,7 +150,8 @@ public class Home {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Home window = new Home(Login.selectedSchoolID, Login.selectedUserID);
+					mysql.connectToDB();
+					Home window = new Home("1", "1", "8");
 					window.frame.setVisible(true);
 					System.gc();
 					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
@@ -266,7 +267,7 @@ public class Home {
 		panel_2.setBackground(new Color(40, 40, 40));
 		panel.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new BorderLayout(0, 0));
-		HomeMenu1 h = new HomeMenu1();
+		HomeMenu1 h = new HomeMenu1(ay_id);
 		//panel_2.remove(0);
 		panel_2.add(h, BorderLayout.CENTER);
 
@@ -307,7 +308,7 @@ public class Home {
 		panelStudents.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ClassStudents.deselectAll();
+				ClassStudents.deselectAll(ay_id);
 			}
 		});
 		
@@ -443,12 +444,12 @@ public class Home {
 
 				if(panel_2.getComponentCount()>0) {
 				panel_2.remove(0);
-				}HomeMenu1 h = new HomeMenu1();
+				}HomeMenu1 h = new HomeMenu1(ay_id);
 				panel_2.add(h, BorderLayout.CENTER);
 				panel_2.revalidate();
 				panel_2.repaint();
 				Class.deselectAll(ay_id);
-				ClassStudents.deselectAll();
+				ClassStudents.deselectAll(ay_id);
 				Teacher.deselectAll();
 			}
 		});
@@ -463,12 +464,12 @@ public class Home {
 				if(panel_2.getComponentCount()>0) {
 				panel_2.remove(0);
 				}
-				HomeMenu2 h = new HomeMenu2();
+				HomeMenu2 h = new HomeMenu2(ay_id);
 				panel_2.add(h, BorderLayout.CENTER);
 				panel_2.revalidate();
 				panel_2.repaint();
 				Class.deselectAll(ay_id);
-				ClassStudents.deselectAll();
+				ClassStudents.deselectAll(ay_id);
 				Teacher.deselectAll();
 			}
 		});
@@ -489,7 +490,7 @@ public class Home {
 				panel_2.repaint();
 				//Teacher.loadData();
 				Class.deselectAll(ay_id);
-				ClassStudents.deselectAll();
+				ClassStudents.deselectAll(ay_id);
 				Teacher.deselectAll();
 			}
 		});
@@ -770,7 +771,7 @@ public static Object[] loadActiveTerms(String ay_id) {
 
 		ResultSet rs=stmt.executeQuery("SELECT * from terms AS t "
 				+ "JOIN academic_year AS ay "
-				+ "WHERE t.ay_id = '"+ay_id+"' AND t.ay_id = ay.ay_id AND t.is_active = 1 AND ay.is_active = 1");
+				+ "WHERE t.ay_id = '"+ay_id+"' AND t.ay_id = ay.ay_id AND t.is_active = 1");
 		while(rs.next())
 		{
 			s.add(rs.getString("t.term_id"));

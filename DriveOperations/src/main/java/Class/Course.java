@@ -145,44 +145,44 @@ public class Course extends JPanel {
 		add(lblNdashimyeMaxBrillant);
 		
 		JLabel label = new JLabel("0%");
-		label.setForeground(Color.WHITE);
+		label.setForeground(new Color(211, 211, 211));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 23));
+		label.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label.setBounds(407, 0, 94, 40);
 		add(label);
 		
 		JLabel label_1 = new JLabel("0/0");
-		label_1.setForeground(Color.WHITE);
+		label_1.setForeground(new Color(211, 211, 211));
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 23));
+		label_1.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_1.setBounds(558, 0, 134, 40);
 		add(label_1);
 		
 		JLabel label_2 = new JLabel("0");
-		label_2.setForeground(Color.WHITE);
+		label_2.setForeground(new Color(211, 211, 211));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 23));
+		label_2.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_2.setBounds(730, 0, 94, 40);
 		add(label_2);
 		
 		JLabel label_3 = new JLabel("0");
-		label_3.setForeground(Color.WHITE);
+		label_3.setForeground(new Color(211, 211, 211));
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 23));
+		label_3.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_3.setBounds(871, 0, 94, 40);
 		add(label_3);
 		
 		JLabel label_4 = new JLabel("+0%");
-		label_4.setForeground(Color.WHITE);
+		label_4.setForeground(new Color(211, 211, 211));
 		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 23));
+		label_4.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_4.setBounds(1040, 0, 94, 40);
 		add(label_4);
 		
 		label_5 = new JLabel("0%");
-		label_5.setForeground(Color.WHITE);
+		label_5.setForeground(new Color(211, 211, 211));
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 23));
+		label_5.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_5.setBounds(1190, 0, 147, 40);
 		add(label_5);
 	}

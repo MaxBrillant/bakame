@@ -66,7 +66,7 @@ public class ExamMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ExamMenu() {
+	public ExamMenu(String classroom_id, String ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -291,16 +291,17 @@ public class ExamMenu extends JPanel {
 				}else {
 					Home.selectedTermIndex = Home.termsText.toArray().length-1;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-1; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
 					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				label_1.setText(Home.termsText.get(Home.selectedTermIndex));
+				ExamBox.loadAllExams(classroom_id, ay_id);
 				}
 		});
 		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
@@ -319,16 +320,17 @@ public class ExamMenu extends JPanel {
 				}else {
 					Home.selectedTermIndex = 0;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-1; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
 					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				label_1.setText(Home.termsText.get(Home.selectedTermIndex));
+				ExamBox.loadAllExams(classroom_id, ay_id);
 		}
 		});
 		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
@@ -383,11 +385,11 @@ public class ExamMenu extends JPanel {
 		delete.setVisible(false);
 		corrige.setVisible(false);
 		
-		if(!TestBox.isEmpty) {
+		if(!ExamBox.isEmpty) {
 		for(int k = 0;k<Application.panelExams.getComponentCount(); k++) {
 		for(int i =0;i<((Container) Application.panelExams.getComponent(k)).getComponentCount();i++) {
 			for(int j = 0;j<Application.panelExams.getComponentCount();j++) {
-				((Container) Application.panelExams.getComponent(j)).getComponent(i).setForeground(Color.white);
+				//((Container) Application.panelExams.getComponent(j)).getComponent(i).setForeground(Color.white);
 			Application.panelExams.getComponent(j).setBackground(new Color(60, 60, 60));
 		}
 		}

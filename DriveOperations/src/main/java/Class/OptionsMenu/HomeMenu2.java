@@ -72,7 +72,7 @@ public class HomeMenu2 extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public HomeMenu2() {
+	public HomeMenu2(String ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -187,9 +187,9 @@ public class HomeMenu2 extends JPanel {
 						dateChooser_1.setDate(d2);
 				}
 
-        		String start = dateChooser.getDate().getDate()+"/"+(dateChooser.getDate().getMonth()+1)+"/"+(dateChooser.getDate().getYear()+1900);
-        		String end = dateChooser_1.getDate().getDate()+"/"+(dateChooser_1.getDate().getMonth()+1)+"/"+(dateChooser_1.getDate().getYear()+1900);
-        		ClassStudents.loadStudents(start, end);
+        		String start = (dateChooser.getDate().getYear()+1900)+"-"+(dateChooser.getDate().getMonth()+1)+"-"+dateChooser.getDate().getDate();
+        		String end = (dateChooser_1.getDate().getYear()+1900)+"-"+(dateChooser_1.getDate().getMonth()+1)+"-"+dateChooser_1.getDate().getDate();
+        		ClassStudents.loadStudents(start, end, ay_id);
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Les 7 derniers jours", "Les 30 derniers jours", "Autre periode"}));

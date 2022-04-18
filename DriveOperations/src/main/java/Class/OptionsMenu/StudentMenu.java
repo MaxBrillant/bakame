@@ -77,7 +77,7 @@ public class StudentMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public StudentMenu() {
+	public StudentMenu(String classroom_id, String ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -360,8 +360,8 @@ public class StudentMenu extends JPanel {
 				
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
-						String name = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata(name, (Container) Application.panel1.getComponent(i));
+						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}}
 		});
 		btnNewButton.setFocusPainted(false);
@@ -384,8 +384,8 @@ public class StudentMenu extends JPanel {
 				
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
-						String name = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata(name, (Container) Application.panel1.getComponent(i));
+						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}
 			}
 		});
@@ -418,21 +418,20 @@ public class StudentMenu extends JPanel {
 				}else {
 					Home.selectedTermIndex = Home.termsText.toArray().length-1;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
-					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
 				
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
-						String name = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata(name, (Container) Application.panel1.getComponent(i));
+						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}
 				}
 		});
@@ -452,11 +451,11 @@ public class StudentMenu extends JPanel {
 				}else {
 					Home.selectedTermIndex = 0;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
 					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
@@ -465,8 +464,8 @@ public class StudentMenu extends JPanel {
 				
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
-						String name = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata(name, (Container) Application.panel1.getComponent(i));
+						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}
 			}
 		});
@@ -539,7 +538,7 @@ public class StudentMenu extends JPanel {
 		for(int k = 0;k<Application.panel1.getComponentCount(); k++) {
 		for(int i = 0;i<((Container) Application.panel1.getComponent(k)).getComponentCount();i++) {
 			for(int j = 0;j<Application.panel1.getComponentCount();j++) {
-				((Container) Application.panel1.getComponent(j)).getComponent(i).setForeground(Color.white);
+				//((Container) Application.panel1.getComponent(j)).getComponent(i).setForeground(Color.white);
 			Application.panel1.getComponent(j).setBackground(new Color(60, 60, 60));
 			((Container) Application.panel1.getComponent(j)).getComponent(0).setForeground(Color.black);
 		}

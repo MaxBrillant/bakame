@@ -66,7 +66,6 @@ public class NewCourse extends JFrame {
 	private JPanel panel;
 	public static JButton actualiser;
 	private JButton button;
-	public static List <String> list = new ArrayList();
 	public static boolean isEmpty = false;
 	public static JButton create;
 
@@ -243,71 +242,23 @@ public class NewCourse extends JFrame {
 	}
 	
 	
-	public static void CourseList() {
-		
-				String name = NewCourse.name.getText();
-				list.add(name+"//"+ NewCourse.courseName.getText()+"//"+NewCourse.TP.getSelectedItem()+"//active");
-				
-			File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Courses.txt");
-			
-			if(file.exists()) {
-						file.delete();
-					}
-			
-				try {
-					file.createNewFile();
-					PrintWriter pw = new PrintWriter(file);
-
-					for(int j = 0;j<list.toArray().length;j++) {
-					pw.println((String)list.get(j));
-					};
-					
-					pw.close();
-				
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				
-			}
-				saveCoursestoStudents(NewCourse.name.getText());
-				aws.upload(file.getPath());
-	}
-	
-	public static void load() {
+	public static void load(String classroom_id, String ay_id) {
 		Application.panel2.removeAll();
-		list.clear();
 		isEmpty = false;
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(1)).getComponent(0).setVisible(true);
-
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Courses.txt");
-		aws.downloadContent(file.getPath());
-			try {
-
-				InputStream in = App.class.getClassLoader().getResourceAsStream(
-						"Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Saved info/"+name+".txt");
-				
-				FileReader fr = new FileReader(file);
-				
-				BufferedReader br = new BufferedReader(fr);
-				Object[] lines = Home.loadActiveCourses(file.getPath());
+		
+				Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
 				
 				for(int i = 0; i<lines.length;i++) {
-				String [] words = lines[i].toString().split("//");
 				Course c = new Course();
-				((JLabel) ((Container) c).getComponent(0)).setText(words[1]);
-				loadCoursedata(words[0], c);
-				c.setName(words[0]);
+				((JLabel) ((Container) c).getComponent(0)).setText(TestBox.getFullName(lines[i].toString()));
+				loadCoursedata(c, lines[i].toString(), classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+				c.setName(lines[i].toString());
 				Application.panel2.add(c);
-				list.add(lines[i].toString());
 				}
 				Application.panel2.revalidate();
 				Application.panel2.repaint();
 				
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-		}
 			if(Application.panel2.getComponentCount()==0) {
 				isEmpty = true;
 				((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(1)).getComponent(0).setVisible(false);
@@ -372,44 +323,8 @@ public class NewCourse extends JFrame {
 			Course.deselectAll();
 		}
 	
-	public static void saveCoursestoStudents(String s) {
-		
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-		aws.downloadContent(file.getPath());
-		try {
-			FileReader fr = new FileReader(file);
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object[] lines = Home.loadActiveStudents(file.getPath());
-			
-			for(int i = 0; i<lines.length;i++) {
-				String [] words = lines[i].toString().split("//");
-				
-				for(int k = 0;k<Application.trim.getItemCount()-1;k++) {
-				File file2 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/"+words[0]+"/"+Application.trim.getItemAt(k)+"/"+s+".txt");
-				
-				file2.createNewFile();
-				PrintWriter pw = new PrintWriter(file2);
-				pw.println("0");
-				
-				
-				pw.close();
-				
-				aws.upload(file2.getPath());
-			}}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-	} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-	}
-	
 
-	public static void loadCoursedata(String shortName, Container c) { 
+	public static void loadCoursedata(Container c, String course_id, String classroom_id, String term_id, String ay_id) {
 
 		
 		List<String> l = new ArrayList();
@@ -419,13 +334,13 @@ public class NewCourse extends JFrame {
 		l1.add("0");
 		l1.add("0/0");
 		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-			l = CourseStats.getStudentTestsStats("All", Home.className
-					,shortName, Home.termsText.get(Home.selectedTermIndex),"All", "All");
+			l = CourseStats.getStudentTestsStats("All", classroom_id
+					,course_id, term_id,"All", "All");
 			}
 
 		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			l1 = CourseStats.getStudentExamStats("All", Home.className
-					,shortName, Home.termsText.get(Home.selectedTermIndex),"All", "All");
+			l1 = CourseStats.getStudentExamStats("All", classroom_id
+					,course_id, term_id,"All", "All");
 			}
 List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -443,15 +358,14 @@ if(points1==0 && maxima==0 ) {
 						((JLabel) ((((Container) c).getComponent(1)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
 							((JLabel) ((((Container) c).getComponent(2)))).setText(new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
 						
-							int echecs = CourseStats.getNumberOfechecs(shortName, Home.className, Home.termsText.get(Home.selectedTermIndex), "All", "All");
-							((JLabel) ((((Container) c).getComponent(3)))).setText(String.valueOf(echecs));
+							int echecs = CourseStats.listOfEchecs(course_id, classroom_id, ay_id, term_id).toArray().length;
 						
 							if(l.toArray().length>2) {
 						((JLabel) ((((Container)c).getComponent(4)))).setText(l.get(2));
 						((JLabel) ((((Container) c).getComponent(5)))).setText(String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
 							}
 
-						Object[] lines1 = Home.loadActiveStudents("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
+						Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
 						((JLabel) ((((Container) c).getComponent(6)))).setText(new DecimalFormat("##.##").format(100-(echecs*100/lines1.length))+"%");
 	}
 	

@@ -98,6 +98,7 @@ public class Schedule extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					mysql.connectToDB();
 					Schedule frame = new Schedule("1", "8");
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -111,8 +112,6 @@ public class Schedule extends JFrame {
 	 * Create the frame.
 	 */
 	public Schedule(String classroom_id, String ay_id) {
-
-		mysql.connectToDB();
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");

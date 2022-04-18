@@ -68,7 +68,6 @@ public class ExamBox extends JPanel {
 	public static JPanel series;
 	public static boolean isCollapsed;
 	private JLabel icon;
-	public static boolean isEmpty = false;
 	
 
 	/**
@@ -233,50 +232,50 @@ public class ExamBox extends JPanel {
 			}
 		});
 		lblNo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNo.setForeground(new Color(255, 255, 255));
-		lblNo.setFont(new Font("Roboto", Font.PLAIN, 23));
+		lblNo.setForeground(new Color(211, 211, 211));
+		lblNo.setFont(new Font("Roboto", Font.PLAIN, 16));
 		lblNo.setBounds(35, 0, 45, 40);
 		add(lblNo);
 		
 		lblNdashimyeMaxBrillant = new JLabel("Comptabilite Generale");
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 23));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 20));
 		lblNdashimyeMaxBrillant.setBounds(104, 0, 407, 40);
 		add(lblNdashimyeMaxBrillant);
 		
 		JLabel label_3 = new JLabel("31/12/2003");
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setForeground(new Color(255, 255, 255));
-		label_3.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_3.setForeground(new Color(211, 211, 211));
+		label_3.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_3.setBounds(514, 0, 134, 40);
 		add(label_3);
 		
 		JLabel label = new JLabel("0/0");
-		label.setForeground(new Color(255, 255, 255));
+		label.setForeground(new Color(211, 211, 211));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label.setBounds(720, 0, 119, 40);
 		add(label);
 		
 		JLabel label_1 = new JLabel("0%");
-		label_1.setForeground(new Color(255, 255, 255));
+		label_1.setForeground(new Color(211, 211, 211));
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_1.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_1.setBounds(878, 0, 134, 40);
 		add(label_1);
 		
 		JLabel label_2 = new JLabel("0");
-		label_2.setForeground(new Color(255, 255, 255));
+		label_2.setForeground(new Color(211, 211, 211));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_2.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_2.setBounds(1050, 0, 94, 40);
 		add(label_2);
 		
 		label_5 = new JLabel("0%");
-		label_5.setForeground(new Color(255, 255, 255));
+		label_5.setForeground(new Color(211, 211, 211));
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_5.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_5.setBounds(1178, 0, 147, 40);
 		add(label_5);
 		
@@ -297,88 +296,30 @@ public class ExamBox extends JPanel {
 		for(int i = 0; i< Home.terms.toArray().length; i++) {
 			loadExams(classroom_id, Home.terms.get(i), ay_id);
 		}
-		Application.panelExams.revalidate();
-		Application.panelExams.repaint();
-		
-		if(Application.panelExams.getComponentCount()==0) {
-			System.out.println("Vide");
-			isEmpty = true;
-			((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(false);
-			
-			JPanel panel_10 = new JPanel();
-			panel_10.setBorder(new MatteBorder(1, 3, 5, 3, (Color) new Color(0, 0, 0, 120)));
-			panel_10.setBackground(new Color(0, 0, 0, 20));
-			panel_10.setPreferredSize(new Dimension(300, 400));
-			Application.panelExams.add(panel_10);
-			panel_10.setLayout(null);
-			
-			JPanel panel_11 = new JPanel();
-			panel_11.setBorder(new MatteBorder(0, 3, 5, 3, (Color) new Color(0, 0, 0, 190)));
-			panel_11.setBackground(new Color(80,80,80));
-			panel_11.setBounds(0, 233, 300, 167);
-			panel_10.add(panel_11);
-			panel_11.setLayout(null);
-			
-			JLabel lblNewLabel = new JLabel("<html>Cette classe n'a pas encore effectue d'interrogations.</html>");
-			lblNewLabel.setForeground(new Color(255, 255, 255));
-			lblNewLabel.setBounds(10, 0, 280, 106);
-			panel_11.add(lblNewLabel);
-			lblNewLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-			
-			JButton btnNewButton_1 = new JButton("Ajouter une interrogation");
-			btnNewButton_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					TestInfo nt = new TestInfo();
-					nt.setVisible(true);
-				}
-			});
-			btnNewButton_1.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					btnNewButton_1.setBackground(Color.white);
-					btnNewButton_1.setForeground(Color.black);
-				}public void mouseExited(MouseEvent e) {
-					btnNewButton_1.setBackground(panel_11.getBackground());
-					btnNewButton_1.setForeground(Color.WHITE);
-					
-				}
-			});
-			btnNewButton_1.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
-			btnNewButton_1.setFocusPainted(false);
-			btnNewButton_1.setBackground(panel_11.getBackground());
-			btnNewButton_1.setForeground(Color.WHITE);
-			btnNewButton_1.setBounds(10, 116, 280, 40);
-			if(Home.selectedTermIndex!=Home.termsText.toArray().length) {
-			panel_11.add(btnNewButton_1);
-			}
-			btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 20));
-			
-			JLabel lblNewLabel_2 = new JLabel("");
-			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_welcome.png"));
-			lblNewLabel_2.setBackground(new Color(0, 0, 0));
-			lblNewLabel_2.setBounds(0, 0, 300, 235);
-			panel_10.add(lblNewLabel_2);
-			
-		}
 
 		Application.panelExams.revalidate();
 		Application.panelExams.repaint();
 	}
 	
 public static void loadExams(String classroom_id, String term_id, String ay_id) {
-		
-		isEmpty = false;
+		int  i = 0;
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(3)).getComponent(0).setVisible(true);
-				
+		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
+		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 20));
+		Application.panelExams.add(lblNdashimyeMaxBrillant);
+		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant.getParent().getParent().getWidth(), 50));
+		
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("SELECT * from exam_info "
+			ResultSet rs=stmt.executeQuery("SELECT * from exam_information "
 					+ "WHERE is_active = 1 AND classroom_id = '"+classroom_id+"' AND term_id = '"+term_id+"'");
 		
 		while(rs.next())
 		{
+			i++;
 						ExamBox eb = new ExamBox();
 						Application.panelExams.add(eb);
 						
@@ -419,8 +360,7 @@ public static void loadExams(String classroom_id, String term_id, String ay_id) 
 					e.printStackTrace();
 					
 			}
-				if(Application.panelExams.getComponentCount()==0) {
-					isEmpty = true;
+				if(i==0) {
 					((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(3)).getComponent(0).setVisible(false);
 					
 					JPanel panel_10 = new JPanel();
@@ -437,7 +377,7 @@ public static void loadExams(String classroom_id, String term_id, String ay_id) 
 					panel_10.add(panel_11);
 					panel_11.setLayout(null);
 					
-					JLabel lblNewLabel = new JLabel("<html>Cette classe n'a pas encore effectue d'examens.</html>");
+					JLabel lblNewLabel = new JLabel("<html>Aucun examen n'a ete effectue dans ce trimestre.</html>");
 					lblNewLabel.setForeground(new Color(255, 255, 255));
 					lblNewLabel.setBounds(10, 0, 280, 106);
 					panel_11.add(lblNewLabel);

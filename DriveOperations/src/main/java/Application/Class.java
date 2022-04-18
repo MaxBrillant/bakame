@@ -93,7 +93,7 @@ public class Class extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Class(String term_id, String ay_id) {
+	public Class(String ay_id) {
 		
 		
 		
@@ -368,12 +368,12 @@ public class Class extends JPanel {
 				String parentId = getParentId(lines[i].toString(), ay_id);
 				String parentName = getParentName(parentId);
 			if(!hasParent(lines[i].toString(), ay_id)) {
-			Class c = new Class(term_id, ay_id);
+			Class c = new Class(ay_id);
 			Home.panelClasses.add(c);
 			c.className.setText("<html><div style='text-align: center;'>"+getClassName(lines[i].toString())+"</div></html>");
 			c.setName(lines[i].toString());
 
-			Class.Actions(Home.panelClasses, term_id, ay_id);
+			Class.Actions(c, term_id, ay_id);
 			
 			c.courseBox.setBackground(Home.getClassColors(lines[i].toString(), ay_id).get(0));
 			
@@ -622,38 +622,32 @@ public class Class extends JPanel {
 	
 	public static void Actions(Component c, String term_id, String ay_id) {
 		
-		for(int i = 0; i< ((Container) c).getComponentCount(); i++) {
-			int k = i;
-			if(((Container) c).getComponent(k) instanceof Class) {
-			((JButton) ((Container) (((Container) c).getComponent(i))).getComponent(2)).addActionListener(new ActionListener() {
+			if(c instanceof Class) {
+			((JButton) ((Container) (c)).getComponent(2)).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if((((Container) c).getComponent(k)).getPreferredSize().width==370) {
-					((JButton) ((Container) (((Container) c).getComponent(k))).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-					((Container) ((Container) c).getComponent(k)).getComponent(1).setVisible(false);
-					((Container) c).getComponent(k).setPreferredSize(new Dimension(370-370*53/100, 140));
-					((Container) c).getComponent(k).revalidate();
-					((Container) c).getComponent(k).repaint();
+				if((c).getPreferredSize().width==370) {
+					((JButton) ((Container) (c)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+					((Container) c).getComponent(1).setVisible(false);
+					c.setPreferredSize(new Dimension(370-370*53/100, 140));
+					c.revalidate();
+					c.repaint();
 				}else {
-					((JButton) ((Container) (((Container) c).getComponent(k))).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop3.png"));
-					((Container) ((Container) c).getComponent(k)).getComponent(1).setVisible(true);
-					((Container) c).getComponent(k).setPreferredSize(new Dimension(370, 140));
-					((Container) c).getComponent(k).revalidate();
-					((Container) c).getComponent(k).repaint();
-					loadData(((Container) (((Container) c).getComponent(k))), ((Container) (((Container) c).getComponent(k))).getName(), term_id, ay_id);
+					((JButton) ((Container) (c)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop3.png"));
+					((Container) c).getComponent(1).setVisible(true);
+					c.setPreferredSize(new Dimension(370, 140));
+					c.revalidate();
+					c.repaint();
+					loadData(((Container) (c)), ((Container) (c)).getName(), term_id, ay_id);
 				}
 				if(!((Container) c).getParent().equals(Home.panelClasses)) {
 					Group.resizeGroup(((Container) c).getParent());
 				}
 				}
 		});
-		}}
 		
-		
-		for(int i = 0; i< ((Container) c).getComponentCount(); i++) {
-			int k = i;
-			if(((Container) c).getComponent(i) instanceof Class) {
-			((Container) c).getComponent(k).addMouseListener(new MouseAdapter() {
+			if(c instanceof Class) {
+			c.addMouseListener(new MouseAdapter() {
 				
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -666,10 +660,10 @@ public class Class extends JPanel {
 				    @Override
 				    public void run(){
 				if(e.getClickCount()==2) {
-					Home.className = ((JLabel) ((JPanel) ((((Container) (((Container) c).getComponent(k))).getComponent(0)))).getComponent(0)).getText()
+					Home.className = ((JLabel) ((JPanel) ((((Container) (c)).getComponent(0)))).getComponent(0)).getText()
 							.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "");
-					Application a = new Application(((Container) (((Container) c).getComponent(k))).getName(), ay_id);
-					a.frame.setVisible(true);
+					Application app = new Application(c.getName(), ay_id);
+					app.frame.setVisible(true);
 					
 					Home.frame.setVisible(false);
 					

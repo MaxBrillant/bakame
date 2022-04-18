@@ -612,44 +612,29 @@ public static void updateStudent(String studentName) {
 		file5.renameTo(file51);
 	}
 
-public static void load() {
+public static void load(String classroom_id, String ay_id) {
 	
 Student.deselectAll();
 Application.panel1.removeAll();
 isEmpty = false;
 ((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(0)).getComponent(0).setVisible(true);
 	
-
-	File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-	aws.downloadContent(file.getPath());
-		try {
-
-			
-			FileReader fr = new FileReader(file);
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object[] lines = Home.loadActiveStudents(file.getPath());
+			Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
 			
 			for(int i = 0; i<lines.length;i++) {
-			String [] words = lines[i].toString().split("//");
-			Student c = new Student();
-			c.setName(words[0]);
-			((JLabel) ((Container) c).getComponent(0)).setText(words[1]);
-			((JLabel) ((Container) c).getComponent(2)).setText(words[0]);
-			((JLabel) ((Container) c).getComponent(8)).setText(words[2]);
+			Student c = new Student(classroom_id, ay_id);
+			c.setName(lines[i].toString());
+			((JLabel) ((Container) c).getComponent(0)).setText(App.getStudentNumber(lines[i].toString(), classroom_id, ay_id));
+			((JLabel) ((Container) c).getComponent(2)).setText(Home.getStudentName(lines[i].toString()));
+			((JLabel) ((Container) c).getComponent(8)).setText("email adress");
 			
-				loadStudentdata(words[0], c);
+				loadStudentdata(c, lines[i].toString(), classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 
 				Application.panel1.add(c);
 			
 				Application.panel1.revalidate();
 				Application.panel1.repaint();
 			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-	}
 		if(Application.panel1.getComponentCount()==0) {
 			
 			isEmpty = true;
@@ -714,9 +699,11 @@ isEmpty = false;
 		Application.panel1.repaint();
 
 	}
-public static void loadStudentdata(String student, Container c) { 
+public static void loadStudentdata(Container c, String student_id, String classroom_id, String term_id, String ay_id) { 
 	//to calculate the different stats about the student
-		Application.manageTabs();
+	new SwingWorker<Void, Void>() {
+        public Void doInBackground() throws Exception{
+		Application.manageTabs(classroom_id, ay_id);
 		
 		List<String> l = new ArrayList();
 		l.add("0");
@@ -725,13 +712,13 @@ public static void loadStudentdata(String student, Container c) {
 		l1.add("0");
 		l1.add("0/0");
 		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-			l = StudentStats.getStudentTestsStats(student, Home.className
-					,"All", Home.termsText.get(Home.selectedTermIndex),"All", "All");
+			l = StudentStats.getStudentTestsStats(student_id, classroom_id
+					,"All", term_id,"All", "All");
 			}
 
 		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			l1 = StudentStats.getStudentExamStats(student, Home.className
-					,"All", Home.termsText.get(Home.selectedTermIndex),"All", "All");
+			l1 = StudentStats.getStudentExamStats(student_id, classroom_id
+					,"All", term_id,"All", "All");
 			}
 List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -752,12 +739,15 @@ if(points1==0 && maxima==0 ) {
 	
 	((JLabel) ((((Container) c).getComponent(3)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
 	
-	((JLabel) ((((Container) c).getComponent(5)))).setText(String.valueOf(StudentStats.getNumberOfechecs(student, Home.className, Home.termsText.get(Home.selectedTermIndex),"All", "All")));
+	((JLabel) ((((Container) c).getComponent(5)))).setText(String.valueOf(StudentStats.getNumberOfechecs(student_id, "All",
+			  classroom_id, ay_id, term_id, "All", "All")));
 	
 	if(l.toArray().length>2) {
 	((JLabel) ((((Container) c).getComponent(6)))).setText(String.valueOf(l.get(2)));
 	((JLabel) ((((Container) c).getComponent(7)))).setText(String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
-	}
+	}return null;
+        }
+    }.execute();
 }
 }
 

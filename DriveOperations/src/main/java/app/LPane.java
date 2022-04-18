@@ -32,11 +32,14 @@ import Application.Home;
 import Application.ResizeImages;
 import Class.Application;
 import Class.CustomVerticalScrollBarUI;
+import Class.ExamBox;
+import Class.ExamInfo;
 import Class.TestBox;
 import Class.TestInfo;
 import CloudOperations.aws;
 import CloudOperations.mysql;
 import Stats.StudentStats;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -204,10 +207,10 @@ public class LPane extends JPanel {
 		mention.setFont(new Font("Arial", Font.PLAIN, 20));
 		mention.setBounds(297, 70, 132, 23);
 		panel.add(mention);
-		
 		comboBox = new JComboBox();
 		comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		comboBox.setVisible(false);
+		comboBox.setSelectedItem(Integer.valueOf((int) Double.parseDouble(ExamInfo.loadCourseMaxima(course_id, classroom_id, Login.selectedAcademicYearID))));
 		comboBox.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -277,6 +280,7 @@ public class LPane extends JPanel {
 			}
 		});
 		loadAllTests(course_id, student_id, classroom_id);
+		loadAllExams(course_id, student_id, classroom_id);
 	}
 	
 	public static void loadAllTests(String course_id, String student_id, String classroom_id) {
@@ -299,12 +303,12 @@ public class LPane extends JPanel {
 	
 	public static void loadTests(String course_id, String student_id, String classroom_id, String term_id) {
 		
-		JLabel lblNdashimyeMaxBrillant = new JLabel(term_id);
+		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
 		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 18));
-		lblNdashimyeMaxBrillant.setBounds(92, 0, 391, 40);
 		LPane.panel_3.add(lblNdashimyeMaxBrillant);
+		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant.getParent().getParent().getWidth(), 30));
 		
 	boolean hasTests = false;
 	
@@ -359,12 +363,12 @@ public class LPane extends JPanel {
 				}
 		}
 		if(!hasTests) {
-				JLabel lblNdashimyeMaxBrillant1 = new JLabel("            Aucune interrogation effectuee.               ");
+				JLabel lblNdashimyeMaxBrillant1 = new JLabel("Aucune interrogation effectuee.");
 				lblNdashimyeMaxBrillant1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
 				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 18));
-				lblNdashimyeMaxBrillant1.setBounds(92, 0, 391, 40);
 				LPane.panel_3.add(lblNdashimyeMaxBrillant1);
+				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant1.getParent().getParent().getWidth(), 30));
 		}
 		Test.deselect(course_id, student_id, classroom_id);
 		} catch (SQLException e1) {
@@ -406,10 +410,14 @@ public class LPane extends JPanel {
 	
 public static void loadExams(String course_id, String student_id, String classroom_id, String term_id) {
 		
-		if(App.panel_5.getComponentCount()>0) {
+		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
+		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 18));
+		LPane.panel_2.add(lblNdashimyeMaxBrillant);
+		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant.getParent().getParent().getWidth(), 30));
 		
-		LPane.panel_2.removeAll();
-
+		boolean hasTests = false;
 
 		try {
 			Statement stmt= mysql.con.createStatement();
@@ -480,11 +488,19 @@ public static void loadExams(String course_id, String student_id, String classro
 						LPane.panel_2.revalidate();
 						LPane.panel_2.repaint();
 					}
+
+		if(!hasTests) {
+				JLabel lblNdashimyeMaxBrillant1 = new JLabel("Aucune serie effectuee.");
+				lblNdashimyeMaxBrillant1.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
+				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 18));
+				LPane.panel_2.add(lblNdashimyeMaxBrillant1);
+				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant1.getParent().getParent().getWidth(), 30));
+		}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
 		//ExamBox.loadExams();
 	}
 	

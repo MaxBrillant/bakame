@@ -64,7 +64,7 @@ public class Student extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Student() {
+	public Student(String classroom_id, String ay_id) {
 		setBackground(new Color(60, 60, 60));
 		addMouseListener(new MouseAdapter() {
 			
@@ -135,7 +135,7 @@ public class Student extends JPanel {
 				
 				if(e.getClickCount()==2) {
 					if(selectedStudents.toArray().length==1) {
-					openStudent(((JLabel) ((Container) selectedStudents.get(selectedStudents.toArray().length-1)).getComponent(2)).getText());
+					openStudent(getName(), classroom_id, ay_id);
 				}}
 			}
 			public void mouseEntered(MouseEvent e) {
@@ -157,58 +157,58 @@ public class Student extends JPanel {
 		setLayout(null);
 		
 		number = new JLabel();
-		number.setForeground(Color.BLACK);
+		number.setForeground(new Color(211, 211, 211));
 		number.setHorizontalAlignment(SwingConstants.CENTER);
 		number.setBounds(5, 0, 39, 40);
-		number.setFont(new Font("Roboto", Font.PLAIN, 23));
+		number.setFont(new Font("Roboto", Font.PLAIN, 16));
 		add(number);
 		
 		place = new JLabel();
-		place.setForeground(Color.WHITE);
+		place.setForeground(new Color(211, 211, 211));
 		place.setHorizontalAlignment(SwingConstants.CENTER);
 		place.setBounds(50, 0, 94, 40);
-		place.setFont(new Font("Roboto", Font.PLAIN, 23));
+		place.setFont(new Font("Roboto", Font.PLAIN, 16));
 		add(place);
 		
 		lblNdashimyeMaxBrillant = new JLabel();
 		lblNdashimyeMaxBrillant.setForeground(Color.WHITE);
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 23));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 20));
 		lblNdashimyeMaxBrillant.setBounds(141, 0, 380, 40);
 		add(lblNdashimyeMaxBrillant);
 		
 		JLabel label = new JLabel("0%");
-		label.setForeground(Color.WHITE);
+		label.setForeground(new Color(211, 211, 211));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label.setBounds(520, 0, 94, 40);
 		add(label);
 		
 		JLabel label_1 = new JLabel("0/0");
-		label_1.setForeground(Color.WHITE);
+		label_1.setForeground(new Color(211, 211, 211));
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_1.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_1.setBounds(653, 0, 134, 40);
 		add(label_1);
 		
 		JLabel label_2 = new JLabel("0");
-		label_2.setForeground(Color.WHITE);
+		label_2.setForeground(new Color(211, 211, 211));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_2.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_2.setBounds(807, 0, 94, 40);
 		add(label_2);
 		
 		JLabel label_3 = new JLabel("0");
-		label_3.setForeground(Color.WHITE);
+		label_3.setForeground(new Color(211, 211, 211));
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_3.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_3.setBounds(932, 0, 94, 40);
 		add(label_3);
 		
 		JLabel label_4 = new JLabel("+0%");
-		label_4.setForeground(Color.WHITE);
+		label_4.setForeground(new Color(211, 211, 211));
 		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_4.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_4.setBounds(1077, 0, 94, 40);
 		add(label_4);
 		
@@ -227,35 +227,21 @@ public class Student extends JPanel {
 		
 	}
 	
-	public static void openStudent(String studentName) {
+	public static void openStudent(String student_id, String classroom_id, String ay_id) {
 		
 		int index = 0;
-		
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-		aws.downloadContent(file.getPath());
-		FileReader fr;
-		try {
-			fr = new FileReader(file);
-		
-		
-		BufferedReader br = new BufferedReader(fr);
-		Object [] lines = Home.loadActiveStudents(file.getPath());
+		Object [] lines = Home.loadActiveStudents(classroom_id, ay_id);
 		for(int i = 0; i<lines.length;i++) {
 			List note = Arrays.asList(lines[i].toString().trim().split("//"));
-			if(note.get(0).toString().equals(studentName)) {
+			if(note.get(0).toString().equals(student_id)) {
 				index = i;
 				break;
 			}
 		}
-		System.out.println(index);
 		App.n= index;
-		App app = new App();
+		App app = new App(classroom_id, ay_id);
 		app.frame.setVisible(true);
 		Application.frame.setVisible(false);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 	
 	

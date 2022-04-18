@@ -38,6 +38,7 @@ import app.General;
 import app.LPane;
 import Class.NewCourse;
 import Class.OptionsMenu.CourseMenu;
+import Class.OptionsMenu.ExamMenu;
 import Class.OptionsMenu.StudentMenu;
 import Class.OptionsMenu.TestMenu;
 import app.Test;
@@ -120,7 +121,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
+					Application window = new Application("", "");
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -747,12 +748,12 @@ public class Application {
 
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				manageTabs();
+				manageTabs(classroom_id, ay_id);
 			}
 		});
 
 
-		Application.manageTabs();
+		Application.manageTabs(classroom_id, ay_id);
 		Application.deselect();
 		
 
@@ -765,7 +766,7 @@ public class Application {
     	new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
 
-        		NewStudent.load();
+        		NewStudent.load(classroom_id, ay_id);
         		Application.merite();
             	 return null;
             }
@@ -773,14 +774,14 @@ public class Application {
         
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-        		TestBox.loadAllTests();
+        		TestBox.loadAllTests(classroom_id, ay_id);
             	 return null;
             }
         }.execute();
         
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-    			NewCourse.load();
+    			NewCourse.load(classroom_id, ay_id);
             	 return null;
             }
         }.execute();
@@ -807,25 +808,25 @@ public class Application {
 	}
 	
 
-	public static void manageTabs() {
+	public static void manageTabs(String classroom_id, String ay_id) {
 	if(tabbedPane.getSelectedIndex()==0) {
-		StudentMenu sm = new StudentMenu();
+		StudentMenu sm = new StudentMenu(classroom_id, ay_id);
 		panel.remove(1);
 		panel.add(sm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panel1.getComponentCount()));
 	}if(tabbedPane.getSelectedIndex()==1) {
-		CourseMenu cm = new CourseMenu();
+		CourseMenu cm = new CourseMenu(classroom_id, ay_id);
 		panel.remove(1);
 		panel.add(cm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panel2.getComponentCount()));
 	}if(tabbedPane.getSelectedIndex()==2) {
-		TestMenu tm = new TestMenu();
+		TestMenu tm = new TestMenu(classroom_id, ay_id);
 		panel.remove(1);
 	panel.add(tm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panelTests.getComponentCount()));
 		
 	}if(tabbedPane.getSelectedIndex()==3) {
-		TestMenu tm = new TestMenu();
+		ExamMenu tm = new ExamMenu(classroom_id, ay_id);
 		panel.remove(1);
 	panel.add(tm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panelExams.getComponentCount()));

@@ -320,11 +320,11 @@ public class Group extends JPanel {
 					{
 				
 							
-				Class c = new Class(term_id, ay_id);
+				Class c = new Class(ay_id);
 				((JPanel)((Container) Home.panelClasses.getComponent(j)).getComponent(0)).add(c);
 				c.className.setText("<html><div style='text-align: center;'>"+Class.getClassName(rs.getString("cp.classroom_id"))+"</div></html>");
 				c.setName(rs.getString("cp.classroom_id"));
-				Class.Actions(((Container) Home.panelClasses.getComponent(j)).getComponent(0), term_id, ay_id);
+				Class.Actions(c, term_id, ay_id);
 				
 				List<Color> words = Home.getClassColors(rs.getString("cp.classroom_id"), ay_id);
 				List<String> colors = Arrays.asList(words.get(0).toString().split(","));

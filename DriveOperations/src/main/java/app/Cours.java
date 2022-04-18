@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import java.awt.Font;
 
@@ -186,13 +187,13 @@ public class Cours extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				Animations.animateComponent(getComponent(0).getParent(), 20, 20 , 40);
+				//Animations.animateComponent(getComponent(0).getParent(), 20, 20 , 40);
 					boolean alreadyExists = false;
 
 						if(selectedCourses.contains(getComponent(0).getParent())) {
 						alreadyExists = true;
 						}
-						App.deselect();
+						App.deselect(classroom_id, ay_id);
 						selectedCourses.clear();
 					selectedCourses.add(getComponent(0).getParent());
 					
@@ -201,7 +202,13 @@ public class Cours extends JPanel {
 							if(App.panel_5.getComponent(j).equals(selectedCourses.get(0))) {
 								setSelected(App.panel_5.getComponent(j));
 							}}
-						showStudentTests(course_id, student_id, classroom_id);
+						
+						App.panel_1.remove(1);
+						LPane tp = new LPane(course_id, student_id, classroom_id);
+						App.panel_1.add(tp);
+						App.panel_1.revalidate();
+						App.panel_1.repaint();
+						
 				//
 			}
 			public void mouseEntered(MouseEvent e) {
@@ -242,15 +249,6 @@ c.setBackground(new Color(120, 120, 120));
 	((Container) ((Container) c).getComponent(0)).getComponent(1).setForeground(Color.white);
 	
 }
-
-
-public static void showStudentTests(String course_id, String student_id, String classroom_id) {
-	LPane tp = new LPane(course_id, student_id, classroom_id);
-	App.panel_1.remove(1);
-	App.panel_1.add(tp);
-	App.panel_1.revalidate();
-	App.panel_1.repaint();
-	}
 	
 	  public static void loadAverage(String course_id, String classroom_id, String ay_id) {
 	  
@@ -273,7 +271,8 @@ public static void showStudentTests(String course_id, String student_id, String 
 	 
 
 	public static void loaddata(Container c, String course_id, String classroom_id, String student_id, String ay_id) {
-		
+		new SwingWorker<Void, Void>() {
+            public Void doInBackground() throws Exception{
 		Double sum = (double) 0;
 		Double sum1 = (double) 0;
 		Double tot = (double) 0;
@@ -303,7 +302,7 @@ public static void showStudentTests(String course_id, String student_id, String 
 			((JLabel) ((Container) c.getComponent(1)).getComponent(1)).setText("Points"+": "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima1));
 			((JLabel) ((Container) c.getComponent(1)).getComponent(0)).setText("Pourcentage: "+new DecimalFormat("##.##").format(percentage)+"%");
 			
-			((JLabel) ((Container) c.getComponent(1)).getComponent(2)).setText("Moyenne: "+new DecimalFormat("##.##").format(points1/maxima1*Integer.parseInt(courseMaxima))+"/"+courseMaxima);
+			((JLabel) ((Container) c.getComponent(1)).getComponent(2)).setText("Moyenne: "+new DecimalFormat("##.##").format(points1/maxima1*Double.parseDouble(courseMaxima))+"/"+courseMaxima);
 			
 			if(percentage>=50) {
 				((JLabel) ((Container) c.getComponent(1)).getComponent(3)).setText("Augm. : "+new DecimalFormat("##.##").format(points1-(maxima1/2))+" points");
@@ -319,6 +318,9 @@ public static void showStudentTests(String course_id, String student_id, String 
 			if(points1 == 0 && maxima1 == 0) {
 				c.getComponent(0).setBackground(new Color(200, 200, 200));
 				}
+			return null;
+            }
+        }.execute();
 	}
 	
 }

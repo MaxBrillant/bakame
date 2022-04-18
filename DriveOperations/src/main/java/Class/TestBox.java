@@ -69,9 +69,7 @@ public class TestBox extends JPanel {
 	public static JPanel Box1;
 	public static JLabel lblNdashimyeMaxBrillant;
 	public static JLabel label_5;
-	public static List<String> testList = new ArrayList();
 	public static boolean isSelected;
-	public static boolean isEmpty = false;
 	public static List<Component> selectedTests = new ArrayList();
 
 	/**
@@ -148,50 +146,50 @@ public class TestBox extends JPanel {
 		
 		JLabel lblNo = new JLabel("No 12");
 		lblNo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNo.setForeground(new Color(255, 255, 255));
-		lblNo.setFont(new Font("Roboto", Font.PLAIN, 23));
+		lblNo.setForeground(new Color(211, 211, 211));
+		lblNo.setFont(new Font("Roboto", Font.PLAIN, 16));
 		lblNo.setBounds(0, 0, 82, 40);
 		add(lblNo);
 		
 		lblNdashimyeMaxBrillant = new JLabel("Comptabilite Generale");
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 23));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 20));
 		lblNdashimyeMaxBrillant.setBounds(92, 0, 391, 40);
 		add(lblNdashimyeMaxBrillant);
 		
 		JLabel label_3 = new JLabel("31/12/2003");
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setForeground(new Color(255, 255, 255));
-		label_3.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_3.setForeground(new Color(211, 211, 211));
+		label_3.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_3.setBounds(514, 0, 134, 40);
 		add(label_3);
 		
 		JLabel label = new JLabel("0/0");
-		label.setForeground(new Color(255, 255, 255));
+		label.setForeground(new Color(211, 211, 211));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label.setBounds(720, 0, 119, 40);
 		add(label);
 		
 		JLabel label_1 = new JLabel("0%");
-		label_1.setForeground(new Color(255, 255, 255));
+		label_1.setForeground(new Color(211, 211, 211));
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_1.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_1.setBounds(878, 0, 134, 40);
 		add(label_1);
 		
 		JLabel label_2 = new JLabel("0");
-		label_2.setForeground(new Color(255, 255, 255));
+		label_2.setForeground(new Color(211, 211, 211));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_2.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_2.setBounds(1050, 0, 94, 40);
 		add(label_2);
 		
 		label_5 = new JLabel("0%");
-		label_5.setForeground(new Color(255, 255, 255));
+		label_5.setForeground(new Color(211, 211, 211));
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Roboto", Font.PLAIN, 23));
+		label_5.setFont(new Font("Roboto", Font.PLAIN, 16));
 		label_5.setBounds(1178, 0, 147, 40);
 		add(label_5);
 	
@@ -366,124 +364,108 @@ public static String getShortName(String course_id) {
 		
 	}
 	
-	public static void loadAllTests() {
+	public static void loadAllTests(String classroom_id, String ay_id) {
 		Application.panelTests.removeAll();
 		for(int i = 0; i< Home.terms.toArray().length; i++) {
-			loadTests(Home.terms.get(i));
+			loadTests(classroom_id, Home.terms.get(i), ay_id);
 		}
-		Application.panelTests.revalidate();
-		Application.panelTests.repaint();
-		
-		if(Application.panelTests.getComponentCount()==0) {
-			System.out.println("Vide");
-			isEmpty = true;
-			((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(false);
-			
-			JPanel panel_10 = new JPanel();
-			panel_10.setBorder(new MatteBorder(1, 3, 5, 3, (Color) new Color(0, 0, 0, 120)));
-			panel_10.setBackground(new Color(0, 0, 0, 20));
-			panel_10.setPreferredSize(new Dimension(300, 400));
-			Application.panelTests.add(panel_10);
-			panel_10.setLayout(null);
-			
-			JPanel panel_11 = new JPanel();
-			panel_11.setBorder(new MatteBorder(0, 3, 5, 3, (Color) new Color(0, 0, 0, 190)));
-			panel_11.setBackground(new Color(80,80,80));
-			panel_11.setBounds(0, 233, 300, 167);
-			panel_10.add(panel_11);
-			panel_11.setLayout(null);
-			
-			JLabel lblNewLabel = new JLabel("<html>Cette classe n'a pas encore effectue d'interrogations.</html>");
-			lblNewLabel.setForeground(new Color(255, 255, 255));
-			lblNewLabel.setBounds(10, 0, 280, 106);
-			panel_11.add(lblNewLabel);
-			lblNewLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-			
-			JButton btnNewButton_1 = new JButton("Ajouter une interrogation");
-			btnNewButton_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					TestInfo nt = new TestInfo();
-					nt.setVisible(true);
-				}
-			});
-			btnNewButton_1.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					btnNewButton_1.setBackground(Color.white);
-					btnNewButton_1.setForeground(Color.black);
-				}public void mouseExited(MouseEvent e) {
-					btnNewButton_1.setBackground(panel_11.getBackground());
-					btnNewButton_1.setForeground(Color.WHITE);
-					
-				}
-			});
-			btnNewButton_1.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
-			btnNewButton_1.setFocusPainted(false);
-			btnNewButton_1.setBackground(panel_11.getBackground());
-			btnNewButton_1.setForeground(Color.WHITE);
-			btnNewButton_1.setBounds(10, 116, 280, 40);
-			if(Home.selectedTermIndex!=Home.termsText.toArray().length) {
-			panel_11.add(btnNewButton_1);
-			}
-			btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 20));
-			
-			JLabel lblNewLabel_2 = new JLabel("");
-			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_welcome.png"));
-			lblNewLabel_2.setBackground(new Color(0, 0, 0));
-			lblNewLabel_2.setBounds(0, 0, 300, 235);
-			panel_10.add(lblNewLabel_2);
-			
-		}
-
 		Application.panelTests.revalidate();
 		Application.panelTests.repaint();
 	}
 	
-	public static void loadTests(String term) {
+	public static void loadTests(String classroom_id, String term_id, String ay_id) {
 		
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Test List/"+term+"/TestList.txt");
-		aws.downloadContent(file.getPath());
-		testList.clear();
-		isEmpty = false;
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(true);
-				
-				try {
-
+				int i = 0;
 					
-					FileReader fr = new FileReader(file);
-					
-					BufferedReader br = new BufferedReader(fr);
-					Object[] lines = br.lines().toArray();
-					
-					for(int i = 0;i<lines.length;i++) {
-						testList.add(lines[i].toString());
-					}
-					
-
-					if(lines.length>0) {
-					JLabel lblNdashimyeMaxBrillant = new JLabel(term);
+					JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
 					lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 					lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
 					lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 20));
-					lblNdashimyeMaxBrillant.setBounds(92, 0, 391, 40);
 					Application.panelTests.add(lblNdashimyeMaxBrillant);
-					}
-					for(int i = 0;i<testList.toArray().length; i++) {
-						List note = Arrays.asList(testList.get(i).split("//"));
-						if(Home.courseExists((String) note.get(1), Home.className)) {
+					lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant.getParent().getParent().getWidth(), 50));
+					
+					try {
+						Statement stmt= mysql.con.createStatement();
+
+						ResultSet rs=stmt.executeQuery("SELECT * from test_information "
+								+ "WHERE is_active = 1 AND classroom_id = '"+classroom_id+"' AND term_id = '"+term_id+"'");
+					
+					while(rs.next())
+					{
+						i++;
 						TestBox tb = new TestBox();
-						tb.setName((String) note.get(0));
-						loadTestdata((String) note.get(0), tb);
+						tb.setName(rs.getString("test_id"));
+						loadTestdata(tb, rs.getString("test_id"), classroom_id, ay_id);
 						Application.panelTests.add(tb);
-					}}
+					}
 					Application.panelTests.revalidate();
 					Application.panelTests.repaint();
-				} catch (FileNotFoundException e) {
+				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					
 			}
+					if(i == 0) {
+						((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(false);
+						
+						JPanel panel_10 = new JPanel();
+						panel_10.setBorder(new MatteBorder(1, 3, 5, 3, (Color) new Color(0, 0, 0, 120)));
+						panel_10.setBackground(new Color(0, 0, 0, 20));
+						panel_10.setPreferredSize(new Dimension(300, 400));
+						Application.panelTests.add(panel_10);
+						panel_10.setLayout(null);
+						panel_10.setName(term_id);
+						
+						JPanel panel_11 = new JPanel();
+						panel_11.setBorder(new MatteBorder(0, 3, 5, 3, (Color) new Color(0, 0, 0, 190)));
+						panel_11.setBackground(new Color(80,80,80));
+						panel_11.setBounds(0, 233, 300, 167);
+						panel_10.add(panel_11);
+						panel_11.setLayout(null);
+						
+						JLabel lblNewLabel = new JLabel("<html>Aucune interrogation n'a ete effectuee dans ce trimestre.</html>");
+						lblNewLabel.setForeground(new Color(255, 255, 255));
+						lblNewLabel.setBounds(10, 0, 280, 106);
+						panel_11.add(lblNewLabel);
+						lblNewLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+						
+						JButton btnNewButton_1 = new JButton("Ajouter une interrogation");
+						btnNewButton_1.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								TestInfo nt = new TestInfo();
+								nt.setVisible(true);
+							}
+						});
+						btnNewButton_1.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseEntered(MouseEvent e) {
+								btnNewButton_1.setBackground(Color.white);
+								btnNewButton_1.setForeground(Color.black);
+							}public void mouseExited(MouseEvent e) {
+								btnNewButton_1.setBackground(panel_11.getBackground());
+								btnNewButton_1.setForeground(Color.WHITE);
+								
+							}
+						});
+						btnNewButton_1.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
+						btnNewButton_1.setFocusPainted(false);
+						btnNewButton_1.setBackground(panel_11.getBackground());
+						btnNewButton_1.setForeground(Color.WHITE);
+						btnNewButton_1.setBounds(10, 116, 280, 40);
+						if(Home.selectedTermIndex!=Home.termsText.toArray().length) {
+						panel_11.add(btnNewButton_1);
+						}
+						btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 20));
+						
+						JLabel lblNewLabel_2 = new JLabel("");
+						lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_welcome.png"));
+						lblNewLabel_2.setBackground(new Color(0, 0, 0));
+						lblNewLabel_2.setBounds(0, 0, 300, 235);
+						panel_10.add(lblNewLabel_2);
+						
+					}
 				Application.panelTests.revalidate();
 				Application.panelTests.repaint();
 				TestBox.deselectAll();
@@ -491,28 +473,20 @@ public static String getShortName(String course_id) {
 	
 	
 
-	public static void loadTestdata(String testId, Container c) {
+	public static void loadTestdata(Container c, String test_id, String classroom_id, String ay_id) {
 		
 		int echec = 0;
 		Double points = (double) 0;
 		Double maxima = (double) 0;
 		int participants = 0;
 		
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
 		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = Home.loadActiveStudents(file1.getPath());
+		Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
 		
 		
 		for(int i = 0; i<lines1.length;i++) {
-		List student = Arrays.asList(lines1[i].toString().split("//"));
 		
-		List<String> note = Arrays.asList(LPane.loadStudentNote(testId, student.get(0).toString()).split("/"));
+		List<String> note = Arrays.asList(LPane.loadStudentNote(test_id, lines1[i].toString()).split("/"));
 		Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."));
 		Double maxima1 = Double.parseDouble(note.get(1).replaceAll(",", "."));
 		
@@ -528,21 +502,12 @@ public static String getShortName(String course_id) {
 			participants++;
 		}
 		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		
-		
-		
-
-		((JLabel) ((Container) c).getComponent(0)).setText("No "+Test.getTestNumber(testId));
-		String name = getFullName(Test.getTestCourseName(testId), Home.className);
+		((JLabel) ((Container) c).getComponent(0)).setText("No "+Test.getTestName(test_id));
+		String name = getFullName(Test.getTestCourse(test_id));
 		((JLabel) ((Container) c).getComponent(1)).setText(name);
-		((JLabel) ((Container) c).getComponent(2)).setText(Test.getTestDate(testId));
+		((JLabel) ((Container) c).getComponent(2)).setText(Test.getTestDate(test_id));
 		
-		((JLabel) ((Container) c).getComponent(3)).setText((new DecimalFormat("##.##").format(points*Double.parseDouble(Test.getTestMaxima(testId))/maxima))+"/"+Test.getTestMaxima(testId));
+		((JLabel) ((Container) c).getComponent(3)).setText((new DecimalFormat("##.##").format(points*Double.parseDouble(Test.getTestMaxima(test_id))/maxima))+"/"+Test.getTestMaxima(test_id));
 		((JLabel) ((Container) c).getComponent(4)).setText((new DecimalFormat("##.##").format(100*points/maxima)+"%"));
 		((JLabel) ((Container) c).getComponent(5)).setText(String.valueOf(echec));
 		String reussite = new DecimalFormat("##.##").format(100-(Double.parseDouble(String.valueOf(echec))/Double.parseDouble(String.valueOf(participants))*100));

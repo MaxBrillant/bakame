@@ -239,7 +239,7 @@ public class ClassStudents extends JPanel {
 			public void itemStateChanged(ItemEvent e) {
 			//	loadData(te, t.get(0).toString());
 
-				deselectAll();
+				deselectAll(ay_id);
 
 				if(((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).getText().equals("Croissant")) {
 
@@ -263,7 +263,7 @@ public class ClassStudents extends JPanel {
 		te.combo2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 			//	loadData(te, t.get(0).toString());
-				deselectAll();
+				deselectAll(ay_id);
 				selectedCourse = te.combo2.getSelectedIndex();
 
 				if(((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).getText().equals("Croissant")) {
@@ -291,7 +291,7 @@ public class ClassStudents extends JPanel {
         		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 				
 				loadData(te.combo3.getParent().getParent(), courses.get(selectedCourse), lines1[l].toString(), ay_id, start, end);
-				deselectAll();
+				deselectAll(ay_id);
 
 				if(((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).getText().equals("Croissant")) {
 	        		String start1 = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
@@ -315,7 +315,7 @@ public class ClassStudents extends JPanel {
 		((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).getText().equals("Croissant")) {
-					deselectAll();
+					deselectAll(ay_id);
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
@@ -324,7 +324,7 @@ public class ClassStudents extends JPanel {
 				((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).setText("Decroissant");
 
 				}else if(((AbstractButton) ((Container) te.getComponent(2)).getComponent(1)).getText().equals("Decroissant")){
-					deselectAll();
+					deselectAll(ay_id);
 	        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
 	        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
 					
@@ -340,7 +340,7 @@ public class ClassStudents extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				Home.className = ((JLabel) ((Container) te.getComponent(0)).getComponent(0)).getText()
 						.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "");
-				Application a = new Application();
+				Application a = new Application(te.getName(), ay_id);
 				a.frame.setVisible(true);
 				
 				Home.frame.setVisible(false);
@@ -505,7 +505,7 @@ public class ClassStudents extends JPanel {
 			(((JPanel)((JPanel) te).getComponent(1))).getComponent(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					deselectAll();
+					deselectAll(ay_id);
 					((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).setBackground(new Color(20, 148, 198));
 					selectedStudent = ((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getName();
 					StudentInfo s = new StudentInfo(((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getName(),
@@ -659,7 +659,7 @@ c.addItem("Tous");
 
 	}
 	
-	public static void deselectAll() {
+	public static void deselectAll(String ay_id) {
 
 		for(int j = 0; j< Home.panelStudents.getComponentCount(); j++) {
 		for(int i = 0; i< (((Container) ((JPanel) Home.panelStudents.getComponent(j)).getComponent(1))).getComponentCount(); i++) {
@@ -667,7 +667,7 @@ c.addItem("Tous");
 		}
 		}selectedStudent = "";
 
-		MainInfo m = new MainInfo();
+		MainInfo m = new MainInfo(ay_id);
 		m.guide.setText("<html>- Cliquez sur une classe pour voir les eleves<br/> appartenants a cette classe selon la methode de <br/>triage selectionnee.<br/><br/>\r\n- Cliquez sur un eleve pour le selectonner.<br/><br/>\r\n- Selectionnez un pour voir les options <br/>disponibles ainsi que quelques statistiques rapides.<br/><br/>\r\n- Cliquez sur le bas de la classe la ou c'est ecrit <br/>\"voir la classe\" pour ouvrir cette classe.<br/><br/>\r\n- Cliquez sur l'ordre de classement (croissant <br/>ou decroissant) pour changer l'ordre.</html>");
 		Home.side.removeAll();
 		Home.side.add(m);

@@ -67,7 +67,7 @@ public class CourseMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CourseMenu() {
+	public CourseMenu(String classroom_id, String ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -340,9 +340,8 @@ public class CourseMenu extends JPanel {
 				label.setText(Home.periodText.get(Home.selectedPeriod));
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
-						String name = (String) Application.panel2.getComponent(i).getName();
-					System.out.println(name);
-					NewCourse.loadCoursedata(name, (Container) Application.panel2.getComponent(i));
+						String course_id = (String) Application.panel2.getComponent(i).getName();
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}
 				}
 		});
@@ -366,9 +365,8 @@ public class CourseMenu extends JPanel {
 
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
-						String name = (String) Application.panel2.getComponent(i).getName();
-					System.out.println(name);
-					NewCourse.loadCoursedata(name, (Container) Application.panel2.getComponent(i));
+						String course_id = (String) Application.panel2.getComponent(i).getName();
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}
 			}
 		});
@@ -402,22 +400,20 @@ public class CourseMenu extends JPanel {
 				}else {
 					Home.selectedTermIndex = Home.termsText.toArray().length-1;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
-					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				label_1.setText(Home.termsText.get(Home.selectedTermIndex));
 
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
-						String name = (String) Application.panel2.getComponent(i).getName();
-					System.out.println(name);
-					NewCourse.loadCoursedata(name, (Container) Application.panel2.getComponent(i));
+						String course_id = (String) Application.panel2.getComponent(i).getName();
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}
 				}
 		});
@@ -438,11 +434,11 @@ public class CourseMenu extends JPanel {
 				}else {
 					Home.selectedTermIndex = 0;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
 					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
@@ -451,9 +447,8 @@ public class CourseMenu extends JPanel {
 
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
-						String name = (String) Application.panel2.getComponent(i).getName();
-					System.out.println(name);
-					NewCourse.loadCoursedata(name, (Container) Application.panel2.getComponent(i));
+						String course_id = (String) Application.panel2.getComponent(i).getName();
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}}
 			}
 		});
@@ -511,7 +506,7 @@ public class CourseMenu extends JPanel {
 		for(int k = 0;k<Application.panel2.getComponentCount(); k++) {
 		for(int i =0;i<((Container) Application.panel2.getComponent(k)).getComponentCount();i++) {
 			for(int j = 0;j<Application.panel2.getComponentCount();j++) {
-				((Container) Application.panel2.getComponent(j)).getComponent(i).setForeground(Color.white);
+				//((Container) Application.panel2.getComponent(j)).getComponent(i).setForeground(Color.white);
 			Application.panel2.getComponent(j).setBackground(new Color(60, 60, 60));
 		}
 		}

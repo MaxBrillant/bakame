@@ -156,20 +156,22 @@ public class App {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(String classroom_id, String ay_id) {
-		frame = new JFrame();
-		frame.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-				
-				for(int i = 0; i<panel_5.getComponentCount();i++) {
-				if(frame.getWidth()<=1191) {
-				panel_5.setLayout(new WrapLayout(WrapLayout.CENTER, 15*frame.getWidth()/2/screensize.width, 15*frame.getWidth()/2/screensize.width));
-			}else {
-				panel_5.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 10));
-			}
-				}}
-		});
+
+		loadStudents(classroom_id, ay_id);
+		
+		
+		frame = new JFrame();/*
+								 * frame.addComponentListener(new ComponentAdapter() {
+								 * 
+								 * @Override public void componentResized(ComponentEvent e) { Dimension
+								 * screensize = Toolkit.getDefaultToolkit().getScreenSize();
+								 * 
+								 * for(int i = 0; i<panel_5.getComponentCount();i++) {
+								 * if(frame.getWidth()<=1191) { panel_5.setLayout(new
+								 * WrapLayout(WrapLayout.CENTER, 15*frame.getWidth()/2/screensize.width,
+								 * 15*frame.getWidth()/2/screensize.width)); }else { panel_5.setLayout(new
+								 * WrapLayout(WrapLayout.CENTER, 10, 10)); } }} });
+								 */
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(0,0,screensize.width,screensize.height);
@@ -281,7 +283,7 @@ public class App {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				Application app = new Application();
+				Application app = new Application(classroom_id, ay_id);
 				app.frame.setVisible(true);
 				App.frame.setVisible(false);
 			}
@@ -344,11 +346,11 @@ public class App {
 					Home.selectedTermIndex = Home.termsText.toArray().length-1;
 				}
 
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-1; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
 					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
@@ -358,6 +360,7 @@ public class App {
 				
 				if(selectedCourse!= null) {
 					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
 					
 				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -394,11 +397,11 @@ public class App {
 					Home.selectedTermIndex = 0;
 				}
 
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-1; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
 					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
@@ -410,6 +413,7 @@ public class App {
 				
 				if(selectedCourse != null) {
 					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
 				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
 						Cours.selectedCourses.add(App.panel_5.getComponent(i));
@@ -554,8 +558,6 @@ public class App {
 
 				Test.deselect(selectedCourse.getName(), students.get(n), classroom_id);
 				}
-
-				loadStudents(classroom_id, ay_id);
 				
 				if(n<students.toArray().length-1) {
 					n++;
@@ -573,6 +575,7 @@ public class App {
 					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
 					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
 					
 				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -609,7 +612,7 @@ public class App {
 				Test.deselect(selectedCourse.getName(), students.get(n), classroom_id);
 				}
 				
-				loadStudents(classroom_id, ay_id);
+				//loadStudents(classroom_id, ay_id);
 				
 				if(n>0) {
 					n--;
@@ -625,6 +628,7 @@ public class App {
 					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
 					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
 					
 					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -694,6 +698,21 @@ public class App {
 		panel_5.setLayout(null);
 		
 		panel_5.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
+		
+
+		frame.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+				
+				for(int i = 0; i<panel_5.getComponentCount();i++) {
+				if(frame.getWidth()<=1191) {
+				panel_5.setLayout(new WrapLayout(WrapLayout.CENTER, 15*frame.getWidth()/2/screensize.width, 15*frame.getWidth()/2/screensize.width));
+			}else {
+				panel_5.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 10));
+			}
+				}}
+		});
 		
 		deselect(classroom_id, ay_id);
 
@@ -798,6 +817,7 @@ public class App {
 					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
 					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
 					
 					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -841,10 +861,11 @@ public class App {
 		
 		Cours.isSelected = false;
 		
-		if(App.panel_5.getComponentCount()>0) {
-		int num = Integer.parseInt(App.number.getText().replaceAll("[^0.00-9.00]", ""));
-		App.panel_5.getComponent(num-1).setPreferredSize(new Dimension(400, 150));
-		}
+		if(App.panel_5.getComponentCount()>0 && Cours.selectedCourses.toArray().length>0) {
+			for(int i = 0; i< App.panel_5.getComponentCount(); i++) {
+				if(App.panel_5.getComponent(i).equals(Cours.selectedCourses.get(0))) {
+		App.panel_5.getComponent(i).setPreferredSize(new Dimension(400, 150));
+		}}}
 		
 		App.delete.setEnabled(false);
 		App.edit.setEnabled(false);
@@ -915,10 +936,10 @@ public class App {
 				c.setName(lines[i].toString());
 				App.panel_5.add(c);
 				//number.setText(String.valueOf(panel_5.getComponentCount()));
+				Cours.loaddata(c, lines[i].toString(), classroom_id, student_id, ay_id);
 				
 				App.panel_5.revalidate();
 				App.panel_5.repaint();
-				Cours.loaddata(c, lines[i].toString(), classroom_id, student_id, ay_id);
 				}
 		}
 }

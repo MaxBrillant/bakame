@@ -737,7 +737,7 @@ public class StudentStats extends JPanel {
 						
 							Object[] lines11 = Home.loadActiveTerms(ay_id);
 							for(int j = 0; j<lines11.length;j++) {
-							students.add(lines11[j].toString());
+								terms.add(lines11[j].toString());
 							}
 						}
 					else {
@@ -1084,7 +1084,7 @@ public static List<String> getStudentExamStats(String student_id, String classro
 					
 						Object[] lines11 = Home.loadActiveTerms(ay_id);
 						for(int j = 0; j<lines11.length;j++) {
-						students.add(lines11[j].toString());
+							terms.add(lines11[j].toString());
 						}
 					}
 				else {

@@ -74,7 +74,7 @@ public class HomeMenu1 extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public HomeMenu1() {
+	public HomeMenu1(String ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -215,7 +215,7 @@ public class HomeMenu1 extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int i = ((JScrollPane) Home.panelClasses.getParent().getParent()).getVerticalScrollBar().getValue();
 				goUp (((JLabel) ((Container) ((Container) Class.selectedClasses.get(0)).getComponent(0)).getComponent(0)).getText().replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
-				Class.loadClasses();
+				Class.loadClasses(Home.periodText.get(Home.selectedPeriod), ay_id);
 				System.out.println(i);
 				((JScrollPane) Home.panelClasses.getParent().getParent()).getVerticalScrollBar().setValue(i);}
 		});
@@ -236,7 +236,7 @@ public class HomeMenu1 extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int i = ((JScrollPane) Home.panelClasses.getParent().getParent()).getVerticalScrollBar().getValue();
 				goDown (((JLabel) ((Container) ((Container) Class.selectedClasses.get(0)).getComponent(0)).getComponent(0)).getText().replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
-				Class.loadClasses();
+				Class.loadClasses(Home.periodText.get(Home.selectedPeriod), ay_id);
 				((JScrollPane) Home.panelClasses.getParent().getParent()).getVerticalScrollBar().setValue(i);
 			
 			}
@@ -346,9 +346,9 @@ public class HomeMenu1 extends JPanel {
 					Home.selectedPeriod = Home.periodText.toArray().length-1;
 				}
 				lblNewLabel_1.setText(Home.periodText.get(Home.selectedPeriod));
-				Class.deselectAll();
+				Class.deselectAll(ay_id);
 				for(int i = 0; i< Home.panelClasses.getComponentCount(); i++) {
-				Class.loadData(Home.panelClasses.getComponent(i));
+				Class.loadData(Home.panelClasses.getComponent(i), Home.panelClasses.getComponent(i).getName(), Home.termsText.get(Home.selectedTermIndex), ay_id);
 				}
 				}
 		});
@@ -369,9 +369,9 @@ public class HomeMenu1 extends JPanel {
 					Home.selectedPeriod = 0;
 				}
 				lblNewLabel_1.setText(Home.periodText.get(Home.selectedPeriod));
-				Class.deselectAll();
+				Class.deselectAll(ay_id);
 				for(int i = 0; i< Home.panelClasses.getComponentCount(); i++) {
-					Class.loadData(Home.panelClasses.getComponent(i));
+					Class.loadData(Home.panelClasses.getComponent(i), Home.panelClasses.getComponent(i).getName(), Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}
 			}
 		});
@@ -404,19 +404,22 @@ public class HomeMenu1 extends JPanel {
 				}else {
 					Home.selectedTermIndex = Home.termsText.toArray().length-1;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
-					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
-				lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
-				Class.deselectAll();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
+				}else {
+					lblerTrimestre.setText(Home.getTermName(Home.termsText.get(Home.selectedTermIndex)));
+					}
+				Class.deselectAll(ay_id);
 				for(int i = 0; i< Home.panelClasses.getComponentCount(); i++) {
-					Class.loadData(Home.panelClasses.getComponent(i));
+					Class.loadData(Home.panelClasses.getComponent(i), Home.panelClasses.getComponent(i).getName(), Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}
 				}
 		});
@@ -436,19 +439,22 @@ public class HomeMenu1 extends JPanel {
 				}else {
 					Home.selectedTermIndex = 0;
 				}
-				if(Home.selectedTermIndex == 3) {
-					Home.terms.clear();
-					Home.terms.add("1er Trimestre");
-					Home.terms.add("2eme Trimestre");
-					Home.terms.add("3eme Trimestre");
+				Home.terms.clear();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
+					Home.terms.add(Home.termsText.get(i));
+					}
 				}else {
-					Home.terms.clear();
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
-				lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
-				Class.deselectAll();
+				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
+					lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
+				}else {
+					lblerTrimestre.setText(Home.getTermName(Home.termsText.get(Home.selectedTermIndex)));
+					}
+				Class.deselectAll(ay_id);
 				for(int i = 0; i< Home.panelClasses.getComponentCount(); i++) {
-					Class.loadData(Home.panelClasses.getComponent(i));
+					Class.loadData(Home.panelClasses.getComponent(i), Home.panelClasses.getComponent(i).getName(), Home.termsText.get(Home.selectedTermIndex), ay_id);
 					}
 		}
 		});

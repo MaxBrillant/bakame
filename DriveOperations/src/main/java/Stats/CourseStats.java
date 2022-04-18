@@ -720,7 +720,7 @@ public class CourseStats extends JPanel {
 						
 							Object[] lines11 = Home.loadActiveTerms(ay_id);
 							for(int j = 0; j<lines11.length;j++) {
-							students.add(lines11[j].toString());
+								terms.add(lines11[j].toString());
 							}
 						}
 					else {
@@ -1036,7 +1036,7 @@ public static List<String> getStudentExamStats(String student_id, String classro
 					
 						Object[] lines11 = Home.loadActiveTerms(ay_id);
 						for(int j = 0; j<lines11.length;j++) {
-						students.add(lines11[j].toString());
+							terms.add(lines11[j].toString());
 						}
 					}
 				else {
@@ -1420,6 +1420,35 @@ e.printStackTrace();
 		 * 
 		 * }
 		 */
+	    
+public static List listOfEchecs(String course_id, String classroom_id, String ay_id, String term_id) {
+	    	
+	    	
+			Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
+			List<String> echecs = new ArrayList();
+			
+	    	
+			for(int i = 0; i<lines.length;i++) {
+				
+	    	List l = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
+					, course_id, term_id, "All", "All");
+	    	
+			List l1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
+					, course_id, term_id, "All", "All");
+			
+			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
+			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
+			
+			
+			Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."))+Double.parseDouble(note1.get(0).replaceAll(",", "."));
+			Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", "."));
+			
+			if(Double.parseDouble(new DecimalFormat("##.##").format(points1).replaceAll(",", "."))<(Double.parseDouble(new DecimalFormat("##.##").format(maxima).replaceAll(",", "."))/2)) {
+				echecs.add(lines[i].toString()+"//"+new DecimalFormat("##.##").format(maxima/2-points1).replaceAll(",", "."));
+			}
+			}
+			return echecs;
+			}
 	    
 	    public static void echecs(String course_id, String classroom_id, String ay_id, String term_id) {
 	    	
