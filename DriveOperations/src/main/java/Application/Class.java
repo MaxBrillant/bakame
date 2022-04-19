@@ -116,7 +116,7 @@ public class Class extends JPanel {
 	className.setBorder(null);
 	className.setForeground(Color.WHITE);
 	className.setBackground(Color.GREEN);
-	className.setFont(new Font("Roboto", Font.BOLD, 20));
+	className.setFont(new Font("Roboto", Font.BOLD, 16));
 	className.setHorizontalAlignment(SwingConstants.CENTER);
 	courseBox.add(className);
 	
@@ -128,26 +128,26 @@ public class Class extends JPanel {
 	
 	percent = new JLabel("Moyenne: 0%");
 	percent.setForeground(Color.WHITE);
-	percent.setFont(new Font("Roboto Medium", Font.PLAIN, 18));
+	percent.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
 	stats.add(percent);
 	stats.add(percent);
 	
 	
 	number = new JLabel("Nombre d'eleves: 252");
 	number.setForeground(Color.WHITE);
-	number.setFont(new Font("Roboto Medium", Font.PLAIN, 18));
+	number.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
 	stats.add(number);
 	stats.add(number);
 	
 	moyenneEchecs = new JLabel("Nombre de cours: 14");
 	moyenneEchecs.setForeground(Color.WHITE);
-	moyenneEchecs.setFont(new Font("Roboto Medium", Font.PLAIN, 18));
+	moyenneEchecs.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
 	stats.add(moyenneEchecs);
 	stats.add(moyenneEchecs);
 	
 	echecs = new JLabel("Sous 50%:: 0 el\u00E8ves");
 	echecs.setForeground(Color.WHITE);
-	echecs.setFont(new Font("Roboto Medium", Font.PLAIN, 18));
+	echecs.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
 	stats.add(echecs);
 	stats.add(echecs);
 	

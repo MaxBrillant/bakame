@@ -71,7 +71,6 @@ public class Cours extends JPanel {
 	public static JLabel lblPoints;
 	public static JLabel lblAverage;
 	public static JLabel lblImprovements;
-	public static JLabel num;
 	public static boolean isSelected;
 	public static List<Component> selectedCourses = new ArrayList();
 	
@@ -83,7 +82,7 @@ public class Cours extends JPanel {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	setBackground(Color.BLACK);
 	setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
-	setPreferredSize(new Dimension(400, 150));
+	setPreferredSize(new Dimension(300, 112));
 	setLayout(new BorderLayout(0, 0));
 	
 	
@@ -91,7 +90,7 @@ public class Cours extends JPanel {
 	courseBox = new JPanel();
 	courseBox.setBorder(null);
 	courseBox.setBackground(new Color(201,255,226));
-	courseBox.setPreferredSize(new Dimension(180, 10));
+	courseBox.setPreferredSize(new Dimension(150, 10));
 	add(courseBox, BorderLayout.WEST);
 	courseBox.setLayout(null);
 	
@@ -99,87 +98,44 @@ public class Cours extends JPanel {
 	Cours.setBorder(null);
 	Cours.setForeground(new Color(0, 0, 0));
 	Cours.setBackground(Color.GREEN);
-	Cours.setFont(new Font("Futura Bk BT", Font.BOLD, 25));
+	Cours.setFont(new Font("Segoe UI", Font.BOLD, 12));
 	Cours.setHorizontalAlignment(SwingConstants.CENTER);
-	Cours.setBounds(0, 0, 180, 150);
+	Cours.setBounds(0, 0, 150, 107);
 	courseBox.add(Cours);
-	
-	num = new JLabel("0");
-	num.setHorizontalAlignment(SwingConstants.CENTER);
-	num.setForeground(new Color(0, 0, 0));
-	num.setFont(new Font("Arial", Font.PLAIN, 17));
-	num.setBounds(0, 116, 37, 34);
-	courseBox.add(num);
 	
 	stats = new JPanel();
 	stats.setBackground(new Color(60, 60, 60));
 	add(stats, BorderLayout.CENTER);
-
-	GridBagLayout gbl_stats = new GridBagLayout();
-	gbl_stats.columnWidths = new int[]{18, 132, 0};
-	gbl_stats.rowHeights = new int[]{24, 35, 35, 35, 35, 17, 0};
-	gbl_stats.columnWeights = new double[]{0.0, 10.0, Double.MIN_VALUE};
-	gbl_stats.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-	stats.setLayout(gbl_stats);
+	stats.setLayout(null);
 	
 	percent = new JLabel("Pourcentage: 0%");
 	percent.setForeground(Color.WHITE);
-	percent.setFont(new Font("Roboto", Font.BOLD, 18));
-	percent.setBounds(10, 21, 230, 24);
+	percent.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	percent.setBounds(10, 3, 126, 22);
 	stats.add(percent);
-
-	GridBagConstraints gbc_percent = new GridBagConstraints();
-	gbc_percent.fill = GridBagConstraints.VERTICAL;
-	gbc_percent.anchor = GridBagConstraints.WEST;
-	gbc_percent.insets = new Insets(0, 0, 5, 0);
-	gbc_percent.gridx = 1;
-	gbc_percent.gridy = 1;
-	stats.add(percent, gbc_percent);
+	stats.add(percent);
 	
 	
 	lblPoints = new JLabel("Points:");
 	lblPoints.setForeground(Color.WHITE);
-	lblPoints.setFont(new Font("Roboto", Font.BOLD, 18));
-	lblPoints.setBounds(10, 47, 230, 24);
+	lblPoints.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	lblPoints.setBounds(10, 23, 126, 22);
 	stats.add(lblPoints);
-
-	GridBagConstraints gbc_lblPoints = new GridBagConstraints();
-	gbc_lblPoints.anchor = GridBagConstraints.WEST;
-	gbc_lblPoints.insets = new Insets(0, 0, 5, 0);
-	gbc_lblPoints.gridx = 1;
-	gbc_lblPoints.gridy = 2;
-	stats.add(lblPoints, gbc_lblPoints);
+	stats.add(lblPoints);
 	
 	lblAverage = new JLabel("Moyenne:");
 	lblAverage.setForeground(Color.WHITE);
-	lblAverage.setFont(new Font("Roboto", Font.BOLD, 18));
-	lblAverage.setBounds(10, 73, 230, 24);
+	lblAverage.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	lblAverage.setBounds(10, 43, 126, 22);
 	stats.add(lblAverage);
-
-	GridBagConstraints gbc_lblAverage = new GridBagConstraints();
-	gbc_lblAverage.fill = GridBagConstraints.VERTICAL;
-	gbc_lblAverage.anchor = GridBagConstraints.WEST;
-	gbc_lblAverage.insets = new Insets(0, 0, 5, 0);
-	gbc_lblAverage.gridx = 1;
-	gbc_lblAverage.gridy = 3;
-	stats.add(lblAverage, gbc_lblAverage);
+	stats.add(lblAverage);
 	
 	lblImprovements = new JLabel("Echec:");
 	lblImprovements.setForeground(Color.WHITE);
-	lblImprovements.setFont(new Font("Roboto", Font.BOLD, 18));
-	lblImprovements.setBounds(10, 101, 230, 24);
+	lblImprovements.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	lblImprovements.setBounds(10, 63, 126, 22);
 	stats.add(lblImprovements);
-
-	GridBagConstraints gbc_lblImprovements = new GridBagConstraints();
-	gbc_lblImprovements.fill = GridBagConstraints.VERTICAL;
-	gbc_lblImprovements.anchor = GridBagConstraints.WEST;
-	gbc_lblImprovements.insets = new Insets(0, 0, 5, 0);
-	gbc_lblImprovements.gridx = 1;
-	gbc_lblImprovements.gridy = 4;
-	stats.add(lblImprovements, gbc_lblImprovements);
-	
-	
-	setPreferredSize(new Dimension(new Dimension(400, 150)));
+	stats.add(lblImprovements);
 	
 	
 	
@@ -246,7 +202,6 @@ c.setBackground(new Color(120, 120, 120));
 }
 	((JComponent) c).setBorder(new MatteBorder(3, 2, 6, 5, c.getBackground()));
 	((Container) ((Container) c).getComponent(0)).getComponent(0).setForeground(Color.white);
-	((Container) ((Container) c).getComponent(0)).getComponent(1).setForeground(Color.white);
 	
 }
 	

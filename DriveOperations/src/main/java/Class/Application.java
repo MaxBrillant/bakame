@@ -89,6 +89,10 @@ import java.awt.event.ItemEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JLayeredPane;
+import java.awt.event.WindowStateListener;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class Application {
 

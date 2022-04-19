@@ -624,9 +624,8 @@ isEmpty = false;
 			for(int i = 0; i<lines.length;i++) {
 			Student c = new Student(classroom_id, ay_id);
 			c.setName(lines[i].toString());
-			((JLabel) ((Container) c).getComponent(0)).setText(App.getStudentNumber(lines[i].toString(), classroom_id, ay_id));
-			((JLabel) ((Container) c).getComponent(2)).setText(Home.getStudentName(lines[i].toString()));
-			((JLabel) ((Container) c).getComponent(8)).setText("email adress");
+			((JLabel) ((Container)((Container) c).getComponent(0)).getComponent(0)).setText(App.getStudentNumber(lines[i].toString(), classroom_id, ay_id));
+			((JLabel) ((Container) c).getComponent(1)).setText(Home.getStudentName(lines[i].toString()));
 			
 				loadStudentdata(c, lines[i].toString(), classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 
@@ -733,19 +732,19 @@ if(points1==0 && maxima==0 ) {
 	percentage = points1*100/maxima;
 }
 	
-	((JLabel) ((((Container) c).getComponent(4)))).setText(new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(2)))).setText("Points: "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
 	
 	
 	
-	((JLabel) ((((Container) c).getComponent(3)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(0)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
 	
-	((JLabel) ((((Container) c).getComponent(5)))).setText(String.valueOf(StudentStats.getNumberOfechecs(student_id, "All",
-			  classroom_id, ay_id, term_id, "All", "All")));
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(6)))).setText(String.valueOf(StudentStats.getNumberOfechecs(student_id, "All",
+			  classroom_id, ay_id, term_id, "All", "All"))+" echecs");
 	
-	if(l.toArray().length>2) {
-	((JLabel) ((((Container) c).getComponent(6)))).setText(String.valueOf(l.get(2)));
-	((JLabel) ((((Container) c).getComponent(7)))).setText(String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
-	}return null;
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(8)))).setText(String.valueOf(l.get(2))+" interros");
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(12)))).setText("Progres: "+String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
+	
+	return null;
         }
     }.execute();
 }

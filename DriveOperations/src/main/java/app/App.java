@@ -108,42 +108,47 @@ public class App {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
+		
 
-		File file = new File("C:/Users/User/Desktop/db_script.sql");
-		aws.downloadContent(file.getPath());
-		FileReader fr;
-			fr = new FileReader(file);
-		
-		
-		BufferedReader br = new BufferedReader(fr);
-		Object[] lines = br.lines().toArray();
-		
-		List<String> l = new ArrayList();
-		int j = 0;
-	 for(int i = 0; i< lines.length; i++) {
-		 if(lines[i].toString().contains("CONSTRAINT")) {
-			 j++;
-		 String s = lines[i].toString().substring(0, lines[i].toString().lastIndexOf("`"))+j+"`";
-		 l.add(s);
-	 }else{
-		 l.add(lines[i].toString());
-	 }}
-	 
-
-	 if(file.exists()) {
-		file.delete();
-	}
-	
-		file.createNewFile();
-	 for(int i = 0; i< l.toArray().length; i++) {
-			
-			PrintWriter pw = new PrintWriter(file);
-			for(int k = 0; k<l.toArray().length;k++) {
-				pw.println(l.get(k));
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					mysql.connectToDB();
+					App window = new App("1", "8");
+					window.frame.setVisible(true);
+					System.gc();
+					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			
-			pw.close();}
-	}
+		});
+	
+		/*
+		 * 
+		 * File file = new File("C:/Users/User/Desktop/db_script.sql");
+		 * aws.downloadContent(file.getPath()); FileReader fr; fr = new
+		 * FileReader(file);
+		 * 
+		 * 
+		 * BufferedReader br = new BufferedReader(fr); Object[] lines =
+		 * br.lines().toArray();
+		 * 
+		 * List<String> l = new ArrayList(); int j = 0; for(int i = 0; i< lines.length;
+		 * i++) { if(lines[i].toString().contains("CONSTRAINT")) { j++; String s =
+		 * lines[i].toString().substring(0, lines[i].toString().lastIndexOf("`"))+j+"`";
+		 * l.add(s); }else{ l.add(lines[i].toString()); }}
+		 * 
+		 * 
+		 * if(file.exists()) { file.delete(); }
+		 * 
+		 * file.createNewFile(); for(int i = 0; i< l.toArray().length; i++) {
+		 * 
+		 * PrintWriter pw = new PrintWriter(file); for(int k = 0;
+		 * k<l.toArray().length;k++) { pw.println(l.get(k)); }
+		 * 
+		 * pw.close();}
+		 */}
 
 	/**
 	 * Create the application.
@@ -177,7 +182,7 @@ public class App {
 		frame.setBounds(0,0,screensize.width,screensize.height);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		frame.setMinimumSize(new Dimension(screensize.width*80/100, screensize.height*80/100));
+		//frame.setMinimumSize(new Dimension(screensize.width*80/100, screensize.height*80/100));
 		
 		panel = new JPanel();
 		panel.setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(0, 0, 0)));
@@ -437,47 +442,33 @@ public class App {
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(25, 25, 25));
-		panel_1.setPreferredSize(new Dimension(frame.getWidth()*33/100, 10));
+		panel_1.setPreferredSize(new Dimension(frame.getWidth()*20/100, 10));
 		frame.getContentPane().add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 
 		panelName = new JPanel();
 		panelName.setBackground(new Color(60, 60, 60));
-		panelName.setPreferredSize(new Dimension(10, 70));
 		panel_1.add(panelName, BorderLayout.NORTH);
+		panelName.setPreferredSize(new Dimension(10, 50));
+		panelName.setLayout(new BorderLayout(0, 0));
 		
-		
-		panelName.setLayout(null);
-		
-		name = new JLabel("NDASHIMYE Max Brillant");
+		name = new JLabel("UMUHOZA Chris Koen Michael");
 		name.setForeground(Color.WHITE);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
-		name.setFont(new Font("Futura Hv BT", Font.BOLD, 25));
-		name.setBounds(10, 5, 430, 31);
-		panelName.add(name);
+		name.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		panelName.add(name, BorderLayout.NORTH);
 		
 		previous = new JButton("");
 		previous.setFocusPainted(false);
 		previous.setBorderPainted(false);
 		previous.setBackground(new Color(25, 25, 25));
 		previous.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
-		previous.setBounds(0, 38, 61, 32);
-		panelName.add(previous);
-		
-		next = new JButton("");
-		next.setFocusPainted(false);
-		next.setBorderPainted(false);
-		next.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
-		next.setBackground(new Color(25, 25, 25));
-		next.setBounds(389, 38, 61, 32);
-		panelName.add(next);
+		panelName.add(previous, BorderLayout.WEST);
 		
 		panel_6 = new JPanel();
 		panel_6.setBorder(null);
-		panel_6.setBounds(61, 38, 329, 32);
-		panelName.add(panel_6);
-		panel_6.setLayout(null);
+		panelName.add(panel_6, BorderLayout.CENTER);
 		panel_6.setBackground(new Color(60, 60, 60));
 		
 
@@ -487,22 +478,17 @@ public class App {
 		num.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panelName.getHeight() == 70) {
-					if(numbers.getComponentCount()<=10) {
-						panelName.setPreferredSize(new Dimension(10, 120));
-						panelName.revalidate();
-						panelName.repaint();
-						loadnumbers(classroom_id, ay_id);
-					}else {
-						panelName.setPreferredSize(new Dimension(10, 170));
+				if(panelName.getHeight() == 50) {
+						panelName.setPreferredSize(new Dimension(10, 100));
+						panelName.getComponent(panelName.getComponentCount()-2).setPreferredSize(new Dimension(10, 50));
 					panelName.revalidate();
 					panelName.repaint();
-						
-					}
+					loadnumbers(classroom_id, ay_id);
 					
 					}
 					else{
-						panelName.setPreferredSize(new Dimension(10, 70));
+						panelName.setPreferredSize(new Dimension(10, 50));
+						panelName.getComponent(panelName.getComponentCount()-2).setPreferredSize(new Dimension(10, 0));
 						panelName.revalidate();
 						panelName.repaint();
 					}
@@ -517,16 +503,16 @@ public class App {
 			
 			}
 		});
+		panel_6.setLayout(new BorderLayout(0, 0));
 		num.setBackground(new Color(245, 245, 245));
-		num.setBounds(0, 0, 329, 31);
 		panel_6.add(num);
 		num.setHorizontalAlignment(SwingConstants.CENTER);
-		num.setFont(new Font("Futura Hv BT", Font.BOLD, 30));
+		num.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setPreferredSize(new Dimension(2, 0));
 		scrollPane_1.setBorder(null);
-		scrollPane_1.setBounds(0, 69, frame.getWidth()*33/100, 101);
-		panelName.add(scrollPane_1);
+		panelName.add(scrollPane_1, BorderLayout.SOUTH);
 		
 		
 
@@ -539,6 +525,13 @@ public class App {
 		scrollPane_1.setViewportView(numbers);
 
 		numbers.setLayout(new WrapLayout(WrapLayout.CENTER,3,3));
+		
+		next = new JButton("");
+		panelName.add(next, BorderLayout.EAST);
+		next.setFocusPainted(false);
+		next.setBorderPainted(false);
+		next.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		next.setBackground(new Color(25, 25, 25));
 		
 		
 		next.addActionListener(new ActionListener() {
@@ -697,22 +690,21 @@ public class App {
 		scrollPane.setViewportView(panel_5);
 		panel_5.setLayout(null);
 		
-		panel_5.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
+		panel_5.setLayout(new WrapLayout(WrapLayout.LEFT, 12, 12));
 		
 
-		frame.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-				
-				for(int i = 0; i<panel_5.getComponentCount();i++) {
-				if(frame.getWidth()<=1191) {
-				panel_5.setLayout(new WrapLayout(WrapLayout.CENTER, 15*frame.getWidth()/2/screensize.width, 15*frame.getWidth()/2/screensize.width));
-			}else {
-				panel_5.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 10));
-			}
-				}}
-		});
+		/*
+		 * frame.addComponentListener(new ComponentAdapter() {
+		 * 
+		 * @Override public void componentResized(ComponentEvent e) { Dimension
+		 * screensize = Toolkit.getDefaultToolkit().getScreenSize();
+		 * 
+		 * for(int i = 0; i<panel_5.getComponentCount();i++) {
+		 * if(frame.getWidth()<=1191) { panel_5.setLayout(new
+		 * WrapLayout(WrapLayout.CENTER, 15*frame.getWidth()/2/screensize.width,
+		 * 15*frame.getWidth()/2/screensize.width)); }else { panel_5.setLayout(new
+		 * WrapLayout(WrapLayout.CENTER, 10, 10)); } }} });
+		 */
 		
 		deselect(classroom_id, ay_id);
 
@@ -773,7 +765,7 @@ public class App {
 		for(int i = 0;i<lines.length;i++) {
 		
 		JPanel button = new JPanel();
-		button.setPreferredSize(new Dimension(40, 35));
+		button.setPreferredSize(new Dimension(30, 25));
 		button.setBackground(new Color(80, 80, 80));
 		button.setName(String.valueOf(i));
 		JLabel num = new JLabel();
@@ -782,7 +774,7 @@ public class App {
 		button.add(num);
 		
 		num.setVerticalAlignment(SwingConstants.CENTER);
-		num.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		num.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		num.setForeground(Color.white);
 		numbers.add(button);
 
@@ -861,12 +853,6 @@ public class App {
 		
 		Cours.isSelected = false;
 		
-		if(App.panel_5.getComponentCount()>0 && Cours.selectedCourses.toArray().length>0) {
-			for(int i = 0; i< App.panel_5.getComponentCount(); i++) {
-				if(App.panel_5.getComponent(i).equals(Cours.selectedCourses.get(0))) {
-		App.panel_5.getComponent(i).setPreferredSize(new Dimension(400, 150));
-		}}}
-		
 		App.delete.setEnabled(false);
 		App.edit.setEnabled(false);
 		App.delete.setBackground(App.panel.getBackground());
@@ -880,7 +866,6 @@ public class App {
 			((Container) panel_5.getComponent(i)).getComponent(1).setBackground(new Color(60, 60, 60));
 			((JComponent) panel_5.getComponent(i)).setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
 			((Container) ((Container) panel_5.getComponent(i)).getComponent(0)).getComponent(0).setForeground(Color.black);
-			((Container) ((Container) panel_5.getComponent(i)).getComponent(0)).getComponent(1).setForeground(Color.black);
 			
 			if(((JComponent) App.panel_5.getComponent(i)).getComponent(0).getBackground().equals(new Color(161, 0, 0))) {
 				App.panel_5.getComponent(i).setBackground(new Color(255,221,221));

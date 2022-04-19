@@ -88,20 +88,21 @@ public class LPane extends JPanel {
 	private JPanel panel_1;
 	public static JPanel panel_2;
 	public static JTabbedPane tabbedPane;
+	private JPanel panel_4;
 
 	/**
 	 * Create the panel.
 	 */
 	public LPane(String course_id, String student_id, String classroom_id) {
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension((int) screensize.getWidth()*33/100,(int) (screensize.getHeight()*82/100)));
+		setPreferredSize(new Dimension(300, 629));
 		setLayout(new BorderLayout(0, 0));
 		
 		panel = new JPanel();
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Test.deselect(course_id, student_id, classroom_id);
+				Test.deselect(course_id, App.students.get(App.n), classroom_id);
 			}
 		});
 		panel.setBackground(new Color(25, 25, 25));
@@ -110,34 +111,34 @@ public class LPane extends JPanel {
 		panel.setLayout(null);
 		
 		echec = new JLabel("Echec:");
-		echec.setForeground(new Color(245, 255, 250));
-		echec.setFont(new Font("Roboto", Font.PLAIN, 18));
-		echec.setBounds(10, 98, 218, 23);
+		echec.setForeground(new Color(211, 211, 211));
+		echec.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		echec.setBounds(10, 70, 177, 23);
 		panel.add(echec);
 		
 		Name = new JLabel(TestBox.getFullName(course_id));
 		Name.setForeground(Color.WHITE);
-		Name.setFont(new Font("Futura Hv BT", Font.BOLD, 25));
-		Name.setBounds(10, 1, 440, 32);
+		Name.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		Name.setBounds(10, 1, 280, 28);
 		panel.add(Name);
 		
-		no = new JLabel("0 interrogations effectuees");
-		no.setForeground(new Color(245, 255, 250));
-		no.setFont(new Font("Arial", Font.BOLD, 20));
-		no.setBounds(10, 33, 308, 23);
+		no = new JLabel("0 interros effectuees");
+		no.setForeground(new Color(211, 211, 211));
+		no.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		no.setBounds(10, 25, 145, 23);
 		panel.add(no);
 		
 		
 		pourcent = new JLabel("Pourcentage: " );
-		pourcent.setForeground(new Color(255, 255, 255));
-		pourcent.setFont(new Font("Arial", Font.BOLD, 20));
-		pourcent.setBounds(10, 54, 218, 23);
+		pourcent.setForeground(new Color(211, 211, 211));
+		pourcent.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		pourcent.setBounds(10, 40, 145, 23);
 		panel.add(pourcent);
 		
 		prog = new JLabel("Progression: 0%");
-		prog.setForeground(new Color(245, 255, 250));
-		prog.setFont(new Font("Roboto", Font.PLAIN, 18));
-		prog.setBounds(10, 76, 177, 23);
+		prog.setForeground(new Color(211, 211, 211));
+		prog.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		prog.setBounds(10, 55, 145, 23);
 		panel.add(prog);
 		
 		add = new JButton("Ajouter");
@@ -188,26 +189,27 @@ public class LPane extends JPanel {
 		points = new JLabel("0/10");
 		points.setForeground(new Color(255, 33, 94));
 		points.setHorizontalAlignment(SwingConstants.TRAILING);
-		points.setFont(new Font("Futura Bk BT", Font.PLAIN, 35));
-		points.setBounds(252, 30, 177, 44);
+		points.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		points.setBounds(132, 49, 105, 28);
 		panel.add(points);
+		
+		panel_4 = new JPanel();
+		panel_4.setBounds(10, 95, 145, 23);
+		panel.add(panel_4);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		panel_4.setBackground(panel_4.getParent().getBackground());
 		
 		
 		average = new JLabel("Moyenne:");
+		panel_4.add(average, BorderLayout.WEST);
 		average.setHorizontalAlignment(SwingConstants.TRAILING);
 		average.setVisible(false);
 		average.setForeground(new Color(245, 255, 250));
-		average.setFont(new Font("Arial", Font.PLAIN, 18));
-		average.setBounds(238, 98, 145, 23);
-		panel.add(average);
-		
-		mention = new JLabel("Tres bien");
-		mention.setHorizontalAlignment(SwingConstants.TRAILING);
-		mention.setForeground(new Color(255, 33, 94));
-		mention.setFont(new Font("Arial", Font.PLAIN, 20));
-		mention.setBounds(297, 70, 132, 23);
-		panel.add(mention);
+		average.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		comboBox = new JComboBox();
+		comboBox.setPreferredSize(new Dimension(10, 22));
+		comboBox.setMaximumSize(new Dimension(40, 32767));
+		panel_4.add(comboBox, BorderLayout.CENTER);
 		comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		comboBox.setVisible(false);
 		comboBox.setSelectedItem(Integer.valueOf((int) Double.parseDouble(ExamInfo.loadCourseMaxima(course_id, classroom_id, Login.selectedAcademicYearID))));
@@ -224,13 +226,18 @@ public class LPane extends JPanel {
 			}}
 		});
 		comboBox.setEditable(true);
-		comboBox.setFont(new Font("Arial", Font.BOLD, 18));
+		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"10", "15", "20", "40", "80"}));
-		comboBox.setBounds(385, 98, 53, 22);
-		panel.add(comboBox);
+		
+		mention = new JLabel("Tres bien");
+		mention.setHorizontalAlignment(SwingConstants.TRAILING);
+		mention.setForeground(new Color(255, 33, 94));
+		mention.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mention.setBounds(132, 70, 105, 23);
+		panel.add(mention);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setFont(new Font("Roboto", Font.PLAIN, 18));
+		tabbedPane.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		add(tabbedPane, BorderLayout.CENTER);
 		
 		
@@ -250,7 +257,7 @@ public class LPane extends JPanel {
 		panel_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Test.deselect(course_id, student_id, classroom_id);
+				Test.deselect(course_id, App.students.get(App.n), classroom_id);
 			}
 		});
 		panel_3.setBackground(new Color(25, 25, 25));
@@ -266,7 +273,7 @@ public class LPane extends JPanel {
 		panel_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Test.deselect(course_id, student_id, classroom_id);
+				Test.deselect(course_id, App.students.get(App.n), classroom_id);
 			}
 		});
 		panel_2.setBorder(null);
@@ -276,7 +283,7 @@ public class LPane extends JPanel {
 		
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				Test.deselect(course_id, student_id, classroom_id);
+				Test.deselect(course_id, App.students.get(App.n), classroom_id);
 			}
 		});
 		loadAllTests(course_id, student_id, classroom_id);
@@ -308,7 +315,7 @@ public class LPane extends JPanel {
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
 		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 18));
 		LPane.panel_3.add(lblNdashimyeMaxBrillant);
-		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant.getParent().getParent().getWidth(), 30));
+		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(300, 30));
 		
 	boolean hasTests = false;
 	
@@ -368,9 +375,9 @@ public class LPane extends JPanel {
 				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
 				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 18));
 				LPane.panel_3.add(lblNdashimyeMaxBrillant1);
-				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant1.getParent().getParent().getWidth(), 30));
+				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(300, 30));
 		}
-		Test.deselect(course_id, student_id, classroom_id);
+		Test.deselect(course_id, App.students.get(App.n), classroom_id);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -415,7 +422,7 @@ public static void loadExams(String course_id, String student_id, String classro
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
 		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 18));
 		LPane.panel_2.add(lblNdashimyeMaxBrillant);
-		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant.getParent().getParent().getWidth(), 30));
+		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(300, 30));
 		
 		boolean hasTests = false;
 
@@ -495,7 +502,7 @@ public static void loadExams(String course_id, String student_id, String classro
 				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
 				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 18));
 				LPane.panel_2.add(lblNdashimyeMaxBrillant1);
-				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(lblNdashimyeMaxBrillant1.getParent().getParent().getWidth(), 30));
+				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(300, 30));
 		}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

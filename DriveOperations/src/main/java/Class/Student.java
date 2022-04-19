@@ -55,10 +55,6 @@ import sideInformation.MainInfo;
 
 public class Student extends JPanel {
 	public static JPanel Box1;
-	public static JLabel place;
-	public static JLabel number;
-	public static JLabel lblNdashimyeMaxBrillant;
-	public static JLabel label_5;
 	public static List<Component> selectedStudents = new ArrayList();
 
 	/**
@@ -153,76 +149,137 @@ public class Student extends JPanel {
 		});
 		
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension(screensize.width*97/100, 40));
-		setLayout(null);
-		
-		number = new JLabel();
-		number.setForeground(new Color(211, 211, 211));
-		number.setHorizontalAlignment(SwingConstants.CENTER);
-		number.setBounds(5, 0, 39, 40);
-		number.setFont(new Font("Roboto", Font.PLAIN, 16));
-		add(number);
-		
-		place = new JLabel();
-		place.setForeground(new Color(211, 211, 211));
-		place.setHorizontalAlignment(SwingConstants.CENTER);
-		place.setBounds(50, 0, 94, 40);
-		place.setFont(new Font("Roboto", Font.PLAIN, 16));
-		add(place);
-		
-		lblNdashimyeMaxBrillant = new JLabel();
-		lblNdashimyeMaxBrillant.setForeground(Color.WHITE);
-		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblNdashimyeMaxBrillant.setBounds(141, 0, 380, 40);
-		add(lblNdashimyeMaxBrillant);
-		
-		JLabel label = new JLabel("0%");
-		label.setForeground(new Color(211, 211, 211));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label.setBounds(520, 0, 94, 40);
-		add(label);
-		
-		JLabel label_1 = new JLabel("0/0");
-		label_1.setForeground(new Color(211, 211, 211));
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_1.setBounds(653, 0, 134, 40);
-		add(label_1);
-		
-		JLabel label_2 = new JLabel("0");
-		label_2.setForeground(new Color(211, 211, 211));
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_2.setBounds(807, 0, 94, 40);
-		add(label_2);
-		
-		JLabel label_3 = new JLabel("0");
-		label_3.setForeground(new Color(211, 211, 211));
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_3.setBounds(932, 0, 94, 40);
-		add(label_3);
-		
-		JLabel label_4 = new JLabel("+0%");
-		label_4.setForeground(new Color(211, 211, 211));
-		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_4.setBounds(1077, 0, 94, 40);
-		add(label_4);
-		
-		label_5 = new JLabel();
-		label_5.setForeground(Color.WHITE);
-		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Roboto", Font.PLAIN, 23));
-		label_5.setBounds(1181, 0, 147, 40);
-		add(label_5);
+		setPreferredSize(new Dimension(1325, 69));
+		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(23, 10));
 		panel.setBackground(new Color(51, 255, 204));
-		panel.setBounds(0, 0, 53, 40);
-		add(panel);
+		add(panel, BorderLayout.WEST);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_1 = new JLabel("203");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setPreferredSize(new Dimension(20, 14));
+		panel.add(lblNewLabel_1);
+		
+		JLabel lblUmuhozaChrisKoen = new JLabel();
+		lblUmuhozaChrisKoen.setAlignmentX(1.0f);
+		lblUmuhozaChrisKoen.setText("Umuhoza Chris Koen Michael");
+		lblUmuhozaChrisKoen.setForeground(Color.WHITE);
+		lblUmuhozaChrisKoen.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		add(lblUmuhozaChrisKoen, BorderLayout.CENTER);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setForeground(Color.GRAY);
+		panel_1.setPreferredSize(new Dimension(10, 50));
+		add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 1));
+		panel_1.setBackground(Color.DARK_GRAY);
+		
+		JLabel lblNewLabel = new JLabel("49.75%");
+		lblNewLabel.setBackground(new Color(250, 128, 114));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 11));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		panel_1.add(lblNewLabel);
+		
+		JLabel label = new JLabel("-");
+		label.setVerticalAlignment(SwingConstants.TOP);
+		label.setHorizontalTextPosition(SwingConstants.LEADING);
+		label.setForeground(new Color(211, 211, 211));
+		label.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		label.setBackground(new Color(250, 128, 114));
+		panel_1.add(label);
+		
+		JLabel lblPoints = new JLabel("Points: 1902.39/2888");
+		lblPoints.setVerticalAlignment(SwingConstants.TOP);
+		lblPoints.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblPoints.setForeground(new Color(211, 211, 211));
+		lblPoints.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblPoints.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblPoints);
+		
+		JLabel label_1 = new JLabel("-");
+		label_1.setVerticalAlignment(SwingConstants.TOP);
+		label_1.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_1.setForeground(new Color(211, 211, 211));
+		label_1.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		label_1.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_1);
+		
+		JLabel lblPlace = new JLabel("234 eme");
+		lblPlace.setVerticalAlignment(SwingConstants.TOP);
+		lblPlace.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblPlace.setForeground(new Color(211, 211, 211));
+		lblPlace.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblPlace.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblPlace);
+		
+		JLabel label_5 = new JLabel("-");
+		label_5.setVerticalAlignment(SwingConstants.TOP);
+		label_5.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_5.setForeground(new Color(211, 211, 211));
+		label_5.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		label_5.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_5);
+		
+		JLabel lblEchecs = new JLabel("12 echecs");
+		lblEchecs.setVerticalAlignment(SwingConstants.TOP);
+		lblEchecs.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblEchecs.setForeground(new Color(211, 211, 211));
+		lblEchecs.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblEchecs.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblEchecs);
+		
+		JLabel label_2 = new JLabel("-");
+		label_2.setVerticalAlignment(SwingConstants.TOP);
+		label_2.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_2.setForeground(new Color(211, 211, 211));
+		label_2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		label_2.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_2);
+		
+		JLabel lblInterros = new JLabel("53 interros");
+		lblInterros.setVerticalAlignment(SwingConstants.TOP);
+		lblInterros.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblInterros.setForeground(new Color(211, 211, 211));
+		lblInterros.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblInterros.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblInterros);
+		
+		JLabel label_3 = new JLabel("-");
+		label_3.setVerticalAlignment(SwingConstants.TOP);
+		label_3.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_3.setForeground(new Color(211, 211, 211));
+		label_3.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		label_3.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_3);
+		
+		JLabel lblEducation = new JLabel("Education: 82/180");
+		lblEducation.setVerticalAlignment(SwingConstants.TOP);
+		lblEducation.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblEducation.setForeground(new Color(211, 211, 211));
+		lblEducation.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblEducation.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblEducation);
+		
+		JLabel label_4 = new JLabel("-");
+		label_4.setVerticalAlignment(SwingConstants.TOP);
+		label_4.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_4.setForeground(new Color(211, 211, 211));
+		label_4.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		label_4.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_4);
+		
+		JLabel lblProgres = new JLabel("Progres: 120.75%");
+		lblProgres.setVerticalAlignment(SwingConstants.TOP);
+		lblProgres.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblProgres.setForeground(new Color(211, 211, 211));
+		lblProgres.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblProgres.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblProgres);
 	
 		
 	}

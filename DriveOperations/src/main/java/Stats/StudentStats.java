@@ -1357,11 +1357,11 @@ e.printStackTrace();
 		  if(Home.selectedPeriod == 0 ||
 		  Home.selectedPeriod == 2) {
 			  l = getStudentTestsStats(student_id, classroom_id
-		  , course_id, term_id, start, end);}
+		  , lines1[i].toString(), term_id, start, end);}
 		  
 		  if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) { l1 =
-		  getStudentExamStats(student_id, classroom_id , course_id, term_id, start,
-		  end); }
+		  getStudentExamStats(student_id, classroom_id
+				  , lines1[i].toString(), term_id, start, end); }
 		  
 		  List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 		  List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
