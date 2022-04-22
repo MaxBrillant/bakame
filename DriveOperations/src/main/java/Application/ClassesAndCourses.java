@@ -87,7 +87,7 @@ public class ClassesAndCourses extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClassesAndCourses frame = new ClassesAndCourses("NDURA Donatien");
+					ClassesAndCourses frame = new ClassesAndCourses("1", "8");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

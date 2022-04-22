@@ -386,7 +386,7 @@ public static void loadExams(String classroom_id, String term_id, String ay_id) 
 					JButton btnNewButton_1 = new JButton("Ajouter un nouvel examen");
 					btnNewButton_1.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							ExamInfo nt = new ExamInfo();
+							ExamInfo nt = new ExamInfo(classroom_id, ay_id);
 							nt.setVisible(true);
 						}
 					});

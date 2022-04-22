@@ -550,14 +550,14 @@ public class Home {
 			if(Home.panelClasses.getComponent(k) instanceof Class) {
 			((JButton) ((Container) Home.panelClasses.getComponent(k)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
 			((Container) Home.panelClasses.getComponent(k)).getComponent(1).setVisible(false);
-			Home.panelClasses.getComponent(k).setPreferredSize(new Dimension(370-370*53/100, 140));
+			Home.panelClasses.getComponent(k).setPreferredSize(new Dimension(310-310*49/100, 120));
 			Home.panelClasses.getComponent(k).revalidate();
 			Home.panelClasses.getComponent(k).repaint();
 		}else{
 			for(int i = 0; i< ((Container) ((Container) Home.panelClasses.getComponent(k)).getComponent(0)).getComponentCount(); i++) {
 			((JButton) ((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).getComponent(1).setVisible(false);
-			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).setPreferredSize(new Dimension(370-370*53/100, 140));
+			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).getComponent(1).setVisible(true);
+			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).setPreferredSize(new Dimension(310-310*49/100, 120));
 			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).revalidate();
 			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).repaint();
 			}
@@ -566,7 +566,7 @@ public class Home {
 	public static void collapse(Component c) {
 		((AbstractButton) ((Container) c).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
 			((Container) c).getComponent(1).setVisible(false);
-			((Container) c).setPreferredSize(new Dimension(370-370*53/100, 140));
+			((Container) c).setPreferredSize(new Dimension(310-310*49/100, 120));
 			((Container) c).revalidate();
 			((Container) c).repaint();
 		}
@@ -796,7 +796,7 @@ public static Object[] loadActiveClasses(String ay_id) {
 
 		ResultSet rs=stmt.executeQuery("select * from classrooms_in_ay AS cia "
 				+ "JOIN classrooms AS c "
-				+ "WHERE cia.ay_id = '"+ay_id+"' AND cia.classroom_id = c.classroom_id AND c.is_active = 1 AND cia.is_active = 1");
+				+ "WHERE c.is_active = 1 AND cia.is_active = 1 AND cia.ay_id = '"+ay_id+"' AND cia.classroom_id = c.classroom_id");
 		while(rs.next())
 		{
 			s.add(rs.getString("cia.classroom_id"));

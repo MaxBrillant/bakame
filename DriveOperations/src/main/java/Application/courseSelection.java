@@ -94,7 +94,7 @@ public class courseSelection extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					courseSelection frame = new courseSelection("3eme Economique");
+					courseSelection frame = new courseSelection("1", "8");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

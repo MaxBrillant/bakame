@@ -112,7 +112,7 @@ public class LPane extends JPanel {
 		
 		echec = new JLabel("Echec:");
 		echec.setForeground(new Color(211, 211, 211));
-		echec.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		echec.setFont(new Font("Roboto", Font.PLAIN, 14));
 		echec.setBounds(10, 70, 177, 23);
 		panel.add(echec);
 		
@@ -124,20 +124,20 @@ public class LPane extends JPanel {
 		
 		no = new JLabel("0 interros effectuees");
 		no.setForeground(new Color(211, 211, 211));
-		no.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		no.setFont(new Font("Roboto", Font.PLAIN, 14));
 		no.setBounds(10, 25, 145, 23);
 		panel.add(no);
 		
 		
 		pourcent = new JLabel("Pourcentage: " );
 		pourcent.setForeground(new Color(211, 211, 211));
-		pourcent.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		pourcent.setFont(new Font("Roboto", Font.PLAIN, 14));
 		pourcent.setBounds(10, 40, 145, 23);
 		panel.add(pourcent);
 		
 		prog = new JLabel("Progression: 0%");
 		prog.setForeground(new Color(211, 211, 211));
-		prog.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		prog.setFont(new Font("Roboto", Font.PLAIN, 14));
 		prog.setBounds(10, 55, 145, 23);
 		panel.add(prog);
 		
@@ -194,7 +194,7 @@ public class LPane extends JPanel {
 		panel.add(points);
 		
 		panel_4 = new JPanel();
-		panel_4.setBounds(10, 95, 145, 23);
+		panel_4.setBounds(10, 95, 158, 23);
 		panel.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		panel_4.setBackground(panel_4.getParent().getBackground());
@@ -205,7 +205,7 @@ public class LPane extends JPanel {
 		average.setHorizontalAlignment(SwingConstants.TRAILING);
 		average.setVisible(false);
 		average.setForeground(new Color(245, 255, 250));
-		average.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		average.setFont(new Font("Roboto", Font.BOLD, 14));
 		comboBox = new JComboBox();
 		comboBox.setPreferredSize(new Dimension(10, 22));
 		comboBox.setMaximumSize(new Dimension(40, 32767));
@@ -232,7 +232,7 @@ public class LPane extends JPanel {
 		mention = new JLabel("Tres bien");
 		mention.setHorizontalAlignment(SwingConstants.TRAILING);
 		mention.setForeground(new Color(255, 33, 94));
-		mention.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mention.setFont(new Font("Roboto", Font.PLAIN, 14));
 		mention.setBounds(132, 70, 105, 23);
 		panel.add(mention);
 

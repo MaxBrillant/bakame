@@ -39,6 +39,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +56,7 @@ import javax.swing.border.MatteBorder;
 
 import Class.NewCourse;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -83,7 +87,7 @@ public class EducationFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EducationFrame frame = new EducationFrame();
+					EducationFrame frame = new EducationFrame("8");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -95,7 +99,7 @@ public class EducationFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EducationFrame() {
+	public EducationFrame(String ay_id) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -196,38 +200,35 @@ public class EducationFrame extends JFrame {
 	contentPane.add(btnAjouter);
 	
 	setLocationRelativeTo(null);
-	loadPunishments();
+	loadPunishments(ay_id);
 	}
 	
 	
 	
 
-	public static void loadPunishments() {
+	public static void loadPunishments(String ay_id) {
 		panel.removeAll();
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Punishments.txt");
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
+		
+		
 		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines = br1.lines().toArray();
-		
-		
-		for(int i = 0; i< lines.length; i++) {
-			List l = Arrays.asList(lines[i].toString().split("//"));
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishments_in_ay AS pia "
+					+ "JOIN punishments AS p "
+					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.ay_id = '"+ay_id+"' AND pia.punishment_id = p.punishment_id");
+			while(rs.next())
+			{
 			JPanel panel_1 = new JPanel();
 			panel_1.setPreferredSize(new Dimension(390, 25));
 			panel_1.setLayout(null);
 			panel_1.setBackground(new Color(80, 80, 80));;
 			
-			JLabel lblNewLabel = new JLabel(l.get(1).toString());
+			JLabel lblNewLabel = new JLabel(rs.getString("p.punishment_name"));
 			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 15));
 			lblNewLabel.setBounds(10, 2, 252, 20);
 			lblNewLabel.setForeground(Color.white);
 			
-			JLabel lblCours = new JLabel(l.get(2).toString()+" points");
+			JLabel lblCours = new JLabel(rs.getString("pia.points")+" points");
 			lblCours.setHorizontalAlignment(SwingConstants.CENTER);
 			lblCours.setFont(new Font("Roboto", Font.PLAIN, 15));
 			lblCours.setForeground(Color.white);
@@ -268,7 +269,7 @@ public class EducationFrame extends JFrame {
 					button.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							NewPunishment.deletePunishment(((JLabel) button.getParent().getComponent(0)).getText());
-							EducationFrame.loadPunishments();
+							EducationFrame.loadPunishments(ay_id);
 						}
 					});
 					panel_1.addMouseListener(new MouseAdapter() {@Override
@@ -300,7 +301,7 @@ public class EducationFrame extends JFrame {
 		}
 		panel.revalidate();
 		panel.repaint();
-		} catch (FileNotFoundException e1) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}

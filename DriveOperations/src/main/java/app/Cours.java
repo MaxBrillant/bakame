@@ -98,7 +98,7 @@ public class Cours extends JPanel {
 	Cours.setBorder(null);
 	Cours.setForeground(new Color(0, 0, 0));
 	Cours.setBackground(Color.GREEN);
-	Cours.setFont(new Font("Segoe UI", Font.BOLD, 12));
+	Cours.setFont(new Font("Roboto", Font.BOLD, 14));
 	Cours.setHorizontalAlignment(SwingConstants.CENTER);
 	Cours.setBounds(0, 0, 150, 107);
 	courseBox.add(Cours);
@@ -110,7 +110,7 @@ public class Cours extends JPanel {
 	
 	percent = new JLabel("Pourcentage: 0%");
 	percent.setForeground(Color.WHITE);
-	percent.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	percent.setFont(new Font("Roboto", Font.PLAIN, 12));
 	percent.setBounds(10, 3, 126, 22);
 	stats.add(percent);
 	stats.add(percent);
@@ -118,21 +118,21 @@ public class Cours extends JPanel {
 	
 	lblPoints = new JLabel("Points:");
 	lblPoints.setForeground(Color.WHITE);
-	lblPoints.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	lblPoints.setFont(new Font("Roboto", Font.PLAIN, 12));
 	lblPoints.setBounds(10, 23, 126, 22);
 	stats.add(lblPoints);
 	stats.add(lblPoints);
 	
 	lblAverage = new JLabel("Moyenne:");
 	lblAverage.setForeground(Color.WHITE);
-	lblAverage.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	lblAverage.setFont(new Font("Roboto", Font.PLAIN, 12));
 	lblAverage.setBounds(10, 43, 126, 22);
 	stats.add(lblAverage);
 	stats.add(lblAverage);
 	
 	lblImprovements = new JLabel("Echec:");
 	lblImprovements.setForeground(Color.WHITE);
-	lblImprovements.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+	lblImprovements.setFont(new Font("Roboto", Font.PLAIN, 12));
 	lblImprovements.setBounds(10, 63, 126, 22);
 	stats.add(lblImprovements);
 	stats.add(lblImprovements);

@@ -42,6 +42,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +64,7 @@ import Application.NewPunishment;
 import Application.ResizeImages;
 import Class.NewCourse;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import Publishing.getInternetDateAndTime;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
@@ -110,7 +114,7 @@ public class Punish extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Punish(List<String> students) {
+	public Punish(String classroom_id, String ay_id, List<String> students) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -281,44 +285,46 @@ public class Punish extends JFrame {
 	contentPane.add(lblPoints);
 	}
 	setLocationRelativeTo(null);
-	loadPunishments(students);
+	loadPunishments(ay_id, students);
 	
 	if(students.toArray().length==1) {
-	loadIndividualPunishments(students.get(0));
-	}else if(students.toArray().length==0) {
-		loadClassPunishments(Home.className);
+    	panel_2.removeAll();
+    	for(int j = 0; j< Home.terms.toArray().length; j++) {
+    		loadIndividualPunishments(students.get(0).toString(), Home.terms.get(j));
+		}
+    	}else if(students.toArray().length==0) {
+
+        	panel_2.removeAll();
+        	for(int j = 0; j< Home.terms.toArray().length; j++) {
+        		loadClassPunishments(classroom_id, ay_id, Home.terms.get(j));
+    		}
 	}
 	}
 	
 	
 	
 
-	public static void loadPunishments(List students) {
+	public static void loadPunishments(String ay_id, List students) {
 		panel.removeAll();
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Punishments.txt");
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
 		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines = br1.lines().toArray();
-		
-		
-		for(int i = 0; i< lines.length; i++) {
-			List l = Arrays.asList(lines[i].toString().split("//"));
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishments_in_ay AS pia "
+					+ "JOIN punishments AS p "
+					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.ay_id = '"+ay_id+"' AND pia.punishment_id = p.punishment_id");
+			while(rs.next())
+			{
 			JPanel panel_1 = new JPanel();
 			panel_1.setPreferredSize(new Dimension(500, 25));
 			panel_1.setLayout(null);
 			panel_1.setBackground(new Color(80, 80, 80));;
 			
-			JLabel lblNewLabel = new JLabel(l.get(1).toString());
+			JLabel lblNewLabel = new JLabel(rs.getString("p.punishment_name"));
 			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 15));
 			lblNewLabel.setBounds(10, 2, 325, 20);
 			lblNewLabel.setForeground(Color.white);
 			
-			JLabel lblCours = new JLabel(l.get(2).toString()+" points");
+			JLabel lblCours = new JLabel(rs.getString("pia.points")+" points");
 			lblCours.setHorizontalAlignment(SwingConstants.CENTER);
 			lblCours.setFont(new Font("Roboto", Font.PLAIN, 15));
 			lblCours.setForeground(Color.white);
@@ -366,7 +372,10 @@ public class Punish extends JFrame {
 								
 
 						        if(students.toArray().length == 1) {
-						        	loadIndividualPunishments(students.get(0).toString());
+						        	panel_2.removeAll();
+						        	for(int j = 0; j< Home.terms.toArray().length; j++) {
+						        		loadIndividualPunishments(students.get(0).toString(), Home.terms.get(j));
+						    		}
 						        }
 							}
 						}
@@ -401,7 +410,7 @@ public class Punish extends JFrame {
 		}
 		panel.revalidate();
 		panel.repaint();
-		} catch (FileNotFoundException e1) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -416,28 +425,27 @@ public class Punish extends JFrame {
 	
 	
 	
-	public static void loadIndividualPunishments(String student) {
-		panel_2.removeAll();
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/"+student+"/3eme Trimestre/Education.txt");
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
+	public static void loadIndividualPunishments(String student_id, String term_id) {
+		
+		
 		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines = br1.lines().toArray();
-		
-		
-		for(int i = 0; i< lines.length; i++) {
-			List l = Arrays.asList(lines[i].toString().split("//"));
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishments_in_ay AS pia "
+					+ "JOIN punishments AS p "
+					+ "JOIN punishment_information as pi "
+					+ "JOIN student_punishments as sp "
+					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.punishment_id = p.punishment_id AND pia.punishment_id = pi.punishment_id "
+					+ "AND pi.pi_id = sp.pi_id AND pi.term_id = '"+term_id+"' AND sp.student_id = '"+student_id+"'");
+			while(rs.next())
+			{
 			JPanel panel_1 = new JPanel();
 			panel_1.setPreferredSize(new Dimension(500, 25));
 			panel_1.setLayout(null);
 			panel_1.setBackground(new Color(80, 80, 80));
-			panel_1.setName(l.get(1).toString());
+			panel_1.setName(rs.getString("pi.pi_id"));
 			
-			JLabel lblNewLabel = new JLabel(getPunishmentName(l.get(0).toString()));
+			JLabel lblNewLabel = new JLabel(rs.getString("p.punishment_name"));
 			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 15));
 			lblNewLabel.setBounds(10, 2, 254, 20);
 			lblNewLabel.setForeground(Color.white);
@@ -445,8 +453,7 @@ public class Punish extends JFrame {
 					panel_2.add(panel_1);
 					panel_1.add(lblNewLabel);
 					
-					List d = Arrays.asList(l.get(2).toString().split("::"));
-					JLabel lblLe = new JLabel(d.get(0).toString()+" \u2022 "+getPunishmentPoints(l.get(0).toString())+" pts");
+					JLabel lblLe = new JLabel(rs.getString("pi.date")+" \u2022 "+rs.getString("pia.points")+" pts");
 					lblLe.setHorizontalAlignment(SwingConstants.CENTER);
 					lblLe.setForeground(Color.WHITE);
 					lblLe.setFont(new Font("Roboto", Font.PLAIN, 15));
@@ -484,8 +491,8 @@ public class Punish extends JFrame {
 					btnRetirer.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							
-							forgive(student, btnRetirer.getParent().getName());
-							loadIndividualPunishments(student);
+							forgive(student_id, btnRetirer.getParent().getName());
+							loadIndividualPunishments(student_id, term_id);
 							
 						}
 					});
@@ -517,7 +524,7 @@ public class Punish extends JFrame {
 		}
 		panel_2.revalidate();
 		panel_2.repaint();
-		} catch (FileNotFoundException e1) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -530,144 +537,136 @@ public class Punish extends JFrame {
 		}
 	}
 	
-	
-	
-	
-	public static void loadClassPunishments(String className) {
-		panel_2.removeAll();
+	public static List<String> getPunishedStudents(String punishment_id, String classroom_id, String ay_id) {
 		
-		List<String> punishments = new ArrayList();
-		Object[] lines = Home.loadActiveStudents("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+className+"/Students.txt");
-		
-		for(int j = 0 ; j< lines.length; j++) {
-			List l1 = Arrays.asList(lines[j].toString().split("//"));
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/"+l1.get(0).toString()+"/3eme Trimestre/Education.txt");
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
+		List<String> students = new ArrayList();
 		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = br1.lines().toArray();
-		
-		
-		for(int i = 0; i< lines1.length; i++) {
-				boolean exists = false;
-			for(int k = 0; k< punishments.toArray().length; k++) {
-				List l = Arrays.asList(punishments.get(k).toString().split("//"));
-				List l2 = Arrays.asList(lines1[i].toString().split("//"));
-				
-				if(l.get(1).toString().equals(l2.get(1).toString())) {
-					exists = true;
-					String s = lines1[i].toString()+"//"+(Integer.parseInt(l.get(3).toString())+1);
-					punishments.add(k, s);
-					punishments.remove(k+1);
-					break;
+			Statement stmt= mysql.con.createStatement();
+			Object[] s = Home.loadActiveStudents(classroom_id, ay_id);
+
+			ResultSet rs=stmt.executeQuery("select * from student_punishments "
+					+ "WHERE pi_id = '"+punishment_id+"'");
+			while(rs.next())
+			{
+				for(int i = 0; i< s.length; i++) {
+					if(rs.getString("student_id").equals(s[i].toString())) {
+						students.add(rs.getString("student_id"));
+					}
 				}
 			}
-				if(!exists) {
-					punishments.add(lines1[i].toString()+"//1");
-				}
-		}
-		} catch (FileNotFoundException e1) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}}
-		
-		for(int i = 0; i< punishments.toArray().length; i++) {
-			List l = Arrays.asList(punishments.get(i).split("//"));
-			
-
-			JPanel panel_3 = new JPanel();
-			panel_3.setLayout(null);
-			panel_3.setPreferredSize(new Dimension(500, 25));
-			panel_3.setBackground(new Color(80, 80, 80));
-			panel_2.add(panel_3);
-			panel_3.setName(l.get(1).toString());
-			
-			JLabel label = new JLabel(getPunishmentName(l.get(0).toString()));
-			label.setForeground(Color.WHITE);
-			label.setFont(new Font("Roboto", Font.PLAIN, 15));
-			label.setBounds(10, 2, 207, 20);
-			panel_3.add(label);
-			
-			
-			List date = Arrays.asList(l.get(2).toString().split("::"));
-			String eleves = "eleves";
-			if(l.get(3).equals("1")) {
-				eleves = "eleve";
-			}
-			JLabel label_2 = new JLabel(date.get(0).toString()+" \u2022 "+l.get(3).toString()+" "+eleves);
-			label_2.setHorizontalAlignment(SwingConstants.CENTER);
-			label_2.setForeground(Color.WHITE);
-			label_2.setFont(new Font("Roboto", Font.PLAIN, 15));
-			label_2.setBounds(219, 2, 162, 20);
-			panel_3.add(label_2);
-			
-
-			JButton btnToutPardonner = new JButton("Tout Pardonner");
-			btnToutPardonner.setVerticalTextPosition(SwingConstants.BOTTOM);
-			btnToutPardonner.setIconTextGap(0);
-			btnToutPardonner.setHorizontalTextPosition(SwingConstants.CENTER);
-			btnToutPardonner.setForeground(Color.WHITE);
-			btnToutPardonner.setFont(new Font("Roboto", Font.PLAIN, 13));
-			btnToutPardonner.setFocusPainted(false);
-			btnToutPardonner.setBorder(new LineBorder(new Color(255, 255, 255)));
-			btnToutPardonner.setBackground(new Color(80, 80, 80));
-			btnToutPardonner.setBounds(391, 0, 109, 25);
-			panel_3.add(btnToutPardonner);
-			btnToutPardonner.setVisible(false);
-			
-			
-			btnToutPardonner.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					btnToutPardonner.setBackground(new Color(20, 142, 192));
-				}
-				@Override
-				public void mouseExited(MouseEvent e) {
-
-					btnToutPardonner.setBackground(new Color(80, 80, 80));
-				}
-			});
-			
-
-			btnToutPardonner.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					forgiveAll(className, btnToutPardonner.getParent().getName());
-					loadClassPunishments(Home.className);
-					
-				}
-			});
-			
-			
-			panel_3.addMouseListener(new MouseAdapter() {@Override
-				public void mouseClicked(MouseEvent e) {
-				for(int i = 0; i< panel_3.getParent().getComponentCount(); i++) {
-					panel_3.getParent().getComponent(i).setBackground(new Color(80, 80, 80));
-					((Container) panel_3.getParent().getComponent(i)).getComponent(2).setVisible(false);
-				}
-				panel_3.setBackground(new Color(20, 142, 192));
-				panel_3.getComponent(2).setVisible(true);
-				
-				if(e.getClickCount()==2) {
-					List d = Arrays.asList(((JLabel) panel_3.getComponent(1)).getText().split(" \\u2022 "));
-					PunishedStudents ps = new PunishedStudents(panel_3.getName(), d.get(0).toString());
-					ps.setVisible(true);
-				}
-			}
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					panel_3.setBorder(new LineBorder(Color.white, 1));
-				}
-				@Override
-				public void mouseExited(MouseEvent e) {
-					panel_3.setBorder(null);
-				}
-			});
 		}
+		return students;
+	}
+	
+	
+	public static void loadClassPunishments(String classroom_id, String ay_id, String term_id) {
+		panel_2.removeAll();
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishments_in_ay AS pia "
+					+ "JOIN punishments AS p "
+					+ "JOIN punishment_information as pi "
+					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.punishment_id = p.punishment_id AND pia.punishment_id = pi.punishment_id "
+					+ "AND pi.term_id = '"+term_id+"'");
+			while(rs.next())
+			{
+
+				List students = getPunishedStudents(rs.getString("pi.pi_id"), classroom_id, ay_id);
+				
+
+				JPanel panel_3 = new JPanel();
+				panel_3.setLayout(null);
+				panel_3.setPreferredSize(new Dimension(500, 25));
+				panel_3.setBackground(new Color(80, 80, 80));
+				panel_2.add(panel_3);
+				panel_3.setName(rs.getString("pi.pi_id"));
+				
+				JLabel label = new JLabel(rs.getString("p.punishment_name"));
+				label.setForeground(Color.WHITE);
+				label.setFont(new Font("Roboto", Font.PLAIN, 15));
+				label.setBounds(10, 2, 207, 20);
+				panel_3.add(label);
+				
+				String eleves = "eleves";
+				if(students.toArray().length==1) {
+					eleves = "eleve";
+				}
+				JLabel label_2 = new JLabel(rs.getString("pi.date")+" \u2022 "+students.toArray().length+" "+eleves);
+				label_2.setHorizontalAlignment(SwingConstants.CENTER);
+				label_2.setForeground(Color.WHITE);
+				label_2.setFont(new Font("Roboto", Font.PLAIN, 15));
+				label_2.setBounds(219, 2, 162, 20);
+				panel_3.add(label_2);
+				
+
+				JButton btnToutPardonner = new JButton("Tout Pardonner");
+				btnToutPardonner.setVerticalTextPosition(SwingConstants.BOTTOM);
+				btnToutPardonner.setIconTextGap(0);
+				btnToutPardonner.setHorizontalTextPosition(SwingConstants.CENTER);
+				btnToutPardonner.setForeground(Color.WHITE);
+				btnToutPardonner.setFont(new Font("Roboto", Font.PLAIN, 13));
+				btnToutPardonner.setFocusPainted(false);
+				btnToutPardonner.setBorder(new LineBorder(new Color(255, 255, 255)));
+				btnToutPardonner.setBackground(new Color(80, 80, 80));
+				btnToutPardonner.setBounds(391, 0, 109, 25);
+				panel_3.add(btnToutPardonner);
+				btnToutPardonner.setVisible(false);
+				
+				
+				btnToutPardonner.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						btnToutPardonner.setBackground(new Color(20, 142, 192));
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+
+						btnToutPardonner.setBackground(new Color(80, 80, 80));
+					}
+				});
+				
+
+				btnToutPardonner.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						forgiveAll(className, btnToutPardonner.getParent().getName());
+						loadClassPunishments(classroom_id, ay_id, term_id);
+						
+					}
+				});
+				
+				
+				panel_3.addMouseListener(new MouseAdapter() {@Override
+					public void mouseClicked(MouseEvent e) {
+					for(int i = 0; i< panel_3.getParent().getComponentCount(); i++) {
+						panel_3.getParent().getComponent(i).setBackground(new Color(80, 80, 80));
+						((Container) panel_3.getParent().getComponent(i)).getComponent(2).setVisible(false);
+					}
+					panel_3.setBackground(new Color(20, 142, 192));
+					panel_3.getComponent(2).setVisible(true);
+					
+					if(e.getClickCount()==2) {
+						PunishedStudents ps = new PunishedStudents(panel_3.getName());
+						ps.setVisible(true);
+					}
+				}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						panel_3.setBorder(new LineBorder(Color.white, 1));
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						panel_3.setBorder(null);
+					}
+				});
+			
+			}} catch (SQLException e1) {
+			}
 		panel_2.revalidate();
 		panel_2.repaint();
 		if(panel_2.getComponentCount() == 0) {
@@ -825,94 +824,89 @@ public static void forgiveAll(String className, String punishmentID) {
 }
 	}
 	
-	
-	public static String getPunishmentID(String name) {
-		String id = null;
-	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Punishments.txt");
-	aws.downloadContent(file1.getPath());
-	FileReader fr1;
-	try {
-		fr1 = new FileReader(file1);
-	
-	
-	BufferedReader br1 = new BufferedReader(fr1);
-	Object[] lines = br1.lines().toArray();
-	
-	
-	for(int i = 0; i< lines.length; i++) {
-		List l = Arrays.asList(lines[i].toString().split("//"));
-		if(l.get(1).toString().equals(name)) {
-			id = l.get(0).toString();
-			break;
-		}
-	}
-	} catch (FileNotFoundException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-	
-	return id;
-	}
-	
 
-	public static String getPunishmentName(String id) {
+	public static String getPunishmentName(String punishment_id) {
 		String name = null;
-	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Punishments.txt");
-	aws.downloadContent(file1.getPath());
-	FileReader fr1;
-	try {
-		fr1 = new FileReader(file1);
-	
-	
-	BufferedReader br1 = new BufferedReader(fr1);
-	Object[] lines = br1.lines().toArray();
-	
-	
-	for(int i = 0; i< lines.length; i++) {
-		List l = Arrays.asList(lines[i].toString().split("//"));
-		if(l.get(0).toString().equals(id)) {
-			name = l.get(1).toString();
-			break;
+		
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishments "
+					+ "WHERE punishment_id =  '"+punishment_id+"'");
+			while(rs.next())
+			{
+				name = rs.getString("punishment_name");
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-	}
-	} catch (FileNotFoundException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-	
-	return name;
+		return name;
 	}
 	
 	
 	
 	
 
-	public static String getPunishmentPoints(String id) {
+	public static String getPunishmentPoints(String punishment_id, String ay_id) {
 		String points = null;
-	File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/Punishments.txt");
-	aws.downloadContent(file1.getPath());
-	FileReader fr1;
-	try {
-		fr1 = new FileReader(file1);
-	
-	
-	BufferedReader br1 = new BufferedReader(fr1);
-	Object[] lines = br1.lines().toArray();
-	
-	
-	for(int i = 0; i< lines.length; i++) {
-		List l = Arrays.asList(lines[i].toString().split("//"));
-		if(l.get(0).toString().equals(id)) {
-			points = l.get(2).toString();
-			break;
+		
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishments_in_ay "
+					+ "WHERE punishment_id =  '"+punishment_id+"' AND ay_id = '"+ay_id+"' LIMIT 1");
+			while(rs.next())
+			{
+				points = rs.getString("points");
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		return points;
 	}
-	} catch (FileNotFoundException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
+
+	public static String getPunishmentOriginalId(String pi_id) {
+		String id = null;
+		
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishment_information "
+					+ "WHERE pi_id =  '"+pi_id+"'");
+			while(rs.next())
+			{
+				id = rs.getString("punishment_id");
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return id;
 	}
-	
-	return points;
+
+	public static String getPunishmentDate(String pi_id) {
+		String date = null;
+		
+		
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs=stmt.executeQuery("select * from punishment_information "
+					+ "WHERE pi_id =  '"+pi_id+"'");
+			while(rs.next())
+			{
+				date = rs.getString("date");
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return date;
 	}
 
 }

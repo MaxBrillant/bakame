@@ -100,7 +100,7 @@ public class Class extends JPanel {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	setBackground(new Color(60, 60, 60));
 	setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
-	setPreferredSize(new Dimension(370, 140));
+	setPreferredSize(new Dimension(310, 120));
 	setLayout(new BorderLayout(0, 0));
 	
 	
@@ -108,7 +108,7 @@ public class Class extends JPanel {
 	courseBox = new JPanel();
 	courseBox.setBorder(null);
 	courseBox.setBackground(new Color(0, 121, 50));
-	courseBox.setPreferredSize(new Dimension(150, 10));
+	courseBox.setPreferredSize(new Dimension(135, 10));
 	add(courseBox, BorderLayout.WEST);
 	courseBox.setLayout(new BorderLayout(0, 0));
 	
@@ -116,38 +116,38 @@ public class Class extends JPanel {
 	className.setBorder(null);
 	className.setForeground(Color.WHITE);
 	className.setBackground(Color.GREEN);
-	className.setFont(new Font("Roboto", Font.BOLD, 16));
+	className.setFont(new Font("Roboto", Font.BOLD, 14));
 	className.setHorizontalAlignment(SwingConstants.CENTER);
 	courseBox.add(className);
 	
 	stats = new JPanel();
-	stats.setPreferredSize(new Dimension(getPreferredSize().width*53/100, 10));
+	stats.setPreferredSize(new Dimension(154, 10));
 	stats.setBackground(new Color(60, 60, 60));
 	add(stats, BorderLayout.EAST);
 	stats.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 9));
 	
 	percent = new JLabel("Moyenne: 0%");
 	percent.setForeground(Color.WHITE);
-	percent.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
+	percent.setFont(new Font("Roboto", Font.PLAIN, 14));
 	stats.add(percent);
 	stats.add(percent);
 	
 	
 	number = new JLabel("Nombre d'eleves: 252");
 	number.setForeground(Color.WHITE);
-	number.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
+	number.setFont(new Font("Roboto", Font.PLAIN, 14));
 	stats.add(number);
 	stats.add(number);
 	
 	moyenneEchecs = new JLabel("Nombre de cours: 14");
 	moyenneEchecs.setForeground(Color.WHITE);
-	moyenneEchecs.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
+	moyenneEchecs.setFont(new Font("Roboto", Font.PLAIN, 14));
 	stats.add(moyenneEchecs);
 	stats.add(moyenneEchecs);
 	
 	echecs = new JLabel("Sous 50%:: 0 el\u00E8ves");
 	echecs.setForeground(Color.WHITE);
-	echecs.setFont(new Font("Roboto Medium", Font.PLAIN, 16));
+	echecs.setFont(new Font("Roboto", Font.PLAIN, 14));
 	stats.add(echecs);
 	stats.add(echecs);
 	
@@ -626,16 +626,16 @@ public class Class extends JPanel {
 			((JButton) ((Container) (c)).getComponent(2)).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if((c).getPreferredSize().width==370) {
+				if((c).getPreferredSize().width==310) {
 					((JButton) ((Container) (c)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
 					((Container) c).getComponent(1).setVisible(false);
-					c.setPreferredSize(new Dimension(370-370*53/100, 140));
+					c.setPreferredSize(new Dimension(310-310*49/100, 120));
 					c.revalidate();
 					c.repaint();
 				}else {
 					((JButton) ((Container) (c)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop3.png"));
 					((Container) c).getComponent(1).setVisible(true);
-					c.setPreferredSize(new Dimension(370, 140));
+					c.setPreferredSize(new Dimension(310, 120));
 					c.revalidate();
 					c.repaint();
 					loadData(((Container) (c)), ((Container) (c)).getName(), term_id, ay_id);

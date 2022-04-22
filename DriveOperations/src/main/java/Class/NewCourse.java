@@ -141,7 +141,6 @@ public class NewCourse extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Application.tabbedPane.setSelectedIndex(1);
 			Application.deselect();
-			CourseList();
 			load();
 			setVisible(false);
 			

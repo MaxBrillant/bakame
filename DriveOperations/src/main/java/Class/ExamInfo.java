@@ -80,10 +80,10 @@ public class ExamInfo extends JFrame {
 
 	private JPanel contentPane;
 	public static JComboBox cours;
+	public static List<String> coursesList = new ArrayList();
 	public static JComboBox maxima;
 	public static JButton Add;
 	public static JButton cancel;
-	public static List<String> examList = new ArrayList();
 	private JDateChooser dateChooser;
 	public static JTable table;
 	private JLabel notice;
@@ -94,7 +94,8 @@ public class ExamInfo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ExamInfo frame = new ExamInfo();
+					mysql.connectToDB();
+					ExamInfo frame = new ExamInfo("1", "8");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,7 +107,7 @@ public class ExamInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ExamInfo() {
+	public ExamInfo(String classroom_id, String ay_id) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
 		setTitle("New Test");
 		setResizable(false);
@@ -133,15 +134,16 @@ public class ExamInfo extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		cours = new JComboBox();
+
 		cours.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String max = loadCourseMaxima(cours.getSelectedItem().toString(), Home.className);
+				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()), classroom_id, ay_id);
 				maxima.setSelectedItem(max);
-			}
+				}
 		});
 		cours.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				String max = loadCourseMaxima(cours.getSelectedItem().toString(), Home.className);
+				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()), classroom_id, ay_id);
 				maxima.setSelectedItem(max);
 			}
 		});
@@ -209,7 +211,7 @@ public class ExamInfo extends JFrame {
 				}
 				
 				addExams(s);
-				NewExam.cours.setText(TestBox.getFullName(cours.getSelectedItem().toString(),Home.className));
+				NewExam.cours.setText(TestBox.getFullName(coursesList.get(cours.getSelectedIndex())));
 				NewExam.loadExamSeries(NewExam.cours.getText());
 				
 				}else {
@@ -319,7 +321,7 @@ public class ExamInfo extends JFrame {
 					model.addRow(new Object[] {"Examen","100"});
 				}
 
-				String max = loadCourseMaxima(cours.getSelectedItem().toString(), Home.className);
+				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()), classroom_id, ay_id);
 				maxima.setSelectedItem(max);
 			}}
 		});
@@ -345,30 +347,16 @@ public class ExamInfo extends JFrame {
 		
 		model.addRow(new Object[] {"Situation d'integration","60"});
 		model.addRow(new Object[] {"Examen","40"});
-		populateBox();
-		loadExamList();
+		populateBox(classroom_id, ay_id);
 		
 	}
-	public static void populateBox() {
-		
-
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Courses.txt");
-		aws.downloadContent(file.getPath());
-			FileReader fr;
-			try {
-				fr = new FileReader(file);
-			
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object lines [] = Home.loadActiveCourses(file.getPath());
+	public static void populateBox(String classroom_id, String ay_id) {
+		//coursesList.clear();
+			Object lines [] = Home.loadActiveCourses(ay_id, classroom_id);
 			
 			for(int i = 0;i<lines.length; i++) {
-				List note = Arrays.asList(lines[i].toString().trim().split("//"));
-				cours.addItem(note.get(0));
-			}
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				coursesList.add(lines[i].toString());
+				cours.addItem(TestBox.getFullName(lines[i].toString()));
 			}
 			
 		
@@ -396,36 +384,7 @@ public class ExamInfo extends JFrame {
 			return maxima;
 			
 	}
-
-	
-	public static void loadExamList() {
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Exam List/3eme Trimestre/ExamList.txt");
-		examList.clear();
-		aws.downloadContent(file.getPath());
-				try {
-
-					
-					FileReader fr = new FileReader(file);
-					
-					BufferedReader br = new BufferedReader(fr);
-					Object[] lines = br.lines().toArray();
-					
-					for(int i = 0;i<lines.length;i++) {
-						examList.add(lines[i].toString());
-					}
-					
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					
-			}
-				
-			}
-	
-	
-	
 	public static void addExams(String s) {
-		loadExamList();
 		refreshExams();
 		examList.add(0, s);
 		saveExams();

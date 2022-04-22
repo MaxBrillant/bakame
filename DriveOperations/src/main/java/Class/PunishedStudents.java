@@ -108,7 +108,7 @@ public class PunishedStudents extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PunishedStudents(String punishmentId, String date) {
+	public PunishedStudents(String pi_id, String classroom_id, String ay_id, List students) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -146,7 +146,7 @@ public class PunishedStudents extends JFrame {
 	btnFermer.setBounds(395, 520, 129, 31);
 	contentPane.add(btnFermer);
 	
-	lblajoutezLesClasses = new JLabel("<html><div style='text-align: center;'>Refus d'ordre</html>");
+	lblajoutezLesClasses = new JLabel(Punish.getPunishmentName(Punish.getPunishmentOriginalId(pi_id)));
 	lblajoutezLesClasses.setHorizontalAlignment(SwingConstants.CENTER);
 	lblajoutezLesClasses.setForeground(Color.WHITE);
 	lblajoutezLesClasses.setFont(new Font("Roboto", Font.BOLD, 25));
@@ -187,68 +187,39 @@ public class PunishedStudents extends JFrame {
 	text.setBounds(10, 62, 514, 31);
 	contentPane.add(text);
 	
-	JLabel lblLe = new JLabel("Le "+date);
+	JLabel lblLe = new JLabel("Le "+Punish.getPunishmentDate(pi_id));
 	lblLe.setHorizontalAlignment(SwingConstants.CENTER);
 	lblLe.setForeground(Color.WHITE);
 	lblLe.setFont(new Font("Roboto", Font.BOLD, 20));
 	lblLe.setBounds(10, 32, 514, 31);
 	contentPane.add(lblLe);
 	setLocationRelativeTo(null);
-	loadPunishedStudents(punishmentId);
+	loadPunishedStudents(pi_id, classroom_id, ay_id, students);
 	}
 	
 	
 	
 	
-	public static void loadPunishedStudents(String punishmentId) {
+	public static void loadPunishedStudents(String pi_id, String classroom_id, String ay_id, List students) {
 		panel.removeAll();
 		
-		List<String> punished = new ArrayList();
-		Object[] lines = Home.loadActiveStudents("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-		
-		for(int j = 0 ; j< lines.length; j++) {
-			List l1 = Arrays.asList(lines[j].toString().split("//"));
-		File file1 = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/"+l1.get(0).toString()+"/3eme Trimestre/Education.txt");
-		aws.downloadContent(file1.getPath());
-		FileReader fr1;
-		try {
-			fr1 = new FileReader(file1);
-		
-		
-		BufferedReader br1 = new BufferedReader(fr1);
-		Object[] lines1 = br1.lines().toArray();
-		
-		
-		for(int i = 0; i< lines1.length; i++) {
-				List l = Arrays.asList(lines1[i].toString().split("//"));
-				if(l.get(1).toString().equals(punishmentId)) {
-					punished.add(l1.get(0).toString()+"//"+l.get(0).toString()+"//"+l.get(1).toString());
-					break;
-				}
-		}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}}
-		
-		for(int i = 0; i< punished.toArray().length; i++) {
-			List l = Arrays.asList(punished.get(i).split("//"));
+		String points = Punish.getPunishmentPoints(Punish.getPunishmentOriginalId(pi_id), ay_id);
+		for(int i = 0; i< students.toArray().length; i++) {
 			
-
 			JPanel panel_3 = new JPanel();
 			panel_3.setLayout(null);
 			panel_3.setPreferredSize(new Dimension(500, 25));
 			panel_3.setBackground(new Color(80, 80, 80));
 			panel.add(panel_3);
-			panel_3.setName(l.get(0).toString());
+			panel_3.setName(pi_id);
 			
-			JLabel label = new JLabel(l.get(0).toString());
+			JLabel label = new JLabel(Home.getStudentName(students.get(i).toString()));
 			label.setForeground(Color.WHITE);
 			label.setFont(new Font("Roboto", Font.PLAIN, 15));
 			label.setBounds(10, 2, 207, 20);
 			panel_3.add(label);
 			
-			JLabel label_2 = new JLabel(Punish.getPunishmentPoints(l.get(1).toString())+" points");
+			JLabel label_2 = new JLabel(points+" points");
 			label_2.setHorizontalAlignment(SwingConstants.CENTER);
 			label_2.setForeground(Color.WHITE);
 			label_2.setFont(new Font("Roboto", Font.PLAIN, 15));
@@ -283,11 +254,17 @@ public class PunishedStudents extends JFrame {
 			});
 			
 
+			int k = i;
 			btnToutPardonner.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Punish.forgive(btnToutPardonner.getParent().getName(), punishmentId);
-					loadPunishedStudents(punishmentId);
-					Punish.loadClassPunishments(Home.className);
+					Punish.forgive(students.get(k).toString(), btnToutPardonner.getParent().getName());
+					loadPunishedStudents(pi_id, classroom_id, ay_id, students);
+
+		        	Punish.panel_2.removeAll();
+		        	for(int j = 0; j< Home.terms.toArray().length; j++) {
+		        		Punish.loadClassPunishments(classroom_id, ay_id, Home.terms.get(j));
+		    		}
+			
 				}
 			});
 			

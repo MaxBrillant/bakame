@@ -189,7 +189,7 @@ public class Teacher extends JPanel {
 			((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					deselectAll();
+					deselectAll(ay_id);
 					selectedTeacher = ((JLabel) ((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).getComponent(0)).getText();
 					((JComponent) Home.panelProf.getComponent(k)).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 					
@@ -231,7 +231,7 @@ public class Teacher extends JPanel {
 		}
 		Home.panelProf.revalidate();
 		Home.panelProf.repaint();
-		deselectAll();
+		deselectAll(ay_id);
 		
 		if(Home.panelProf.getComponentCount() == 0) {
 			JLabel lblNewLabel = new JLabel("Il n'y a actuellement aucun professeur dans cet etablissement.");
@@ -270,7 +270,7 @@ public class Teacher extends JPanel {
 		
 	}
 	
-	public static void deselectAll() {
+	public static void deselectAll(String ay_id) {
 		for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
 			((JComponent) Home.panelProf.getComponent(i)).setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
 
@@ -284,7 +284,7 @@ public class Teacher extends JPanel {
 			}
 		}
 		selectedTeacher = "";
-		MainInfo m = new MainInfo();
+		MainInfo m = new MainInfo(ay_id);
 		m.guide.setText("<html>- Cliquez sur un professeur pour le selectionner.<br/><br/>\r\n- Cliquez sur la fleche correspondante au professeur <br/>pour rapidement voir ses differentes performances <br/>dans differentes classes et cours.<br/><br/>\r\n- Selectionnez le professeur pour voir les options <br/>disponibles.<br/><br/>\r\n- Double-cliquez sur une des classes disponibles<br/> pour le professeur pour l'ouvrir.</html>");
 		Home.side.removeAll();
 		Home.side.add(m);
@@ -466,7 +466,7 @@ public class Teacher extends JPanel {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 
-							deselectAll();
+							deselectAll(ay_id);
 							selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getName();
 							((JComponent) c.getParent()).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 							
@@ -485,10 +485,10 @@ public class Teacher extends JPanel {
 							TeacherInfo.selectedClass = k;
 							TeacherInfo.loadTeacherInfo(teacher_id, ay_id, TeacherInfo.classes.get(TeacherInfo.selectedClass));
 							
-							if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)).getComponent(0)).getComponent(0)).getText().equals(selectedTeacher)) {
+							if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)).getComponent(0)).getComponent(0)).getName().equals(selectedTeacher)) {
 
 								HomeMenu3.panel.getComponent(5).setVisible(false);}
-							if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(0)).getComponent(0)).getComponent(0)).getText().equals(selectedTeacher)) {
+							if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(0)).getComponent(0)).getComponent(0)).getName().equals(selectedTeacher)) {
 								HomeMenu3.panel.getComponent(4).setVisible(false);
 								}
 							
@@ -504,7 +504,7 @@ public class Teacher extends JPanel {
 							if(e.getClickCount() == 2) {
 								Home.className = ((JLabel) ((Container) ((Container) ((Container) c).getComponent(k))).getComponent(0)).getText()
 										.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "");
-								Application a = new Application();
+								Application a = new Application(((Container) ((Container) ((Container) c).getComponent(k))).getComponent(0).getName(), ay_id);
 								a.frame.setVisible(true);
 								
 								Home.frame.setVisible(false);
@@ -537,7 +537,7 @@ public class Teacher extends JPanel {
 							@Override
 							public void mouseClicked(MouseEvent e) {
 
-									deselectAll();
+									deselectAll(ay_id);
 									selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getName();
 									((JComponent) c.getParent()).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 									
