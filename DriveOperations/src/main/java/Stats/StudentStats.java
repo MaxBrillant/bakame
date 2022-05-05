@@ -766,7 +766,7 @@ public class StudentStats extends JPanel {
 										rs= stmt.executeQuery("SELECT * FROM test_information AS ti "
 												+ "JOIN course_tests AS ct "
 												+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 "
-														+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"' AND ei.date BETWEEN '"+firstDate+"' and '"+lastDate+"'");
+														+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"' AND ti.date BETWEEN '"+firstDate+"' and '"+lastDate+"'");
 									}
 								while(rs.next())
 								{

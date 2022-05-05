@@ -321,7 +321,7 @@ public class Home {
 		panelProf.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Teacher.deselectAll();
+				Teacher.deselectAll(ay_id);
 
 				HomeMenu3.deselect();
 			}
@@ -450,7 +450,7 @@ public class Home {
 				panel_2.repaint();
 				Class.deselectAll(ay_id);
 				ClassStudents.deselectAll(ay_id);
-				Teacher.deselectAll();
+				Teacher.deselectAll(ay_id);
 			}
 		});
 		button.addActionListener(new ActionListener() {
@@ -470,7 +470,7 @@ public class Home {
 				panel_2.repaint();
 				Class.deselectAll(ay_id);
 				ClassStudents.deselectAll(ay_id);
-				Teacher.deselectAll();
+				Teacher.deselectAll(ay_id);
 			}
 		});
 		btnProfesseurs.addActionListener(new ActionListener() {
@@ -491,7 +491,7 @@ public class Home {
 				//Teacher.loadData();
 				Class.deselectAll(ay_id);
 				ClassStudents.deselectAll(ay_id);
-				Teacher.deselectAll();
+				Teacher.deselectAll(ay_id);
 			}
 		});
 		

@@ -111,7 +111,7 @@ public class TestMenu extends JPanel {
 		newTest = new JButton("");
 		newTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TestInfo nt = new TestInfo();
+				TestInfo nt = new TestInfo("null", classroom_id, ay_id);
 				nt.setVisible(true);
 			}
 		});
@@ -163,27 +163,8 @@ public class TestMenu extends JPanel {
 		edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TestInfo nt = new TestInfo();
+				TestInfo nt = new TestInfo(TestBox.selectedTests.get(0).getName(), classroom_id, ay_id);
 				nt.setVisible(true);
-				nt.actualiser.setVisible(true);
-				nt.Add.setVisible(false);
-				String s = TestData(TestBox.getShortName(((JLabel) ((Container) TestBox.selectedTests.get(0)).getComponent(1)).getText(), Home.className), Integer.parseInt(((JLabel) ((Container) TestBox.selectedTests.get(0)).getComponent(0)).getText().replaceAll("[^0.00-9.00]+", " ").replaceAll(" ", "")));
-				List l = Arrays.asList(s.split("//"));
-				nt.cours.setSelectedItem(l.get(0).toString());
-				nt.cours.setEnabled(false);
-				nt.maxima.setSelectedItem(l.get(1).toString());
-				nt.maxima.setEnabled(false);
-				
-				 SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yyyy");
-				 Date d3 = null;
-				try {
-					d3 = df1.parse(l.get(3).toString());
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} 
-				
-				nt.dateChooser.setDate(d3);
 			
 			}
 		});
@@ -426,29 +407,4 @@ public class TestMenu extends JPanel {
 }
 		Application.no.setText(String.valueOf(Application.panelTests.getComponentCount()));
 		}
-	
-	
-	public static String TestData(String shortName, int testNumber) {
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Test List/3eme Trimestre/TestList.txt");
-		aws.downloadContent(file.getPath());
-		String s = null;
-		try {
-			FileReader fr = new FileReader(file);
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object[] lines = br.lines().toArray();
-			
-			for(int i = 0; i< lines.length; i++) {
-				List l = Arrays.asList(lines[i].toString().split("//"));
-				if(l.get(0).toString().equals(shortName) && l.get(2).toString().equals(String.valueOf(testNumber))) {
-					s = lines[i].toString();
-					break;
-				}
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-	}
-	return s;
-	}
 }

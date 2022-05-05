@@ -269,7 +269,7 @@ public class HomeMenu2 extends JPanel {
         					((JComboBox) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(2)).setSelectedIndex(0);
         				}
         				
-        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ((JLabel) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(0)).getText(), start, end);
+        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ClassStudents.courses.get(ClassStudents.selectedCourse), Home.panelStudents.getComponent(i).getName(), ay_id, start, end);
         			if(((AbstractButton) ((Container) (((Container) Home.panelStudents.getComponent(i)).getComponent(2))).getComponent(1)).getText().equals("Decroissant")){
         				ClassStudents.rankFromLastToFirst((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(i))).getComponent(1))));
         				}else{
@@ -290,7 +290,7 @@ public class HomeMenu2 extends JPanel {
 						}
 					((JComboBox) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(2)).setSelectedIndex(index);
 					}
-    			ClassStudents.deselectAll();
+    			ClassStudents.deselectAll(ay_id);
 				}
 		});
 		btnNewButton.setFocusPainted(false);
@@ -324,7 +324,7 @@ public class HomeMenu2 extends JPanel {
         					((JComboBox) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(2)).setSelectedIndex(0);
         				}
         				
-        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ((JLabel) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(0)).getText(), start, end);
+        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ClassStudents.courses.get(ClassStudents.selectedCourse), Home.panelStudents.getComponent(i).getName(), ay_id, start, end);
         			if(((AbstractButton) ((Container) (((Container) Home.panelStudents.getComponent(i)).getComponent(2))).getComponent(1)).getText().equals("Decroissant")){
         				ClassStudents.rankFromLastToFirst((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(i))).getComponent(1))));
         				}else{
@@ -344,7 +344,7 @@ public class HomeMenu2 extends JPanel {
 						}
 					((JComboBox) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(2)).setSelectedIndex(index);
 					}
-    			ClassStudents.deselectAll();
+    			ClassStudents.deselectAll(ay_id);
 			
 			}
 		});
@@ -492,12 +492,12 @@ public class HomeMenu2 extends JPanel {
 			public void propertyChange(PropertyChangeEvent evt) {
 				
 				comboBox.setSelectedIndex(2);
-        		String start = dateChooser.getDate().getDate()+"/"+(dateChooser.getDate().getMonth()+1)+"/"+(dateChooser.getDate().getYear()+1900);
-        		String end = dateChooser_1.getDate().getDate()+"/"+(dateChooser_1.getDate().getMonth()+1)+"/"+(dateChooser_1.getDate().getYear()+1900);
+        		String start = (dateChooser.getDate().getYear()+1900)+"-"+(dateChooser.getDate().getMonth()+1)+"-"+dateChooser.getDate().getDate();
+        		String end = (dateChooser_1.getDate().getYear()+1900)+"-"+(dateChooser_1.getDate().getMonth()+1)+"-"+dateChooser_1.getDate().getDate();
 				
         		for(int i = 0; i< Home.panelStudents.getComponentCount(); i++) {
         			if(Home.panelStudents.getComponent(i).getPreferredSize().height > 50) {
-        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ((JLabel) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(0)).getName(), start, end);
+        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ClassStudents.courses.get(ClassStudents.selectedCourse), Home.panelStudents.getComponent(i).getName(), ay_id, start, end);
         			if(((AbstractButton) ((Container) (((Container) Home.panelStudents.getComponent(i)).getComponent(2))).getComponent(1)).getText().equals("Decroissant")){
         				ClassStudents.rankFromLastToFirst((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(i))).getComponent(1))));
         				}else{
@@ -511,11 +511,11 @@ public class HomeMenu2 extends JPanel {
 
 				comboBox.setSelectedIndex(2);
 
-				String start = dateChooser.getDate().getDate()+"/"+(dateChooser.getDate().getMonth()+1)+"/"+(dateChooser.getDate().getYear()+1900);
-        		String end = dateChooser_1.getDate().getDate()+"/"+(dateChooser_1.getDate().getMonth()+1)+"/"+(dateChooser_1.getDate().getYear()+1900);
-        		for(int i = 0; i< Home.panelStudents.getComponentCount(); i++) {
+				String start = (dateChooser.getDate().getYear()+1900)+"-"+(dateChooser.getDate().getMonth()+1)+"-"+dateChooser.getDate().getDate();
+        		String end = (dateChooser_1.getDate().getYear()+1900)+"-"+(dateChooser_1.getDate().getMonth()+1)+"-"+dateChooser_1.getDate().getDate();
+				for(int i = 0; i< Home.panelStudents.getComponentCount(); i++) {
         			if(Home.panelStudents.getComponent(i).getPreferredSize().height > 50) {
-        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ((JLabel) ((Container) ((Container) Home.panelStudents.getComponent(i)).getComponent(0)).getComponent(0)).getText(), start, end);
+        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ClassStudents.courses.get(ClassStudents.selectedCourse), Home.panelStudents.getComponent(i).getName(), ay_id, start, end);
         			if(((AbstractButton) ((Container) (((Container) Home.panelStudents.getComponent(i)).getComponent(2))).getComponent(1)).getText().equals("Decroissant")){
         				ClassStudents.rankFromLastToFirst((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(i))).getComponent(1))));
         				}else{

@@ -76,7 +76,7 @@ public class General extends JPanel {
 	public General(String student_id, String classroom_id, String ay_id, String term_id) {
 		setBackground(new Color(235, 255, 244));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension((int) screensize.getWidth()*33/100,(int) (screensize.getHeight()*82/100)));
+		setPreferredSize(new Dimension(300, 629));
 		setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane_4 = new JScrollPane();
@@ -90,37 +90,39 @@ public class General extends JPanel {
 		scrollPane_4.getHorizontalScrollBar().setUI(new CustomVerticalScrollBarUI());
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setPreferredSize(new Dimension(300, 10));
 		panel_2.setBackground(new Color(25, 25, 25));
 		scrollPane_4.setViewportView(panel_2);
-		panel_2.setLayout(new WrapLayout(1, 10, 15));
+		panel_2.setLayout(new WrapLayout(1, 10, 10));
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(80, 80, 80));
 		
 		JLabel lblNewLabel = new JLabel("Total General");
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 23));
+		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 16));
 		panel_2.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("<html><div style='text-align: center;'>Cliquez sur les barres en dessous pour voir les details de chaque cours</html>");
-		lblNewLabel_1.setPreferredSize(new Dimension(390, 38));
+		lblNewLabel_1.setPreferredSize(new Dimension(300, 30));
+		//lblNewLabel_1.setPreferredSize(new Dimension(10, 38));
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 12));
 		panel_2.add(lblNewLabel_1);
 		panel_3.setLayout(null);
-		panel_3.setPreferredSize(new Dimension(430, 33));
+		panel_3.setPreferredSize(new Dimension(280, 33));
 		panel_2.add(panel_3);
 		
 		percentage = new JLabel("Pourcentage: 0%");
 		percentage.setForeground(Color.WHITE);
 		percentage.setHorizontalAlignment(SwingConstants.CENTER);
-		percentage.setFont(new Font("Roboto", Font.PLAIN, 20));
-		percentage.setBounds(7, 3, 415, 26);
+		percentage.setFont(new Font("Roboto", Font.PLAIN, 16));
+		percentage.setBounds(8, 3, 263, 26);
 		panel_3.add(percentage);
 		
 		JScrollPane scrollPane1 = new JScrollPane();
 		scrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane1.setBounds(7, 33, 415, 80);
+		scrollPane1.setBounds(7, 33, 265, 80);
 		panel_3.add(scrollPane1);
 		
 
@@ -137,19 +139,19 @@ public class General extends JPanel {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(80, 80, 80));
 		panel_5.setLayout(null);
-		panel_5.setPreferredSize(new Dimension(430, 33));
+		panel_5.setPreferredSize(new Dimension(280, 33));
 		panel_2.add(panel_5);
 		
 		lblPoints = new JLabel("Points: 0/0");
 		lblPoints.setForeground(Color.WHITE);
 		lblPoints.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPoints.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblPoints.setBounds(7, 3, 415, 26);
+		lblPoints.setFont(new Font("Roboto", Font.PLAIN, 16));
+		lblPoints.setBounds(8, 3, 263, 26);
 		panel_5.add(lblPoints);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(7, 33, 415, 80);
+		scrollPane.setBounds(7, 33, 265, 80);
 		panel_5.add(scrollPane);
 		
 
@@ -166,20 +168,20 @@ public class General extends JPanel {
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(80, 80, 80));
 		panel_6.setLayout(null);
-		panel_6.setPreferredSize(new Dimension(430, 33));
+		panel_6.setPreferredSize(new Dimension(280, 33));
 		panel_2.add(panel_6);
 		
 		
 		lblTests = new JLabel("Interrogations faites: 0");
 		lblTests.setForeground(Color.WHITE);
 		lblTests.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTests.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblTests.setBounds(7, 3, 415, 26);
+		lblTests.setFont(new Font("Roboto", Font.PLAIN, 16));
+		lblTests.setBounds(8, 3, 263, 26);
 		panel_6.add(lblTests);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_1.setBounds(7, 33, 415, 80);
+		scrollPane_1.setBounds(7, 33, 265, 80);
 		panel_6.add(scrollPane_1);
 		
 
@@ -196,20 +198,20 @@ public class General extends JPanel {
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(new Color(80, 80, 80));
 		panel_7.setLayout(null);
-		panel_7.setPreferredSize(new Dimension(430, 33));
+		panel_7.setPreferredSize(new Dimension(280, 33));
 		panel_2.add(panel_7);
 		
 		
 		lblEchecs = new JLabel("Echecs: 0");
 		lblEchecs.setForeground(Color.WHITE);
 		lblEchecs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEchecs.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblEchecs.setBounds(7, 3, 415, 26);
+		lblEchecs.setFont(new Font("Roboto", Font.PLAIN, 16));
+		lblEchecs.setBounds(8, 3, 263, 26);
 		panel_7.add(lblEchecs);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_2.setBounds(7, 33, 415, 60);
+		scrollPane_2.setBounds(7, 33, 265, 60);
 		panel_7.add(scrollPane_2);
 		
 
@@ -226,19 +228,19 @@ public class General extends JPanel {
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(new Color(80, 80, 80));
 		panel_8.setLayout(null);
-		panel_8.setPreferredSize(new Dimension(430, 33));
+		panel_8.setPreferredSize(new Dimension(280, 33));
 		panel_2.add(panel_8);
 		
 		lblProgress = new JLabel("Progression: 0%");
 		lblProgress.setForeground(Color.WHITE);
 		lblProgress.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProgress.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblProgress.setBounds(7, 3, 415, 26);
+		lblProgress.setFont(new Font("Roboto", Font.PLAIN, 16));
+		lblProgress.setBounds(8, 3, 263, 26);
 		panel_8.add(lblProgress);
 		
 		JScrollPane scrollPane_3 = new JScrollPane();
 		scrollPane_3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_3.setBounds(7, 33, 415, 80);
+		scrollPane_3.setBounds(7, 33, 265, 80);
 		panel_8.add(scrollPane_3);
 		
 		
@@ -278,19 +280,19 @@ public class General extends JPanel {
 		panel_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panel_3.getPreferredSize().equals(new Dimension(430, 33))) {
-				panel_3.setPreferredSize(new Dimension(430, 120));
+				if(panel_3.getPreferredSize().equals(new Dimension(280, 33))) {
+				panel_3.setPreferredSize(new Dimension(280, 120));
 				
-				panel_5.setPreferredSize(new Dimension(430, 33));
-				panel_6.setPreferredSize(new Dimension(430, 33));
-				panel_7.setPreferredSize(new Dimension(430, 33));
-				panel_8.setPreferredSize(new Dimension(430, 33));
+				panel_5.setPreferredSize(new Dimension(280, 33));
+				panel_6.setPreferredSize(new Dimension(280, 33));
+				panel_7.setPreferredSize(new Dimension(280, 33));
+				panel_8.setPreferredSize(new Dimension(280, 33));
 				
 				panel_3.revalidate();
 				panel_3.repaint();
 				}
 				else{
-					panel_3.setPreferredSize(new Dimension(430, 33));
+					panel_3.setPreferredSize(new Dimension(280, 33));
 					panel_3.revalidate();
 					panel_3.repaint();
 				}
@@ -299,19 +301,19 @@ public class General extends JPanel {
 		panel_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panel_5.getPreferredSize().equals(new Dimension(430, 33))) {
-					panel_5.setPreferredSize(new Dimension(430, 120));
+				if(panel_5.getPreferredSize().equals(new Dimension(280, 33))) {
+					panel_5.setPreferredSize(new Dimension(280, 120));
 					
-					panel_3.setPreferredSize(new Dimension(430, 33));
-					panel_6.setPreferredSize(new Dimension(430, 33));
-					panel_7.setPreferredSize(new Dimension(430, 33));
-					panel_8.setPreferredSize(new Dimension(430, 33));
+					panel_3.setPreferredSize(new Dimension(280, 33));
+					panel_6.setPreferredSize(new Dimension(280, 33));
+					panel_7.setPreferredSize(new Dimension(280, 33));
+					panel_8.setPreferredSize(new Dimension(280, 33));
 					
 					panel_5.revalidate();
 					panel_5.repaint();
 				}
 				else{
-					panel_5.setPreferredSize(new Dimension(430, 33));
+					panel_5.setPreferredSize(new Dimension(280, 33));
 					panel_5.revalidate();
 					panel_5.repaint();
 				}
@@ -320,19 +322,19 @@ public class General extends JPanel {
 		panel_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panel_6.getPreferredSize().equals(new Dimension(430, 33))) {
-					panel_6.setPreferredSize(new Dimension(430, 120));
+				if(panel_6.getPreferredSize().equals(new Dimension(280, 33))) {
+					panel_6.setPreferredSize(new Dimension(280, 120));
 					
-					panel_3.setPreferredSize(new Dimension(430, 33));
-					panel_5.setPreferredSize(new Dimension(430, 33));
-					panel_7.setPreferredSize(new Dimension(430, 33));
-					panel_8.setPreferredSize(new Dimension(430, 33));
+					panel_3.setPreferredSize(new Dimension(280, 33));
+					panel_5.setPreferredSize(new Dimension(280, 33));
+					panel_7.setPreferredSize(new Dimension(280, 33));
+					panel_8.setPreferredSize(new Dimension(280, 33));
 					
 					panel_6.revalidate();
 					panel_6.repaint();
 				}
 				else{
-					panel_6.setPreferredSize(new Dimension(430, 33));
+					panel_6.setPreferredSize(new Dimension(280, 33));
 					panel_6.revalidate();
 					panel_6.repaint();
 				}
@@ -342,19 +344,19 @@ public class General extends JPanel {
 		panel_7.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panel_7.getPreferredSize().equals(new Dimension(430, 33))) {
-					panel_7.setPreferredSize(new Dimension(430, 100));
+				if(panel_7.getPreferredSize().equals(new Dimension(280, 33))) {
+					panel_7.setPreferredSize(new Dimension(280, 100));
 					
-					panel_3.setPreferredSize(new Dimension(430, 33));
-					panel_5.setPreferredSize(new Dimension(430, 33));
-					panel_6.setPreferredSize(new Dimension(430, 33));
-					panel_8.setPreferredSize(new Dimension(430, 33));
+					panel_3.setPreferredSize(new Dimension(280, 33));
+					panel_5.setPreferredSize(new Dimension(280, 33));
+					panel_6.setPreferredSize(new Dimension(280, 33));
+					panel_8.setPreferredSize(new Dimension(280, 33));
 					
 					panel_7.revalidate();
 					panel_7.repaint();
 				}
 				else{
-					panel_7.setPreferredSize(new Dimension(430, 33));
+					panel_7.setPreferredSize(new Dimension(280, 33));
 					panel_7.revalidate();
 					panel_7.repaint();
 				}
@@ -364,19 +366,19 @@ public class General extends JPanel {
 		panel_8.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(panel_8.getPreferredSize().equals(new Dimension(430, 33))) {
-					panel_8.setPreferredSize(new Dimension(430, 120));
+				if(panel_8.getPreferredSize().equals(new Dimension(280, 33))) {
+					panel_8.setPreferredSize(new Dimension(280, 120));
 					
-					panel_3.setPreferredSize(new Dimension(430, 33));
-					panel_5.setPreferredSize(new Dimension(430, 33));
-					panel_6.setPreferredSize(new Dimension(430, 33));
-					panel_7.setPreferredSize(new Dimension(430, 33));
+					panel_3.setPreferredSize(new Dimension(280, 33));
+					panel_5.setPreferredSize(new Dimension(280, 33));
+					panel_6.setPreferredSize(new Dimension(280, 33));
+					panel_7.setPreferredSize(new Dimension(280, 33));
 					
 				panel_8.revalidate();
 				panel_8.repaint();
 				}
 				else{
-					panel_8.setPreferredSize(new Dimension(430, 33));
+					panel_8.setPreferredSize(new Dimension(280, 33));
 					panel_8.revalidate();
 					panel_8.repaint();
 				}
@@ -463,14 +465,14 @@ public class General extends JPanel {
 	else {
 			JLabel label1 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 					.toUpperCase()+": "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima)+"	   ");
-					label1.setFont(new Font("Arial", Font.BOLD, 17));
+					label1.setFont(new Font("Roboto", Font.BOLD, 12));
 					label1.setForeground(Color.white);
 					panelPoints.add(label1);
 					
 					
 					JLabel label11 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 							.toUpperCase()+": "+new DecimalFormat("##.##").format(percentage)+"%	   ");
-							label11.setFont(new Font("Arial", Font.BOLD, 17));
+							label11.setFont(new Font("Roboto", Font.BOLD, 12));
 							label11.setForeground(Color.white);
 							panelPercent.add(label11);
 							
@@ -478,13 +480,13 @@ public class General extends JPanel {
 							if(l.toArray().length>2) {
 					JLabel label111 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 							.toUpperCase()+": "+l.get(2)+"	   ");
-							label111.setFont(new Font("Arial", Font.BOLD, 17));
+							label111.setFont(new Font("Roboto", Font.BOLD, 12));
 							label111.setForeground(Color.white);
 							panelTests.add(label111);
 
 							JLabel label = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 									.toUpperCase()+": "+l.get(5)+"%	   ");
-									label.setFont(new Font("Arial", Font.BOLD, 17));
+									label.setFont(new Font("Roboto", Font.BOLD, 12));
 									label.setForeground(Color.white);
 									panelProgress.add(label);
 							}
@@ -493,7 +495,7 @@ public class General extends JPanel {
 							if(percentage<50) {
 						JLabel label1111 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
 								.toUpperCase()+": "+new DecimalFormat("##.##").format(maxima/2-points1)+"pts    ");
-								label1111.setFont(new Font("Arial", Font.BOLD, 17));
+								label1111.setFont(new Font("Roboto", Font.BOLD, 12));
 								label1111.setForeground(Color.white);
 								panelEchec.add(label1111);
 					}}}
@@ -534,7 +536,7 @@ if(points1==0 && maxima==0 ) {
 				  classroom_id, ay_id, term_id, "All", "All")));
 		if(panelEchec.getComponentCount() == 0) {
 			JLabel label = new JLabel("Pas d'echecs");
-					label.setFont(new Font("Arial", Font.BOLD, 20));
+					label.setFont(new Font("Roboto", Font.BOLD, 12));
 					label.setForeground(Color.white);
 					panelEchec.add(label);
 

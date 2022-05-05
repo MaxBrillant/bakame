@@ -52,7 +52,7 @@ public class StudentInfo extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public StudentInfo(String studentName, String ClassName, String start, String end) {
+	public StudentInfo(String student_id, String classroom_id, String ay_id, String start, String end) {
 		setBorder(new LineBorder(Color.WHITE, 1, true));
 		setBackground(new Color(40, 40, 40));
 		setPreferredSize(new Dimension(400, 500));
@@ -157,7 +157,7 @@ public class StudentInfo extends JPanel {
 		education.setFont(new Font("Roboto", Font.BOLD, 30));
 		panel_3.add(education, BorderLayout.CENTER);
 		
-		className = new JLabel(ClassName);
+		className = new JLabel(Home.getClassName(classroom_id));
 		className.setHorizontalAlignment(SwingConstants.CENTER);
 		className.setForeground(new Color(192, 192, 192));
 		className.setFont(new Font("Futura Hv BT", Font.PLAIN, 18));
@@ -188,8 +188,7 @@ public class StudentInfo extends JPanel {
 		JButton btnvoirLeleve = new JButton("<html><div style='text-align: left;'>Voir l'eleve</div></html>");
 		btnvoirLeleve.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Home.className = ClassName;
-				Student.openStudent(studentName);
+				Student.openStudent(student_id, classroom_id, ay_id);
 				Home.frame.setVisible(false);
 			}
 		});
@@ -217,12 +216,9 @@ public class StudentInfo extends JPanel {
 		JButton btnstatistiquesAvances = new JButton("<html><div style='text-align: center;'>Statistiques avanc\u00E9es</div></html>");
 		btnstatistiquesAvances.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				StatsPane frame = new StatsPane(3, StatsPane.getClassIndex(ClassName), 0, StatsPane.getStudentIndex(studentName, ClassName));
+				StatsPane frame = new StatsPane(student_id, "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 				frame.setVisible(true);
-			
-				
-			}
+				}
 		});
 		btnstatistiquesAvances.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnstatistiquesAvances.setIconTextGap(0);
@@ -247,12 +243,12 @@ public class StudentInfo extends JPanel {
 		});
 		
 		
-		loadStudentInfo(studentName, ClassName, start, end);
+		loadStudentInfo(student_id, classroom_id, ay_id, start, end);
 	}
 	
-	public static void loadStudentInfo(String studentName, String className, String start, String end) {
-		name.setText(studentName);
-		number.setText("No "+StudentStats.loadStudentNumber(studentName, className));
+	public static void loadStudentInfo(String student_id, String classroom_id, String ay_id, String start, String end) {
+		name.setText(Home.getStudentName(student_id));
+		number.setText("No "+StudentStats.loadStudentNumber(student_id, classroom_id, ay_id));
 		
 		List<String> l = new ArrayList();
 		l.add("0");
@@ -261,11 +257,11 @@ public class StudentInfo extends JPanel {
 		l1.add("0");
 		l1.add("0/0");
 		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-			l  = StudentStats.getStudentTestsStats(studentName, className
+			l  = StudentStats.getStudentTestsStats(student_id, classroom_id
 				, "All", "Toute l'annee", start, end);}
 
 		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			l1 = StudentStats.getStudentExamStats(studentName, className
+			l1 = StudentStats.getStudentExamStats(student_id, classroom_id
 					, "All", "Toute l'annee", start, end);
 			}
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -282,7 +278,8 @@ public class StudentInfo extends JPanel {
 		}
 		percent.setText(new DecimalFormat("##.##").format(percentage)+"%");
 		points.setText(new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
-		echec.setText(StudentStats.getNumberOfechecs(studentName, className, "Toute l'annee", start, end)+"");
+		echec.setText(StudentStats.getNumberOfechecs(student_id, "All", classroom_id, ay_id
+				, "Toute l'annee", start, end)+"");
 		
 	}
 }

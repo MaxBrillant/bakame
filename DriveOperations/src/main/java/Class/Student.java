@@ -132,6 +132,7 @@ public class Student extends JPanel {
 				if(e.getClickCount()==2) {
 					if(selectedStudents.toArray().length==1) {
 					openStudent(getName(), classroom_id, ay_id);
+					Application.frame.setVisible(false);
 				}}
 			}
 			public void mouseEntered(MouseEvent e) {
@@ -299,7 +300,6 @@ public class Student extends JPanel {
 		App.n= index;
 		App app = new App(classroom_id, ay_id);
 		app.frame.setVisible(true);
-		Application.frame.setVisible(false);
 	}
 	
 	

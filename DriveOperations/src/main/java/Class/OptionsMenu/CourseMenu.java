@@ -114,11 +114,10 @@ public class CourseMenu extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if(Course.selectedCourses.toArray().length>0) {
-				StatsPane frame = new StatsPane(3, StatsPane.getClassIndex(Home.className), StatsPane.getCourseIndex(TestBox.getShortName(((JLabel) ((Container) Course.selectedCourses.get(0)).getComponent(0)).getText(), Home.className), Home.className), 0);
+				StatsPane frame = new StatsPane("All", Course.selectedCourses.get(0).getName(), classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 				frame.setVisible(true);
 			}else{
-
-				StatsPane frame = new StatsPane(3, StatsPane.getClassIndex(Home.className), 0, 0);
+				StatsPane frame = new StatsPane("All", "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 				frame.setVisible(true);
 			
 			}
@@ -166,7 +165,7 @@ public class CourseMenu extends JPanel {
 				
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
-		    			NewCourse.load();
+		    			NewCourse.load(classroom_id, ay_id);
 		            	 return null;
 		            }
 		        }.execute();
@@ -196,7 +195,7 @@ public class CourseMenu extends JPanel {
 				
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
-		    			NewCourse.load();
+		    			NewCourse.load(classroom_id, ay_id);
 		            	 return null;
 		            }
 		        }.execute();
@@ -252,7 +251,7 @@ public class CourseMenu extends JPanel {
 				
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
-		    			NewCourse.load();
+		    			NewCourse.load(classroom_id, ay_id);
 		            	 return null;
 		            }
 		        }.execute();
@@ -518,33 +517,6 @@ public class CourseMenu extends JPanel {
 }
 		CourseMenu.stats.setVisible(true);
 		}
-	
-	
-	public static String courseData(String courseName) {
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Courses.txt");
-		aws.downloadContent(file.getPath());
-		String s = null;
-		try {
-			
-			FileReader fr = new FileReader(file);
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object[] lines = br.lines().toArray();
-			
-			for(int i = 0; i< lines.length; i++) {
-				List l = Arrays.asList(lines[i].toString().split("//"));
-				if(l.get(1).toString().equals(courseName)) {
-					s = lines[i].toString();
-					break;
-				}
-			}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-	}
-	return s;
-	}
 	
 	
 	public static void deleteStudent(String shortName, String className) {

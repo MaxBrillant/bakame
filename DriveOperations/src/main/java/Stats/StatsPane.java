@@ -87,7 +87,7 @@ public class StatsPane extends JFrame {
 				try {
 
 					mysql.connectToDB();
-					StatsPane frame = new StatsPane("0", "0", "1", "1", "8");
+					StatsPane frame = new StatsPane("1", "1", "All", "Toute l'annee", "8");
 					frame.setVisible(true);
 					System.gc();
 					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
@@ -292,8 +292,8 @@ public class StatsPane extends JFrame {
 		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 		
 		JPanel panel_2 = new JPanel();
-		StudentStats s = new StudentStats(student_id, classroom_id, course_id, term_id, "All", "All");
-		scrollPane.setViewportView(s);
+		//StudentStats s = new StudentStats(student_id, classroom_id, course_id, term_id, "All", "All");
+		//scrollPane.setViewportView(s);
 		panel_2.setLayout(new WrapLayout(WrapLayout.CENTER, 3, 3));
 		setLocationRelativeTo(null);
 		
@@ -337,14 +337,14 @@ public class StatsPane extends JFrame {
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{*/
 		if(selectedStudent == 0) {
-			CourseStats cs = new CourseStats(student_id, classroom_id, course_id, term_id, "All", "All");
+			CourseStats cs = new CourseStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 			scrollPane.setViewportView(cs);
-			CourseStats.loadCourseData(student_id, classroom_id, course_id, term_id, "All", "All");
+			CourseStats.loadCourseData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 			number.setVisible(false);
 		}else {
-			StudentStats cs = new StudentStats(student_id, classroom_id, course_id, term_id, "All", "All");
+			StudentStats cs = new StudentStats(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 			scrollPane.setViewportView(cs);
-			StudentStats.loadStudentData(student_id, classroom_id, course_id, term_id, "All", "All");
+			StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 			number.setVisible(false);
 		} /*
 			 * return null; } }.execute();
@@ -584,7 +584,12 @@ public class StatsPane extends JFrame {
 		}}
 		
 		className.setText(Home.getClassName(classes.get(selectedClass)));
-		Term.setText(Home.getTermName(terms.get(selectedTerm)));
+
+		if(selectedTerm == terms.toArray().length-1) {
+			Term.setText(terms.get(selectedTerm));
+		}else {
+			Term.setText(Home.getTermName(terms.get(selectedTerm)));
+			}
 		
 		if(selectedStudent>0) {
 		name.setText(Home.getStudentName(students.get(selectedStudent)));

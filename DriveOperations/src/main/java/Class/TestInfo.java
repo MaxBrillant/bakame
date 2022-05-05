@@ -13,6 +13,7 @@ import app.Cours;
 import app.General;
 import app.LPane;
 import app.NewCourse;
+import app.Test;
 import Class.NewTest;
 
 import java.awt.Dimension;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +58,7 @@ import com.toedter.components.JSpinField;
 
 import Application.Home;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -65,6 +68,7 @@ public class TestInfo extends JFrame {
 
 	private JPanel contentPane;
 	public static JComboBox cours;
+	public static List<String> coursesList = new ArrayList();
 	public static JComboBox maxima;
 	public static JButton Add;
 	public static JButton cancel;
@@ -77,7 +81,8 @@ public class TestInfo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestInfo frame = new TestInfo();
+					mysql.connectToDB();
+					TestInfo frame = new TestInfo("3", "1", "8");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +94,7 @@ public class TestInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TestInfo() {
+	public TestInfo(String test_id, String classroom_id, String ay_id) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
 		setTitle("New Test");
 		setResizable(false);
@@ -198,7 +203,7 @@ public class TestInfo extends JFrame {
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
 		            	Thread.sleep(1000);
-		        		TestBox.loadAllTests();
+		        		TestBox.loadAllTests(classroom_id, ay_id);
 						Animations.scrollTestRight();
 						NewTest.points.requestFocus();
 		            	 return null;
@@ -241,7 +246,7 @@ public class TestInfo extends JFrame {
 			
 			new SwingWorker<Void, Void>() {
 	            public Void doInBackground() throws Exception{
-	        		TestBox.loadAllTests();
+	        		TestBox.loadAllTests(classroom_id, ay_id);
 	            	 return null;
 	            }
 	        }.execute();
@@ -255,29 +260,45 @@ public class TestInfo extends JFrame {
 		actualiser.setBounds(29, 307, 120, 31);
 		contentPane.add(actualiser);
 		
-		populateBox();
+		populateBox(classroom_id, ay_id);
 		
-	}
-	public static void populateBox() {
-		
-
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Courses.txt");
-		aws.downloadContent(file.getPath());
-			FileReader fr;
+		if(test_id.equals("null")) {
+			actualiser.setVisible(false);
+			Add.setVisible(true);
+			//cours.setSelectedItem(Test.getTestCourse(test_id));
+			//cours.setEnabled(true);
+			//maxima.setSelectedItem(Test.getTestMaxima(test_id));
+			//maxima.setEnabled(true);
+		}else {
+			actualiser.setVisible(true);
+			Add.setVisible(false);
+			cours.setSelectedItem(TestBox.getFullName(Test.getTestCourse(test_id)));
+			cours.setEnabled(false);
+			maxima.setSelectedItem(Test.getTestMaxima(test_id));
+			maxima.setEnabled(false);
+			
+			SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yyyy");
+			System.out.println(test_id+"//"+Test.getTestDate(test_id));
+			 Date d3 = null;
 			try {
-				fr = new FileReader(file);
-			
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object lines [] = Home.loadActiveCourses(file.getPath());
-			
-			for(int i = 0;i<lines.length; i++) {
-				List note = Arrays.asList(lines[i].toString().trim().split("//"));
-				cours.addItem(note.get(0));
-			}
-			} catch (FileNotFoundException e1) {
+				d3 = df1.parse(Test.getTestDate(test_id));
+			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			} 
+			
+			dateChooser.setDate(d3);
+		
+		}
+		
+	}
+	public static void populateBox(String classroom_id, String ay_id) {
+		//coursesList.clear();
+			Object lines [] = Home.loadActiveCourses(ay_id, classroom_id);
+			
+			for(int i = 0;i<lines.length; i++) {
+				coursesList.add(lines[i].toString());
+				cours.addItem(TestBox.getFullName(lines[i].toString()));
 			}
 			
 		

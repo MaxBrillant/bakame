@@ -272,6 +272,8 @@ public class Teacher extends JPanel {
 	
 	public static void deselectAll(String ay_id) {
 		for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
+			if(((Container) Home.panelProf.getComponent(i)).getComponentCount()>0) {
+				if(((Container) Home.panelProf.getComponent(i)) instanceof Teacher) {	
 			((JComponent) Home.panelProf.getComponent(i)).setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
 
 			for(int j = 0; j< ((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(1)).getComponentCount(); j++) {
@@ -282,8 +284,8 @@ public class Teacher extends JPanel {
 				Home.panelProf.revalidate();
 				Home.panelProf.repaint();
 			}
-		}
 		selectedTeacher = "";
+		}}}
 		MainInfo m = new MainInfo(ay_id);
 		m.guide.setText("<html>- Cliquez sur un professeur pour le selectionner.<br/><br/>\r\n- Cliquez sur la fleche correspondante au professeur <br/>pour rapidement voir ses differentes performances <br/>dans differentes classes et cours.<br/><br/>\r\n- Selectionnez le professeur pour voir les options <br/>disponibles.<br/><br/>\r\n- Double-cliquez sur une des classes disponibles<br/> pour le professeur pour l'ouvrir.</html>");
 		Home.side.removeAll();

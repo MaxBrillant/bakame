@@ -415,7 +415,6 @@ public static String getShortName(String course_id) {
 						panel_10.setPreferredSize(new Dimension(300, 400));
 						Application.panelTests.add(panel_10);
 						panel_10.setLayout(null);
-						panel_10.setName(term_id);
 						
 						JPanel panel_11 = new JPanel();
 						panel_11.setBorder(new MatteBorder(0, 3, 5, 3, (Color) new Color(0, 0, 0, 190)));

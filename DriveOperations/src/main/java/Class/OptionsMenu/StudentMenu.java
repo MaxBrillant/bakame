@@ -30,6 +30,7 @@ import Application.Home;
 import Application.ResizeImages;
 import Application.Teacher;
 import Class.Application;
+import Class.Course;
 import Class.NewPane;
 import Class.NewStudent;
 import Class.Punish;
@@ -103,7 +104,7 @@ public class StudentMenu extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if(Student.selectedStudents.toArray().length==1) {
-					Student.openStudent(((JLabel) ((Container) Student.selectedStudents.get(Student.selectedStudents.toArray().length-1)).getComponent(2)).getText());
+					Student.openStudent(Student.selectedStudents.get(0).getName(), classroom_id, ay_id);
 			}
 			}
 		});
@@ -144,11 +145,10 @@ public class StudentMenu extends JPanel {
 		stats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Student.selectedStudents.toArray().length>0) {
-				StatsPane frame = new StatsPane(3, StatsPane.getClassIndex(Home.className), 0, StatsPane.getStudentIndex(((JLabel) ((Container) Student.selectedStudents.get(0)).getComponent(2)).getText(), Home.className));
+				StatsPane frame = new StatsPane(Student.selectedStudents.get(0).getName(), "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 				frame.setVisible(true);
 				}else{
-
-					StatsPane frame = new StatsPane(3, StatsPane.getClassIndex(Home.className), 0, 0);
+					StatsPane frame = new StatsPane("All", "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
 					frame.setVisible(true);
 				
 				}}
@@ -172,24 +172,6 @@ public class StudentMenu extends JPanel {
 				nt.setVisible(true);
 				nt.actualiser.setVisible(true);
 				nt.add.setVisible(false);
-				String s = studentData(((JLabel) ((Container) Student.selectedStudents.get(0)).getComponent(2)).getText());
-				List l = Arrays.asList(s.split("//"));
-				List n = Arrays.asList(l.get(0).toString().split("::"));
-				nt.nom.setText(n.get(0).toString());
-				nt.prenom.setText(n.get(1).toString());
-				nt.num.setText(l.get(1).toString());
-				
-				if(l.get(2).toString().equals("noPhone")) {
-					nt.phone.setText("");
-				}else {
-					nt.phone.setText(l.get(2).toString());
-				}
-				
-				if(l.get(3).toString().equals("noMail")) {
-					nt.email.setText("");
-				}else {
-					nt.email.setText(l.get(3).toString());
-				}
 			}
 		});
 		edit.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
@@ -213,7 +195,7 @@ public class StudentMenu extends JPanel {
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
 
-		        		NewStudent.load();
+		        		NewStudent.load(classroom_id, ay_id);
 		        		Application.merite();
 		            	 return null;
 		            }
@@ -235,11 +217,11 @@ public class StudentMenu extends JPanel {
 		retirer = new JButton("");
 		retirer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<String> l = new ArrayList();
+				List<String> students = new ArrayList();
 				for(int i = 0; i< Student.selectedStudents.toArray().length; i++) {
-					l.add(((JLabel) ((Container) Student.selectedStudents.get(i)).getComponent(2)).getText());
+					students.add(Student.selectedStudents.get(i).getName());
 				}
-				Punish p = new Punish(l);
+				Punish p = new Punish(classroom_id, ay_id, students);
 				p.setVisible(true);
 			}
 		});
@@ -549,32 +531,6 @@ public class StudentMenu extends JPanel {
 			Application.no.setText("0");
 }
 		}
-	
-	public static String studentData(String studentName) {
-		File file = new File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+"/Students.txt");
-		aws.downloadContent(file.getPath());
-		String s = null;
-		try {
-			
-			FileReader fr = new FileReader(file);
-			
-			BufferedReader br = new BufferedReader(fr);
-			Object[] lines = br.lines().toArray();
-			
-			for(int i = 0; i< lines.length; i++) {
-				List l = Arrays.asList(lines[i].toString().split("//"));
-				if(l.get(0).toString().replaceAll("::", " ").equals(studentName)) {
-					s = lines[i].toString();
-					break;
-				}
-			}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-	}
-	return s;
-	}
 	
 	
 	public static void deleteStudent(String studentName, String className) {

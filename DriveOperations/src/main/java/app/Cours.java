@@ -82,7 +82,7 @@ public class Cours extends JPanel {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	setBackground(Color.BLACK);
 	setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
-	setPreferredSize(new Dimension(300, 112));
+	setPreferredSize(new Dimension(220, 112));
 	setLayout(new BorderLayout(0, 0));
 	
 	
@@ -90,9 +90,9 @@ public class Cours extends JPanel {
 	courseBox = new JPanel();
 	courseBox.setBorder(null);
 	courseBox.setBackground(new Color(201,255,226));
-	courseBox.setPreferredSize(new Dimension(150, 10));
-	add(courseBox, BorderLayout.WEST);
-	courseBox.setLayout(null);
+	courseBox.setPreferredSize(new Dimension(150, 25));
+	add(courseBox, BorderLayout.NORTH);
+	courseBox.setLayout(new BorderLayout(0, 0));
 	
 	Cours = new JLabel(TestBox.getFullName(course_id));
 	Cours.setBorder(null);
@@ -100,13 +100,13 @@ public class Cours extends JPanel {
 	Cours.setBackground(Color.GREEN);
 	Cours.setFont(new Font("Roboto", Font.BOLD, 14));
 	Cours.setHorizontalAlignment(SwingConstants.CENTER);
-	Cours.setBounds(0, 0, 150, 107);
 	courseBox.add(Cours);
 	
 	stats = new JPanel();
 	stats.setBackground(new Color(60, 60, 60));
 	add(stats, BorderLayout.CENTER);
 	stats.setLayout(null);
+	
 	
 	percent = new JLabel("Pourcentage: 0%");
 	percent.setForeground(Color.WHITE);
@@ -119,21 +119,21 @@ public class Cours extends JPanel {
 	lblPoints = new JLabel("Points:");
 	lblPoints.setForeground(Color.WHITE);
 	lblPoints.setFont(new Font("Roboto", Font.PLAIN, 12));
-	lblPoints.setBounds(10, 23, 126, 22);
+	lblPoints.setBounds(10, 20, 126, 22);
 	stats.add(lblPoints);
 	stats.add(lblPoints);
 	
 	lblAverage = new JLabel("Moyenne:");
 	lblAverage.setForeground(Color.WHITE);
 	lblAverage.setFont(new Font("Roboto", Font.PLAIN, 12));
-	lblAverage.setBounds(10, 43, 126, 22);
+	lblAverage.setBounds(10, 37, 126, 22);
 	stats.add(lblAverage);
 	stats.add(lblAverage);
 	
 	lblImprovements = new JLabel("Echec:");
 	lblImprovements.setForeground(Color.WHITE);
 	lblImprovements.setFont(new Font("Roboto", Font.PLAIN, 12));
-	lblImprovements.setBounds(10, 63, 126, 22);
+	lblImprovements.setBounds(10, 54, 126, 22);
 	stats.add(lblImprovements);
 	stats.add(lblImprovements);
 	

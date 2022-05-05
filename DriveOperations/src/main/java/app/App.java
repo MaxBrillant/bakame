@@ -442,7 +442,7 @@ public class App {
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(25, 25, 25));
-		panel_1.setPreferredSize(new Dimension(frame.getWidth()*20/100, 10));
+		panel_1.setPreferredSize(new Dimension(300, 10));
 		frame.getContentPane().add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
