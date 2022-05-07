@@ -72,22 +72,20 @@ import javax.swing.ImageIcon;
 import java.awt.FlowLayout;
 
 public class Class extends JPanel {
-	public static JLabel percent;
 	public static JLabel className;
-	public static JPanel stats;
 	public static JPanel courseBox;
 	public static JPanel Box1;
-	public static JLabel number;
-	public static JLabel moyenneEchecs;
-	public static JLabel echecs;
 	public static boolean isSelected;
 
 	public static List <String> classList = new ArrayList();
 
 	public static List <Component> selectedClasses = new ArrayList();
-	public static JButton expand;
 	private JPanel panel;
 	private JLabel lblNewLabel;
+	private JPanel panel_1;
+	private JLabel lblNewLabel_1;
+	private JLabel lblCours;
+	private JLabel lblInterros;
 	
 
 	/**
@@ -100,7 +98,7 @@ public class Class extends JPanel {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	setBackground(new Color(60, 60, 60));
 	setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
-	setPreferredSize(new Dimension(310, 120));
+	setPreferredSize(new Dimension(140, 120));
 	setLayout(new BorderLayout(0, 0));
 	
 	
@@ -120,44 +118,27 @@ public class Class extends JPanel {
 	className.setHorizontalAlignment(SwingConstants.CENTER);
 	courseBox.add(className);
 	
-	stats = new JPanel();
-	stats.setPreferredSize(new Dimension(154, 10));
-	stats.setBackground(new Color(60, 60, 60));
-	add(stats, BorderLayout.EAST);
-	stats.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 9));
+	panel_1 = new JPanel();
+	panel_1.setBackground(Color.DARK_GRAY);
+	panel_1.setPreferredSize(new Dimension(10, 40));
+	panel_1.setMinimumSize(new Dimension(10, 40));
+	courseBox.add(panel_1, BorderLayout.SOUTH);
+	panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 3));
 	
-	percent = new JLabel("Moyenne: 0%");
-	percent.setForeground(Color.WHITE);
-	percent.setFont(new Font("Roboto", Font.PLAIN, 14));
-	stats.add(percent);
-	stats.add(percent);
+	lblNewLabel_1 = new JLabel("143 eleves");
+	lblNewLabel_1.setForeground(new Color(211, 211, 211));
+	lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 12));
+	panel_1.add(lblNewLabel_1);
 	
+	lblCours = new JLabel("93 cours");
+	lblCours.setForeground(new Color(211, 211, 211));
+	lblCours.setFont(new Font("Roboto", Font.PLAIN, 12));
+	panel_1.add(lblCours);
 	
-	number = new JLabel("Nombre d'eleves: 252");
-	number.setForeground(Color.WHITE);
-	number.setFont(new Font("Roboto", Font.PLAIN, 14));
-	stats.add(number);
-	stats.add(number);
-	
-	moyenneEchecs = new JLabel("Nombre de cours: 14");
-	moyenneEchecs.setForeground(Color.WHITE);
-	moyenneEchecs.setFont(new Font("Roboto", Font.PLAIN, 14));
-	stats.add(moyenneEchecs);
-	stats.add(moyenneEchecs);
-	
-	echecs = new JLabel("Sous 50%:: 0 el\u00E8ves");
-	echecs.setForeground(Color.WHITE);
-	echecs.setFont(new Font("Roboto", Font.PLAIN, 14));
-	stats.add(echecs);
-	stats.add(echecs);
-	
-	expand = new JButton("");
-
-	
-	expand.setBorder(new LineBorder(new Color(0, 0, 0)));
-	expand.setFocusPainted(false);
-	expand.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-	add(expand, BorderLayout.CENTER);
+	lblInterros = new JLabel("193 interros");
+	lblInterros.setForeground(new Color(211, 211, 211));
+	lblInterros.setFont(new Font("Roboto", Font.PLAIN, 12));
+	panel_1.add(lblInterros);
 	
 	panel = new JPanel();
 	panel.setVisible(false);
@@ -174,7 +155,7 @@ public class Class extends JPanel {
 	lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	panel.add(lblNewLabel, BorderLayout.CENTER);
 	
-	Home.collapse(getComponent(0).getParent());
+	//Home.collapse(getComponent(0).getParent());
     addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -188,7 +169,8 @@ public class Class extends JPanel {
 						setBorder(new LineBorder(Color.cyan,4));
 						((JComponent) getComponent(0)).setBorder(new LineBorder(Color.black,2));
 						((JComponent) getComponent(0)).setBackground(((JComponent) getComponent(0)).getBackground().darker());
-						((JComponent) getComponent(3)).setVisible(false);
+						((JComponent) getComponent(1)).setVisible(false);
+						(((JComponent) getComponent(0)).getComponent(1)).setVisible(true);
 					}
 				}else {
 
@@ -275,8 +257,8 @@ public class Class extends JPanel {
 				for(int i = 0; i<selectedClasses.toArray().length; i++) {
 					((JComponent) selectedClasses.get(i)).setBorder(new LineBorder(new Color(20, 148, 198),4));
 					((JComponent) ((JComponent) selectedClasses.get(i)).getComponent(0)).setBorder(new MatteBorder(0, 2, 2, 2, (Color) new Color(0, 0, 0)));
-					((JComponent) ((JComponent) selectedClasses.get(i)).getComponent(1)).setLayout(new FlowLayout(FlowLayout.LEFT, 7, 5));
-					((JComponent) ((JComponent) selectedClasses.get(i)).getComponent(3)).setVisible(true);
+					((JComponent) ((JComponent) selectedClasses.get(i)).getComponent(1)).setVisible(true);
+					(((JComponent) ((JComponent) selectedClasses.get(i)).getComponent(0)).getComponent(1)).setVisible(false);
 					
 					if(selectedClasses.get(i).equals(getComponent(0).getParent())) {
 						if(!alreadyExists) {
@@ -334,21 +316,6 @@ public class Class extends JPanel {
 				}
 		}
 		});
-    
-    expand.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			if(!selectedClasses.contains(getComponent(0).getParent())) {
-			setBorder(new LineBorder(Color.cyan,2));
-			((JComponent) getComponent(0)).setBorder(new LineBorder(Color.black,1));
-			}
-		}public void mouseExited(MouseEvent e) {
-			if(!selectedClasses.contains(getComponent(0).getParent())) {
-			setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
-			((JComponent) getComponent(0)).setBorder(null);
-			}
-	}
-	});
 		
     
     
@@ -363,8 +330,9 @@ public class Class extends JPanel {
 		Home.panelClasses.removeAll();
 		
 			Object[] lines = Home.loadActiveClasses(ay_id);
+			System.out.println(lines.length);
 			
-			for(int i = 0; i<lines.length;i++) {
+			for(int i = 0; i<lines.length; i++) {
 				String parentId = getParentId(lines[i].toString(), ay_id);
 				String parentName = getParentName(parentId);
 			if(!hasParent(lines[i].toString(), ay_id)) {
@@ -380,8 +348,10 @@ public class Class extends JPanel {
 			c.className.setForeground(Home.getClassColors(lines[i].toString(), ay_id).get(1));
 			
 
-			c.expand.setBackground(c.courseBox.getBackground().darker());
+			((Container) c.getComponent(0)).getComponent(1).setBackground(c.courseBox.getBackground().darker());
 			
+
+			Class.loadData(c, lines[i].toString(), term_id, ay_id);
 			}else {
 				if(!groupExists(parentId)) {
 				Group g = new Group(term_id, ay_id);
@@ -489,8 +459,6 @@ public class Class extends JPanel {
 			}
 			Home.panelClasses.revalidate();
 			Home.panelClasses.repaint();
-
-			//loadData();
 		
 
 		Class.deselectAll(ay_id);
@@ -623,30 +591,6 @@ public class Class extends JPanel {
 	public static void Actions(Component c, String term_id, String ay_id) {
 		
 			if(c instanceof Class) {
-			((JButton) ((Container) (c)).getComponent(2)).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				if((c).getPreferredSize().width==310) {
-					((JButton) ((Container) (c)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-					((Container) c).getComponent(1).setVisible(false);
-					c.setPreferredSize(new Dimension(310-310*49/100, 120));
-					c.revalidate();
-					c.repaint();
-				}else {
-					((JButton) ((Container) (c)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop3.png"));
-					((Container) c).getComponent(1).setVisible(true);
-					c.setPreferredSize(new Dimension(310, 120));
-					c.revalidate();
-					c.repaint();
-					loadData(((Container) (c)), ((Container) (c)).getName(), term_id, ay_id);
-				}
-				if(!((Container) c).getParent().equals(Home.panelClasses)) {
-					Group.resizeGroup(((Container) c).getParent());
-				}
-				}
-		});
-		
-			if(c instanceof Class) {
 			c.addMouseListener(new MouseAdapter() {
 				
 				@Override
@@ -679,100 +623,39 @@ public class Class extends JPanel {
 		    }).start();
 			}
 		});
-		}}
+		}
 	}
 	
 public static void loadData(Component c, String classroom_id, String term_id, String ay_id) {
 		if(c instanceof Class) {
-			
-			List<String> l = new ArrayList();
-			l.add("0");
-			l.add("0/0");
-			List<String> l1 = new ArrayList();
-			l1.add("0");
-			l1.add("0/0");
-			if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-	l = StudentStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
-			
-
-	}
-
-			if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-	l1 = StudentStats.getStudentExamStats("All", classroom_id, "All", term_id, "All", "All");
-
-	}
-
-			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
-			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
-	Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."))+Double.parseDouble(note1.get(0).replaceAll(",", "."));
-	Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", "."));
-	
-	Double percentage;
-	if(points1 == Double.parseDouble("0") && maxima == Double.parseDouble("0")) {
-		percentage = (double) 0;
-	}else {	
-		percentage = points1*100/maxima;
-	}
-	
-	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(0)).setText("Moyenne: "+new DecimalFormat("##.##").format(percentage)+"%");
-	
 	
 	int number = StudentStats.getNumberOfStudents(classroom_id, ay_id);
-	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(1)).setText("Nombre d'eleves: "+number);
+	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(0)).setText(number+" eleves");
 	
 	int courses = CourseStats.getNumberOfCourses(classroom_id, ay_id);
 	
-	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(2)).setText("Nombre de cours: "+courses);
+	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(1)).setText(courses+" cours");
 	
 	List l20 = CourseStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
 	
-	((JLabel) ((Container) ((Container) c).getComponent(1)).getComponent(3)).setText("Nombre d'interros: "+l20.get(2));
+	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(2)).setText(l20.get(2)+" interros");
 
 	((Container) c).revalidate();
 	((Container) c).repaint();
 	
 	}else {
 		for(int j = 0; j<((Container) ((Container) c).getComponent(0)).getComponentCount(); j++) {
-
-			
-			List<String> l = new ArrayList();
-			l.add("0");
-			l.add("0/0");
-			List<String> l1 = new ArrayList();
-			l1.add("0");
-			l1.add("0/0");
-			if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-		l = StudentStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
-		}if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-		l1 = StudentStats.getStudentExamStats("All", classroom_id, "All", term_id, "All", "All");
-		}
-		
-		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
-		List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
-		
-		Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."))+Double.parseDouble(note1.get(0).replaceAll(",", "."));
-		Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", "."));
-		
-		Double percentage;
-		if(points1 == Double.parseDouble("0") && maxima == Double.parseDouble("0")) {
-			percentage = (double) 0;
-		}else {	
-			percentage = points1*100/maxima;
-		}
-		
-		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(0)).setText("Moyenne: "+new DecimalFormat("##.##").format(percentage)+"%");
-		
 		
 		int number = StudentStats.getNumberOfStudents(classroom_id, ay_id);
-		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(1)).setText("Nombre d'eleves: "+number);
+		((JLabel) ((Container) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(1)).getComponent(0)).setText(number+" eleves");
 
 		int courses = CourseStats.getNumberOfCourses(classroom_id, ay_id);
 		
-		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(2)).setText("Nombre de cours: "+courses);
+		((JLabel) ((Container) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(1)).getComponent(1)).setText(courses+" cours");
 		
 		List l20 = CourseStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
 		
-		((JLabel) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(1))).getComponent(3)).setText("Nombre d'interros: "+l20.get(2));
+		((JLabel) ((Container) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(1)).getComponent(2)).setText(l20.get(2)+" interros");
 
 		((Container) c).revalidate();
 		((Container) c).repaint();
@@ -793,9 +676,9 @@ public static void deselectAll(String ay_id) {
 
 			((JComponent) ((Container) Home.panelClasses).getComponent(i)).setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
 			((JComponent) ((JComponent) ((Container) Home.panelClasses).getComponent(i)).getComponent(0)).setBorder(null);
-			((JComponent) ((JComponent) ((Container) Home.panelClasses).getComponent(i)).getComponent(1)).setLayout(new FlowLayout(FlowLayout.LEFT, 7, 9));
-
-			((JComponent) ((JComponent) ((Container) Home.panelClasses).getComponent(i)).getComponent(3)).setVisible(false);
+			
+			((JComponent) ((JComponent) ((Container) Home.panelClasses).getComponent(i)).getComponent(1)).setVisible(false);
+			(((JComponent) ((JComponent) ((Container) Home.panelClasses).getComponent(i)).getComponent(0)).getComponent(1)).setVisible(true);
 		}
 			Home.panelClasses.revalidate();
 

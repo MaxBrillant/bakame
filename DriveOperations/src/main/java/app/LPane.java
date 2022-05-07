@@ -262,7 +262,7 @@ public class LPane extends JPanel {
 		});
 		panel_3.setBackground(new Color(25, 25, 25));
 		scrollPane.setViewportView(panel_3);
-		panel_3.setLayout(new WrapLayout(WrapLayout.CENTER,10,3));
+		panel_3.setLayout(new WrapLayout(WrapLayout.CENTER,3,3));
 		
 		scrollPane2 = new JScrollPane();
 		scrollPane2.setBorder(null);
@@ -313,9 +313,9 @@ public class LPane extends JPanel {
 		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 18));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 12));
 		LPane.panel_3.add(lblNdashimyeMaxBrillant);
-		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(300, 30));
+		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(280, 30));
 		
 	boolean hasTests = false;
 	
@@ -373,9 +373,9 @@ public class LPane extends JPanel {
 				JLabel lblNdashimyeMaxBrillant1 = new JLabel("Aucune interrogation effectuee.");
 				lblNdashimyeMaxBrillant1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
-				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 18));
+				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 12));
 				LPane.panel_3.add(lblNdashimyeMaxBrillant1);
-				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(300, 30));
+				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(280, 30));
 		}
 		Test.deselect(course_id, App.students.get(App.n), classroom_id);
 		} catch (SQLException e1) {
@@ -420,9 +420,9 @@ public static void loadExams(String course_id, String student_id, String classro
 		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 18));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 12));
 		LPane.panel_2.add(lblNdashimyeMaxBrillant);
-		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(300, 30));
+		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(280, 30));
 		
 		boolean hasTests = false;
 
@@ -500,9 +500,9 @@ public static void loadExams(String course_id, String student_id, String classro
 				JLabel lblNdashimyeMaxBrillant1 = new JLabel("Aucune serie effectuee.");
 				lblNdashimyeMaxBrillant1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
-				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 18));
+				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 12));
 				LPane.panel_2.add(lblNdashimyeMaxBrillant1);
-				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(300, 30));
+				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(280, 30));
 		}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

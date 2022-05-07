@@ -68,18 +68,18 @@ public class Test extends JPanel {
 	public Test(String course_id, String student_id, String classroom_id, String term_id) {
 		setBackground(new Color(80, 80, 80));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension(new Dimension((int) screensize.getWidth()*31/100,(int) (screensize.getHeight()*82/100*7/100))));
+		setPreferredSize(new Dimension(280, 35));
 		setLayout(null);
 		
 		progress = new JProgressBar();
 		progress.setBorder(new LineBorder(new Color(255, 255, 255)));
-		progress.setBounds(42, 7, 251, 30);
+		progress.setBounds(42, 5, 148, 25);
 		progress.setBackground(LPane.panel_3.getBackground());
 		UIManager.put("progress.selectionBackground", Color.black);
 		progress.setStringPainted(true);
 		progress.setForeground(new Color(46, 139, 87));
 		progress.setValue(58);
-		progress.setFont(new Font("Roboto", Font.PLAIN, 23));
+		progress.setFont(new Font("Roboto", Font.PLAIN, 14));
 		progress.setString("58/100");
 		
 		
@@ -107,21 +107,22 @@ public class Test extends JPanel {
 		number.setForeground(Color.WHITE);
 		number.setText("22");
 		number.setHorizontalAlignment(SwingConstants.CENTER);
-		number.setFont(new Font("Roboto", Font.PLAIN, 23));
-		number.setBounds(0, 7, 37, 30);
+		number.setFont(new Font("Roboto", Font.PLAIN, 12));
+		number.setBounds(0, 2, 37, 30);
 		add(number);
 		
 		percent = new JLabel("100%");
+		percent.setHorizontalAlignment(SwingConstants.CENTER);
 		percent.setForeground(Color.WHITE);
-		percent.setFont(new Font("Roboto", Font.PLAIN, 23));
-		percent.setBounds(297, 7, 61, 30);
+		percent.setFont(new Font("Roboto", Font.PLAIN, 12));
+		percent.setBounds(190, 2, 48, 30);
 		add(percent);
 		
 		progression = new JLabel("-100%");
 		progression.setForeground(Color.WHITE);
 		progression.setHorizontalAlignment(SwingConstants.CENTER);
-		progression.setFont(new Font("Roboto", Font.PLAIN, 20));
-		progression.setBounds(361, 7, 61, 30);
+		progression.setFont(new Font("Roboto", Font.PLAIN, 12));
+		progression.setBounds(232, 2, 48, 30);
 		add(progression);
 		
 		JLabel pasfait = new JLabel("N'as pas fait l'interrogation");
@@ -130,8 +131,8 @@ public class Test extends JPanel {
 		pasfait.setHorizontalTextPosition(SwingConstants.RIGHT);
 		pasfait.setForeground(Color.WHITE);
 		pasfait.setHorizontalAlignment(SwingConstants.CENTER);
-		pasfait.setFont(new Font("Roboto", Font.BOLD, 23));
-		pasfait.setBounds(10, 0, 412, 44);
+		pasfait.setFont(new Font("Roboto", Font.BOLD, 14));
+		pasfait.setBounds(10, 2, 270, 33);
 		add(pasfait);
 		
 

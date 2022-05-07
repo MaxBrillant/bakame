@@ -334,10 +334,12 @@ public class Group extends JPanel {
 				c.className.setForeground(new Color(Integer.parseInt(colors2.get(0)), Integer.parseInt(colors2.get(1)), Integer.parseInt(colors2.get(2))));
 				
 
-				c.expand.setBackground(c.courseBox.getBackground().darker());
+				((Container) c.getComponent(0)).getComponent(1).setBackground(c.courseBox.getBackground().darker());
 				
 
 	    		Group.resizeGroup(Home.panelClasses.getComponent(j));
+
+				Class.loadData(c, rs.getString("cp.classroom_id"), term_id, ay_id);
 				}
 						
 					Home.panelClasses.revalidate();

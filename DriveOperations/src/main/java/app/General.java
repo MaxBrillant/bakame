@@ -434,7 +434,7 @@ public class General extends JPanel {
 
 	Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
 		for(int i = 0; i<lines.length;i++) {
-			List<String> l = new ArrayList();
+			List l = new ArrayList();
 			l.add("0");
 			l.add("0/0");
 			List<String> l1 = new ArrayList();
@@ -479,7 +479,7 @@ public class General extends JPanel {
 							
 							if(l.toArray().length>2) {
 					JLabel label111 = new JLabel("- "+TestBox.getShortName(lines[i].toString())
-							.toUpperCase()+": "+l.get(2)+"	   ");
+							.toUpperCase()+": "+((List)l.get(6)).toArray().length+"	   ");
 							label111.setFont(new Font("Roboto", Font.BOLD, 12));
 							label111.setForeground(Color.white);
 							panelTests.add(label111);
@@ -502,7 +502,7 @@ public class General extends JPanel {
 
 
 		
-		List<String> l = new ArrayList();
+		List l = new ArrayList();
 		l.add("0");
 		l.add("0/0");
 		List<String> l1 = new ArrayList();
@@ -542,8 +542,8 @@ if(points1==0 && maxima==0 ) {
 
 		}
 		if(l.toArray().length>2) {
-		lblTests.setText("Interrogations effectuees: "+l.get(2));
-		lblProgress.setText(String.valueOf("Progression: "+new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
+		lblTests.setText("Interrogations effectuees: "+((List)l.get(6)).toArray().length);
+		lblProgress.setText(String.valueOf("Progression: "+new DecimalFormat("##.##").format(Double.parseDouble((String) l.get(5))))+"%");
 		}
 		}
 }
