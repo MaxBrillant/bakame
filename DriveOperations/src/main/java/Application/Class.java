@@ -98,7 +98,7 @@ public class Class extends JPanel {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	setBackground(new Color(60, 60, 60));
 	setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
-	setPreferredSize(new Dimension(140, 120));
+	setPreferredSize(new Dimension(150, 120));
 	setLayout(new BorderLayout(0, 0));
 	
 	
@@ -107,7 +107,7 @@ public class Class extends JPanel {
 	courseBox.setBorder(null);
 	courseBox.setBackground(new Color(0, 121, 50));
 	courseBox.setPreferredSize(new Dimension(135, 10));
-	add(courseBox, BorderLayout.WEST);
+	add(courseBox, BorderLayout.CENTER);
 	courseBox.setLayout(new BorderLayout(0, 0));
 	
 	className = new JLabel("<html><div style='text-align: center;'>3eme PF Bio-Chimie</div></html>");
@@ -127,17 +127,17 @@ public class Class extends JPanel {
 	
 	lblNewLabel_1 = new JLabel("143 eleves");
 	lblNewLabel_1.setForeground(new Color(211, 211, 211));
-	lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 12));
+	lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_1.add(lblNewLabel_1);
 	
 	lblCours = new JLabel("93 cours");
 	lblCours.setForeground(new Color(211, 211, 211));
-	lblCours.setFont(new Font("Roboto", Font.PLAIN, 12));
+	lblCours.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_1.add(lblCours);
 	
 	lblInterros = new JLabel("193 interros");
 	lblInterros.setForeground(new Color(211, 211, 211));
-	lblInterros.setFont(new Font("Roboto", Font.PLAIN, 12));
+	lblInterros.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_1.add(lblInterros);
 	
 	panel = new JPanel();
@@ -333,9 +333,9 @@ public class Class extends JPanel {
 			System.out.println(lines.length);
 			
 			for(int i = 0; i<lines.length; i++) {
-				String parentId = getParentId(lines[i].toString(), ay_id);
+				String parentId = getParentId(lines[i].toString());
 				String parentName = getParentName(parentId);
-			if(!hasParent(lines[i].toString(), ay_id)) {
+			if(!hasParent(lines[i].toString())) {
 			Class c = new Class(ay_id);
 			Home.panelClasses.add(c);
 			c.className.setText("<html><div style='text-align: center;'>"+getClassName(lines[i].toString())+"</div></html>");
@@ -343,9 +343,9 @@ public class Class extends JPanel {
 
 			Class.Actions(c, term_id, ay_id);
 			
-			c.courseBox.setBackground(Home.getClassColors(lines[i].toString(), ay_id).get(0));
+			c.courseBox.setBackground(Home.getClassColors(lines[i].toString()).get(0));
 			
-			c.className.setForeground(Home.getClassColors(lines[i].toString(), ay_id).get(1));
+			c.className.setForeground(Home.getClassColors(lines[i].toString()).get(1));
 			
 
 			((Container) c.getComponent(0)).getComponent(1).setBackground(c.courseBox.getBackground().darker());
@@ -477,7 +477,7 @@ public class Class extends JPanel {
 		
 	}
 	
-	public static boolean hasParent(String classroom_id, String ay_id) {
+	public static boolean hasParent(String classroom_in_ay_id) {
 		boolean granted = false;
 
 	try {
@@ -485,7 +485,7 @@ public class Class extends JPanel {
 
 		ResultSet rs= stmt.executeQuery("select * from classroom_parents AS cp "
 				+ "JOIN parents_of_classrooms AS poc "
-				+ "WHERE cp.classroom_id = '"+classroom_id+"' AND poc.parent_id = cp.parent_id AND poc.ay_id = '"+ay_id+"' LIMIT 1");
+				+ "WHERE cp.cia_id = '"+classroom_in_ay_id+"' AND poc.parent_id = cp.parent_id  LIMIT 1");
 		
 		int i = 0;
 		while(rs.next())
@@ -551,7 +551,7 @@ public class Class extends JPanel {
 
 
 
-	public static String getParentId(String classroom_id, String ay_id) {
+	public static String getParentId(String classroom_in_ay_id) {
 		String id = null;
 
 		try {
@@ -559,7 +559,7 @@ public class Class extends JPanel {
 
 			ResultSet rs=stmt.executeQuery("select * from classroom_parents AS cp "
 					+ "JOIN parents_of_classrooms AS poc "
-					+ "WHERE cp.classroom_id = '"+classroom_id+"' AND poc.parent_id = cp.parent_id AND poc.ay_id = '"+ay_id+"' LIMIT 1");
+					+ "WHERE cp.cia_id = '"+classroom_in_ay_id+"' AND poc.parent_id = cp.parent_id  LIMIT 1");
 			while(rs.next())
 			{
 				id = rs.getString("cp.parent_id");
@@ -606,7 +606,7 @@ public class Class extends JPanel {
 				if(e.getClickCount()==2) {
 					Home.className = ((JLabel) ((JPanel) ((((Container) (c)).getComponent(0)))).getComponent(0)).getText()
 							.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "");
-					Application app = new Application(c.getName(), ay_id);
+					Application app = new Application(c.getName());
 					app.frame.setVisible(true);
 					
 					Home.frame.setVisible(false);
@@ -626,17 +626,17 @@ public class Class extends JPanel {
 		}
 	}
 	
-public static void loadData(Component c, String classroom_id, String term_id, String ay_id) {
+public static void loadData(Component c, String classroom_in_ay_id, String term_id, String ay_id) {
 		if(c instanceof Class) {
 	
-	int number = StudentStats.getNumberOfStudents(classroom_id, ay_id);
+	int number = StudentStats.getNumberOfStudents(classroom_in_ay_id);
 	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(0)).setText(number+" eleves");
 	
-	int courses = CourseStats.getNumberOfCourses(classroom_id, ay_id);
+	int courses = CourseStats.getNumberOfCourses(classroom_in_ay_id);
 	
 	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(1)).setText(courses+" cours");
 	
-	List l20 = CourseStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
+	List l20 = CourseStats.getStudentTestsStats("All", classroom_in_ay_id, "All", term_id, "All", "All");
 	
 	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(2)).setText(l20.get(2)+" interros");
 
@@ -646,14 +646,14 @@ public static void loadData(Component c, String classroom_id, String term_id, St
 	}else {
 		for(int j = 0; j<((Container) ((Container) c).getComponent(0)).getComponentCount(); j++) {
 		
-		int number = StudentStats.getNumberOfStudents(classroom_id, ay_id);
+		int number = StudentStats.getNumberOfStudents(classroom_in_ay_id);
 		((JLabel) ((Container) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(1)).getComponent(0)).setText(number+" eleves");
 
-		int courses = CourseStats.getNumberOfCourses(classroom_id, ay_id);
+		int courses = CourseStats.getNumberOfCourses(classroom_in_ay_id);
 		
 		((JLabel) ((Container) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(1)).getComponent(1)).setText(courses+" cours");
 		
-		List l20 = CourseStats.getStudentTestsStats("All", classroom_id, "All", term_id, "All", "All");
+		List l20 = CourseStats.getStudentTestsStats("All", classroom_in_ay_id, "All", term_id, "All", "All");
 		
 		((JLabel) ((Container) ((Container) (((Container) (((Container) ((Container) c).getComponent(0)).getComponent(j))).getComponent(0))).getComponent(1)).getComponent(2)).setText(l20.get(2)+" interros");
 
@@ -684,7 +684,7 @@ public static void deselectAll(String ay_id) {
 
 			Home.panelClasses.repaint();
 	
-		}else {
+		}else if(!(((Container) Home.panelClasses).getComponent(i) instanceof JLabel)) {
 			Group.deselectGroup(((Container) ((Container) Home.panelClasses).getComponent(i)).getComponent(0), ay_id);
 		}
 	}

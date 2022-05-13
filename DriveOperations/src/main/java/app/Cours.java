@@ -78,11 +78,11 @@ public class Cours extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Cours(String ay_id, String course_id, String classroom_id, String student_id) {
+	public Cours(String course_in_classroom_id, String classroom_in_ay_id, String student_in_classroom_id) {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	setBackground(Color.BLACK);
 	setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
-	setPreferredSize(new Dimension(220, 112));
+	setPreferredSize(new Dimension(220, 120));
 	setLayout(new BorderLayout(0, 0));
 	
 	
@@ -94,7 +94,7 @@ public class Cours extends JPanel {
 	add(courseBox, BorderLayout.NORTH);
 	courseBox.setLayout(new BorderLayout(0, 0));
 	
-	Cours = new JLabel(TestBox.getFullName(course_id));
+	Cours = new JLabel(TestBox.getFullName(course_in_classroom_id));
 	Cours.setBorder(null);
 	Cours.setForeground(new Color(0, 0, 0));
 	Cours.setBackground(Color.GREEN);
@@ -109,31 +109,31 @@ public class Cours extends JPanel {
 	
 	
 	percent = new JLabel("Pourcentage: 0%");
-	percent.setForeground(Color.WHITE);
-	percent.setFont(new Font("Roboto", Font.PLAIN, 12));
-	percent.setBounds(10, 3, 126, 22);
+	percent.setForeground(new Color(211, 211, 211));
+	percent.setFont(new Font("Roboto", Font.PLAIN, 14));
+	percent.setBounds(10, 3, 196, 22);
 	stats.add(percent);
 	stats.add(percent);
 	
 	
 	lblPoints = new JLabel("Points:");
-	lblPoints.setForeground(Color.WHITE);
-	lblPoints.setFont(new Font("Roboto", Font.PLAIN, 12));
-	lblPoints.setBounds(10, 20, 126, 22);
+	lblPoints.setForeground(new Color(211, 211, 211));
+	lblPoints.setFont(new Font("Roboto", Font.PLAIN, 14));
+	lblPoints.setBounds(10, 23, 196, 22);
 	stats.add(lblPoints);
 	stats.add(lblPoints);
 	
 	lblAverage = new JLabel("Moyenne:");
-	lblAverage.setForeground(Color.WHITE);
-	lblAverage.setFont(new Font("Roboto", Font.PLAIN, 12));
-	lblAverage.setBounds(10, 37, 126, 22);
+	lblAverage.setForeground(new Color(211, 211, 211));
+	lblAverage.setFont(new Font("Roboto", Font.PLAIN, 14));
+	lblAverage.setBounds(10, 43, 196, 22);
 	stats.add(lblAverage);
 	stats.add(lblAverage);
 	
 	lblImprovements = new JLabel("Echec:");
-	lblImprovements.setForeground(Color.WHITE);
-	lblImprovements.setFont(new Font("Roboto", Font.PLAIN, 12));
-	lblImprovements.setBounds(10, 54, 126, 22);
+	lblImprovements.setForeground(new Color(211, 211, 211));
+	lblImprovements.setFont(new Font("Roboto", Font.PLAIN, 14));
+	lblImprovements.setBounds(10, 63, 196, 22);
 	stats.add(lblImprovements);
 	stats.add(lblImprovements);
 	
@@ -149,7 +149,7 @@ public class Cours extends JPanel {
 						if(selectedCourses.contains(getComponent(0).getParent())) {
 						alreadyExists = true;
 						}
-						App.deselect(classroom_id, ay_id);
+						App.deselect(classroom_in_ay_id);
 						selectedCourses.clear();
 					selectedCourses.add(getComponent(0).getParent());
 					
@@ -160,7 +160,7 @@ public class Cours extends JPanel {
 							}}
 						
 						App.panel_1.remove(1);
-						LPane tp = new LPane(course_id, student_id, classroom_id);
+						LPane tp = new LPane(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 						App.panel_1.add(tp);
 						App.panel_1.revalidate();
 						App.panel_1.repaint();
@@ -224,8 +224,7 @@ c.setBackground(new Color(120, 120, 120));
 	  
 	  }
 	 
-
-	public static void loaddata(Container c, String course_id, String classroom_id, String student_id, String ay_id) {
+	public static void loaddata(Container c, String course_in_classroom_id, String classroom_in_ay_id, String student_in_classroom_id) {
 		new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
 		Double sum = (double) 0;
@@ -234,14 +233,14 @@ c.setBackground(new Color(120, 120, 120));
 		Double tot1 = (double) 0;
 			
 			
-			List l = CourseStats.getStudentTestsStats(student_id, classroom_id, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
-			List l1 = CourseStats.getStudentExamStats(student_id, classroom_id, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
+			List l = CourseStats.getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id, course_in_classroom_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
+			List l1 = CourseStats.getStudentExamStats(student_in_classroom_id, classroom_in_ay_id, course_in_classroom_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
 			
 			String courseMaxima;
-			courseMaxima = ExamInfo.loadCourseMaxima(course_id, classroom_id, ay_id);
+			courseMaxima = ExamInfo.loadCourseMaxima(course_in_classroom_id);
 			
 			Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."))+Double.parseDouble(note1.get(0).replaceAll(",", "."));
 			Double maxima1 = Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", "."));
@@ -260,7 +259,7 @@ c.setBackground(new Color(120, 120, 120));
 			((JLabel) ((Container) c.getComponent(1)).getComponent(2)).setText("Moyenne: "+new DecimalFormat("##.##").format(points1/maxima1*Double.parseDouble(courseMaxima))+"/"+courseMaxima);
 			
 			if(percentage>=50) {
-				((JLabel) ((Container) c.getComponent(1)).getComponent(3)).setText("Augm. : "+new DecimalFormat("##.##").format(points1-(maxima1/2))+" points");
+				((JLabel) ((Container) c.getComponent(1)).getComponent(3)).setText("Augmentation : "+new DecimalFormat("##.##").format(points1-(maxima1/2))+" points");
 			}else {
 				((JLabel) ((Container) c.getComponent(1)).getComponent(3)).setText("Echec. : "+new DecimalFormat("##.##").format((maxima1/2)-points1)+" points");
 				}

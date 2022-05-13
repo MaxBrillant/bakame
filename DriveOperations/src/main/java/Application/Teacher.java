@@ -154,7 +154,7 @@ public class Teacher extends JPanel {
 			for(int k = 0; k< lines1.length;k++) {
 				
 				Teacher te = new Teacher();
-				te.name.setText(lines1[k].toString());
+				te.name.setText(Teacher.getTeacherName(lines1[k].toString()));
 				te.setName(lines1[k].toString());
 				Home.panelProf.add(te);
 				collapse(k);
@@ -299,7 +299,7 @@ public class Teacher extends JPanel {
 		int echecs = 0;
 		int rate = 0;
 			
-			Object lines [] = Home.loadActiveStudents(classroom_id, ay_id);
+			Object lines [] = Home.loadActiveStudents(classroom_id);
 		
 			for(int i = 0; i< lines.length; i++) {
 
@@ -343,11 +343,11 @@ public class Teacher extends JPanel {
 					+ "JOIN classrooms as c "
 					+ "JOIN courses as co "
 					+ "JOIN classrooms_in_ay as cia "
-					+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+					+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND c.classroom_id = cia.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
 							+ " AND cic.course_id = co.course_id AND co.is_active = 1");
 			while(rs.next())
 			{
-				s.add(rs.getString("cic.classroom_id"));
+				s.add(rs.getString("cic.cia_id"));
 			}
 
 		} catch (SQLException e) {
@@ -357,8 +357,12 @@ public class Teacher extends JPanel {
 		}
 
 					Object[] lines = s.toArray();
+					List<String> classes = new ArrayList();
 					
 					for(int i = 0; i< lines.length; i++) {
+						
+						if(!classes.contains(lines[i].toString())) {
+						classes.add(lines[i].toString());
 						
 						JPanel panel_2 = new JPanel();
 						panel_2.setBackground(new Color(40, 40, 40));
@@ -388,11 +392,11 @@ public class Teacher extends JPanel {
 									+ "JOIN classrooms_in_ay as cia "
 									+ "JOIN courses as co "
 									+ "JOIN courses_in_classroom as cic "
-									+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-											+ "AND cic.classroom_id = '"+lines[i].toString()+"' AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
+									+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+											+ "AND cic.cia_id = '"+lines[i].toString()+"' AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
 							while(rs.next())
 							{
-								s1.add(rs.getString("cic.course_id"));
+								s1.add(rs.getString("cic.courses_in_classroom_id"));
 							}
 
 						} catch (SQLException e) {
@@ -412,7 +416,7 @@ public class Teacher extends JPanel {
 								panel_3.setPreferredSize(new Dimension(panel_3.getParent().getPreferredSize().width*99/100, 25));
 								panel_3.setLayout(null);
 								
-								JLabel lblFormationPatriotiqueEt = new JLabel();
+								JLabel lblFormationPatriotiqueEt = new JLabel(TestBox.getFullName(lines1[j].toString()));
 								lblFormationPatriotiqueEt.setName(lines1[j].toString());
 								lblFormationPatriotiqueEt.setForeground(Color.WHITE);
 								lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.BOLD, 18));
@@ -458,7 +462,7 @@ public class Teacher extends JPanel {
 								label_3.setBounds(290, 0, 22, 25);
 								panel_3.add(label_3);
 									
-						}}
+						}}}
 				Home.panelProf.revalidate();
 				Home.panelProf.repaint();
 				
@@ -506,7 +510,7 @@ public class Teacher extends JPanel {
 							if(e.getClickCount() == 2) {
 								Home.className = ((JLabel) ((Container) ((Container) ((Container) c).getComponent(k))).getComponent(0)).getText()
 										.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "");
-								Application a = new Application(((Container) ((Container) ((Container) c).getComponent(k))).getComponent(0).getName(), ay_id);
+								Application a = new Application(((Container) ((Container) ((Container) c).getComponent(k))).getComponent(0).getName());
 								a.frame.setVisible(true);
 								
 								Home.frame.setVisible(false);
@@ -679,7 +683,7 @@ public class Teacher extends JPanel {
 				+ "JOIN courses_in_classroom AS cic "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cic.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"'");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cic.is_active = 1 AND cic.cia_id = cia.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"'");
 		while(rs.next())
 		{
 			numberOfclass++;

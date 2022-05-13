@@ -114,7 +114,7 @@ public class App {
 			public void run() {
 				try {
 					mysql.connectToDB();
-					App window = new App("1", "8");
+					App window = new App("1");
 					window.frame.setVisible(true);
 					System.gc();
 					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
@@ -153,16 +153,16 @@ public class App {
 	/**
 	 * Create the application.
 	 */
-	public App(String classroom_id, String ay_id) {
-		initialize(classroom_id, ay_id);
+	public App(String classroom_in_ay_id) {
+		initialize(classroom_in_ay_id);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String classroom_id, String ay_id) {
+	private void initialize(String classroom_in_ay_id) {
 
-		loadStudents(classroom_id, ay_id);
+		loadStudents(classroom_in_ay_id);
 		
 		
 		frame = new JFrame();/*
@@ -189,7 +189,7 @@ public class App {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				deselect(classroom_id, ay_id);
+				deselect(classroom_in_ay_id);
 			}
 		});
 		panel.setBackground(new Color(40, 40, 40));
@@ -288,7 +288,7 @@ public class App {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				Application app = new Application(classroom_id, ay_id);
+				Application app = new Application(classroom_in_ay_id);
 				app.frame.setVisible(true);
 				App.frame.setVisible(false);
 			}
@@ -361,11 +361,11 @@ public class App {
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				lblemeTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
-				loadCourses(ay_id, classroom_id, students.get(n));
+				loadCourses(classroom_in_ay_id, students.get(n));
 				
 				if(selectedCourse!= null) {
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 					
 				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -376,7 +376,7 @@ public class App {
 						Cours.setSelected(App.panel_5.getComponent(j));
 					}}
 			}else{
-				General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
+				General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 			}}
 		});
 		button.setPreferredSize(new Dimension(30, 30));
@@ -412,13 +412,13 @@ public class App {
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				lblemeTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
-				loadCourses(ay_id, classroom_id, students.get(n));
+				loadCourses(classroom_in_ay_id, students.get(n));
 				
 
 				
 				if(selectedCourse != null) {
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
 						Cours.selectedCourses.add(App.panel_5.getComponent(i));
@@ -427,7 +427,7 @@ public class App {
 					if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 						Cours.setSelected(App.panel_5.getComponent(j));
 					}}}else{
-						General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
+						General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}
 				
 			}
@@ -442,7 +442,7 @@ public class App {
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(25, 25, 25));
-		panel_1.setPreferredSize(new Dimension(300, 10));
+		panel_1.setPreferredSize(new Dimension(350, 10));
 		frame.getContentPane().add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
@@ -456,7 +456,7 @@ public class App {
 		name = new JLabel("UMUHOZA Chris Koen Michael");
 		name.setForeground(Color.WHITE);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
-		name.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		name.setFont(new Font("Roboto", Font.BOLD, 16));
 		panelName.add(name, BorderLayout.NORTH);
 		
 		previous = new JButton("");
@@ -483,7 +483,7 @@ public class App {
 						panelName.getComponent(panelName.getComponentCount()-2).setPreferredSize(new Dimension(10, 50));
 					panelName.revalidate();
 					panelName.repaint();
-					loadnumbers(classroom_id, ay_id);
+					loadnumbers(classroom_in_ay_id);
 					
 					}
 					else{
@@ -507,7 +507,7 @@ public class App {
 		num.setBackground(new Color(245, 245, 245));
 		panel_6.add(num);
 		num.setHorizontalAlignment(SwingConstants.CENTER);
-		num.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		num.setFont(new Font("Roboto", Font.BOLD, 16));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setPreferredSize(new Dimension(2, 0));
@@ -549,7 +549,7 @@ public class App {
 				}
 				LPane.tabbedPane.setSelectedIndex(0);
 
-				Test.deselect(selectedCourse.getName(), students.get(n), classroom_id);
+				Test.deselect(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 				}
 				
 				if(n<students.toArray().length-1) {
@@ -557,18 +557,18 @@ public class App {
 				}else{
 					n = 0;
 				}
-				General.loadName(students.get(n), classroom_id, ay_id);
+				General.loadName(students.get(n));
 				
-				loadCourses(ay_id, classroom_id, students.get(n));
+				loadCourses(classroom_in_ay_id, students.get(n));
 
-				loadnumbers(classroom_id, ay_id);
+				loadnumbers(classroom_in_ay_id);
 				
 				if(selectedCourse != null) {
 					
 					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 					
 				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -579,7 +579,7 @@ public class App {
 					if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 						Cours.setSelected(App.panel_5.getComponent(j));
 					}}}else{
-						General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
+						General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}
 				App.panel_5.revalidate();
 				App.panel_5.repaint();
@@ -602,7 +602,7 @@ public class App {
 				}
 				LPane.tabbedPane.setSelectedIndex(0);
 
-				Test.deselect(selectedCourse.getName(), students.get(n), classroom_id);
+				Test.deselect(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 				}
 				
 				//loadStudents(classroom_id, ay_id);
@@ -612,16 +612,16 @@ public class App {
 				}else{
 				n = students.toArray().length-1;
 				}
-				General.loadName(students.get(n), classroom_id, ay_id);
+				General.loadName(students.get(n));
 
-				loadCourses(ay_id, classroom_id, students.get(n));
+				loadCourses(classroom_in_ay_id, students.get(n));
 
-				loadnumbers(classroom_id, ay_id);
+				loadnumbers(classroom_in_ay_id);
 				if(selectedCourse != null) {
 					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 					
 					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -632,7 +632,7 @@ public class App {
 						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 							Cours.setSelected(App.panel_5.getComponent(j));
 						}}}else{
-							General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
+							General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 						}
 				
 				
@@ -646,7 +646,7 @@ public class App {
 		
 		
 		
-		General g = new General(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
+		General g = new General(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 		JPanel lp = new JPanel();
 		panel_1.add(lp, BorderLayout.CENTER);
 		
@@ -684,7 +684,7 @@ public class App {
 		panel_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				deselect(classroom_id, ay_id);
+				deselect(classroom_in_ay_id);
 			}
 		});
 		scrollPane.setViewportView(panel_5);
@@ -706,13 +706,13 @@ public class App {
 		 * WrapLayout(WrapLayout.CENTER, 10, 10)); } }} });
 		 */
 		
-		deselect(classroom_id, ay_id);
+		deselect(classroom_in_ay_id);
 
 		
-		loadCourses(ay_id, classroom_id, students.get(n));
+		loadCourses(classroom_in_ay_id, students.get(n));
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deselect(classroom_id, ay_id);
+				deselect(classroom_in_ay_id);
 				createBox();
 				NewCourse.create.setVisible(true);
 				NewCourse.actualiser.setVisible(false);
@@ -739,7 +739,7 @@ public class App {
 				number.setText(String.valueOf(count));
 				  panel_5.revalidate();
 				     panel_5.repaint();
-						deselect(classroom_id, ay_id);
+						deselect(classroom_in_ay_id);
 
 			}
 		});
@@ -748,9 +748,9 @@ public class App {
 		//Exam.loadExams();
 	}
 	
-	public static void loadStudents(String classroom_id, String ay_id) { //number selected
+	public static void loadStudents(String classroom_in_ay_id) { //number selected
 		students.clear();
-		Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
+		Object[] lines = Home.loadActiveStudents(classroom_in_ay_id);
 		
 		for(int i = 0;i<lines.length;i++) {
 		students.add(lines[i].toString());
@@ -758,9 +758,9 @@ public class App {
 	}
 	
 
-	public static void loadnumbers(String classroom_id, String ay_id) { //number selected
+	public static void loadnumbers(String classroom_in_ay_id) { //number selected
 		numbers.removeAll();
-		Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
+		Object[] lines = Home.loadActiveStudents(classroom_in_ay_id);
 					
 		for(int i = 0;i<lines.length;i++) {
 		
@@ -769,7 +769,7 @@ public class App {
 		button.setBackground(new Color(80, 80, 80));
 		button.setName(String.valueOf(i));
 		JLabel num = new JLabel();
-		num.setText(getStudentNumber(lines[i].toString(), classroom_id, ay_id));
+		num.setText(getStudentNumber(lines[i].toString()));
 		num.setBounds(button.getBounds());
 		button.add(num);
 		
@@ -796,20 +796,20 @@ public class App {
 				}
 				LPane.tabbedPane.setSelectedIndex(0);
 
-				Test.deselect(selectedCourse.getName(), students.get(n), classroom_id);
+				Test.deselect(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 				}
 				
 
 				n= Integer.parseInt(button.getName());
-				General.loadName(students.get(n), classroom_id, ay_id);
+				General.loadName(students.get(n));
 
-				loadCourses(ay_id, classroom_id, students.get(n));
-				loadnumbers(classroom_id, ay_id);
+				loadCourses(classroom_in_ay_id, students.get(n));
+				loadnumbers(classroom_in_ay_id);
 				if(selectedCourse != null) {
 					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_id);
+					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
 					
 					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
 						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
@@ -820,7 +820,7 @@ public class App {
 						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 							Cours.setSelected(App.panel_5.getComponent(j));
 						}}}else{
-							General.totalScore(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
+							General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 						}
 
 				num.setForeground(Color.white);
@@ -849,7 +849,7 @@ public class App {
 		nc.setVisible(true);
         
 	}
-	public static void deselect(String classroom_id, String ay_id) {
+	public static void deselect(String classroom_in_ay_id) {
 		
 		Cours.isSelected = false;
 		
@@ -858,7 +858,7 @@ public class App {
 		App.delete.setBackground(App.panel.getBackground());
 		App.edit.setBackground(App.panel.getBackground());
 		
-		General g = new General(students.get(n), classroom_id, ay_id, Home.termsText.get(Home.selectedTermIndex));
+		General g = new General(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 		panel_1.remove(1);
 		panel_1.add(g);
 		Cours.selectedCourses.clear();
@@ -889,20 +889,19 @@ public class App {
 
 }
 	
-	public static String getStudentNumber(String student_id, String classroom_id, String ay_id) {
+	public static String getStudentNumber(String student_in_classroom_id) {
 		 String number = null;
 		 
 		 try {
 				Statement stmt= mysql.con.createStatement();
 
-				ResultSet rs=stmt.executeQuery("SELECT * FROM students_in_classrooms AS sic "
-						+ "WHERE student_id = '"+student_id+"' AND classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' AND is_active = 1");
+				ResultSet rs=stmt.executeQuery("SELECT * FROM students_in_classrooms "
+						+ "WHERE sic_id = '"+student_in_classroom_id+"'");
 				while(rs.next())
 				{
 					number = rs.getString("number");
 		
 		}} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 			}
@@ -910,18 +909,18 @@ public class App {
 	return number;
 	}
 	
-	public static void loadCourses(String ay_id, String classroom_id, String student_id) {
+	public static void loadCourses(String classroom_in_ay_id, String student_id) {
 
 		App.panel_5.removeAll();
 
-				Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
+				Object[] lines = Home.loadActiveCourses(classroom_in_ay_id);
 				
 				for(int i = 0; i<lines.length;i++) {
-				Cours c = new Cours(ay_id, lines[i].toString(), classroom_id, student_id);
+				Cours c = new Cours(lines[i].toString(), classroom_in_ay_id, student_id);
 				c.setName(lines[i].toString());
 				App.panel_5.add(c);
 				//number.setText(String.valueOf(panel_5.getComponentCount()));
-				Cours.loaddata(c, lines[i].toString(), classroom_id, student_id, ay_id);
+				Cours.loaddata(c, lines[i].toString(), classroom_in_ay_id, student_id);
 				
 				App.panel_5.revalidate();
 				App.panel_5.repaint();

@@ -55,6 +55,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import Class.NewCourse;
+import Class.TestBox;
 import CloudOperations.aws;
 import CloudOperations.mysql;
 import accounts.NewEstablishment;
@@ -293,11 +294,11 @@ public class ClassesAndCourses extends JFrame {
 					+ "JOIN classrooms as c "
 					+ "JOIN courses as co "
 					+ "JOIN classrooms_in_ay as cia "
-					+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-							+ " AND cic.course_id = co.course_id AND co.is_active = 1");
+					+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND c.classroom_id = cia.classroom_id AND cia.is_active = 1 AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+							+ " AND tic.courses_in_classroom_id = cic.courses_in_classroom_id AND cic.course_id = co.course_id AND co.is_active = 1");
 			while(rs.next())
 			{
-				s.add(rs.getString("cic.classroom_id")+"//"+rs.getString("cic.course_id")+":"+rs.getString("tic.sessions_per_week"));
+				s.add(rs.getString("cia.cia_id")+"//"+rs.getString("cic.courses_in_classroom_id")+":"+rs.getString("tic.sessions_per_week"));
 			}
 
 		} catch (SQLException e) {
@@ -308,16 +309,20 @@ public class ClassesAndCourses extends JFrame {
 
 					Object[] lines = s.toArray();
 					
+					List<String> classes = new ArrayList();
 					for(int i = 0; i< lines.length; i++) {
 						List l = Arrays.asList(lines[i].toString().split("//"));
 				
 				JPanel panel_1 = new JPanel();
+				panel_1.setName(l.get(0).toString());
 				panel_1.setBackground(new Color(80, 80, 80));
 				panel_1.setPreferredSize(new Dimension(390, 55));
-				ClassesAndCourses.panel.add(panel_1, i);
 				panel_1.setLayout(new BorderLayout(0, 0));
-				
 
+				if(!classes.contains(l.get(0).toString())) {
+					classes.add((String) l.get(0));
+				ClassesAndCourses.panel.add(panel_1, i);
+				
 				JPanel panel_4 = new JPanel();
 				panel_4.setPreferredSize(new Dimension(10, 30));
 				panel_1.add(panel_4, BorderLayout.NORTH);
@@ -325,7 +330,7 @@ public class ClassesAndCourses extends JFrame {
 
 				panel_4.setBackground(panel_4.getParent().getBackground());
 				
-				JLabel label = new JLabel(l.get(0).toString());
+				JLabel label = new JLabel(Home.getClassName(l.get(0).toString()));
 				label.setBackground(Color.DARK_GRAY);
 				label.setPreferredSize(new Dimension(46, 30));
 				label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -387,7 +392,7 @@ public class ClassesAndCourses extends JFrame {
 
 					btnNewButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							courseSelection cs = new courseSelection(((JLabel) ((Container) btnNewButton.getParent().getParent().getComponent(0)).getComponent(0)).getName(), ay_id);
+							courseSelection cs = new courseSelection(((JLabel) ((Container) btnNewButton.getParent().getParent().getComponent(0)).getComponent(0)).getName());
 							cs.setVisible(true);
 							
 							for(int m = 0; m<  ClassesAndCourses.panel.getComponentCount()-1; m++) {
@@ -396,7 +401,7 @@ public class ClassesAndCourses extends JFrame {
 								}}
 						}
 					});
-			
+				}
 				
 				for(int j = 1; j< l.toArray().length; j++) {
 					
@@ -408,13 +413,13 @@ public class ClassesAndCourses extends JFrame {
 							panel_3.setPreferredSize(new Dimension(380, 25));
 							panel_3.setLayout(null);
 							
-							JLabel lblNewLabel_1 = new JLabel(l1.get(0).toString());
+							JLabel lblNewLabel_1 = new JLabel(TestBox.getFullName(l1.get(0).toString()));
 							lblNewLabel_1.setForeground(Color.WHITE);
 							lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 							lblNewLabel_1.setBounds(10, 0, 256, 25);
 							panel_3.add(lblNewLabel_1);
 							
-							JLabel lblheures = new JLabel(l1.get(1).toString()+" s.");
+							JLabel lblheures = new JLabel(l1.get(1).toString().replaceAll("null", "0")+" s.");
 							lblheures.setForeground(Color.WHITE);
 							lblheures.setHorizontalAlignment(SwingConstants.CENTER);
 							lblheures.setFont(new Font("Roboto", Font.PLAIN, 17));
@@ -441,7 +446,7 @@ public class ClassesAndCourses extends JFrame {
 
 									panel_3.setBorder(new LineBorder(Color.white, 1));
 									if(e.getClickCount()==2) {
-										courseSelection cs = new courseSelection(((JLabel) ((Container) panel_3.getParent().getParent().getComponent(0)).getComponent(0)).getName(), ay_id);
+										courseSelection cs = new courseSelection(((JLabel) ((Container) panel_3.getParent().getParent().getComponent(0)).getComponent(0)).getName());
 										cs.setVisible(true);
 										cs.create.setVisible(false);
 										cs.actualiser.setVisible(true);
@@ -478,7 +483,6 @@ public class ClassesAndCourses extends JFrame {
 							int j1 = i;
 							btnNewButton_1.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
-										System.out.println("done2");
 										btnNewButton_1.getParent().getParent().remove(btnNewButton_1.getParent());
 
 										ClassesAndCourses.panel.revalidate();
@@ -488,22 +492,21 @@ public class ClassesAndCourses extends JFrame {
 									}
 								});
 							
-							((JPanel)((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(1)).add(panel_3, ((Container) ((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(1)).getComponentCount()-1);
+							for(int k = 0; k< ClassesAndCourses.panel.getComponentCount()-1; k++) {
+								if(ClassesAndCourses.panel.getComponent(k).getName().equals(l.get(0).toString())) {
+							((JPanel)((Container) ClassesAndCourses.panel.getComponent(k)).getComponent(1)).add(panel_3, ((JPanel)((Container) ClassesAndCourses.panel.getComponent(k)).getComponent(1)).getComponentCount()-1);
 							ClassesAndCourses.checkContinuation();
-							((JPanel)((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(1)).revalidate();
-							((JPanel)((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(1)).repaint();
-						
+							((JPanel)((Container) ClassesAndCourses.panel.getComponent(k)).getComponent(1)).revalidate();
+							((JPanel)((Container) ClassesAndCourses.panel.getComponent(k)).getComponent(1)).repaint();
+							
+							((Container) ClassesAndCourses.panel.getComponent(k)).setPreferredSize(new Dimension(390,
+									30+(((Container)((Container) ClassesAndCourses.panel.getComponent(k)).getComponent(1)).getComponentCount()-1)*25+25));
+								}}
 						}
-
-				System.out.println(((Container)panel_1.getComponent(1)).getComponentCount()-1);
-				panel_1.setPreferredSize(new Dimension(390,
-						30+(((Container)panel_1.getComponent(1)).getComponentCount()-1)*25+25));
-				
-				System.out.println(ClassesAndCourses.panel.getParent().getWidth()+"//"+30+(((Container)panel_1.getComponent(1)).getComponentCount()-1)*25+25);
+				//System.out.println(ClassesAndCourses.panel.getParent().getWidth()+"//"+30+(((Container)panel_1.getComponent(1)).getComponentCount()-1)*25+25);
 				ClassesAndCourses.panel.revalidate();
 				ClassesAndCourses.panel.repaint();
-			}
-		
+	}
 		
 		
 	}

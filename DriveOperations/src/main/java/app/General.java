@@ -73,7 +73,7 @@ public class General extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public General(String student_id, String classroom_id, String ay_id, String term_id) {
+	public General(String student_in_classroom_id, String classroom_in_ay_id, String term_id) {
 		setBackground(new Color(235, 255, 244));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(300, 629));
@@ -256,9 +256,8 @@ public class General extends JPanel {
 		scrollPane_3.setViewportView(panelProgress);
 		panelPoints.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
 		panelProgress.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
-		
-		loadName(student_id, classroom_id, ay_id);
-		totalScore(student_id, classroom_id, ay_id, term_id);
+		loadName(student_in_classroom_id);
+		totalScore(student_in_classroom_id, classroom_in_ay_id, term_id);
 		
 
 		for(int i = 0;i<panel_2.getComponentCount(); i++) {
@@ -389,7 +388,7 @@ public class General extends JPanel {
 	
 	
 	
-	public static void loadName(String student_id, String classroom_id, String ay_id) {
+	public static void loadName(String student_id) {
 		/*
 		 * File file = new
 		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
@@ -406,7 +405,7 @@ public class General extends JPanel {
 		 * Arrays.asList(lines[0].toString().trim().split("//")); }
 		 */
 		App.name.setText(Home.getStudentName(student_id));
-		App.num.setText(App.getStudentNumber(student_id, classroom_id, ay_id));
+		App.num.setText(App.getStudentNumber(student_id));
 		/*
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
@@ -425,14 +424,14 @@ public class General extends JPanel {
 	
 
 	
-	public static void totalScore(String student_id, String classroom_id, String ay_id, String term_id) {
+	public static void totalScore(String student_in_classroom_id, String classroom_in_ay_id, String term_id) {
 	panelPoints.removeAll();
 	panelPercent.removeAll();
 	panelTests.removeAll();
 	panelEchec.removeAll();
 	panelProgress.removeAll();;
 
-	Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
+	Object[] lines = Home.loadActiveCourses(classroom_in_ay_id);
 		for(int i = 0; i<lines.length;i++) {
 			List l = new ArrayList();
 			l.add("0");
@@ -441,12 +440,12 @@ public class General extends JPanel {
 			l1.add("0");
 			l1.add("0/0");
 			if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-				l = StudentStats.getStudentTestsStats(student_id, classroom_id
+				l = StudentStats.getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id
 						,lines[i].toString(), term_id,"All", "All");
 				}
 
 			if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-				l1 = StudentStats.getStudentExamStats(student_id, classroom_id
+				l1 = StudentStats.getStudentExamStats(student_in_classroom_id, classroom_in_ay_id
 						,lines[i].toString(), term_id,"All", "All");
 				}
 	List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -509,12 +508,12 @@ public class General extends JPanel {
 		l1.add("0");
 		l1.add("0/0");
 		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-			l = StudentStats.getStudentTestsStats(student_id, classroom_id
+			l = StudentStats.getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id
 					,"All", term_id,"All", "All");
 			}
 
 		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			l1 = StudentStats.getStudentExamStats(student_id, classroom_id
+			l1 = StudentStats.getStudentExamStats(student_in_classroom_id, classroom_in_ay_id
 					,"All", term_id,"All", "All");
 			}
 List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -532,8 +531,8 @@ if(points1==0 && maxima==0 ) {
 		lblPoints.setText("Points: "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
 		
 		General.percentage.setText("Pourcentage: "+new DecimalFormat("##.##").format(percentage)+"%");
-		lblEchecs.setText(String.valueOf("Echecs: "+StudentStats.getNumberOfechecs(student_id, "All",
-				  classroom_id, ay_id, term_id, "All", "All")));
+		lblEchecs.setText(String.valueOf("Echecs: "+StudentStats.getNumberOfechecs(student_in_classroom_id, "All",
+				classroom_in_ay_id, term_id, "All", "All")));
 		if(panelEchec.getComponentCount() == 0) {
 			JLabel label = new JLabel("Pas d'echecs");
 					label.setFont(new Font("Roboto", Font.BOLD, 12));

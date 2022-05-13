@@ -66,7 +66,7 @@ public class ExamMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ExamMenu(String classroom_id, String ay_id) {
+	public ExamMenu(String classroom_in_ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -301,7 +301,7 @@ public class ExamMenu extends JPanel {
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				label_1.setText(Home.termsText.get(Home.selectedTermIndex));
-				ExamBox.loadAllExams(classroom_id, ay_id);
+				ExamBox.loadAllExams(classroom_in_ay_id);
 				}
 		});
 		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
@@ -330,7 +330,7 @@ public class ExamMenu extends JPanel {
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				label_1.setText(Home.termsText.get(Home.selectedTermIndex));
-				ExamBox.loadAllExams(classroom_id, ay_id);
+				ExamBox.loadAllExams(classroom_in_ay_id);
 		}
 		});
 		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));

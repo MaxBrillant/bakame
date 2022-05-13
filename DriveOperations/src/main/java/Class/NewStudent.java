@@ -90,7 +90,7 @@ public class NewStudent extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewStudent() {
+	public NewStudent(String classroom_in_ay_id) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\School Project\\Icons\\cg_colored.png"));
 		setTitle("New Student");
 		setResizable(false);
@@ -178,7 +178,7 @@ public class NewStudent extends JFrame {
 		add = new JButton("Ajouter");
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				load();
+				load(classroom_in_ay_id);
 				String ph;
 				String em;
 				
@@ -199,7 +199,7 @@ public class NewStudent extends JFrame {
 				saveCourses();
 				saveMissedTests();
 				saveMissedExams();
-				load();
+				load(classroom_in_ay_id);
 				setVisible(false);
 
 				Application.rankAlphabetically();
@@ -296,7 +296,7 @@ public class NewStudent extends JFrame {
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
 
-		        		NewStudent.load();
+		        		NewStudent.load(classroom_in_ay_id);
 		        		Application.merite();
 		            	 return null;
 		            }
@@ -612,22 +612,22 @@ public static void updateStudent(String studentName) {
 		file5.renameTo(file51);
 	}
 
-public static void load(String classroom_id, String ay_id) {
+public static void load(String classroom_in_ay_id) {
 	
 Student.deselectAll();
 Application.panel1.removeAll();
 isEmpty = false;
 ((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(0)).getComponent(0).setVisible(true);
 	
-			Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
+			Object[] lines = Home.loadActiveStudents(classroom_in_ay_id);
 			
 			for(int i = 0; i<lines.length;i++) {
-			Student c = new Student(classroom_id, ay_id);
+			Student c = new Student(classroom_in_ay_id);
 			c.setName(lines[i].toString());
-			((JLabel) ((Container)((Container) c).getComponent(0)).getComponent(0)).setText(App.getStudentNumber(lines[i].toString(), classroom_id, ay_id));
+			((JLabel) ((Container)((Container) c).getComponent(0)).getComponent(0)).setText(App.getStudentNumber(lines[i].toString()));
 			((JLabel) ((Container) c).getComponent(1)).setText(Home.getStudentName(lines[i].toString()));
 			
-				loadStudentdata(c, lines[i].toString(), classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+				loadStudentdata(c, lines[i].toString(), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 
 				Application.panel1.add(c);
 			
@@ -698,11 +698,11 @@ isEmpty = false;
 		Application.panel1.repaint();
 
 	}
-public static void loadStudentdata(Container c, String student_id, String classroom_id, String term_id, String ay_id) { 
+public static void loadStudentdata(Container c, String student_in_classroom_id, String classroom_in_ay_id, String term_id) { 
 	//to calculate the different stats about the student
 	new SwingWorker<Void, Void>() {
         public Void doInBackground() throws Exception{
-		Application.manageTabs(classroom_id, ay_id);
+		Application.manageTabs(classroom_in_ay_id);
 		
 		List<String> l = new ArrayList();
 		l.add("0");
@@ -711,12 +711,12 @@ public static void loadStudentdata(Container c, String student_id, String classr
 		l1.add("0");
 		l1.add("0/0");
 		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-			l = StudentStats.getStudentTestsStats(student_id, classroom_id
+			l = StudentStats.getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id
 					,"All", term_id,"All", "All");
 			}
 
 		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			l1 = StudentStats.getStudentExamStats(student_id, classroom_id
+			l1 = StudentStats.getStudentExamStats(student_in_classroom_id, classroom_in_ay_id
 					,"All", term_id,"All", "All");
 			}
 List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -738,8 +738,8 @@ if(points1==0 && maxima==0 ) {
 	
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(0)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
 	
-	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(6)))).setText(String.valueOf(StudentStats.getNumberOfechecs(student_id, "All",
-			  classroom_id, ay_id, term_id, "All", "All"))+" echecs");
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(6)))).setText(String.valueOf(StudentStats.getNumberOfechecs(student_in_classroom_id, "All",
+			classroom_in_ay_id, term_id, "All", "All"))+" echecs");
 	
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(8)))).setText(String.valueOf(l.get(2))+" interros");
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(12)))).setText("Progres: "+String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");

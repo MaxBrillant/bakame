@@ -60,7 +60,7 @@ public class Student extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Student(String classroom_id, String ay_id) {
+	public Student(String classroom_in_ay_id) {
 		setBackground(new Color(60, 60, 60));
 		addMouseListener(new MouseAdapter() {
 			
@@ -131,7 +131,7 @@ public class Student extends JPanel {
 				
 				if(e.getClickCount()==2) {
 					if(selectedStudents.toArray().length==1) {
-					openStudent(getName(), classroom_id, ay_id);
+					openStudent(getName(), classroom_in_ay_id);
 					Application.frame.setVisible(false);
 				}}
 			}
@@ -286,10 +286,10 @@ public class Student extends JPanel {
 		
 	}
 	
-	public static void openStudent(String student_id, String classroom_id, String ay_id) {
+	public static void openStudent(String student_id, String classroom_in_ay_id) {
 		
 		int index = 0;
-		Object [] lines = Home.loadActiveStudents(classroom_id, ay_id);
+		Object [] lines = Home.loadActiveStudents(classroom_in_ay_id);
 		for(int i = 0; i<lines.length;i++) {
 			List note = Arrays.asList(lines[i].toString().trim().split("//"));
 			if(note.get(0).toString().equals(student_id)) {
@@ -298,7 +298,7 @@ public class Student extends JPanel {
 			}
 		}
 		App.n= index;
-		App app = new App(classroom_id, ay_id);
+		App app = new App(classroom_in_ay_id);
 		app.frame.setVisible(true);
 	}
 	

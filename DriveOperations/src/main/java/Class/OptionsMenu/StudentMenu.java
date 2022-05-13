@@ -38,6 +38,7 @@ import Class.Student;
 import CloudOperations.aws;
 import Publishing.NewPublication;
 import Stats.StatsPane;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -78,7 +79,7 @@ public class StudentMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public StudentMenu(String classroom_id, String ay_id) {
+	public StudentMenu(String classroom_in_ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -104,7 +105,7 @@ public class StudentMenu extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if(Student.selectedStudents.toArray().length==1) {
-					Student.openStudent(Student.selectedStudents.get(0).getName(), classroom_id, ay_id);
+					Student.openStudent(Student.selectedStudents.get(0).getName(), classroom_in_ay_id);
 			}
 			}
 		});
@@ -145,10 +146,10 @@ public class StudentMenu extends JPanel {
 		stats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Student.selectedStudents.toArray().length>0) {
-				StatsPane frame = new StatsPane(Student.selectedStudents.get(0).getName(), "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+				StatsPane frame = new StatsPane(Student.selectedStudents.get(0).getName(), "All", classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				frame.setVisible(true);
 				}else{
-					StatsPane frame = new StatsPane("All", "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					StatsPane frame = new StatsPane("All", "All", classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					frame.setVisible(true);
 				
 				}}
@@ -168,7 +169,7 @@ public class StudentMenu extends JPanel {
 		edit = new JButton("");
 		edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewStudent nt = new NewStudent();
+				NewStudent nt = new NewStudent(classroom_in_ay_id);
 				nt.setVisible(true);
 				nt.actualiser.setVisible(true);
 				nt.add.setVisible(false);
@@ -195,7 +196,7 @@ public class StudentMenu extends JPanel {
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
 
-		        		NewStudent.load(classroom_id, ay_id);
+		        		NewStudent.load(classroom_in_ay_id);
 		        		Application.merite();
 		            	 return null;
 		            }
@@ -221,7 +222,7 @@ public class StudentMenu extends JPanel {
 				for(int i = 0; i< Student.selectedStudents.toArray().length; i++) {
 					students.add(Student.selectedStudents.get(i).getName());
 				}
-				Punish p = new Punish(classroom_id, ay_id, students);
+				Punish p = new Punish(classroom_in_ay_id, Login.selectedAcademicYearID, students);
 				p.setVisible(true);
 			}
 		});
@@ -343,7 +344,7 @@ public class StudentMenu extends JPanel {
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
 						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}}
 		});
 		btnNewButton.setFocusPainted(false);
@@ -367,7 +368,7 @@ public class StudentMenu extends JPanel {
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
 						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}
 			}
 		});
@@ -413,7 +414,7 @@ public class StudentMenu extends JPanel {
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
 						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}
 				}
 		});
@@ -447,7 +448,7 @@ public class StudentMenu extends JPanel {
 				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
 					if(Application.panel1.getComponent(i) instanceof Student) {
 						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}
 			}
 		});

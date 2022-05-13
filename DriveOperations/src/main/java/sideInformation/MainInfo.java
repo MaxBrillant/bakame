@@ -216,7 +216,7 @@ public class MainInfo extends JPanel {
 		int students = 0;
 		int tests;
 		for(int i = 0; i< classes.length; i++) {
-			int st = StudentStats.getNumberOfStudents(classes[i].toString(), ay_id);
+			int st = StudentStats.getNumberOfStudents(classes[i].toString());
 			students = students+st;
 		}
 

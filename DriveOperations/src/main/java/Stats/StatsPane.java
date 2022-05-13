@@ -14,6 +14,7 @@ import Class.CustomVerticalScrollBarUI;
 import Class.TestBox;
 import CloudOperations.aws;
 import CloudOperations.mysql;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -87,7 +88,7 @@ public class StatsPane extends JFrame {
 				try {
 
 					mysql.connectToDB();
-					StatsPane frame = new StatsPane("1", "1", "All", "Toute l'annee", "8");
+					StatsPane frame = new StatsPane("1", "1", "All", "Toute l'annee");
 					frame.setVisible(true);
 					System.gc();
 					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
@@ -101,7 +102,7 @@ public class StatsPane extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StatsPane(String student_id, String course_id, String classroom_id, String term_id, String ay_id) {
+	public StatsPane(String student_in_classroom_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
 		setResizable(false);
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(400, 600));
@@ -331,7 +332,7 @@ public class StatsPane extends JFrame {
 		panel_1.add(number);
 
 
-		displayStats(student_id, course_id, classroom_id, term_id, ay_id);
+		displayStats(student_in_classroom_id, course_in_classroom_id, classroom_in_ay_id, term_id);
 		
 /*
 		new SwingWorker<Void, Void>() {
@@ -389,7 +390,7 @@ public class StatsPane extends JFrame {
 					scrollPane.setViewportView(cs);
 					number.setVisible(true);
 					
-				displayStats(students.get(selectedStudent), courses.get(selectedCourse), classes.get(selectedClass), terms.get(selectedTerm), ay_id);
+				displayStats(students.get(selectedStudent), courses.get(selectedCourse), classes.get(selectedClass), terms.get(selectedTerm));
 
 				StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				revalidate();
@@ -480,7 +481,7 @@ public class StatsPane extends JFrame {
 					scrollPane.setViewportView(cs);
 					number.setVisible(true);
 					
-				displayStats(students.get(selectedStudent), courses.get(selectedCourse), classes.get(selectedClass), terms.get(selectedTerm), ay_id);
+				displayStats(students.get(selectedStudent), courses.get(selectedCourse), classes.get(selectedClass), terms.get(selectedTerm));
 
 				StudentStats.loadStudentData(students.get(selectedStudent), classes.get(selectedClass), courses.get(selectedCourse), terms.get(selectedTerm), "All", "All");
 				revalidate();
@@ -554,26 +555,26 @@ public class StatsPane extends JFrame {
 	
 	
 	
-	public static void displayStats(String student_id, String course_id, String classroom_id, String term_id, String ay_id) {
+	public static void displayStats(String student_in_classroom_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
 		
-		populateTermsList(ay_id);
-		populateClassList(ay_id);
-		populateCourseList(classroom_id, ay_id);
-		populateStudentList(classroom_id, ay_id);
+		populateTermsList(Login.selectedAcademicYearID);
+		populateClassList(Login.selectedAcademicYearID);
+		populateCourseList(classroom_in_ay_id);
+		populateStudentList(classroom_in_ay_id);
 		
 
 		for(int i = 0; i< students.toArray().length; i++) {
-			if(students.get(i).equals(student_id)) {
+			if(students.get(i).equals(student_in_classroom_id)) {
 		selectedStudent = i;
 		break;
 		}}
 		for(int i = 0; i< courses.toArray().length; i++) {
-			if(courses.get(i).equals(course_id)) {
+			if(courses.get(i).equals(course_in_classroom_id)) {
 				selectedCourse = i;
 		break;
 		}}
 		for(int i = 0; i< classes.toArray().length; i++) {
-			if(classes.get(i).equals(classroom_id)) {
+			if(classes.get(i).equals(classroom_in_ay_id)) {
 				selectedClass = i;
 		break;
 		}}
@@ -642,10 +643,10 @@ public class StatsPane extends JFrame {
 		 * index-1; break; }} } } catch (FileNotFoundException e1) { // TODO
 		 * Auto-generated catch block e1.printStackTrace(); } return index; }
 		 */
-	public static void populateCourseList(String classroom_id, String ay_id) {
+	public static void populateCourseList(String classroom_id) {
 		courses.clear();
 		courses.add("All");
-		Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+		Object[] lines1 = Home.loadActiveCourses(classroom_id);
 		
 		for(int i = 0; i< lines1.length; i++) {
 			courses.add(lines1[i].toString());
@@ -675,10 +676,10 @@ public class StatsPane extends JFrame {
 	 * e1.printStackTrace(); } return index; }
 	 */
 	
-	public static void populateStudentList(String classroom_id, String ay_id) {
+	public static void populateStudentList(String classroom_id) {
 		students.clear();
 		students.add("All");
-		Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
+		Object[] lines1 = Home.loadActiveStudents(classroom_id);
 		
 		for(int i = 0; i< lines1.length; i++) {
 			students.add(lines1[i].toString());
@@ -708,9 +709,9 @@ public class StatsPane extends JFrame {
 		 */
 	
 	
-	public static boolean hasCourses(String classroom_id, String ay_id) {
+	public static boolean hasCourses(String classroom_id) {
 		boolean hasc = false ;
-		Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+		Object[] lines1 = Home.loadActiveCourses(classroom_id);
 
 		if(lines1.length>0) {
 			hasc = true;
@@ -719,9 +720,9 @@ public class StatsPane extends JFrame {
 		}
 		return hasc;
 	}
-	public static boolean hasStudents(String classroom_id, String ay_id) {
+	public static boolean hasStudents(String classroom_id) {
 		boolean hasc = false ;
-		Object[] lines1 = Home.loadActiveStudents(ay_id, classroom_id);
+		Object[] lines1 = Home.loadActiveStudents(classroom_id);
 
 		if(lines1.length>0) {
 			hasc = true;

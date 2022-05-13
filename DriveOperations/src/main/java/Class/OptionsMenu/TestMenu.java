@@ -66,7 +66,7 @@ public class TestMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TestMenu(String classroom_id, String ay_id) {
+	public TestMenu(String classroom_in_ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -111,7 +111,7 @@ public class TestMenu extends JPanel {
 		newTest = new JButton("");
 		newTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TestInfo nt = new TestInfo("null", classroom_id, ay_id);
+				TestInfo nt = new TestInfo("null", classroom_in_ay_id);
 				nt.setVisible(true);
 			}
 		});
@@ -163,7 +163,7 @@ public class TestMenu extends JPanel {
 		edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TestInfo nt = new TestInfo(TestBox.selectedTests.get(0).getName(), classroom_id, ay_id);
+				TestInfo nt = new TestInfo(TestBox.selectedTests.get(0).getName(), classroom_in_ay_id);
 				nt.setVisible(true);
 			
 			}
@@ -311,7 +311,7 @@ public class TestMenu extends JPanel {
 					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 					}
 				label_1.setText(Home.termsText.get(Home.selectedTermIndex));
-				TestBox.loadAllTests(classroom_id, ay_id);
+				TestBox.loadAllTests(classroom_in_ay_id);
 				}
 		});
 		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
@@ -339,7 +339,7 @@ public class TestMenu extends JPanel {
 						Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
 						}
 					label_1.setText(Home.termsText.get(Home.selectedTermIndex));
-					TestBox.loadAllTests(classroom_id, ay_id);
+					TestBox.loadAllTests(classroom_in_ay_id);
 			}
 		});
 		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));

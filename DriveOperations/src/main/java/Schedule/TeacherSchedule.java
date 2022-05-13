@@ -142,7 +142,7 @@ public class TeacherSchedule extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TeacherSchedule frame = new TeacherSchedule("1", "1");
+					TeacherSchedule frame = new TeacherSchedule("1", "2");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -427,14 +427,14 @@ deselect();
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms as tic "
+			ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 					+ "JOIN schedule_class AS sc "
 					+ "JOIN classrooms as c "
 					+ "JOIN classrooms_in_ay as cia "
 					+ "JOIN courses_in_classroom as cic "
 					+ "JOIN courses AS co "
-					+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-							+ "AND sc.classroom_id = cic.classroom_id AND sc.ay_id = '"+ay_id+"' AND cic.is_active = 1 AND co.is_active = 1 AND co.course_id = cic.course_id");
+					+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+							+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
 			while(rs.next())
 			{
 							JLabel lblNewLabel_2 = new JLabel((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")).replaceAll(":", "h"));
@@ -573,14 +573,14 @@ public static void loadBlocks(String teacher_id, String ay_id) {
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms as tic "
+		ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 				+ "JOIN schedule_class AS sc "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses_in_classroom as cic "
 				+ "JOIN courses AS co "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-						+ "AND sc.classroom_id = cic.classroom_id AND sc.ay_id = '"+ay_id+"' AND cic.is_active = 1 AND co.is_active = 1 AND co.course_id = cic.course_id");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+						+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
 		while(rs.next())
 		{
 								for(int m = 1; m<((Container) panel1.getComponent(0)).getComponentCount(); m++) {
@@ -603,7 +603,7 @@ public static void loadBlocks(String teacher_id, String ay_id) {
 
 } 
 
-public static void blocksPerClass(String classroom_id, String ay_id) {
+public static void blocksPerClass(String classroom_id) {
 	classBoxes.clear();
 	List<Component> trueComponents = new ArrayList<Component>();
 	
@@ -616,7 +616,7 @@ public static void blocksPerClass(String classroom_id, String ay_id) {
 				//+ "JOIN courses_in_classroom as cic "
 				//+ "JOIN courses AS co "
 				+ "WHERE c.is_active = 1 AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id "
-						+ "AND sc.classroom_id = c.classroom_id AND sc.ay_id = '"+ay_id+"' ");
+						+ "AND sc.cia_id = cia.cia_id AND sc.cia_id = '"+classroom_id+"' "); //if not replace classroom_id with ay_id
 		while(rs.next())
 		{
 	
@@ -657,12 +657,12 @@ public static void loadSessions(String teacher_id, String ay_id) {
 		Statement stmt= mysql.con.createStatement();
 
 		ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms as tic "
+				+ "JOIN courses_in_classroom AS cic "
 				+ "JOIN classrooms as c "
-				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses as co "
-				+ "JOIN courses_in_classroom as cic "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-						+ "AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
+				+ "JOIN classrooms_in_ay as cia "
+				+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND c.classroom_id = cia.classroom_id AND cia.is_active = 1 AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+						+ " AND tic.courses_in_classroom_id = cic.courses_in_classroom_id AND cic.course_id = co.course_id AND co.is_active = 1");
 		while(rs.next())
 		{
 				JPanel jp = new JPanel();
@@ -672,8 +672,8 @@ public static void loadSessions(String teacher_id, String ay_id) {
 				jp.setBorder(new LineBorder(Color.LIGHT_GRAY));
 				panel2.add(jp);
 				
-				JLabel lblNewLabel = new JLabel("<html><div style='text-align: center;'>"+rs.getString("cic.classroom_id")+"</div></html>");
-				lblNewLabel.setName(rs.getString("cic.classroom_id"));
+				JLabel lblNewLabel = new JLabel("<html><div style='text-align: center;'>"+rs.getString("cic.cia_id")+"</div></html>");
+				lblNewLabel.setName(rs.getString("cic.cia_id"));
 				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNewLabel.setPreferredSize(new Dimension(220, 30));
 				lblNewLabel.setFont(new Font("ROBOTO", Font.PLAIN, 15));
@@ -687,12 +687,12 @@ public static void loadSessions(String teacher_id, String ay_id) {
 					Statement stmt1= mysql.con.createStatement();
 
 					ResultSet rs1=stmt1.executeQuery("select * from teachers_in_classrooms as tic "
+							+ "JOIN courses_in_classroom AS cic "
 							+ "JOIN classrooms as c "
-							+ "JOIN classrooms_in_ay as cia "
 							+ "JOIN courses as co "
-							+ "JOIN courses_in_classroom as cic "
-							+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-									+ "AND cic.classroom_id = '"+rs.getString("cic.classroom_id")+"' AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
+							+ "JOIN classrooms_in_ay as cia "
+							+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND c.classroom_id = cia.classroom_id AND cia.is_active = 1 AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+									+ "AND cic.cia_id = '"+rs.getString("cic.cia_id")+"' AND tic.courses_in_classroom_id = cic.courses_in_classroom_id AND cic.course_id = co.course_id AND co.is_active = 1");
 					while(rs1.next())
 					{
 							
@@ -703,7 +703,7 @@ public static void loadSessions(String teacher_id, String ay_id) {
 						jp.add(panel);
 						panel.setLayout(new BorderLayout(0, 0));
 						
-						JLabel lblNewLabel_1 = new JLabel(rs.getString("cic.classroom_id"));
+						JLabel lblNewLabel_1 = new JLabel(rs.getString("cic.cia_id"));
 						lblNewLabel_1.setPreferredSize(new Dimension(40, 14));
 						lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 						lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -713,18 +713,18 @@ public static void loadSessions(String teacher_id, String ay_id) {
 						JPanel panel_1 = new JPanel();
 						panel.add(panel_1, BorderLayout.CENTER);
 						panel_1.setLayout(new BorderLayout(0, 0));
-						panel_1.setBackground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(0));
+						panel_1.setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
 						
 						JPanel panel_11 = new JPanel();
 						panel_1.add(panel_11, BorderLayout.CENTER);
 						panel_11.setLayout(new BorderLayout(0, 0));
-						JLabel lblNewLabel1 = new JLabel("<html><div style='text-align: center;'>"+TestBox.getShortName(rs.getString("cic.course_id"))+"</div></html>");
-						lblNewLabel1.setName(rs.getString("cic.course_id"));
+						JLabel lblNewLabel1 = new JLabel("<html><div style='text-align: center;'>"+TestBox.getShortName(rs.getString("cic.courses_in_classroom_id"))+"</div></html>");
+						lblNewLabel1.setName(rs.getString("cic.courses_in_classroom_id"));
 						lblNewLabel1.setFont(new Font("Roboto", Font.BOLD, 18));
 						lblNewLabel1.setHorizontalAlignment(SwingConstants.CENTER);
 						panel_11.add(lblNewLabel1, BorderLayout.CENTER);
-						lblNewLabel1.setForeground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(1));
-						panel_11.setBackground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(0));
+						lblNewLabel1.setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(1));
+						panel_11.setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
 						
 						JPanel panel1 = new JPanel();
 						panel1.setForeground(new Color(255, 255, 255));
@@ -732,16 +732,16 @@ public static void loadSessions(String teacher_id, String ay_id) {
 						panel_1.add(panel1, BorderLayout.SOUTH);
 						panel1.setPreferredSize(new Dimension(10, 20));
 						panel1.setLayout(new BorderLayout(0, 0));
-						panel1.setBackground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(1));
+						panel1.setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(1));
 						panel1.setVisible(false);
 						
-						JLabel lblNewLabel_11 = new JLabel(rs.getString("cic.classroom_id"));
+						JLabel lblNewLabel_11 = new JLabel(rs.getString("cic.cia_id"));
 						lblNewLabel_11.setPreferredSize(new Dimension(113, 10));
 						lblNewLabel_11.setForeground(new Color(255, 255, 255));
 						lblNewLabel_11.setFont(new Font("Roboto", Font.PLAIN, 11));
 						lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
 						panel1.add(lblNewLabel_11);
-						lblNewLabel_11.setForeground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(0));
+						lblNewLabel_11.setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
 
 						
 						//ClassesAndCourses.checkContinuation();
@@ -1021,36 +1021,36 @@ public static void loadSchedule(String teacher_id, String ay_id) {
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms as tic "
+		ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 				+ "JOIN schedule_class AS sc "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses_in_classroom as cic "
 				+ "JOIN courses AS co "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-						+ "AND sc.classroom_id = cic.classroom_id AND sc.ay_id = '"+ay_id+"' AND cic.is_active = 1 AND co.is_active = 1 AND co.course_id = cic.course_id");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+						+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
 		while(rs.next())
 		{
 			for(int j = 1; j< ((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponentCount(); j++) {
 				if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(j)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")))) {
 			Session session = new Session();
-			((Container) session.getComponent(1)).getComponent(1).setBackground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(0));
-			((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0).setBackground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(0));
-			((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1).setBackground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(1));
+			((Container) session.getComponent(1)).getComponent(1).setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
+			((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0).setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
+			((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1).setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(1));
 			((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1).setVisible(false);
-			((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0).setForeground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(1));
-			((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0).setForeground(Home.getClassColors(rs.getString("cic.classroom_id"), ay_id).get(0));
-			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setText(TestBox.getShortName(rs.getString("cic.course_id")));
-			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setText(Class.getClassName(rs.getString("cic.classroom_id")));
-			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setName(rs.getString("cic.classroom_id"));
+			((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0).setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(1));
+			((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0).setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
+			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setText(TestBox.getShortName(rs.getString("cic.courses_in_classroom_id")));
+			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setText(Class.getClassName(rs.getString("cic.cia_id")));
+			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setName(rs.getString("cic.cia_id"));
 			((JComponent) ((Container) session.getComponent(1)).getComponent(1)).setBorder(new LineBorder(((JPanel)((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(j)).getBackground() ,4));
 			((Container)((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(j)).add(((Container) session.getComponent(1)).getComponent(1));
 			session.inverse.setVisible(false);
 		
 				for(int m = 0; m< panel2.getComponentCount(); m++) {
-					if(((JLabel) ((Container) panel2.getComponent(m)).getComponent(0)).getName().equals(rs.getString("cic.classroom_id"))) {
+					if(((JLabel) ((Container) panel2.getComponent(m)).getComponent(0)).getName().equals(rs.getString("cic.cia_id"))) {
 						for(int k = 1; k< ((Container) panel2.getComponent(m)).getComponentCount(); k++) {
-							if(((JLabel) ((Container) ((Container) ((Container) ((Container) panel2.getComponent(m)).getComponent(k)).getComponent(1)).getComponent(0)).getComponent(0)).getName().equals(rs.getString("cic.course_id"))) {
+							if(((JLabel) ((Container) ((Container) ((Container) ((Container) panel2.getComponent(m)).getComponent(k)).getComponent(1)).getComponent(0)).getComponent(0)).getName().equals(rs.getString("cic.courses_in_classroom_id"))) {
 								((JLabel) ((Container) ((Container) panel2.getComponent(m)).getComponent(k)).getComponent(0)).setText(Integer.parseInt(((JLabel) ((Container) ((Container) panel2.getComponent(m)).getComponent(k)).getComponent(0)).getText())-1+"");
 							if(((JLabel) ((Container) ((Container) panel2.getComponent(m)).getComponent(k)).getComponent(0)).getText().equals("0")) {
 								((Container) ((Container) panel2.getComponent(m)).getComponent(k)).setVisible(false);
@@ -1072,22 +1072,22 @@ public static void loadSchedule(String teacher_id, String ay_id) {
 }
 
 
-public static void drawZones(String teacher_id, String classroom_id, String ay_id) {
+public static void drawZones(String teacher_id, String classroom_in_ay_id, String ay_id) {
 	loadBlocks(teacher_id, ay_id);
-	blocksPerClass(classroom_id, ay_id);
+	blocksPerClass(classroom_in_ay_id);
 	redZones.clear();
 	
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms as tic "
+		ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 				+ "JOIN schedule_class AS sc "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses_in_classroom as cic "
 				+ "JOIN courses AS co "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id <> '"+teacher_id+"' "
-						+ "AND sc.classroom_id = cic.classroom_id AND sc.ay_id = '"+ay_id+"' AND cic.classroom_id == '"+classroom_id+"' AND cic.is_active = 1 AND co.is_active = 1 AND co.course_id = cic.course_id");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+						+ "AND sc.cia_id = cic.cia_id AND cic.cia_id = '"+classroom_in_ay_id+"'AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
 		while(rs.next())
 		{
 						
@@ -1095,7 +1095,7 @@ public static void drawZones(String teacher_id, String classroom_id, String ay_i
 								if(!((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().equals("Pause")) {
 						if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")))) {
 							if(((Container) ((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(k)).getComponentCount()==0) {
-							JButton lblNewLabel_3 = new JButton("<html><div style='text-align: center;'>Occup\u00E9e par le professeur de "+TestBox.getShortName(rs.getString("cic.course_id"))+"</div></html>");
+							JButton lblNewLabel_3 = new JButton("<html><div style='text-align: center;'>Occup\u00E9e par le professeur de "+TestBox.getShortName(rs.getString("cic.courses_in_classroom_id"))+"</div></html>");
 							lblNewLabel_3.setFont(new Font("Roboto", Font.PLAIN, 14));
 							lblNewLabel_3.setBackground(new Color(255, 208, 223));
 							lblNewLabel_3.setOpaque(true);
@@ -1126,7 +1126,7 @@ public static void drawZones(String teacher_id, String classroom_id, String ay_i
 }
 
 
-public static List<Component> getRedAreas(String teacher_id, String classroom_id, String ay_id) {
+public static List<Component> getRedAreas(String teacher_id, String classroom_in_ay_id, String ay_id) {
 	
 	List<Component> areas = new ArrayList();
 	//loadBlocks(name);
@@ -1135,14 +1135,14 @@ public static List<Component> getRedAreas(String teacher_id, String classroom_id
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms as tic "
+		ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 				+ "JOIN schedule_class AS sc "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses_in_classroom as cic "
 				+ "JOIN courses AS co "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id <> '"+teacher_id+"' "
-						+ "AND sc.classroom_id = cic.classroom_id AND sc.ay_id = '"+ay_id+"' AND cic.classroom_id == '"+classroom_id+"' AND cic.is_active = 1 AND co.is_active = 1 AND co.course_id = cic.course_id");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+						+ "AND sc.cia_id = cic.cia_id AND cic.cia_id = '"+classroom_in_ay_id+"'AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
 		while(rs.next())
 		{
 						
@@ -1253,7 +1253,7 @@ panel2.repaint();
 			}}
 
 				selectedComponent = ((Container) ((Container) panel2.getComponent(s)).getComponent(t));
-				blocksPerClass(((JLabel) ((Container) (((Container) (((Container) selectedComponent).getComponent(1))).getComponent(1))).getComponent(0)).getName(), ay_id);
+				blocksPerClass(((JLabel) ((Container) (((Container) (((Container) selectedComponent).getComponent(1))).getComponent(1))).getComponent(0)).getName());
 				drawZones(teacher_id, ((JLabel) ((Container) (((Container) (((Container) selectedComponent).getComponent(1))).getComponent(1))).getComponent(0)).getName(), ay_id);
 				isSelected = true;
 				
@@ -1323,7 +1323,7 @@ public static void actions1(String teacher_id, String ay_id) {
 						selectedSession = ((JComponent) ((Container) panel1.getComponent(m)).getComponent(k));
 						SessionisSelected = true;
 						
-						blocksPerClass(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName(), ay_id);
+						blocksPerClass(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName());
 						drawZones(teacher_id, ((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName(), ay_id);
 
 						((JComponent) ((Container) panel1.getComponent(m)).getComponent(k)).setBorder(new LineBorder(new Color(0, 255, 153),4));
@@ -1346,7 +1346,7 @@ public static void actions1(String teacher_id, String ay_id) {
 							selectedSession = ((JComponent) ((Container) panel1.getComponent(m)).getComponent(k));
 							SessionisSelected = true;
 							
-							blocksPerClass(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName(), ay_id);
+							blocksPerClass(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName());
 							drawZones(teacher_id, ((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName(),  ay_id);
 
 							((JComponent) ((Container) panel1.getComponent(m)).getComponent(k)).setBorder(new LineBorder(new Color(0, 255, 153),4));
@@ -1397,7 +1397,7 @@ public static void actions(String teacher_id, String ay_id) {
 						selectedSession.setEnabled(true);
 						if(SessionisSelected && !((JLabel) ((Container) (((Container) (((Container) ((JComponent) ((Container) panel1.getComponent(m)).getComponent(k))).getComponent(0))).getComponent(1))).getComponent(0)).getName().equals
 								(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName())) {
-							blocksPerClass(((JLabel) ((Container) (((Container) (((Container) ((JComponent) ((Container) panel1.getComponent(m)).getComponent(k))).getComponent(0))).getComponent(1))).getComponent(0)).getName(), ay_id);
+							blocksPerClass(((JLabel) ((Container) (((Container) (((Container) ((JComponent) ((Container) panel1.getComponent(m)).getComponent(k))).getComponent(0))).getComponent(1))).getComponent(0)).getName());
 							}
 						((JComponent) ((Container) panel1.getComponent(m)).getComponent(k)).setBorder(new LineBorder(new Color(255, 102, 102), 3));
 						((JComponent) selectedSession).setBorder(new LineBorder(new Color(0, 255, 153), 5));
@@ -1501,7 +1501,7 @@ public static void actions(String teacher_id, String ay_id) {
 							(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName())
 							) {
 						if(((Container) ((Container) panel1.getComponent(m)).getComponent(k)) instanceof JPanel){
-						blocksPerClass(((JLabel) ((Container) ((((Container) ((((Container) (selectedSession)).getComponent(0)))).getComponent(1)))).getComponent(0)).getName(), ay_id);
+						blocksPerClass(((JLabel) ((Container) ((((Container) ((((Container) (selectedSession)).getComponent(0)))).getComponent(1)))).getComponent(0)).getName());
 
 						((JComponent) selectedSession).setBorder(new LineBorder(new Color(0, 255, 153), 5));
 						}}

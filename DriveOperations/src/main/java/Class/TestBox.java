@@ -197,18 +197,19 @@ public class TestBox extends JPanel {
 	}
 	
 
-	public static String getFullName(String course_id) {
+	public static String getFullName(String course_in_classroom_id) {
 		
 		String fullName = null;
 		
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("select * from courses "
-					+ "WHERE course_id = '"+course_id+"' LIMIT 1");
+			ResultSet rs=stmt.executeQuery("select * from courses AS c "
+					+ "JOIN courses_in_classroom AS cic "
+					+ "WHERE cic.courses_in_classroom_id = '"+course_in_classroom_id+"' AND cic.course_id = c.course_id LIMIT 1");
 			while(rs.next())
 			{
-				fullName = rs.getString("full_name");
+				fullName = rs.getString("c.full_name");
 			}
 
 		} catch (SQLException e) {
@@ -219,18 +220,19 @@ public class TestBox extends JPanel {
 		
 	}
 	
-public static String getShortName(String course_id) {
+public static String getShortName(String course_in_classroom_id) {
 	
 	String shortName = null;
 	
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs=stmt.executeQuery("select * from courses "
-				+ "WHERE course_id = '"+course_id+"' LIMIT 1");
+		ResultSet rs=stmt.executeQuery("select * from courses AS c "
+				+ "JOIN courses_in_classroom AS cic "
+				+ "WHERE cic.courses_in_classroom_id = '"+course_in_classroom_id+"' AND cic.course_id = c.course_id LIMIT 1");
 		while(rs.next())
 		{
-			shortName = rs.getString("short_name");
+			shortName = rs.getString("c.short_name");
 		}
 
 	} catch (SQLException e) {
@@ -364,16 +366,16 @@ public static String getShortName(String course_id) {
 		
 	}
 	
-	public static void loadAllTests(String classroom_id, String ay_id) {
+	public static void loadAllTests(String classroom_in_ay_id) {
 		Application.panelTests.removeAll();
 		for(int i = 0; i< Home.terms.toArray().length; i++) {
-			loadTests(classroom_id, Home.terms.get(i), ay_id);
+			loadTests(classroom_in_ay_id, Home.terms.get(i));
 		}
 		Application.panelTests.revalidate();
 		Application.panelTests.repaint();
 	}
 	
-	public static void loadTests(String classroom_id, String term_id, String ay_id) {
+	public static void loadTests(String classroom_in_ay_id, String term_id) {
 		
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(true);
 				int i = 0;
@@ -389,14 +391,14 @@ public static String getShortName(String course_id) {
 						Statement stmt= mysql.con.createStatement();
 
 						ResultSet rs=stmt.executeQuery("SELECT * from test_information "
-								+ "WHERE is_active = 1 AND classroom_id = '"+classroom_id+"' AND term_id = '"+term_id+"'");
+								+ "WHERE is_active = 1 AND cia_id = '"+classroom_in_ay_id+"' AND term_id = '"+term_id+"'");
 					
 					while(rs.next())
 					{
 						i++;
 						TestBox tb = new TestBox();
 						tb.setName(rs.getString("test_id"));
-						loadTestdata(tb, rs.getString("test_id"), classroom_id, ay_id);
+						loadTestdata(tb, rs.getString("test_id"), classroom_in_ay_id);
 						Application.panelTests.add(tb);
 					}
 					Application.panelTests.revalidate();
@@ -472,7 +474,7 @@ public static String getShortName(String course_id) {
 	
 	
 
-	public static void loadTestdata(Container c, String test_id, String classroom_id, String ay_id) {
+	public static void loadTestdata(Container c, String test_id, String classroom_in_ay_id) {
 		
 		int echec = 0;
 		Double points = (double) 0;
@@ -480,7 +482,7 @@ public static String getShortName(String course_id) {
 		int participants = 0;
 		
 		
-		Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
+		Object[] lines1 = Home.loadActiveStudents(classroom_in_ay_id);
 		
 		
 		for(int i = 0; i<lines1.length;i++) {

@@ -94,7 +94,7 @@ public class courseSelection extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					courseSelection frame = new courseSelection("1", "8");
+					courseSelection frame = new courseSelection("1");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,7 +106,7 @@ public class courseSelection extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public courseSelection(String classroom_id, String ay_id) {
+	public courseSelection(String classroom_in_ay_id) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -127,7 +127,7 @@ public class courseSelection extends JFrame {
 
 			for(int i = 0; i< ClassesAndCourses.panel.getComponentCount()-1;i++) {
 				
-				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(0)).getComponent(0)).getText().equals(Home.getClassName(classroom_id))) {
+				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(0)).getComponent(0)).getText().equals(Home.getClassName(classroom_in_ay_id))) {
 					
 					
 					JPanel panel_3 = new JPanel();
@@ -169,7 +169,7 @@ public class courseSelection extends JFrame {
 							panel_3.setBorder(new LineBorder(Color.white, 1));
 							if(e.getClickCount()==2) {
 
-								courseSelection cs = new courseSelection(classroom_id, ay_id);
+								courseSelection cs = new courseSelection(classroom_in_ay_id);
 								SwingUtilities.getRoot(cs.contentPane).setVisible(false);
 								cs.setVisible(true);
 								cs.create.setVisible(false);
@@ -335,7 +335,7 @@ public class courseSelection extends JFrame {
 	notice.setBounds(10, 191, 404, 18);
 	contentPane.add(notice);
 	
-	lblemePfEconomique = new JLabel(Home.getClassName(classroom_id));
+	lblemePfEconomique = new JLabel(Home.getClassName(classroom_in_ay_id));
 	lblemePfEconomique.setHorizontalAlignment(SwingConstants.CENTER);
 	lblemePfEconomique.setForeground(Color.WHITE);
 	lblemePfEconomique.setFont(new Font("Roboto", Font.BOLD, 22));
@@ -343,7 +343,7 @@ public class courseSelection extends JFrame {
 	contentPane.add(lblemePfEconomique);
 	setLocationRelativeTo(null);
 	
-	populateBox(classroom_id, ay_id);
+	populateBox(classroom_in_ay_id);
 	}
 	
 	
@@ -358,15 +358,15 @@ public class courseSelection extends JFrame {
 		((JPanel)((Container) ClassesAndCourses.panel.getComponent(i)).getComponent(1)).repaint();
 	}}
 	
-	public static void populateBox(String classroom_id, String ay_id) {
-		Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
+	public static void populateBox(String classroom_in_ay_id) {
+		Object[] lines = Home.loadActiveCourses(classroom_in_ay_id);
 		
 		
 		for(int i = 0; i< lines.length; i++) {
 			comboBox.addItem(TestBox.getFullName(lines[i].toString()));
 			boolean exists = true;
 			for(int j = 0; j< ClassesAndCourses.panel.getComponentCount()-1; j++) {
-				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(0)).getComponent(0)).getText().equals(Home.getClassName(classroom_id))) {
+				if(((JLabel) ((Container) ((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(0)).getComponent(0)).getText().equals(Home.getClassName(classroom_in_ay_id))) {
 					for(int k = 0; k< ((Container) (((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(1))).getComponentCount()-1; k++) {
 					if(((JLabel) ((Container) ((Container) ((Container) ClassesAndCourses.panel.getComponent(j)).getComponent(1)).getComponent(k)).getComponent(0)).getText()
 								.equals(TestBox.getFullName(lines[i].toString()))) {

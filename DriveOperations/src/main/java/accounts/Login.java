@@ -78,7 +78,7 @@ public class Login extends JFrame {
 	private JLabel notice;
 	public static String selectedUserID = "1";
 	public static String selectedSchoolID = "1";
-	public static String selectedAcademicYearID = "8";
+	public static String selectedAcademicYearID = "2";
 
 	/**
 	 * Launch the application.

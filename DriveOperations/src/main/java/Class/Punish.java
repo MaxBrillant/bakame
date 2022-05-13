@@ -114,7 +114,7 @@ public class Punish extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Punish(String classroom_id, String ay_id, List<String> students) {
+	public Punish(String classroom_in_ay_id, String ay_id, List<String> students) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -296,7 +296,7 @@ public class Punish extends JFrame {
 
         	panel_2.removeAll();
         	for(int j = 0; j< Home.terms.toArray().length; j++) {
-        		loadClassPunishments(classroom_id, ay_id, Home.terms.get(j));
+        		loadClassPunishments(classroom_in_ay_id, Home.terms.get(j));
     		}
 	}
 	}
@@ -425,7 +425,7 @@ public class Punish extends JFrame {
 	
 	
 	
-	public static void loadIndividualPunishments(String student_id, String term_id) {
+	public static void loadIndividualPunishments(String student_in_classroom_id, String term_id) {
 		
 		
 		try {
@@ -436,7 +436,7 @@ public class Punish extends JFrame {
 					+ "JOIN punishment_information as pi "
 					+ "JOIN student_punishments as sp "
 					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.punishment_id = p.punishment_id AND pia.punishment_id = pi.punishment_id "
-					+ "AND pi.pi_id = sp.pi_id AND pi.term_id = '"+term_id+"' AND sp.student_id = '"+student_id+"'");
+					+ "AND pi.pi_id = sp.pi_id AND pi.term_id = '"+term_id+"' AND sp.student_id = '"+student_in_classroom_id+"'");
 			while(rs.next())
 			{
 			JPanel panel_1 = new JPanel();
@@ -491,8 +491,8 @@ public class Punish extends JFrame {
 					btnRetirer.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							
-							forgive(student_id, btnRetirer.getParent().getName());
-							loadIndividualPunishments(student_id, term_id);
+							forgive(student_in_classroom_id, btnRetirer.getParent().getName());
+							loadIndividualPunishments(student_in_classroom_id, term_id);
 							
 						}
 					});
@@ -537,12 +537,12 @@ public class Punish extends JFrame {
 		}
 	}
 	
-	public static List<String> getPunishedStudents(String punishment_id, String classroom_id, String ay_id) {
+	public static List<String> getPunishedStudents(String punishment_id, String classroom_in_ay_id) {
 		
 		List<String> students = new ArrayList();
 		try {
 			Statement stmt= mysql.con.createStatement();
-			Object[] s = Home.loadActiveStudents(classroom_id, ay_id);
+			Object[] s = Home.loadActiveStudents(classroom_in_ay_id);
 
 			ResultSet rs=stmt.executeQuery("select * from student_punishments "
 					+ "WHERE pi_id = '"+punishment_id+"'");
@@ -562,7 +562,7 @@ public class Punish extends JFrame {
 	}
 	
 	
-	public static void loadClassPunishments(String classroom_id, String ay_id, String term_id) {
+	public static void loadClassPunishments(String classroom_in_ay_id, String term_id) {
 		panel_2.removeAll();
 		
 		try {
@@ -576,7 +576,7 @@ public class Punish extends JFrame {
 			while(rs.next())
 			{
 
-				List students = getPunishedStudents(rs.getString("pi.pi_id"), classroom_id, ay_id);
+				List students = getPunishedStudents(rs.getString("pi.pi_id"), classroom_in_ay_id);
 				
 
 				JPanel panel_3 = new JPanel();
@@ -635,7 +635,7 @@ public class Punish extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						
 						forgiveAll(className, btnToutPardonner.getParent().getName());
-						loadClassPunishments(classroom_id, ay_id, term_id);
+						loadClassPunishments(classroom_in_ay_id, term_id);
 						
 					}
 				});

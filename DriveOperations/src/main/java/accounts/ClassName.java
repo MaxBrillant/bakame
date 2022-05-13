@@ -96,7 +96,7 @@ public class ClassName extends JFrame {
 		comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				populateCourseList(classes.get(comboBox.getSelectedIndex()+1), Login.selectedAcademicYearID);
+				populateCourseList(classes.get(comboBox.getSelectedIndex()+1));
 			}
 		});
 		comboBox.setMaximumRowCount(1000);
@@ -198,7 +198,7 @@ public class ClassName extends JFrame {
 
 		load(schoolID, userID);
 		populateClassList(Login.selectedAcademicYearID);
-		populateCourseList(classes.get(comboBox.getSelectedIndex()+1), Login.selectedAcademicYearID);
+		populateCourseList(classes.get(comboBox.getSelectedIndex()+1));
 		populateSelectedList();
 	}
 	
@@ -233,7 +233,7 @@ public static void populateClassList(String ay_id) {
 }
 
 
-public static void populateCourseList(String classroom_id, String ay_id) {
+public static void populateCourseList(String classroom_in_ay_id) {
 	panel.removeAll();
 	
 	if(comboBox.getSelectedIndex()!=0) {
@@ -259,7 +259,7 @@ public static void populateCourseList(String classroom_id, String ay_id) {
 			}
 		});
 		
-	Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+	Object[] lines1 = Home.loadActiveCourses(classroom_in_ay_id);
 	
 	for(int i = 0; i< lines1.length; i++) {
 
@@ -272,7 +272,7 @@ public static void populateCourseList(String classroom_id, String ay_id) {
 		checkBox1.setFocusPainted(false);
 		checkBox1.setBorder(null);
 		panel.add(checkBox1);
-		checkBox1.setName(getId(lines1[i].toString(), classroom_id, ay_id));
+		checkBox1.setName(lines1[i].toString());
 	}
 }
 	
@@ -364,24 +364,6 @@ private static String getClassroomId(String courses_in_classroom_id) {
 		while(rs.next())
 		{
 				id = rs.getString("classroom_id");
-			}
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-}
-
-	return id;
-}
-public static String getId(String course_id, String classroom_id, String ay_id) {
-	String id = null;
-	try {
-		Statement stmt= mysql.con.createStatement();
-
-		ResultSet rs=stmt.executeQuery("select * FROM courses_in_classroom "
-				+ "WHERE is_active = 1 AND course_id = '"+course_id+"' AND classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' LIMIT 1");
-		while(rs.next())
-		{
-				id = rs.getString("courses_in_classroom_id");
 			}
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block

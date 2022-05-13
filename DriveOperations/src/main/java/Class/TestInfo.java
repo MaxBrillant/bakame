@@ -94,7 +94,7 @@ public class TestInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TestInfo(String test_id, String classroom_id, String ay_id) {
+	public TestInfo(String test_id, String classroom_in_ay_id) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
 		setTitle("New Test");
 		setResizable(false);
@@ -203,7 +203,7 @@ public class TestInfo extends JFrame {
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
 		            	Thread.sleep(1000);
-		        		TestBox.loadAllTests(classroom_id, ay_id);
+		        		TestBox.loadAllTests(classroom_in_ay_id);
 						Animations.scrollTestRight();
 						NewTest.points.requestFocus();
 		            	 return null;
@@ -246,7 +246,7 @@ public class TestInfo extends JFrame {
 			
 			new SwingWorker<Void, Void>() {
 	            public Void doInBackground() throws Exception{
-	        		TestBox.loadAllTests(classroom_id, ay_id);
+	        		TestBox.loadAllTests(classroom_in_ay_id);
 	            	 return null;
 	            }
 	        }.execute();
@@ -260,7 +260,7 @@ public class TestInfo extends JFrame {
 		actualiser.setBounds(29, 307, 120, 31);
 		contentPane.add(actualiser);
 		
-		populateBox(classroom_id, ay_id);
+		populateBox(classroom_in_ay_id);
 		
 		if(test_id.equals("null")) {
 			actualiser.setVisible(false);
@@ -292,9 +292,9 @@ public class TestInfo extends JFrame {
 		}
 		
 	}
-	public static void populateBox(String classroom_id, String ay_id) {
+	public static void populateBox(String classroom_in_ay_id) {
 		//coursesList.clear();
-			Object lines [] = Home.loadActiveCourses(ay_id, classroom_id);
+			Object lines [] = Home.loadActiveCourses(classroom_in_ay_id);
 			
 			for(int i = 0;i<lines.length; i++) {
 				coursesList.add(lines[i].toString());

@@ -96,7 +96,7 @@ public class StudentStats extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public StudentStats(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
+	public StudentStats(String student_in_classroom_id, String classroom_in_ay_id, String course_in_classroom_id, String term_id, String firstDate, String lastDate) {
 		setBackground(new Color(40, 40, 40));
 		setLayout(new WrapLayout(WrapLayout.CENTER, 5, 5));
 		
@@ -433,7 +433,7 @@ public class StudentStats extends JPanel {
 	}
 	
 	
-	public static void loadStudentData(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
+	public static void loadStudentData(String student_in_classroom_id, String classroom_in_ay_id, String course_in_classroom_id, String term_id, String firstDate, String lastDate) {
 		
 
 		String ay_id = Login.selectedAcademicYearID;
@@ -452,8 +452,8 @@ public class StudentStats extends JPanel {
 		}
 		loadStuff();
 		
-		List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
-		List l1 = getStudentExamStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
+		List l = getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id, course_in_classroom_id, term_id, firstDate, lastDate);
+		List l1 = getStudentExamStats(student_in_classroom_id, classroom_in_ay_id, course_in_classroom_id, term_id, firstDate, lastDate);
 		
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 		List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -501,12 +501,12 @@ public class StudentStats extends JPanel {
 		missedTests.setText(String.valueOf(((List) l.get(7)).toArray().length));
 		
 
-		StatsPane.number.setText(loadStudentNumber(student_id, classroom_id, ay_id));
+		StatsPane.number.setText(loadStudentNumber(student_in_classroom_id));
 		
 
 		loadAllTests(l);
-		echecs(student_id, course_id, classroom_id, Login.selectedAcademicYearID, term_id);
-		rankStudentPerformances(student_id, course_id, classroom_id, ay_id, term_id);
+		echecs(student_in_classroom_id, course_in_classroom_id, classroom_in_ay_id, term_id);
+		rankStudentPerformances(student_in_classroom_id, course_in_classroom_id, classroom_in_ay_id, term_id);
 		
 		
 		
@@ -553,7 +553,7 @@ public class StudentStats extends JPanel {
             public Void doInBackground() throws Exception{
                 panel_8.removeAll();
     	
-         List l = getStudentTestsStats(student_id, classroom_id, course_id, term_id, firstDate, lastDate);
+         List l = getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id, course_in_classroom_id, term_id, firstDate, lastDate);
             	
 		XYDataset dataset = createDataset(l);
         JFreeChart chart = createChart(dataset);
@@ -569,14 +569,14 @@ public class StudentStats extends JPanel {
 }.execute();
 	}
 	
-	public static String loadStudentNumber(String student_id, String classroom_id, String ay_id) {
+	public static String loadStudentNumber(String student_in_classroom_id) {
 
 		String number = "";
 		try {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("SELECT * from students_in_classrooms "
-					+ "WHERE student_id = '"+student_id+"' AND classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' AND is_active = 1");
+					+ "WHERE sic_id = '"+student_in_classroom_id+"' AND is_active = 1");
 			while(rs.next())
 			{
 				number = rs.getString("number");
@@ -680,7 +680,7 @@ public class StudentStats extends JPanel {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static List getStudentTestsStats(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
+	public static List getStudentTestsStats(String student_id, String classroom_in_ay_id, String course_id, String term_id, String firstDate, String lastDate) {
 		
 		String ay_id;
 		ay_id = Login.selectedAcademicYearID;
@@ -713,7 +713,7 @@ public class StudentStats extends JPanel {
 				
 					if(course_id.equals("All")) {
 						courses.clear();
-						lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+						lines1 = Home.loadActiveCourses(classroom_in_ay_id);
 						for(int j = 0; j<lines1.length;j++) {
 							courses.add(lines1[j].toString());
 						}}
@@ -724,7 +724,7 @@ public class StudentStats extends JPanel {
 					if(student_id.equals("All")) {
 						students.clear();
 						
-						Object[] lines11 = Home.loadActiveStudents(classroom_id, ay_id);
+						Object[] lines11 = Home.loadActiveStudents(classroom_in_ay_id);
 						for(int j = 0; j<lines11.length;j++) {
 						students.add(lines11[j].toString());
 						}}
@@ -761,12 +761,12 @@ public class StudentStats extends JPanel {
 										rs= stmt.executeQuery("SELECT * FROM test_information AS ti "
 											+ "JOIN course_tests AS ct "
 											+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 "
-													+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"'");
+													+ "AND ct.courses_in_classroom_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.cia_id = '"+classroom_in_ay_id+"'");
 									}else {
 										rs= stmt.executeQuery("SELECT * FROM test_information AS ti "
 												+ "JOIN course_tests AS ct "
 												+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 "
-														+ "AND ct.course_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.classroom_id = '"+classroom_id+"' AND ti.date BETWEEN '"+firstDate+"' and '"+lastDate+"'");
+														+ "AND ct.courses_in_classroom_id = '"+courses.get(j)+"' AND ti.term_id = '"+terms.get(l)+"' AND ti.cia_id = '"+classroom_in_ay_id+"' AND ti.date BETWEEN '"+firstDate+"' and '"+lastDate+"'");
 									}
 								while(rs.next())
 								{
@@ -1032,7 +1032,7 @@ public static void loadAllTests(List studentTestStats) {
 
 
 	
-public static List<String> getStudentExamStats(String student_id, String classroom_id, String course_id, String term_id, String firstDate, String lastDate) {
+public static List<String> getStudentExamStats(String student_id, String classroom_in_ay_id, String course_id, String term_id, String firstDate, String lastDate) {
 	
 	String ay_id;
 	ay_id = Login.selectedAcademicYearID;
@@ -1060,7 +1060,7 @@ public static List<String> getStudentExamStats(String student_id, String classro
 			
 				if(course_id == "All") {
 					courses.clear();
-					lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+					lines1 = Home.loadActiveCourses(classroom_in_ay_id);
 					for(int j = 0; j<lines1.length;j++) {
 						courses.add(lines1[j].toString());
 					}}
@@ -1071,7 +1071,7 @@ public static List<String> getStudentExamStats(String student_id, String classro
 				if(student_id == "All") {
 					students.clear();
 					
-					Object[] lines11 = Home.loadActiveStudents(classroom_id, ay_id);
+					Object[] lines11 = Home.loadActiveStudents(classroom_in_ay_id);
 					for(int j = 0; j<lines11.length;j++) {
 					students.add(lines11[j].toString());
 					}}
@@ -1111,14 +1111,14 @@ public static List<String> getStudentExamStats(String student_id, String classro
 								+ "JOIN exam_information AS ei "
 								+ "JOIN course_exams AS ce "
 								+ "WHERE ei.exam_id = ce.exam_id AND s.exam_id = ei.exam_id AND ei.is_active = 1 "
-										+ "AND ce.course_id = '"+courses.get(j)+"' AND ei.term_id = '"+terms.get(l)+"' AND ei.classroom_id = '"+classroom_id+"' ");
+										+ "AND ce.courses_in_classroom_id = '"+courses.get(j)+"' AND ei.term_id = '"+terms.get(l)+"' AND ei.cia_id = '"+classroom_in_ay_id+"' ");
 						}else {
 							rs= stmt.executeQuery("SELECT * from series AS s "
 						
 								+ "JOIN exam_information AS ei "
 								+ "JOIN course_exams AS ce "
 								+ "WHERE ei.exam_id = ce.exam_id AND s.exam_id = ei.exam_id AND ei.is_active = 1 "
-										+ "AND ce.course_id = '"+courses.get(j)+"' AND ei.term_id = '"+terms.get(l)+"' AND ei.classroom_id = '"+classroom_id+"' "
+										+ "AND ce.courses_in_classroom_id = '"+courses.get(j)+"' AND ei.term_id = '"+terms.get(l)+"' AND ei.cia_id = '"+classroom_in_ay_id+"' "
 												+ "AND ei.date BETWEEN '"+firstDate+"' and '"+lastDate+"'");
 						}
 					while(rs.next())
@@ -1226,14 +1226,14 @@ e.printStackTrace();
 }
 
 
-public static boolean hasMissedSerie(String serie_id, String student_id) {
+public static boolean hasMissedSerie(String serie_id, String student_in_classroom_id) {
 	boolean hasMissed = false;
 
 try {
 	Statement stmt= mysql.con.createStatement();
 
 	ResultSet rs= stmt.executeQuery("select * from students_grades_exams "
-			+ "WHERE serie_id = '"+serie_id+"' AND student_id = '"+student_id+"'");
+			+ "WHERE serie_id = '"+serie_id+"' AND sic_id = '"+student_in_classroom_id+"'");
 	
 	int i = 0;
 	while(rs.next())
@@ -1335,13 +1335,13 @@ e.printStackTrace();
 	        return chart;
 	    }
 		
-		  public static int getNumberOfechecs(String student_id, String course_id,
-		  String classroom_id, String ay_id, String term_id, String start, String end)
+		  public static int getNumberOfechecs(String student_in_classroom_id, String course_in_classroom_id,
+		  String classroom_in_ay_id, String term_id, String start, String end)
 		  {
 		  
 		  int echec = 0;
 		  
-		  Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+		  Object[] lines1 = Home.loadActiveCourses(classroom_in_ay_id);
 		  
 		  
 		  for(int i = 0; i<lines1.length;i++) {
@@ -1356,11 +1356,11 @@ e.printStackTrace();
 		  l1.add("0/0"); 
 		  if(Home.selectedPeriod == 0 ||
 		  Home.selectedPeriod == 2) {
-			  l = getStudentTestsStats(student_id, classroom_id
+			  l = getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id
 		  , lines1[i].toString(), term_id, start, end);}
 		  
 		  if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) { l1 =
-		  getStudentExamStats(student_id, classroom_id
+		  getStudentExamStats(student_in_classroom_id, classroom_in_ay_id
 				  , lines1[i].toString(), term_id, start, end); }
 		  
 		  List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -1381,24 +1381,24 @@ e.printStackTrace();
 		  return echec; }
 		 
 	    
-	    public static void echecs(String student_id, String course_id, String classroom_id, String ay_id, String term_id) {
+	    public static void echecs(String student_in_classroom_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
 	    	panelEchecs.removeAll();
 	    	
 	    	Object[] lines1;
-	    	if(course_id.equals("All")) {
-			lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+	    	if(course_in_classroom_id.equals("All")) {
+			lines1 = Home.loadActiveCourses(classroom_in_ay_id);
 	    	}else {
 	    		List l = new ArrayList();
-	    		l.add(course_id);
+	    		l.add(course_in_classroom_id);
 	    		lines1 = l.toArray();
 	    	}
 	    	
 			for(int i = 0; i<lines1.length;i++) {
 				
-	    	List l = getStudentTestsStats(student_id, classroom_id
+	    	List l = getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id
 					, lines1[i].toString(), term_id, "All", "All");
 	    	
-			List l1 = getStudentExamStats(student_id, classroom_id
+			List l1 = getStudentExamStats(student_in_classroom_id, classroom_in_ay_id
 					, lines1[i].toString(), term_id, "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -1428,7 +1428,7 @@ e.printStackTrace();
 					panel_6.setBackground(new Color(20, 148, 198));
 				}
 				
-				if(lines1[i].toString().equals(course_id)) {
+				if(lines1[i].toString().equals(course_in_classroom_id)) {
 					panel_6.setBackground(new Color(20, 148, 198));
 				}
 				
@@ -1451,15 +1451,15 @@ e.printStackTrace();
 			}
 	    
 	    
-	    public static String getEchecsInPoints(String student_id, String course_id, String classroom_id, String ay_id, String term_id, String start, String end) {
+	    public static String getEchecsInPoints(String student_in_classroom_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id, String start, String end) {
 
 	    	
 				
-	    	List l = getStudentTestsStats(student_id, classroom_id
-					, course_id, term_id, start, end);
+	    	List l = getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id
+					, course_in_classroom_id, term_id, start, end);
 	    	
-			List l1 = getStudentExamStats(student_id, classroom_id
-					, course_id, term_id, start, end);
+			List l1 = getStudentExamStats(student_in_classroom_id, classroom_in_ay_id
+					, course_in_classroom_id, term_id, start, end);
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -1478,20 +1478,20 @@ e.printStackTrace();
 	    }
 	    
 	    
-	    public static void rankStudentPerformances(String student_id, String course_id, String classroom_id, String ay_id, String term_id) {
+	    public static void rankStudentPerformances(String student_in_classroom_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
 	    	
 	    	panel1.removeAll();
 	    	panel11.removeAll();
 			List<String> percent = new ArrayList<String>();
-			Object[] lines1 = Home.loadActiveCourses(ay_id, classroom_id);
+			Object[] lines1 = Home.loadActiveCourses(classroom_in_ay_id);
 			int number = lines1.length;
 			
 			
 			for(int i = 0; i<lines1.length;i++) {
 				
-			List l = getStudentTestsStats(student_id, classroom_id
+			List l = getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id
 					, lines1[i].toString(), term_id, "All", "All");
-			List l1 = getStudentExamStats(student_id, classroom_id
+			List l1 = getStudentExamStats(student_in_classroom_id, classroom_in_ay_id
 					, lines1[i].toString(), term_id, "All", "All");
 			
 			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
@@ -1595,14 +1595,14 @@ e.printStackTrace();
 				
 			
 			for(int i = 0; i<panel1.getComponentCount(); i++) {
-				if(((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).getName().equals(course_id)) {
+				if(((JLabel) ((Container) panel1.getComponent(i)).getComponent(1)).getName().equals(course_in_classroom_id)) {
 					panel1.getComponent(i).setBackground(new Color(20, 148, 198));
 				}
 			}
 			
 			for(int i = panel11.getComponentCount()-1; i>-1; i--) {
 
-				if(((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).getName().equals(course_id)) {
+				if(((JLabel) ((Container) panel11.getComponent(panel11.getComponentCount()-1-i)).getComponent(1)).getName().equals(course_in_classroom_id)) {
 					panel11.getComponent(panel11.getComponentCount()-1-i).setBackground(new Color(20, 148, 198));
 					
 				}
@@ -1701,10 +1701,10 @@ e.printStackTrace();
 		 * }
 		 */
 
-public static int getNumberOfStudents(String classroom_id, String ay_id) {
+public static int getNumberOfStudents(String classroom_in_ay_id) {
 	
 	int no = 0;
-	Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
+	Object[] lines1 = Home.loadActiveStudents(classroom_in_ay_id);
 	no = lines1.length;
 	return no;
 }

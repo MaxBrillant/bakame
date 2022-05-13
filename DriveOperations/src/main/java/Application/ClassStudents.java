@@ -228,7 +228,7 @@ public class ClassStudents extends JPanel {
 					Home.panelStudents.add(te);
 				te.name.setText(Class.getClassName(lines1[k].toString()));
 				te.setName(lines1[k].toString());
-				populateBox(lines1[k].toString(), ay_id, te.combo2);
+				populateBox(lines1[k].toString(), te.combo2);
 				Home.panelStudents.revalidate();
 				Home.panelStudents.repaint();
 				te.name.setName(lines1[k].toString());
@@ -341,7 +341,7 @@ public class ClassStudents extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				Home.className = ((JLabel) ((Container) te.getComponent(0)).getComponent(0)).getText()
 						.replace("<html><div style='text-align: center;'>", "").replace("</div></html>", "");
-				Application a = new Application(te.getName(), ay_id);
+				Application a = new Application(te.getName());
 				a.frame.setVisible(true);
 				
 				Home.frame.setVisible(false);
@@ -393,10 +393,10 @@ public class ClassStudents extends JPanel {
 	
 	
 	
-	public static void loadData(Component te, String course_id, String classroom_id, String ay_id, String start, String end) {
+	public static void loadData(Component te, String course_in_classroom_id, String classroom_in_ay_id, String ay_id, String start, String end) {
 		(((JPanel)((JPanel) te).getComponent(1))).removeAll();
 		
-			Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
+			Object[] lines = Home.loadActiveStudents(classroom_in_ay_id);
 
 			for(int i = 0; i< lines.length; i++) {
 
@@ -439,18 +439,18 @@ public class ClassStudents extends JPanel {
 					if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
 						
 						if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()>0) {
-						list  = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
-								, course_id, "Toute l'annee", start, end);
+						list  = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_in_ay_id
+								, course_in_classroom_id, "Toute l'annee", start, end);
 						}else{
-							list  = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
+							list  = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_in_ay_id
 									, "All", "Toute l'annee", start, end);
 						}}
 					if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
 						if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()>0) {
-							list1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
-								, course_id, "Toute l'annee", start, end);
+							list1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_in_ay_id
+								, course_in_classroom_id, "Toute l'annee", start, end);
 						}else{
-							list1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
+							list1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_in_ay_id
 								, "All", "Toute l'annee", start, end);
 							}
 						}
@@ -479,14 +479,14 @@ public class ClassStudents extends JPanel {
 					
 					if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(2)).getSelectedIndex()==2) {
 						if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()==0) {
-							value = String.valueOf(StudentStats.getNumberOfechecs(lines[i].toString(), course_id, classroom_id, ay_id, "Toute l'annee", start, end));
+							value = String.valueOf(StudentStats.getNumberOfechecs(lines[i].toString(), course_in_classroom_id, classroom_in_ay_id, "Toute l'annee", start, end));
 						}
 						
 					}
 				}
 				
 				if(((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(3)).getSelectedIndex()>0 && ((JComboBox) ((Container) ((Container) te).getComponent(0)).getComponent(2)).getSelectedIndex()==2) {
-					value = StudentStats.getEchecsInPoints(lines[i].toString(), course_id, classroom_id, ay_id, "Toute l'annee", start, end)+" pts";
+					value = StudentStats.getEchecsInPoints(lines[i].toString(), course_in_classroom_id, classroom_in_ay_id, "Toute l'annee", start, end)+" pts";
 				}
 				
 				JLabel label = new JLabel(value);
@@ -531,13 +531,13 @@ public class ClassStudents extends JPanel {
 
 	}
 
-	public static void populateBox(String classroom_id, String ay_id, JComboBox c) {
+	public static void populateBox(String classroom_in_ay_id, JComboBox c) {
 c.removeAllItems();
 courses.clear();
 courses.add("Tous");
 c.addItem("Tous");
 
-		Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
+		Object[] lines = Home.loadActiveCourses(classroom_in_ay_id);
 		
 		
 		for(int i = 0; i< lines.length; i++) {

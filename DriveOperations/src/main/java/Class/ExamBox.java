@@ -291,17 +291,17 @@ public class ExamBox extends JPanel {
 	
 	}
 	
-	public static void loadAllExams(String classroom_id, String ay_id) {
+	public static void loadAllExams(String classroom_in_ay_id) {
 		Application.panelExams.removeAll();
 		for(int i = 0; i< Home.terms.toArray().length; i++) {
-			loadExams(classroom_id, Home.terms.get(i), ay_id);
+			loadExams(classroom_in_ay_id, Home.terms.get(i));
 		}
 
 		Application.panelExams.revalidate();
 		Application.panelExams.repaint();
 	}
 	
-public static void loadExams(String classroom_id, String term_id, String ay_id) {
+public static void loadExams(String classroom_in_ay_id, String term_id) {
 		int  i = 0;
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(3)).getComponent(0).setVisible(true);
 		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
@@ -315,7 +315,7 @@ public static void loadExams(String classroom_id, String term_id, String ay_id) 
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("SELECT * from exam_information "
-					+ "WHERE is_active = 1 AND classroom_id = '"+classroom_id+"' AND term_id = '"+term_id+"'");
+					+ "WHERE is_active = 1 AND cia_id = '"+classroom_in_ay_id+"' AND term_id = '"+term_id+"'");
 		
 		while(rs.next())
 		{
@@ -350,7 +350,7 @@ public static void loadExams(String classroom_id, String term_id, String ay_id) 
 						((JLabel) (eb).getComponent(8)).setIcon(null);
 					}
 
-						loadExamData(eb, listOfSeries, eb.getName(), classroom_id, ay_id);
+						loadExamData(eb, listOfSeries, eb.getName(), classroom_in_ay_id);
 						}
 					
 					Application.panelExams.revalidate();
@@ -386,7 +386,7 @@ public static void loadExams(String classroom_id, String term_id, String ay_id) 
 					JButton btnNewButton_1 = new JButton("Ajouter un nouvel examen");
 					btnNewButton_1.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							ExamInfo nt = new ExamInfo(classroom_id, ay_id);
+							ExamInfo nt = new ExamInfo(classroom_in_ay_id);
 							nt.setVisible(true);
 						}
 					});
@@ -422,7 +422,7 @@ public static void loadExams(String classroom_id, String term_id, String ay_id) 
 
 
 
-public static void loadExamData(Component c, List<String> listOfSeries, String exam_id, String classroom_id, String ay_id) {
+public static void loadExamData(Component c, List<String> listOfSeries, String exam_id, String classroom_in_ay_id) {
 	if(Application.panelExams.getComponentCount()>0) {
 					
 					Double sum = (double) 0;
@@ -432,7 +432,7 @@ public static void loadExamData(Component c, List<String> listOfSeries, String e
 					int echecs = 0;
 
 					Object[] lines1 = null;
-						lines1 = Home.loadActiveStudents(classroom_id, ay_id);
+						lines1 = Home.loadActiveStudents(classroom_in_ay_id);
 						
 					String cours = TestBox.getShortName(Exam.getExamCourse(exam_id));
 					int series = Exam.getExamSeries(exam_id).toArray().length;

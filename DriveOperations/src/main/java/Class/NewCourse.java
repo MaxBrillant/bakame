@@ -88,7 +88,7 @@ public class NewCourse extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewCourse() {
+	public NewCourse(String classroom_in_ay_id) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -141,7 +141,7 @@ public class NewCourse extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Application.tabbedPane.setSelectedIndex(1);
 			Application.deselect();
-			load();
+			load(classroom_in_ay_id);
 			setVisible(false);
 			
 		}
@@ -191,7 +191,7 @@ public class NewCourse extends JFrame {
 			
 			new SwingWorker<Void, Void>() {
 	            public Void doInBackground() throws Exception{
-	    			NewCourse.load();
+	    			NewCourse.load(classroom_in_ay_id);
 	            	 return null;
 	            }
 	        }.execute();
@@ -241,17 +241,17 @@ public class NewCourse extends JFrame {
 	}
 	
 	
-	public static void load(String classroom_id, String ay_id) {
+	public static void load(String classroom_in_ay_id) {
 		Application.panel2.removeAll();
 		isEmpty = false;
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(1)).getComponent(0).setVisible(true);
 		
-				Object[] lines = Home.loadActiveCourses(ay_id, classroom_id);
+				Object[] lines = Home.loadActiveCourses(classroom_in_ay_id);
 				
 				for(int i = 0; i<lines.length;i++) {
 				Course c = new Course();
 				((JLabel) ((Container) c).getComponent(0)).setText(TestBox.getFullName(lines[i].toString()));
-				loadCoursedata(c, lines[i].toString(), classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+				loadCoursedata(c, lines[i].toString(), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				c.setName(lines[i].toString());
 				Application.panel2.add(c);
 				}
@@ -285,7 +285,7 @@ public class NewCourse extends JFrame {
 				JButton btnNewButton_1 = new JButton("Ajouter un nouveau cours");
 				btnNewButton_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						NewCourse nt = new NewCourse();
+						NewCourse nt = new NewCourse(classroom_in_ay_id);
 						nt.setVisible(true);
 					}
 				});
@@ -323,7 +323,7 @@ public class NewCourse extends JFrame {
 		}
 	
 
-	public static void loadCoursedata(Container c, String course_id, String classroom_id, String term_id, String ay_id) {
+	public static void loadCoursedata(Container c, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
 
 		
 		List<String> l = new ArrayList();
@@ -333,13 +333,13 @@ public class NewCourse extends JFrame {
 		l1.add("0");
 		l1.add("0/0");
 		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-			l = CourseStats.getStudentTestsStats("All", classroom_id
-					,course_id, term_id,"All", "All");
+			l = CourseStats.getStudentTestsStats("All", classroom_in_ay_id
+					,course_in_classroom_id, term_id,"All", "All");
 			}
 
 		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-			l1 = CourseStats.getStudentExamStats("All", classroom_id
-					,course_id, term_id,"All", "All");
+			l1 = CourseStats.getStudentExamStats("All", classroom_in_ay_id
+					,course_in_classroom_id, term_id,"All", "All");
 			}
 List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -357,14 +357,14 @@ if(points1==0 && maxima==0 ) {
 						((JLabel) ((((Container) c).getComponent(1)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
 							((JLabel) ((((Container) c).getComponent(2)))).setText(new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
 						
-							int echecs = CourseStats.listOfEchecs(course_id, classroom_id, ay_id, term_id).toArray().length;
+							int echecs = CourseStats.listOfEchecs(course_in_classroom_id, classroom_in_ay_id, term_id).toArray().length;
 						
 							if(l.toArray().length>2) {
 						((JLabel) ((((Container)c).getComponent(4)))).setText(l.get(2));
 						((JLabel) ((((Container) c).getComponent(5)))).setText(String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
 							}
 
-						Object[] lines1 = Home.loadActiveStudents(classroom_id, ay_id);
+						Object[] lines1 = Home.loadActiveStudents(classroom_in_ay_id);
 						((JLabel) ((((Container) c).getComponent(6)))).setText(new DecimalFormat("##.##").format(100-(echecs*100/lines1.length))+"%");
 	}
 	

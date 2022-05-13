@@ -65,7 +65,7 @@ public class Test extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Test(String course_id, String student_id, String classroom_id, String term_id) {
+	public Test(String course_in_classroom_id, String student_in_classroom_id, String classroom_in_ay_id, String term_id) {
 		setBackground(new Color(80, 80, 80));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(280, 35));
@@ -150,7 +150,7 @@ public class Test extends JPanel {
 					if(selectedTests.contains(getComponent(0).getParent())) {
 					alreadyExists = true;
 					}
-					Test.deselect(course_id, student_id, classroom_id);
+					Test.deselect(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 					selectedTests.clear();
 				selectedTests.add(getComponent(0).getParent());
 				
@@ -162,7 +162,7 @@ public class Test extends JPanel {
 							((Container) LPane.panel_3.getComponent(j)).getComponent(2).setForeground(Color.WHITE);
 							((Container) LPane.panel_3.getComponent(j)).getComponent(3).setForeground(Color.WHITE);
 							}}
-					showTestData(getName(), student_id);
+					showTestData(getName(), student_in_classroom_id);
 			//
 		
 				
@@ -173,7 +173,7 @@ public class Test extends JPanel {
 				
 				if(e.getClickCount()==2){
 					
-					List note1 = Arrays.asList(LPane.loadStudentNote(getName(), student_id).trim().split("/"));
+					List note1 = Arrays.asList(LPane.loadStudentNote(getName(), student_in_classroom_id).trim().split("/"));
 					
 					NewTest c = new NewTest(getName());
 					c.setVisible(true);
@@ -266,10 +266,10 @@ public class Test extends JPanel {
 	}
 	
 	
-	public static String getTestCourseProgression(String test_id, String ay_id) {
+	public static String getTestCourseProgression(String test_id) {
 		double progress = 0;
 		String classroom_id = Test.getTestClassroom(test_id);
-		Object[] lines = Home.loadActiveStudents(classroom_id, ay_id);
+		Object[] lines = Home.loadActiveStudents(classroom_id);
 		for(int i = 0; i< lines.length; i++) {
 			double studentProgress = Double.parseDouble(Test.getTestProgression(test_id, lines[i].toString()));
 			progress = progress+ studentProgress;
@@ -546,7 +546,7 @@ public static String getTestTerm(String test_id) {
 		LPane.modifier.setVisible(false);
 		
 		
-		LPane.no.setText(l.get(2).toString()+" Interrogations effectuees");
+		LPane.no.setText(((List) l.get(6)).toArray().length+" interros effectuees");
 		
 		
 		
@@ -567,7 +567,7 @@ public static String getTestTerm(String test_id) {
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
 		selectedTests.clear();
-		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_id, classroom_id, Login.selectedAcademicYearID));
+		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_id));
 		
 			LPane.mention();
 			LPane.average();

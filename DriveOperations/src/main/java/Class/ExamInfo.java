@@ -95,7 +95,7 @@ public class ExamInfo extends JFrame {
 			public void run() {
 				try {
 					mysql.connectToDB();
-					ExamInfo frame = new ExamInfo("1", "8");
+					ExamInfo frame = new ExamInfo("1");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -107,7 +107,7 @@ public class ExamInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ExamInfo(String classroom_id, String ay_id) {
+	public ExamInfo(String classroom_in_ay_id) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
 		setTitle("New Test");
 		setResizable(false);
@@ -137,13 +137,13 @@ public class ExamInfo extends JFrame {
 
 		cours.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()), classroom_id, ay_id);
+				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()));
 				maxima.setSelectedItem(max);
 				}
 		});
 		cours.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()), classroom_id, ay_id);
+				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()));
 				maxima.setSelectedItem(max);
 			}
 		});
@@ -321,7 +321,7 @@ public class ExamInfo extends JFrame {
 					model.addRow(new Object[] {"Examen","100"});
 				}
 
-				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()), classroom_id, ay_id);
+				String max = loadCourseMaxima(coursesList.get(cours.getSelectedIndex()));
 				maxima.setSelectedItem(max);
 			}}
 		});
@@ -347,12 +347,12 @@ public class ExamInfo extends JFrame {
 		
 		model.addRow(new Object[] {"Situation d'integration","60"});
 		model.addRow(new Object[] {"Examen","40"});
-		populateBox(classroom_id, ay_id);
+		populateBox(classroom_in_ay_id);
 		
 	}
-	public static void populateBox(String classroom_id, String ay_id) {
+	public static void populateBox(String classroom_id) {
 		//coursesList.clear();
-			Object lines [] = Home.loadActiveCourses(ay_id, classroom_id);
+			Object lines [] = Home.loadActiveCourses(classroom_id);
 			
 			for(int i = 0;i<lines.length; i++) {
 				coursesList.add(lines[i].toString());
@@ -363,7 +363,7 @@ public class ExamInfo extends JFrame {
 	}
 	
 	
-	public static String loadCourseMaxima(String course_id, String classroom_id, String ay_id) {
+	public static String loadCourseMaxima(String course_in_classroom_id) {
 
 		String maxima = null;
 		
@@ -372,7 +372,7 @@ public class ExamInfo extends JFrame {
 				Statement stmt= mysql.con.createStatement();
 
 				ResultSet rs=stmt.executeQuery("SELECT * FROM courses_in_classroom "
-						+ "WHERE course_id = '"+course_id+"' AND classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' LIMIT 1");
+						+ "WHERE courses_in_classroom_id = '"+course_in_classroom_id+"' LIMIT 1");
 				while(rs.next())
 				{
 			 maxima = rs.getString("maxima");

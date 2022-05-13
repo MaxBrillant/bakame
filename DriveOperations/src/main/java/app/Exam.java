@@ -67,7 +67,7 @@ public class Exam extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Exam(String course_id, String student_id, String classroom_id, String term_id) {
+	public Exam(String course_in_classroom_id, String student_in_classroom_id, String classroom_in_ay_id, String term_id) {
 		setBackground(new Color(80, 80, 80));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(new Dimension((int) screensize.getWidth()*31/100,(int) (screensize.getHeight()*82/100*7/100))));
@@ -138,7 +138,7 @@ public class Exam extends JPanel {
 
 
 				//setBorder(new LineBorder(Color.white, 2));
-				Test.deselect(course_id, student_id, classroom_id);
+				Test.deselect(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 
 				isSelected = true;
 				String str = ((JProgressBar)getComponent(0)).getString().replaceAll("[^0.00-9.00]+", "/");
@@ -178,7 +178,7 @@ public class Exam extends JPanel {
 					
 					
 
-					List note1 = Arrays.asList(LPane.loadStudentSerieNote(getName(), student_id).trim().split("/"));
+					List note1 = Arrays.asList(LPane.loadStudentSerieNote(getName(), student_in_classroom_id).trim().split("/"));
 					
 					
 					NewTest.PO.setText((String) note1.get(0));

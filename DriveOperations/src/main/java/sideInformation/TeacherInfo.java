@@ -335,11 +335,11 @@ public class TeacherInfo extends JPanel {
 					+ "JOIN classrooms_in_ay as cia "
 					+ "JOIN courses as co "
 					+ "JOIN courses_in_classroom as cic "
-					+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+					+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
 							+ "AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
 			while(rs.next())
 			{
-						classes.add(rs.getString("cic.classroom_id"));
+						classes.add(rs.getString("cic.cia_id"));
 					}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -350,7 +350,7 @@ public class TeacherInfo extends JPanel {
 	
 	}
 	
-	public static void loadTeacherInfo(String teacher_id, String ay_id, String classroom_id) {
+	public static void loadTeacherInfo(String teacher_id, String ay_id, String classroom_in_ay_id) {
 		try {
 			Statement stmt= mysql.con.createStatement();
 
@@ -359,29 +359,29 @@ public class TeacherInfo extends JPanel {
 					+ "JOIN classrooms_in_ay as cia "
 					+ "JOIN courses as co "
 					+ "JOIN courses_in_classroom as cic "
-					+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-							+ "AND cic.classroom_id = '"+classroom_id+"' AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
+					+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+							+ "AND cic.cia_id = '"+classroom_in_ay_id+"' AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
 			while(rs.next())
 			{
 				List<String> listOfclasses = new ArrayList();
 				List<String> listOfcourses = new ArrayList();
 				while(rs.next())
 				{
-					if(!listOfclasses.contains(rs.getString("cic.classroom_id"))) {
-						listOfclasses.add(rs.getString("cic.classroom_id"));
+					if(!listOfclasses.contains(rs.getString("cic.cia_id"))) {
+						listOfclasses.add(rs.getString("cic.cia_id"));
 					}
 				}
 				while(rs.next())
 				{
-					if(!listOfcourses.contains(rs.getString("cic.course_id"))) {
-						listOfcourses.add(rs.getString("cic.course_id"));
+					if(!listOfcourses.contains(rs.getString("cic.courses_in_classroom_id"))) {
+						listOfcourses.add(rs.getString("cic.courses_in_classroom_id"));
 					}
 				}
 						classNumber.setText(selectedClass+1+"/"+listOfclasses.toArray().length);
 						coursesNumber.setText(listOfcourses.toArray().length+" cours");
-						className.setText(Class.getClassName(classroom_id));
+						className.setText(Class.getClassName(classroom_in_ay_id));
 						numberOfClasses.setText(classes.toArray().length+" classes");
-						loadTeacherStats(teacher_id, ay_id, classroom_id);
+						loadTeacherStats(teacher_id, ay_id, classroom_in_ay_id);
 						}
 			} catch (SQLException e) {
 							// TODO Auto-generated catch block
@@ -391,7 +391,7 @@ public class TeacherInfo extends JPanel {
 				Home.frame.repaint();
 	
 	}
-	public static void loadTeacherStats(String teacher_id, String ay_id, String classroom_id) {
+	public static void loadTeacherStats(String teacher_id, String ay_id, String classroom_in_ay_id) {
 		
 		
 		int classesThatHaveTests = 0;
@@ -409,8 +409,8 @@ public class TeacherInfo extends JPanel {
 											+ "JOIN classrooms_in_ay as cia "
 											+ "JOIN courses as co "
 											+ "JOIN courses_in_classroom as cic "
-											+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND c.classroom_id = cic.classroom_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cic.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-													+ "AND cic.classroom_id = '"+classroom_id+"' AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
+											+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
+													+ "AND cic.cia_id = '"+classroom_in_ay_id+"' AND cic.course_id = co.course_id AND co.is_active = 1 AND cic.is_active = 1");
 									while(rs.next())
 									{
 									
@@ -422,14 +422,14 @@ public class TeacherInfo extends JPanel {
 									l11.add("0");
 									l11.add("0/0");
 									if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-										l1 = CourseStats.getStudentTestsStats("All", classroom_id
-												,rs.getString("cic.course_id"), Home.termsText.get(Home.selectedTermIndex)
+										l1 = CourseStats.getStudentTestsStats("All", classroom_in_ay_id
+												,rs.getString("cic.courses_in_classroom_id"), Home.termsText.get(Home.selectedTermIndex)
 												,"All", "All");
 										}
 
 									if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-										l11 = CourseStats.getStudentExamStats("All", classroom_id
-												,rs.getString("cic.course_id"), Home.termsText.get(Home.selectedTermIndex), "All", "All");
+										l11 = CourseStats.getStudentExamStats("All", classroom_in_ay_id
+												,rs.getString("cic.courses_in_classroom_id"), Home.termsText.get(Home.selectedTermIndex), "All", "All");
 										}
 							
 							List<String> note = Arrays.asList(l1.get(1).toString().split("/"));
@@ -444,7 +444,7 @@ public class TeacherInfo extends JPanel {
 							pointsTotal = pointsTotal+points1;
 							maximaTotal = maximaTotal+maxima;
 								
-								int rate = Teacher.successRate(ay_id, classroom_id, rs.getString("cic.course_id"));
+								int rate = Teacher.successRate(ay_id, classroom_in_ay_id, rs.getString("cic.courses_in_classroom_id"));
 								totalRate = totalRate+rate;
 								}
 

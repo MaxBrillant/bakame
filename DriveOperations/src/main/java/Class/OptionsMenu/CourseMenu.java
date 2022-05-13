@@ -67,7 +67,7 @@ public class CourseMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CourseMenu(String classroom_id, String ay_id) {
+	public CourseMenu(String classroom_in_ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
@@ -114,10 +114,10 @@ public class CourseMenu extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if(Course.selectedCourses.toArray().length>0) {
-				StatsPane frame = new StatsPane("All", Course.selectedCourses.get(0).getName(), classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+				StatsPane frame = new StatsPane("All", Course.selectedCourses.get(0).getName(), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				frame.setVisible(true);
 			}else{
-				StatsPane frame = new StatsPane("All", "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+				StatsPane frame = new StatsPane("All", "All", classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				frame.setVisible(true);
 			
 			}
@@ -165,7 +165,7 @@ public class CourseMenu extends JPanel {
 				
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
-		    			NewCourse.load(classroom_id, ay_id);
+		    			NewCourse.load(classroom_in_ay_id);
 		            	 return null;
 		            }
 		        }.execute();
@@ -195,7 +195,7 @@ public class CourseMenu extends JPanel {
 				
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
-		    			NewCourse.load(classroom_id, ay_id);
+		    			NewCourse.load(classroom_in_ay_id);
 		            	 return null;
 		            }
 		        }.execute();
@@ -251,7 +251,7 @@ public class CourseMenu extends JPanel {
 				
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
-		    			NewCourse.load(classroom_id, ay_id);
+		    			NewCourse.load(classroom_in_ay_id);
 		            	 return null;
 		            }
 		        }.execute();
@@ -340,7 +340,7 @@ public class CourseMenu extends JPanel {
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
 						String course_id = (String) Application.panel2.getComponent(i).getName();
-					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}
 				}
 		});
@@ -365,7 +365,7 @@ public class CourseMenu extends JPanel {
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
 						String course_id = (String) Application.panel2.getComponent(i).getName();
-					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}
 			}
 		});
@@ -412,7 +412,7 @@ public class CourseMenu extends JPanel {
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
 						String course_id = (String) Application.panel2.getComponent(i).getName();
-					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}
 				}
 		});
@@ -447,7 +447,7 @@ public class CourseMenu extends JPanel {
 				for(int i = 0; i< Application.panel2.getComponentCount(); i++) {
 					if(Application.panel2.getComponent(i) instanceof Course) {
 						String course_id = (String) Application.panel2.getComponent(i).getName();
-					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+					NewCourse.loadCoursedata((Container) Application.panel2.getComponent(i), course_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}}
 			}
 		});

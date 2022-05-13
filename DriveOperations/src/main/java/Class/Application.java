@@ -125,7 +125,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application("", "");
+					Application window = new Application("");
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -137,14 +137,14 @@ public class Application {
 	/**
 	 * Create the application.
 	 */
-	public Application(String classroom_id, String ay_id) {
-		initialize(classroom_id, ay_id);
+	public Application(String classroom_id) {
+		initialize(classroom_id);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String classroom_id, String ay_id) {
+	private void initialize(String classroom_in_ay_id) {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(80, 80, 80));
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
@@ -167,12 +167,12 @@ public class Application {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Home.getClassColors(classroom_id, ay_id).get(0));
+		panel_1.setBackground(Home.getClassColors(classroom_in_ay_id).get(0));
 		panel_1.setPreferredSize(new Dimension(10, frame.getHeight()*20/100*30/100));
 		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		classe = new JLabel(Home.getClassName(classroom_id));
+		classe = new JLabel(Home.getClassName(classroom_in_ay_id));
 		classe.setHorizontalAlignment(SwingConstants.CENTER);
 		classe.setForeground(new Color(255, 255, 255));
 		classe.setFont(new Font("Futura Hv BT", Font.BOLD, 30));
@@ -746,18 +746,18 @@ public class Application {
 		panel_2.add(comboBox);
 		
 		for(int i = 0; i< panel_1.getComponentCount(); i++) {
-			panel_1.getComponent(i).setForeground(Home.getClassColors(classroom_id, ay_id).get(1));
+			panel_1.getComponent(i).setForeground(Home.getClassColors(classroom_in_ay_id).get(1));
 		}
 
 
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				manageTabs(classroom_id, ay_id);
+				manageTabs(classroom_in_ay_id);
 			}
 		});
 
 
-		Application.manageTabs(classroom_id, ay_id);
+		Application.manageTabs(classroom_in_ay_id);
 		Application.deselect();
 		
 
@@ -770,7 +770,7 @@ public class Application {
     	new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
 
-        		NewStudent.load(classroom_id, ay_id);
+        		NewStudent.load(classroom_in_ay_id);
         		Application.merite();
             	 return null;
             }
@@ -778,21 +778,21 @@ public class Application {
         
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-        		TestBox.loadAllTests(classroom_id, ay_id);
+        		TestBox.loadAllTests(classroom_in_ay_id);
             	 return null;
             }
         }.execute();
         
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-    			NewCourse.load(classroom_id, ay_id);
+    			NewCourse.load(classroom_in_ay_id);
             	 return null;
             }
         }.execute();
         
         new SwingWorker<Void, Void>() {
             public Void doInBackground() throws Exception{
-        		ExamBox.loadAllExams(classroom_id, ay_id);
+        		ExamBox.loadAllExams(classroom_in_ay_id);
             	 return null;
             }
         }.execute();
@@ -812,25 +812,25 @@ public class Application {
 	}
 	
 
-	public static void manageTabs(String classroom_id, String ay_id) {
+	public static void manageTabs(String classroom_in_ay_id) {
 	if(tabbedPane.getSelectedIndex()==0) {
-		StudentMenu sm = new StudentMenu(classroom_id, ay_id);
+		StudentMenu sm = new StudentMenu(classroom_in_ay_id);
 		panel.remove(1);
 		panel.add(sm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panel1.getComponentCount()));
 	}if(tabbedPane.getSelectedIndex()==1) {
-		CourseMenu cm = new CourseMenu(classroom_id, ay_id);
+		CourseMenu cm = new CourseMenu(classroom_in_ay_id);
 		panel.remove(1);
 		panel.add(cm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panel2.getComponentCount()));
 	}if(tabbedPane.getSelectedIndex()==2) {
-		TestMenu tm = new TestMenu(classroom_id, ay_id);
+		TestMenu tm = new TestMenu(classroom_in_ay_id);
 		panel.remove(1);
 	panel.add(tm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panelTests.getComponentCount()));
 		
 	}if(tabbedPane.getSelectedIndex()==3) {
-		ExamMenu tm = new ExamMenu(classroom_id, ay_id);
+		ExamMenu tm = new ExamMenu(classroom_in_ay_id);
 		panel.remove(1);
 	panel.add(tm, BorderLayout.CENTER);
 		Application.no.setText(String.valueOf(panelExams.getComponentCount()));

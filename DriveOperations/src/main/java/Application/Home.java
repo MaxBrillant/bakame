@@ -151,7 +151,7 @@ public class Home {
 			public void run() {
 				try {
 					mysql.connectToDB();
-					Home window = new Home("1", "1", "8");
+					Home window = new Home("1", "1", "2");
 					window.frame.setVisible(true);
 					System.gc();
 					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
@@ -572,7 +572,7 @@ public class Home {
 		}
 	
 	
-public static List<Color> getClassColors(String classroom_id, String ay_id) {
+public static List<Color> getClassColors(String classroom_in_ay_id) {
 	Color back;
 		Color fore;
 		List <Color> allColors = new ArrayList();
@@ -581,7 +581,7 @@ public static List<Color> getClassColors(String classroom_id, String ay_id) {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("select * from classrooms_in_ay "
-					+ "WHERE classroom_id = '"+classroom_id+"' AND ay_id = '"+ay_id+"' LIMIT 1");
+					+ "WHERE cia_id = '"+classroom_in_ay_id+"' LIMIT 1");
 			while(rs.next())
 			{
 				List<String> colors = Arrays.asList(rs.getString("color1").split(","));
@@ -603,18 +603,19 @@ public static List<Color> getClassColors(String classroom_id, String ay_id) {
 		return allColors;
 		}
 
-public static String getClassName(String classroom_id) {
+public static String getClassName(String classroom_in_ay_id) {
 		
 	String name = null;
 	
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("select * from classrooms "
-					+ "WHERE classroom_id = '"+classroom_id+"' LIMIT 1");
+			ResultSet rs=stmt.executeQuery("select * from classrooms AS c "
+					+ "JOIN classrooms_in_ay AS cia "
+					+ "WHERE cia.cia_id = '"+classroom_in_ay_id+"' AND cia.classroom_id = c.classroom_id  LIMIT 1");
 			while(rs.next())
 			{
-				name = rs.getString("classroom_name");
+				name = rs.getString("c.classroom_name");
 			}
 
 		} catch (SQLException e) {
@@ -625,18 +626,19 @@ public static String getClassName(String classroom_id) {
 		return name;
 		}
 
-public static String getStudentName(String student_id) {
+public static String getStudentName(String student_in_classroom_id) {
 	
 	String name = null;
 	
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("select * from students "
-					+ "WHERE student_id = '"+student_id+"' LIMIT 1");
+			ResultSet rs=stmt.executeQuery("select * from students AS s "
+					+ "JOIN students_in_classrooms AS sic "
+					+ "WHERE sic.sic_id = '"+student_in_classroom_id+"' AND sic.student_id = s.student_id LIMIT 1");
 			while(rs.next())
 			{
-				name = rs.getString("last_name").toUpperCase()+" "+rs.getString("first_name");
+				name = rs.getString("s.last_name").toUpperCase()+" "+rs.getString("s.first_name");
 			}
 
 		} catch (SQLException e) {
@@ -736,7 +738,7 @@ public static String getTermYear(String term_id) {
 	}
 	
 
-public static Object[] loadActiveStudents(String classroom_id, String ay_id) {
+public static Object[] loadActiveStudents(String classroom_in_ay_id) {
 	
 	List<String> s = new ArrayList();
 	//BufferedReader
@@ -746,10 +748,10 @@ public static Object[] loadActiveStudents(String classroom_id, String ay_id) {
 
 		ResultSet rs=stmt.executeQuery("SELECT * FROM students_in_classrooms AS sic "
 				+ "JOIN students AS s "
-				+ "WHERE sic.classroom_id = '"+classroom_id+"' AND sic.ay_id = '"+ay_id+"' AND sic.student_id = s.student_id AND s.is_active = 1 AND sic.is_active = 1");
+				+ "WHERE sic.cia_id = '"+classroom_in_ay_id+"' AND sic.student_id = s.student_id AND s.is_active = 1 AND sic.is_active = 1");
 		while(rs.next())
 		{
-			s.add(rs.getString("sic.student_id"));
+			s.add(rs.getString("sic.sic_id"));
 		}
 
 	} catch (SQLException e) {
@@ -799,7 +801,7 @@ public static Object[] loadActiveClasses(String ay_id) {
 				+ "WHERE c.is_active = 1 AND cia.is_active = 1 AND cia.ay_id = '"+ay_id+"' AND cia.classroom_id = c.classroom_id");
 		while(rs.next())
 		{
-			s.add(rs.getString("cia.classroom_id"));
+			s.add(rs.getString("cia.cia_id"));
 		}
 
 	} catch (SQLException e) {
@@ -816,18 +818,19 @@ public static Object[] loadActiveClasses(String ay_id) {
 public static Object[] loadActiveProfs(String ay_id) {
 	
 	List<String> s = new ArrayList();
-
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs=stmt.executeQuery("select * from teachers_in_classrooms AS tic "
+		ResultSet rs=stmt.executeQuery("select * from teachers AS t "
 				+ "JOIN courses_in_classroom AS cic "
-				+ "JOIN teachers AS t "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND cic.ay_id = '"+ay_id+"' AND t.teacher_id = tic.teacher_id AND tic.is_active = 1 AND t.is_active = 1 AND cic.is_active = 1");
+				+ "JOIN classrooms_in_ay AS cia "
+				+ "JOIN teachers_in_classrooms AS tic "
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND cic.cia_id = cia.cia_id AND cia.ay_id = '"+ay_id+"' AND t.teacher_id = tic.teacher_id AND tic.is_active = 1 AND t.is_active = 1 AND cic.is_active = 1");
 		while(rs.next())
 		{
+			if(!s.contains(rs.getString("tic.teacher_id"))) {
 			s.add(rs.getString("tic.teacher_id"));
-		}
+		}}
 
 	} catch (SQLException e) {
 	// TODO Auto-generated catch block
@@ -893,8 +896,7 @@ public static boolean courseExists(String courseId, String ay_id) {
 } 
 	return exists;
 }
-
-public static Object[] loadActiveCourses(String ay_id, String classroom_id) {
+public static Object[] loadActiveCourses(String classroom_in_ay_id) {
 	
 	List<String> s = new ArrayList();
 
@@ -903,10 +905,10 @@ public static Object[] loadActiveCourses(String ay_id, String classroom_id) {
 
 		ResultSet rs=stmt.executeQuery("select * from courses_in_classroom AS cic "
 				+ "JOIN courses AS c "
-				+ "WHERE cic.ay_id = '"+ay_id+"' AND cic.classroom_id = '"+classroom_id+"' AND cic.course_id = c.course_id AND c.is_active = 1 AND cic.is_active = 1");
+				+ "WHERE cic.cia_id = '"+classroom_in_ay_id+"' AND cic.course_id = c.course_id AND c.is_active = 1 AND cic.is_active = 1");
 		while(rs.next())
 		{
-			s.add(rs.getString("cic.course_id"));
+			s.add(rs.getString("cic.courses_in_classroom_id"));
 		}
 
 	} catch (SQLException e) {
