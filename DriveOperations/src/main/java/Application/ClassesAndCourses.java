@@ -88,7 +88,8 @@ public class ClassesAndCourses extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClassesAndCourses frame = new ClassesAndCourses("1", "8");
+					mysql.connectToDB();
+					ClassesAndCourses frame = new ClassesAndCourses("1", "2");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -233,9 +234,10 @@ public class ClassesAndCourses extends JFrame {
 		boolean isEmpty = false;
 		if(ClassesAndCourses.panel.getComponentCount()>1) {
 		for(int m = 0; m<  ClassesAndCourses.panel.getComponentCount()-1; m++) {
+			if(((Container) ClassesAndCourses.panel.getComponent(m)).getComponentCount()>1) {
 			if(((Container) ((Container) ClassesAndCourses.panel.getComponent(m)).getComponent(1)).getComponentCount()-1<1) {
 				isEmpty = true;
-			}	
+			}	}
 	}}else {
 		isEmpty = true;
 	}
@@ -321,7 +323,7 @@ public class ClassesAndCourses extends JFrame {
 
 				if(!classes.contains(l.get(0).toString())) {
 					classes.add((String) l.get(0));
-				ClassesAndCourses.panel.add(panel_1, i);
+				ClassesAndCourses.panel.add(panel_1, classes.toArray().length-1);
 				
 				JPanel panel_4 = new JPanel();
 				panel_4.setPreferredSize(new Dimension(10, 30));

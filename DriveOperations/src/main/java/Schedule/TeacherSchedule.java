@@ -142,6 +142,7 @@ public class TeacherSchedule extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					mysql.connectToDB();
 					TeacherSchedule frame = new TeacherSchedule("1", "2");
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -191,7 +192,7 @@ public class TeacherSchedule extends JFrame {
 		}
 	});
 	panel_10.setLayout(null);
-	btnSauvegarder.setFont(new Font("Roboto", Font.PLAIN, 17));
+	btnSauvegarder.setFont(new Font("Roboto", Font.PLAIN, 14));
 	btnSauvegarder.setFocusPainted(false);
 	panel_10.add(btnSauvegarder);
 	btnSauvegarder.setBackground(panel.getBackground());
@@ -215,7 +216,7 @@ public class TeacherSchedule extends JFrame {
 	title.setPreferredSize(new Dimension(163, 50));
 	title.setHorizontalAlignment(SwingConstants.CENTER);
 	title.setForeground(Color.WHITE);
-	title.setFont(new Font("Roboto", Font.BOLD, 30));
+	title.setFont(new Font("Roboto", Font.BOLD, 25));
 	panel.add(title, BorderLayout.NORTH);
 	
 	
@@ -241,7 +242,7 @@ public class TeacherSchedule extends JFrame {
 		}
 	});
 	panel_9.setLayout(null);
-	ext.setFont(new Font("Roboto", Font.PLAIN, 20));
+	ext.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_9.add(ext);
 	ext.setBackground(panel.getBackground());
 	ext.addMouseListener(new MouseAdapter() {
@@ -264,7 +265,7 @@ public class TeacherSchedule extends JFrame {
 	
 	lblNewLabel_4 = new JLabel("<html><div style='text-align: center;'>Choisissez l' horaire du professeur cite ci-dessus. Vous pouvez selectionner les cours se trouvant a gauche de l'ecran et les placer sur l' horaire. Pour modifier l'emplacement d' un cours, selectionnez le et placez le a l'endroit voulu.</div></html>");
 	lblNewLabel_4.setForeground(Color.WHITE);
-	lblNewLabel_4.setFont(new Font("Roboto", Font.PLAIN, 15));
+	lblNewLabel_4.setFont(new Font("Roboto", Font.PLAIN, 16));
 	panel_8.add(lblNewLabel_4);
 	
 	JScrollPane scrollPane = new JScrollPane();
@@ -312,85 +313,85 @@ public class TeacherSchedule extends JFrame {
 	sessions.setBorder(null);
 	sessions.setBackground(new Color(40, 40, 40));
 	panel1.add(sessions);
-	sessions.setPreferredSize(new Dimension(174, 652));
+	sessions.setPreferredSize(new Dimension(120, 652));
 	sessions.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 	
-	lblNewLabel = new JLabel("Heures des seances");
+	lblNewLabel = new JLabel("<html><div style='text-align: center;'>Heures des seances</div></html>");
 	lblNewLabel.setForeground(new Color(255, 255, 255));
-	lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 18));
+	lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
 	sessions.add(lblNewLabel);
 	
 	
 	panel_2 = new JPanel();
 	panel_2.setBorder(null);
-	panel_2.setPreferredSize(new Dimension(160, 652));
+	panel_2.setPreferredSize(new Dimension(140, 652));
 	panel_2.setBackground(new Color(40, 40, 40));
 	panel1.add(panel_2);
 	panel_2.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 	
 	lblLundi = new JLabel("Lundi");
 	lblLundi.setForeground(new Color(255, 255, 255));
-	lblLundi.setFont(new Font("Roboto", Font.PLAIN, 18));
+	lblLundi.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_2.add(lblLundi);
 	
 	panel_3 = new JPanel();
 	panel_3.setBorder(null);
-	panel_3.setPreferredSize(new Dimension(160, 652));
+	panel_3.setPreferredSize(new Dimension(140, 652));
 	panel_3.setBackground(new Color(40, 40, 40));
 	panel1.add(panel_3);
 	panel_3.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 	
 	lblMardi = new JLabel("Mardi");
 	lblMardi.setForeground(new Color(255, 255, 255));
-	lblMardi.setFont(new Font("Roboto", Font.PLAIN, 18));
+	lblMardi.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_3.add(lblMardi);
 	
 	panel_4 = new JPanel();
 	panel_4.setBorder(null);
-	panel_4.setPreferredSize(new Dimension(160, 652));
+	panel_4.setPreferredSize(new Dimension(140, 652));
 	panel_4.setBackground(new Color(40, 40, 40));
 	panel1.add(panel_4);
 	panel_4.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 	
 	lblMercredi = new JLabel("Mercredi");
 	lblMercredi.setForeground(new Color(255, 255, 255));
-	lblMercredi.setFont(new Font("Roboto", Font.PLAIN, 18));
+	lblMercredi.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_4.add(lblMercredi);
 	
 	panel_5 = new JPanel();
 	panel_5.setBorder(null);
-	panel_5.setPreferredSize(new Dimension(160, 652));
+	panel_5.setPreferredSize(new Dimension(140, 652));
 	panel_5.setBackground(new Color(40, 40, 40));
 	panel1.add(panel_5);
 	panel_5.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 	
 	lblJeudi = new JLabel("Jeudi");
 	lblJeudi.setForeground(new Color(255, 255, 255));
-	lblJeudi.setFont(new Font("Roboto", Font.PLAIN, 18));
+	lblJeudi.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_5.add(lblJeudi);
 	
 	panel_6 = new JPanel();
 	panel_6.setBorder(null);
-	panel_6.setPreferredSize(new Dimension(160, 652));
+	panel_6.setPreferredSize(new Dimension(140, 652));
 	panel_6.setBackground(new Color(40, 40, 40));
 	panel1.add(panel_6);
 	panel_6.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 	
 	lblVendredi = new JLabel("Vendredi");
 	lblVendredi.setForeground(new Color(255, 255, 255));
-	lblVendredi.setFont(new Font("Roboto", Font.PLAIN, 18));
+	lblVendredi.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_6.add(lblVendredi);
 	
 	panel_7 = new JPanel();
 	panel_7.setBorder(null);
-	panel_7.setPreferredSize(new Dimension(160, 652));
+	panel_7.setPreferredSize(new Dimension(140, 652));
 	panel_7.setBackground(new Color(40, 40, 40));
 	panel1.add(panel_7);
 	panel_7.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 	
 	lblSamedi = new JLabel("Samedi");
 	lblSamedi.setForeground(new Color(255, 255, 255));
-	lblSamedi.setFont(new Font("Roboto", Font.PLAIN, 18));
+	lblSamedi.setFont(new Font("Roboto", Font.PLAIN, 14));
 	panel_7.add(lblSamedi);
 
 	setLocationRelativeTo(null);
@@ -437,17 +438,17 @@ deselect();
 							+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
 			while(rs.next())
 			{
-							JLabel lblNewLabel_2 = new JLabel((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")).replaceAll(":", "h"));
+							JLabel lblNewLabel_2 = new JLabel((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)).replaceAll(":", "h"));
 							lblNewLabel_2.setBorder(new LineBorder(new Color(255, 255, 255)));
 							lblNewLabel_2.setForeground(new Color(255, 255, 255));
-							lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 18));
+							lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 14));
 							lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-							lblNewLabel_2.setPreferredSize(new Dimension(174, 60));
+							lblNewLabel_2.setPreferredSize(new Dimension(120, 60));
 							
 							
 							boolean exists = false;
 							for(int j = 1; j<sessions.getComponentCount(); j++) {
-								if(((JLabel) sessions.getComponent(j)).getText().equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")).replaceAll(":", "h"))) {
+								if(((JLabel) sessions.getComponent(j)).getText().equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)).replaceAll(":", "h"))) {
 									exists = true;
 								}
 							}
@@ -499,7 +500,7 @@ public static void pause() {
 			List<String> list = new ArrayList<String>();
 			List<String> list3 = new ArrayList<String>();
 			for(int i = 1; i<sessions.getComponentCount(); i++) {
-				List s = Arrays.asList(((JLabel) sessions.getComponent(i)).getText().split("-"));
+				List s = Arrays.asList(((JLabel) sessions.getComponent(i)).getText().split(" - "));
 				list.add(s.get(0).toString().replaceAll("h", ""));
 				list3.add(((JLabel) sessions.getComponent(i)).getText());
 			}
@@ -507,7 +508,7 @@ public static void pause() {
 			
 			for(int i = 0; i<list.toArray().length; i++) {
 				for(int j = 0; j<list3.toArray().length; j++) {
-					List s = Arrays.asList(list3.get(j).split("-"));
+					List s = Arrays.asList(list3.get(j).split(" - "));
 					if(s.get(0).toString().replaceAll("h", "").equals(list.get(i))) {
 						list3.add(i, list3.get(j));
 						list3.remove(j+1);
@@ -521,8 +522,8 @@ public static void pause() {
 				if(i+1<sessions.getComponentCount()) {
 				if(((Container) sessions.getComponent(i+1)) instanceof JLabel && !((JLabel) sessions.getComponent(i)).getText().equals("Pause") 
 						&& !((JLabel) sessions.getComponent(i+1)).getText().equals("Pause") ) {
-				List list1 = Arrays.asList(((JLabel) sessions.getComponent(i)).getText().replaceAll("h", ":").split("-"));
-				List list2 = Arrays.asList(((JLabel) sessions.getComponent(i+1)).getText().replaceAll("h", ":").split("-"));
+				List list1 = Arrays.asList(((JLabel) sessions.getComponent(i)).getText().replaceAll("h", ":").split(" - "));
+				List list2 = Arrays.asList(((JLabel) sessions.getComponent(i+1)).getText().replaceAll("h", ":").split(" - "));
 				
 				 SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 				 Date d = null;
@@ -545,9 +546,9 @@ public static void pause() {
 								JLabel lblNewLabel_2 = new JLabel("Pause");
 								lblNewLabel_2.setBorder(new MatteBorder(1, 0, 1, 0, (Color) Color.white));
 								lblNewLabel_2.setForeground(new Color(255, 255, 255));
-								lblNewLabel_2.setFont(new Font("Roboto", Font.BOLD, 25));
+								lblNewLabel_2.setFont(new Font("Roboto", Font.BOLD, 16));
 								lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-								lblNewLabel_2.setPreferredSize(new Dimension(174, 30));
+								lblNewLabel_2.setPreferredSize(new Dimension(120, 30));
 
 								sessions.add(lblNewLabel_2, i+1);
 								sessions.revalidate();
@@ -560,9 +561,9 @@ public static void pause() {
 										JLabel lblNewLabel_2 = new JLabel();
 										lblNewLabel_2.setBorder(null);
 										lblNewLabel_2.setForeground(new Color(255, 255, 255));
-										lblNewLabel_2.setFont(new Font("Roboto", Font.BOLD, 25));
+										lblNewLabel_2.setFont(new Font("Roboto", Font.BOLD, 16));
 										lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-										lblNewLabel_2.setPreferredSize(new Dimension(174, 30));
+										lblNewLabel_2.setPreferredSize(new Dimension(120, 30));
 										((Container) panel1.getComponent(j)).add(lblNewLabel_2, i+1);
 									}
 								}
@@ -584,11 +585,11 @@ public static void loadBlocks(String teacher_id, String ay_id) {
 		while(rs.next())
 		{
 								for(int m = 1; m<((Container) panel1.getComponent(0)).getComponentCount(); m++) {
-								if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(m)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")))) {
+								if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(m)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)))) {
 									for(int k = 0; k<m; k++) {
 										if(((JPanel)panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponentCount()-1<m) {
 									JPanel jp = new JPanel();
-									jp.setPreferredSize(new Dimension(160, 60));
+									jp.setPreferredSize(new Dimension(140, 60));
 									jp.setBorder(new LineBorder(Color.lightGray));
 									((JPanel)panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).add(jp);
 									jp.setBackground(jp.getParent().getBackground());
@@ -603,7 +604,7 @@ public static void loadBlocks(String teacher_id, String ay_id) {
 
 } 
 
-public static void blocksPerClass(String classroom_id) {
+public static void blocksPerClass(String classroom_in_ay_id) {
 	classBoxes.clear();
 	List<Component> trueComponents = new ArrayList<Component>();
 	
@@ -615,24 +616,22 @@ public static void blocksPerClass(String classroom_id) {
 				+ "JOIN classrooms_in_ay as cia "
 				//+ "JOIN courses_in_classroom as cic "
 				//+ "JOIN courses AS co "
-				+ "WHERE c.is_active = 1 AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id "
-						+ "AND sc.cia_id = cia.cia_id AND sc.cia_id = '"+classroom_id+"' "); //if not replace classroom_id with ay_id
+				+ "WHERE sc.cia_id = '"+classroom_in_ay_id+"' AND  sc.cia_id = cia.cia_id "
+						+ "AND c.classroom_id = cia.classroom_id AND c.is_active = 1 AND cia.is_active = 1"); //if not replace classroom_id with ay_id
 		while(rs.next())
 		{
 	
 		for(int m = 1; m<((Container) panel1.getComponent(0)).getComponentCount(); m++) {
-				
-				for(int i = 0; i<((Container) ((Container) panel1.getComponent(0)).getComponent(m)).getComponentCount(); i++) {
+			//	for(int i = 0; i<((Container) ((Container) panel1.getComponent(0)).getComponent(m)).getComponentCount(); i++) {
 				if(!((JLabel) ((Container) panel1.getComponent(0)).getComponent(m)).getText().equals("Pause")) {
-			if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(m)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")))) {
-
+			if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(m)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)))) {
 					if(((JPanel)panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponentCount()>m) {
 						trueComponents.add(((JPanel)panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(m));
 						((JPanel)panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(m).setEnabled(true);
 						((JComponent) ((JPanel)panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(m)).setBorder(new LineBorder(Color.white, 2));
 						classBoxes.add(((JComponent) ((JPanel)panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(m)));
 			}
-			}
+			
 		}}}
 	}
 
@@ -653,6 +652,7 @@ for(int i = 1; i< panel1.getComponentCount(); i++) {
 
 public static void loadSessions(String teacher_id, String ay_id) {
 
+	List<String> classes = new ArrayList();
 	try {
 		Statement stmt= mysql.con.createStatement();
 
@@ -665,6 +665,9 @@ public static void loadSessions(String teacher_id, String ay_id) {
 						+ " AND tic.courses_in_classroom_id = cic.courses_in_classroom_id AND cic.course_id = co.course_id AND co.is_active = 1");
 		while(rs.next())
 		{
+			if(!classes.contains(rs.getString("cic.cia_id"))) {
+				classes.add(rs.getString("cic.cia_id"));
+				
 				JPanel jp = new JPanel();
 				jp.setPreferredSize(new Dimension(210, 300));
 				jp.setLayout(new WrapLayout(WrapLayout.CENTER, 5, 5));
@@ -672,30 +675,29 @@ public static void loadSessions(String teacher_id, String ay_id) {
 				jp.setBorder(new LineBorder(Color.LIGHT_GRAY));
 				panel2.add(jp);
 				
-				JLabel lblNewLabel = new JLabel("<html><div style='text-align: center;'>"+rs.getString("cic.cia_id")+"</div></html>");
+				JLabel lblNewLabel = new JLabel("<html><div style='text-align: center;'>"+Home.getClassName(rs.getString("cic.cia_id"))+"</div></html>");
 				lblNewLabel.setName(rs.getString("cic.cia_id"));
 				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				lblNewLabel.setPreferredSize(new Dimension(220, 30));
-				lblNewLabel.setFont(new Font("ROBOTO", Font.PLAIN, 15));
+				lblNewLabel.setPreferredSize(new Dimension(140, 30));
+				lblNewLabel.setFont(new Font("ROBOTO", Font.PLAIN, 14));
 				lblNewLabel.setForeground(Color.WHITE);
 				jp.add(lblNewLabel);
 				panel2.revalidate();
 				panel2.repaint();
 				
-			
+
 				try {
 					Statement stmt1= mysql.con.createStatement();
-
+					
 					ResultSet rs1=stmt1.executeQuery("select * from teachers_in_classrooms as tic "
 							+ "JOIN courses_in_classroom AS cic "
 							+ "JOIN classrooms as c "
 							+ "JOIN courses as co "
 							+ "JOIN classrooms_in_ay as cia "
 							+ "WHERE cic.is_active = 1 AND cic.courses_in_classroom_id = tic.courses_in_classroom_id  AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND c.classroom_id = cia.classroom_id AND cia.is_active = 1 AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-									+ "AND cic.cia_id = '"+rs.getString("cic.cia_id")+"' AND tic.courses_in_classroom_id = cic.courses_in_classroom_id AND cic.course_id = co.course_id AND co.is_active = 1");
+									+ "AND cic.cia_id = '"+rs.getString("cic.cia_id")+"' AND cic.course_id = co.course_id AND co.is_active = 1");
 					while(rs1.next())
 					{
-							
 						JPanel panel = new JPanel();
 						panel.setPreferredSize(new Dimension(200, 70));
 						panel.setBackground(new Color(60, 60, 60));
@@ -703,9 +705,9 @@ public static void loadSessions(String teacher_id, String ay_id) {
 						jp.add(panel);
 						panel.setLayout(new BorderLayout(0, 0));
 						
-						JLabel lblNewLabel_1 = new JLabel(rs.getString("cic.cia_id"));
+						JLabel lblNewLabel_1 = new JLabel(rs1.getString("tic.sessions_per_week"));
 						lblNewLabel_1.setPreferredSize(new Dimension(40, 14));
-						lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 						lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 						panel.add(lblNewLabel_1, BorderLayout.WEST);
 						lblNewLabel_1.setForeground(Color.white);
@@ -713,18 +715,18 @@ public static void loadSessions(String teacher_id, String ay_id) {
 						JPanel panel_1 = new JPanel();
 						panel.add(panel_1, BorderLayout.CENTER);
 						panel_1.setLayout(new BorderLayout(0, 0));
-						panel_1.setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
+						panel_1.setBackground(Home.getClassColors(rs1.getString("cic.cia_id")).get(0));
 						
 						JPanel panel_11 = new JPanel();
 						panel_1.add(panel_11, BorderLayout.CENTER);
 						panel_11.setLayout(new BorderLayout(0, 0));
-						JLabel lblNewLabel1 = new JLabel("<html><div style='text-align: center;'>"+TestBox.getShortName(rs.getString("cic.courses_in_classroom_id"))+"</div></html>");
-						lblNewLabel1.setName(rs.getString("cic.courses_in_classroom_id"));
-						lblNewLabel1.setFont(new Font("Roboto", Font.BOLD, 18));
+						JLabel lblNewLabel1 = new JLabel("<html><div style='text-align: center;'>"+TestBox.getShortName(rs1.getString("cic.courses_in_classroom_id"))+"</div></html>");
+						lblNewLabel1.setName(rs1.getString("cic.courses_in_classroom_id"));
+						lblNewLabel1.setFont(new Font("Roboto", Font.PLAIN, 14));
 						lblNewLabel1.setHorizontalAlignment(SwingConstants.CENTER);
 						panel_11.add(lblNewLabel1, BorderLayout.CENTER);
-						lblNewLabel1.setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(1));
-						panel_11.setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
+						lblNewLabel1.setForeground(Home.getClassColors(rs1.getString("cic.cia_id")).get(1));
+						panel_11.setBackground(Home.getClassColors(rs1.getString("cic.cia_id")).get(0));
 						
 						JPanel panel1 = new JPanel();
 						panel1.setForeground(new Color(255, 255, 255));
@@ -732,16 +734,17 @@ public static void loadSessions(String teacher_id, String ay_id) {
 						panel_1.add(panel1, BorderLayout.SOUTH);
 						panel1.setPreferredSize(new Dimension(10, 20));
 						panel1.setLayout(new BorderLayout(0, 0));
-						panel1.setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(1));
+						panel1.setBackground(Home.getClassColors(rs1.getString("cic.cia_id")).get(1));
 						panel1.setVisible(false);
 						
-						JLabel lblNewLabel_11 = new JLabel(rs.getString("cic.cia_id"));
-						lblNewLabel_11.setPreferredSize(new Dimension(113, 10));
+						JLabel lblNewLabel_11 = new JLabel(Home.getClassName(rs1.getString("cic.cia_id")));
+						lblNewLabel_11.setName(rs1.getString("cic.cia_id"));
+						lblNewLabel_11.setPreferredSize(new Dimension(113, 5));
 						lblNewLabel_11.setForeground(new Color(255, 255, 255));
 						lblNewLabel_11.setFont(new Font("Roboto", Font.PLAIN, 11));
 						lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
 						panel1.add(lblNewLabel_11);
-						lblNewLabel_11.setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
+						lblNewLabel_11.setForeground(Home.getClassColors(rs1.getString("cic.cia_id")).get(0));
 
 						
 						//ClassesAndCourses.checkContinuation();
@@ -754,7 +757,7 @@ public static void loadSessions(String teacher_id, String ay_id) {
 				}
 
 				resize(jp);
-			}
+			}}
 } catch (SQLException e) {
 	// TODO Auto-generated catch block
 	e.printStackTrace();
@@ -1023,16 +1026,17 @@ public static void loadSchedule(String teacher_id, String ay_id) {
 
 		ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 				+ "JOIN schedule_class AS sc "
+				+ "JOIN schedule_course AS sco "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses_in_classroom as cic "
 				+ "JOIN courses AS co "
 				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-						+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
+						+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND sc.schedule_id = sco.schedule_id AND tic.tic_id = sco.tic_id AND co.is_active = 1");
 		while(rs.next())
 		{
 			for(int j = 1; j< ((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponentCount(); j++) {
-				if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(j)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")))) {
+				if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(j)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)))) {
 			Session session = new Session();
 			((Container) session.getComponent(1)).getComponent(1).setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
 			((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0).setBackground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
@@ -1041,6 +1045,7 @@ public static void loadSchedule(String teacher_id, String ay_id) {
 			((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0).setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(1));
 			((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0).setForeground(Home.getClassColors(rs.getString("cic.cia_id")).get(0));
 			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setText(TestBox.getShortName(rs.getString("cic.courses_in_classroom_id")));
+			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setName((rs.getString("cic.courses_in_classroom_id")));
 			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setText(Class.getClassName(rs.getString("cic.cia_id")));
 			((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setName(rs.getString("cic.cia_id"));
 			((JComponent) ((Container) session.getComponent(1)).getComponent(1)).setBorder(new LineBorder(((JPanel)((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(j)).getBackground() ,4));
@@ -1082,25 +1087,27 @@ public static void drawZones(String teacher_id, String classroom_in_ay_id, Strin
 
 		ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 				+ "JOIN schedule_class AS sc "
+				+ "JOIN schedule_course AS sco "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses_in_classroom as cic "
 				+ "JOIN courses AS co "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-						+ "AND sc.cia_id = cic.cia_id AND cic.cia_id = '"+classroom_in_ay_id+"'AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id <> '"+teacher_id+"' "
+						+ "AND sc.cia_id = cia.cia_id AND cia.cia_id = '"+classroom_in_ay_id+"'AND co.course_id = cic.course_id AND sc.schedule_id = sco.schedule_id AND tic.tic_id = sco.tic_id AND cic.is_active = 1 AND co.is_active = 1");
 		while(rs.next())
 		{
 						
 							for(int k = 1; k< ((Container) panel1.getComponent(0)).getComponentCount(); k++) {
 								if(!((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().equals("Pause")) {
-						if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")))) {
+						if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)))) {
 							if(((Container) ((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(k)).getComponentCount()==0) {
 							JButton lblNewLabel_3 = new JButton("<html><div style='text-align: center;'>Occup\u00E9e par le professeur de "+TestBox.getShortName(rs.getString("cic.courses_in_classroom_id"))+"</div></html>");
-							lblNewLabel_3.setFont(new Font("Roboto", Font.PLAIN, 14));
+							lblNewLabel_3.setName(rs.getString("cic.courses_in_classroom_id"));
+							lblNewLabel_3.setFont(new Font("Roboto", Font.PLAIN, 11));
 							lblNewLabel_3.setBackground(new Color(255, 208, 223));
 							lblNewLabel_3.setOpaque(true);
 							lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-							lblNewLabel_3.setPreferredSize(new Dimension(160, 60));
+							lblNewLabel_3.setPreferredSize(new Dimension(140, 60));
 							lblNewLabel_3.setFocusPainted(false);
 							lblNewLabel_3.setBorder(new LineBorder(Color.white));
 							redZones.add(((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(k));
@@ -1137,18 +1144,19 @@ public static List<Component> getRedAreas(String teacher_id, String classroom_in
 
 		ResultSet rs=stmt.executeQuery("SELECT * FROM teachers_in_classrooms as tic "
 				+ "JOIN schedule_class AS sc "
+				+ "JOIN schedule_course AS sco "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "JOIN courses_in_classroom as cic "
 				+ "JOIN courses AS co "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-						+ "AND sc.cia_id = cic.cia_id AND cic.cia_id = '"+classroom_in_ay_id+"'AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id <> '"+teacher_id+"' "
+						+ "AND sc.cia_id = cia.cia_id AND cia.cia_id = '"+classroom_in_ay_id+"'AND co.course_id = cic.course_id AND sc.schedule_id = sco.schedule_id AND tic.tic_id = sco.tic_id AND cic.is_active = 1 AND co.is_active = 1");
 		while(rs.next())
 		{
 						
 							for(int k = 1; k< ((Container) panel1.getComponent(0)).getComponentCount(); k++) {
 								if(!((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().equals("Pause")) {
-						if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time")+":"+rs.getString("sc.end_time")))) {
+						if(((JLabel) ((Container) panel1.getComponent(0)).getComponent(k)).getText().replaceAll("h", ":").equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)))) {
 							areas.add(((Container) panel1.getComponent(Integer.parseInt(rs.getString("sc.day_of_the_week")))).getComponent(k));
 					
 				//	break;
@@ -1446,7 +1454,9 @@ public static void actions(String teacher_id, String ay_id) {
 									((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0).setForeground(((Container) ((Container) (((Container) selectedSession).getComponent(0))).getComponent(0)).getComponent(0).getForeground());
 									((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0).setForeground(((Container) ((Container) (((Container) selectedSession).getComponent(0))).getComponent(1)).getComponent(0).getForeground());
 									((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setText(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(0))).getComponent(0)).getText());
+									((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setName(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(0))).getComponent(0)).getName());
 									((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setText(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getText());
+									((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setName(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName());
 									((JComponent) ((Container) session.getComponent(1)).getComponent(1)).setBorder(new LineBorder(((JPanel)((Container) panel1.getComponent(m)).getComponent(k)).getBackground() ,4));
 									session.inverse.setVisible(false);
 									
@@ -1458,7 +1468,9 @@ public static void actions(String teacher_id, String ay_id) {
 									((Container) ((Container) ((Container) session1.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0).setForeground(((Container) ((Container) (((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponent(0))).getComponent(0)).getComponent(0).getForeground());
 									((Container) ((Container) ((Container) session1.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0).setForeground(((Container) ((Container) (((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponent(0))).getComponent(1)).getComponent(0).getForeground());
 									((JLabel) ((Container) ((Container) ((Container) session1.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setText(((JLabel) ((Container) (((Container) (((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponent(0))).getComponent(0))).getComponent(0)).getText());
+									((JLabel) ((Container) ((Container) ((Container) session1.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setName(((JLabel) ((Container) (((Container) (((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponent(0))).getComponent(0))).getComponent(0)).getName());
 									((JLabel) ((Container) ((Container) ((Container) session1.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setText(((JLabel) ((Container) (((Container) (((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponent(0))).getComponent(1))).getComponent(0)).getText());
+									((JLabel) ((Container) ((Container) ((Container) session1.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setName(((JLabel) ((Container) (((Container) (((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponent(0))).getComponent(1))).getComponent(0)).getName());
 									((JComponent) ((Container) session1.getComponent(1)).getComponent(1)).setBorder(new LineBorder(((JPanel)((Container) panel1.getComponent(m)).getComponent(k)).getBackground() ,4));
 
 									
@@ -1496,8 +1508,9 @@ public static void actions(String teacher_id, String ay_id) {
 						}}
 						}}
 					}
-
-					if(SessionisSelected && ((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponentCount()>0  && !((JLabel) ((Container) (((Container) (((Container) ((JComponent) ((Container) panel1.getComponent(m)).getComponent(k))).getComponent(0))).getComponent(1))).getComponent(0)).getName().equals
+					if(((JComponent) ((Container) panel1.getComponent(m)).getComponent(k)).getComponentCount()>0) {
+					String comp = ((JLabel) ((Container) (((Container) (((Container) ((JComponent) ((Container) panel1.getComponent(m)).getComponent(k))).getComponent(0))).getComponent(1))).getComponent(0)).getName();
+							if(SessionisSelected && ((Container) ((Container) panel1.getComponent(m)).getComponent(k)).getComponentCount()>0  && !comp.equals
 							(((JLabel) ((Container) (((Container) (((Container) selectedSession).getComponent(0))).getComponent(1))).getComponent(0)).getName())
 							) {
 						if(((Container) ((Container) panel1.getComponent(m)).getComponent(k)) instanceof JPanel){
@@ -1505,6 +1518,7 @@ public static void actions(String teacher_id, String ay_id) {
 
 						((JComponent) selectedSession).setBorder(new LineBorder(new Color(0, 255, 153), 5));
 						}}
+				}
 				}
 				
 				@Override
@@ -1522,7 +1536,9 @@ public static void actions(String teacher_id, String ay_id) {
 					((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0).setForeground(((Container) ((Container) (((Container) selectedComponent).getComponent(1))).getComponent(0)).getComponent(0).getForeground());
 					((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0).setForeground(((Container) ((Container) (((Container) selectedComponent).getComponent(1))).getComponent(1)).getComponent(0).getForeground());
 					((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setText(((JLabel) ((Container) (((Container) (((Container) selectedComponent).getComponent(1))).getComponent(0))).getComponent(0)).getText());
+					((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(0)).getComponent(0)).setName(((JLabel) ((Container) (((Container) (((Container) selectedComponent).getComponent(1))).getComponent(0))).getComponent(0)).getName());
 					((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setText(((JLabel) ((Container) (((Container) (((Container) selectedComponent).getComponent(1))).getComponent(1))).getComponent(0)).getText());
+					((JLabel) ((Container) ((Container) ((Container) session.getComponent(1)).getComponent(1)).getComponent(1)).getComponent(0)).setName(((JLabel) ((Container) (((Container) (((Container) selectedComponent).getComponent(1))).getComponent(1))).getComponent(0)).getName());
 					((JComponent) ((Container) session.getComponent(1)).getComponent(1)).setBorder(new LineBorder(((JPanel)((Container) panel1.getComponent(m)).getComponent(k)).getBackground() ,4));
 					((JPanel)((Container) panel1.getComponent(m)).getComponent(k)).add(((Container) session.getComponent(1)).getComponent(1));
 					session.inverse.setVisible(false);
