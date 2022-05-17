@@ -704,7 +704,7 @@ public static void loadStudentdata(Container c, String student_in_classroom_id, 
         public Void doInBackground() throws Exception{
 		Application.manageTabs(classroom_in_ay_id);
 		
-		List<String> l = new ArrayList();
+		List l = new ArrayList();
 		l.add("0");
 		l.add("0/0");
 		List<String> l1 = new ArrayList();
@@ -734,15 +734,13 @@ if(points1==0 && maxima==0 ) {
 	
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(2)))).setText("Points: "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
 	
-	
-	
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(0)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
 	
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(6)))).setText(String.valueOf(StudentStats.getNumberOfechecs(student_in_classroom_id, "All",
 			classroom_in_ay_id, term_id, "All", "All"))+" echecs");
 	
-	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(8)))).setText(String.valueOf(l.get(2))+" interros");
-	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(12)))).setText("Progres: "+String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(8)))).setText(String.valueOf(((List)l.get(6)).toArray().length)+" interros");
+	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(12)))).setText("Progres: "+String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5).toString())))+"%");
 	
 	return null;
         }

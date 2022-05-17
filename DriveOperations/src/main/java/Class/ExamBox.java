@@ -81,14 +81,15 @@ public class ExamBox extends JPanel {
 				
 				for(int i =0;i<getComponentCount();i++) {
 					for(int j = 0;j<getParent().getComponentCount();j++) {
+						if((Container) getParent().getComponent(j) instanceof ExamBox) {
 						((Container) getParent().getComponent(j)).getComponent(i).setForeground(Color.white);
 						getParent().getComponent(j).setBackground(new Color(60, 60, 60));
 						((JComponent) getParent().getComponent(j)).setBorder(null);
 						
-				}}
+				}}}
 				
 				for(int i = 0; i< getParent().getComponentCount(); i++) {
-
+					if(getParent().getComponent(i) instanceof ExamBox) {
 					getParent().getComponent(i).setPreferredSize(new Dimension(getWidth(), 40));
 					
 					for(int i1 =4; i1<getComponentCount();i1++) {
@@ -101,7 +102,7 @@ public class ExamBox extends JPanel {
 					Application.panelExams.revalidate();
 					Application.panelExams.repaint();
 				}
-				
+				}
 				isSelected = true;
 				//TestMenu.edit.setVisible(true);
 				//TestMenu.delete.setVisible(true);
@@ -124,7 +125,7 @@ public class ExamBox extends JPanel {
 				}else {
 					
 					Application.no.setText(getName());
-					setBackground(new Color(100, 100, 100));	
+					setBackground(new Color(100, 100, 100));
 					setPreferredSize(new Dimension(getWidth(), (((Container) getComponent(0)).getComponentCount()+1)*40+6));
 					//Application.panelExams.setLayout(new WrapLayout(1, 5, 5));
 					
@@ -145,8 +146,8 @@ public class ExamBox extends JPanel {
 						setPreferredSize(new Dimension(getWidth(), 40));
 						
 
-						for(int i =4; i<getComponentCount();i++) {
-							getComponent(i).setVisible(true);
+						for(int i =4; i<((Container) getComponent(1)).getComponentCount();i++) {
+							((Container) getComponent(1)).getComponent(i).setVisible(true);
 						}
 						
 						Application.panelExams.revalidate();
@@ -154,8 +155,8 @@ public class ExamBox extends JPanel {
 						
 
 						for(int j = 0;j<((Container) getComponent(0)).getComponentCount();j++) {
-							for(int i =4; i<getComponentCount();i++) {
-							((Container) ((Container) getComponent(0)).getComponent(j)).getComponent(i).setForeground(Color.white);
+							for(int i =4; i<((Container) getComponent(1)).getComponentCount();i++) {
+							((Container) ((Container) ((Container) getComponent(0)).getComponent(j)).getComponent(1)).getComponent(i).setForeground(Color.white);
 							((Container) getComponent(0)).getComponent(j).setBackground(new Color(60, 60, 60));
 						}
 					}
@@ -194,9 +195,9 @@ public class ExamBox extends JPanel {
 
 					if(isSelected) {
 					getComponent(i).setForeground(Color.white);
-					if(Integer.parseInt(getName()) <= getParent().getComponentCount()) {
-					((Container) getParent().getComponent(Integer.parseInt(getName())-1)).getComponent(i).setForeground(Color.white);
-					}
+					//if(Integer.parseInt(getName()) <= getParent().getComponentCount()) {
+					//((Container) getParent().getComponent(Integer.parseInt(getName())-1)).getComponent(i).setForeground(Color.white);
+					//}
 					if(!isCollapsed && serie!=0 && ((Container) getComponent(0)).getComponentCount()==0){
 						getParent().getComponent(serie-1).setBackground(new Color(20, 148, 198));
 					}
@@ -214,16 +215,21 @@ public class ExamBox extends JPanel {
 		});
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(1325, 40));
-		setLayout(null);
+		setLayout(new BorderLayout(0, 0));
 		
 		series = new JPanel();
 		series.setBackground(getBackground());
 		series.setBorder(null);
-		series.setBounds(3, 40, 1320, 80);
-		add(series);
+		add(series, BorderLayout.SOUTH);
 		series.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 		
+		JPanel panel = new JPanel();
+		add(panel);
+		panel.setBackground(panel.getParent().getBackground());
+		panel.setLayout(new FlowLayout(FlowLayout.LEADING, 55, 0));
+		
 		JLabel lblNo = new JLabel("2");
+		panel.add(lblNo);
 		lblNo.setIconTextGap(15);
 		lblNo.setIcon(null);
 		lblNo.addMouseListener(new MouseAdapter() {
@@ -233,60 +239,51 @@ public class ExamBox extends JPanel {
 		});
 		lblNo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNo.setForeground(new Color(211, 211, 211));
-		lblNo.setFont(new Font("Roboto", Font.PLAIN, 16));
-		lblNo.setBounds(35, 0, 45, 40);
-		add(lblNo);
+		lblNo.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		lblNdashimyeMaxBrillant = new JLabel("Comptabilite Generale");
+		panel.add(lblNdashimyeMaxBrillant);
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblNdashimyeMaxBrillant.setBounds(104, 0, 407, 40);
-		add(lblNdashimyeMaxBrillant);
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 16));
 		
 		JLabel label_3 = new JLabel("31/12/2003");
+		panel.add(label_3);
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_3.setForeground(new Color(211, 211, 211));
-		label_3.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_3.setBounds(514, 0, 134, 40);
-		add(label_3);
+		label_3.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		JLabel label = new JLabel("0/0");
+		panel.add(label);
 		label.setForeground(new Color(211, 211, 211));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label.setBounds(720, 0, 119, 40);
-		add(label);
+		label.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		JLabel label_1 = new JLabel("0%");
+		panel.add(label_1);
 		label_1.setForeground(new Color(211, 211, 211));
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_1.setBounds(878, 0, 134, 40);
-		add(label_1);
+		label_1.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		JLabel label_2 = new JLabel("0");
+		panel.add(label_2);
 		label_2.setForeground(new Color(211, 211, 211));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_2.setBounds(1050, 0, 94, 40);
-		add(label_2);
+		label_2.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		label_5 = new JLabel("0%");
+		panel.add(label_5);
 		label_5.setForeground(new Color(211, 211, 211));
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_5.setBounds(1178, 0, 147, 40);
-		add(label_5);
+		label_5.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		icon = new JLabel("");
+		panel.add(icon);
 		icon.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop2.png"));
 		icon.setIconTextGap(15);
 		icon.setHorizontalAlignment(SwingConstants.CENTER);
 		icon.setForeground(Color.WHITE);
 		icon.setFont(new Font("Roboto", Font.PLAIN, 23));
-		icon.setBounds(0, 0, 45, 40);
-		add(icon);
 	
 	
 	}
@@ -325,24 +322,24 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 						
 						eb.setName(rs.getString("exam_id"));
 						List<String> listOfSeries = Exam.getExamSeries(rs.getString("exam_id"));
-						((JLabel) (eb).getComponent(1)).setText(String.valueOf(listOfSeries.toArray().length));
+						((JLabel) ((Container) (eb).getComponent(1)).getComponent(1)).setText(String.valueOf(listOfSeries.toArray().length));
 						String name = TestBox.getFullName(Exam.getExamCourse(rs.getString("exam_id")));
-						((JLabel) (eb).getComponent(2)).setText(name);
-						((JLabel) (eb).getComponent(3)).setText(Exam.getExamDate(rs.getString("exam_id")));
+						((JLabel) ((Container) (eb).getComponent(1)).getComponent(2)).setText(name);
+						((JLabel) ((Container) (eb).getComponent(1)).getComponent(3)).setText(Exam.getExamDate(rs.getString("exam_id")));
 						JPanel jp = (JPanel) (eb).getComponent(0);
 							int k = 0;
 							for(int j = 0; j<listOfSeries.toArray().length;j++) {
 								k++;
 								ExamBox eb1 = new ExamBox();
+								eb1.setName(listOfSeries.get(j).toString());
 								jp.add(eb1);
 								
-								jp.getComponent(k-1).setName(listOfSeries.get(j));
-								((JLabel) ((Container) jp.getComponent(k-1)).getComponent(1)).setText(String.valueOf(k));
-								((JLabel) ((Container) jp.getComponent(k-1)).getComponent(2)).setText(Exam.getSerieName(listOfSeries.get(j)));
-								((JLabel) ((Container) jp.getComponent(k-1)).getComponent(3)).setText("");
+								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(1)).setText(String.valueOf(k));
+								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(2)).setText(Exam.getSerieName(listOfSeries.get(j)));
+								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(3)).setText("");
 								
 								eb1.setPreferredSize(new Dimension(1325*99/100,40*99/100));
-								((JLabel) eb1.getComponent(8)).setIcon(null);
+								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(8)).setIcon(null);
 							}
 							if(((Container) eb.getComponent(0)).getComponentCount()>0) {
 						((JLabel) (eb).getComponent(8)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
@@ -508,7 +505,7 @@ public static void loadExamData(Component c, List<String> listOfSeries, String e
 				}
 
 					if(((Container) ((Container) (c)).getComponent(0)).getComponentCount()>0) {
-					int max = Integer.parseInt(Exam.getSerieMaxima(listOfSeries.get(k)));
+					double max = Double.parseDouble(Exam.getSerieMaxima(listOfSeries.get(k)));
 					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(4)).setText((new DecimalFormat("##.##").format(sum2/participants1))+"/"+max);
 					System.out.println(participants1);
 					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum2/participants1)/max)+"%"));
@@ -520,13 +517,17 @@ public static void loadExamData(Component c, List<String> listOfSeries, String e
 					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(3)).setText(participants1+" eleves");
 					}
 					}
-					((JLabel) ((Container) c).getComponent(4)).setText((new DecimalFormat("##.##").format(sum/participants))+"/"+Exam.getExamMaxima(exam_id));
+					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(4)).setText((new DecimalFormat("##.##").format(sum/participants))+"/"+Exam.getExamMaxima(exam_id));
 					System.out.println(participants);
-					((JLabel) ((Container) c).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum/participants)/Integer.parseInt(Exam.getExamMaxima(exam_id)))+"%"));
-					((JLabel) ((Container) c).getComponent(6)).setText(String.valueOf(echecs));
+					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum/participants)/Integer.parseInt(Exam.getExamMaxima(exam_id)))+"%"));
+					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(6)).setText(String.valueOf(echecs));
 					String reussite = new DecimalFormat("##.##").format(100-(Double.parseDouble(String.valueOf(echecs))/Double.parseDouble(String.valueOf(participants))*100));
-					((JLabel) ((Container) c).getComponent(7)).setText(reussite+"%");
+					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(7)).setText(reussite+"%");
 					
+					c.revalidate();
+					c.repaint();
+					c.getParent().revalidate();
+					c.repaint();
 				
 	}
 	

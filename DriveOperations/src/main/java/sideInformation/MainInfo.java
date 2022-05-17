@@ -18,6 +18,7 @@ import Class.CustomVerticalScrollBarUI;
 import Stats.CourseStats;
 import Stats.StatsPane;
 import Stats.StudentStats;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
@@ -192,7 +193,7 @@ public class MainInfo extends JPanel {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				EducationFrame ef = new EducationFrame();
+				EducationFrame ef = new EducationFrame(Login.selectedAcademicYearID);
 				ef.setVisible(true);
 			}
 		});

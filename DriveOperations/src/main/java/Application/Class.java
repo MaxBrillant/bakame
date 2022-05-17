@@ -638,7 +638,7 @@ public static void loadData(Component c, String classroom_in_ay_id, String term_
 	
 	List l20 = CourseStats.getStudentTestsStats("All", classroom_in_ay_id, "All", term_id, "All", "All");
 	
-	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(2)).setText(l20.get(2)+" interros");
+	((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(1)).getComponent(2)).setText(((List) l20.get(6)).toArray().length+" interros");
 
 	((Container) c).revalidate();
 	((Container) c).repaint();

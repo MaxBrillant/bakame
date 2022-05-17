@@ -108,7 +108,7 @@ public class PunishedStudents extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PunishedStudents(String pi_id, String classroom_id, String ay_id, List students) {
+	public PunishedStudents(String pi_id, String classroom_in_ay_id, List students) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -194,16 +194,16 @@ public class PunishedStudents extends JFrame {
 	lblLe.setBounds(10, 32, 514, 31);
 	contentPane.add(lblLe);
 	setLocationRelativeTo(null);
-	loadPunishedStudents(pi_id, classroom_id, ay_id, students);
+	loadPunishedStudents(pi_id, classroom_in_ay_id, students);
 	}
 	
 	
 	
 	
-	public static void loadPunishedStudents(String pi_id, String classroom_id, String ay_id, List students) {
+	public static void loadPunishedStudents(String pi_id, String classroom_in_ay_id, List students) {
 		panel.removeAll();
 		
-		String points = Punish.getPunishmentPoints(Punish.getPunishmentOriginalId(pi_id), ay_id);
+		String points = Punish.getPunishmentPoints(Punish.getPunishmentOriginalId(pi_id));
 		for(int i = 0; i< students.toArray().length; i++) {
 			
 			JPanel panel_3 = new JPanel();
@@ -258,11 +258,11 @@ public class PunishedStudents extends JFrame {
 			btnToutPardonner.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Punish.forgive(students.get(k).toString(), btnToutPardonner.getParent().getName());
-					loadPunishedStudents(pi_id, classroom_id, ay_id, students);
+					loadPunishedStudents(pi_id, classroom_in_ay_id, students);
 
 		        	Punish.panel_2.removeAll();
 		        	for(int j = 0; j< Home.terms.toArray().length; j++) {
-		        		Punish.loadClassPunishments(classroom_id, ay_id, Home.terms.get(j));
+		        		Punish.loadClassPunishments(classroom_in_ay_id, Home.terms.get(j));
 		    		}
 			
 				}

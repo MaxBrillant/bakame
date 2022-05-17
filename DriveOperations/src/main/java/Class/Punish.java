@@ -435,8 +435,8 @@ public class Punish extends JFrame {
 					+ "JOIN punishments AS p "
 					+ "JOIN punishment_information as pi "
 					+ "JOIN student_punishments as sp "
-					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.punishment_id = p.punishment_id AND pia.punishment_id = pi.punishment_id "
-					+ "AND pi.pi_id = sp.pi_id AND pi.term_id = '"+term_id+"' AND sp.student_id = '"+student_in_classroom_id+"'");
+					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.punishment_id = p.punishment_id AND pia.pia_id = pi.pia_id "
+					+ "AND pi.pi_id = sp.pi_id AND pi.term_id = '"+term_id+"' AND sp.sic_id = '"+student_in_classroom_id+"'");
 			while(rs.next())
 			{
 			JPanel panel_1 = new JPanel();
@@ -549,8 +549,8 @@ public class Punish extends JFrame {
 			while(rs.next())
 			{
 				for(int i = 0; i< s.length; i++) {
-					if(rs.getString("student_id").equals(s[i].toString())) {
-						students.add(rs.getString("student_id"));
+					if(rs.getString("sic_id").equals(s[i].toString())) {
+						students.add(rs.getString("sic_id"));
 					}
 				}
 			}
@@ -571,7 +571,7 @@ public class Punish extends JFrame {
 			ResultSet rs=stmt.executeQuery("select * from punishments_in_ay AS pia "
 					+ "JOIN punishments AS p "
 					+ "JOIN punishment_information as pi "
-					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.punishment_id = p.punishment_id AND pia.punishment_id = pi.punishment_id "
+					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.punishment_id = p.punishment_id AND pia.pia_id = pi.pia_id "
 					+ "AND pi.term_id = '"+term_id+"'");
 			while(rs.next())
 			{
@@ -651,7 +651,7 @@ public class Punish extends JFrame {
 					panel_3.getComponent(2).setVisible(true);
 					
 					if(e.getClickCount()==2) {
-						PunishedStudents ps = new PunishedStudents(panel_3.getName());
+						PunishedStudents ps = new PunishedStudents(panel_3.getName(), classroom_in_ay_id, students);
 						ps.setVisible(true);
 					}
 				}
@@ -849,7 +849,7 @@ public static void forgiveAll(String className, String punishmentID) {
 	
 	
 
-	public static String getPunishmentPoints(String punishment_id, String ay_id) {
+	public static String getPunishmentPoints(String punishment_in_ay_id) {
 		String points = null;
 		
 		
@@ -857,7 +857,7 @@ public static void forgiveAll(String className, String punishmentID) {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("select * from punishments_in_ay "
-					+ "WHERE punishment_id =  '"+punishment_id+"' AND ay_id = '"+ay_id+"' LIMIT 1");
+					+ "WHERE pia_id =  '"+punishment_in_ay_id+"' LIMIT 1");
 			while(rs.next())
 			{
 				points = rs.getString("points");
@@ -869,7 +869,7 @@ public static void forgiveAll(String className, String punishmentID) {
 		return points;
 	}
 
-	public static String getPunishmentOriginalId(String pi_id) {
+	public static String getPunishmentOriginalId(String punishment_in_ay_id) {
 		String id = null;
 		
 		
@@ -877,10 +877,10 @@ public static void forgiveAll(String className, String punishmentID) {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("select * from punishment_information "
-					+ "WHERE pi_id =  '"+pi_id+"'");
+					+ "WHERE pia_id =  '"+punishment_in_ay_id+"'");
 			while(rs.next())
 			{
-				id = rs.getString("punishment_id");
+				id = rs.getString("pia_id");
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

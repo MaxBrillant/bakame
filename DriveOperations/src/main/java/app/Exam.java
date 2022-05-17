@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 
 import javax.swing.JProgressBar;
@@ -63,6 +64,7 @@ public class Exam extends JPanel {
 	public static boolean isSelected;
 
 	public static int selected;
+	public static List<Component> selectedExams = new ArrayList();
 
 	/**
 	 * Create the panel.
@@ -136,40 +138,31 @@ public class Exam extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				
 
+				boolean alreadyExists = false;
+
+					if(selectedExams.contains(getComponent(0).getParent())) {
+					alreadyExists = true;
+					}
+					deselect(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
+					selectedExams.clear();
+					selectedExams.add(getComponent(0).getParent());
+				
+				
+					for(int j = 0; j< LPane.panel_2.getComponentCount(); j++) {
+						if(LPane.panel_2.getComponent(j).equals(selectedExams.get(0))) {
+							LPane.panel_2.getComponent(j).setBackground(new Color(20, 148, 198));
+							((Container) LPane.panel_2.getComponent(j)).getComponent(1).setForeground(Color.WHITE);
+							((Container) LPane.panel_2.getComponent(j)).getComponent(2).setForeground(Color.WHITE);
+							//((Container) LPane.panel_2.getComponent(j)).getComponent(3).setForeground(Color.WHITE);
+							}}
+					showTestData(getName(), student_in_classroom_id);
+			//
+		
+				
 
 				//setBorder(new LineBorder(Color.white, 2));
-				Test.deselect(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 
 				isSelected = true;
-				String str = ((JProgressBar)getComponent(0)).getString().replaceAll("[^0.00-9.00]+", "/");
-				List note = Arrays.asList(str.trim().split("/"));
-				LPane.points.setText(note.get(0)+"/"+note.get(1));
-				
-				
-				LPane.points.setForeground(new Color(255, 33, 94));
-				LPane.mention.setForeground(new Color(255, 33, 94));
-				LPane.mention();
-				
-				LPane.average.setVisible(false);
-				LPane.comboBox.setVisible(false);
-				
-				setBackground(new Color(20, 148, 198));
-				getComponent(1).setForeground(Color.WHITE);
-				getComponent(2).setForeground(Color.WHITE);
-				LPane.no.setText("Serie No "+((JLabel) getComponent(1)).getText());//this will give the number of tests
-				LPane.supprimer.setVisible(true);
-				LPane.modifier.setVisible(true);
-				
-				selected = Integer.parseInt(((JLabel) getComponent(1)).getText())-1;
-
-				if(App.panel_5.getComponentCount()>0) {
-				int num = Integer.parseInt(LPane.no.getText().replaceAll("[^0.00-9.00]", ""));
-				LPane.panel_2.getComponent(num-1).setPreferredSize(new Dimension((int) ((screensize.getWidth()*31/100)*103)/100,(int) (((screensize.getHeight()*82/100*7/100)*105)/100)));
-				}
-				
-				LPane.panel_2.revalidate();
-				LPane.panel_2.repaint();
-				
 				if(e.getClickCount()==2){
 					NewTest nt = new NewTest(getName());
 				nt.setVisible(true);
@@ -185,90 +178,102 @@ public class Exam extends JPanel {
 					NewTest.TP.setText(getSerieMaxima(getName()));
 					NewTest.interro.setText(getSerieName(getName()));
 				}
-				
-				if(isSelected) {
-					LPane.panel_2.getComponent(selected).setBackground(new Color(20, 148, 198));
-					((Container) LPane.panel_2.getComponent(selected)).getComponent(1).setForeground(Color.white);
-				}
 		}
 			public void mouseEntered(MouseEvent e) {
-				
-				
-				setBorder(null);
-				setBackground(new Color(120, 120, 120));
-				setForeground(Color.white);
-				if(!getComponent(0).isVisible()) {
-					
-				}
 
-				if(isSelected) {
-					LPane.panel_2.getComponent(selected).setBackground(new Color(20, 148, 198));
-					((Container) LPane.panel_2.getComponent(selected)).getComponent(1).setForeground(Color.white);
+				if(!selectedExams.contains(getComponent(0).getParent())) {
+					setBorder(null);
+					setBackground(new Color(120, 120, 120));
+					setForeground(Color.white);
+					if(!getComponent(0).isVisible()) {
+						getComponent(1).setForeground(new Color(255, 102, 102).brighter());
+						getComponent(2).setForeground(new Color(255, 102, 102).brighter());
+						
+					}
 				}
 			}public void mouseExited(MouseEvent e) {
-				if(!getComponent(0).isVisible()) {
-					setBackground(LPane.panel_3.getBackground());
-					setForeground(Color.white);
+				
+
+				if(!selectedExams.contains(getComponent(0).getParent())) {
+					if(!getComponent(0).isVisible()) {
+					setBackground(LPane.panel_2.getBackground());
 					setBorder(new LineBorder(Color.white, 2));
 					getComponent(1).setForeground(Color.white);
+					getComponent(2).setForeground(Color.white);
 				}else {
 			setBackground(new Color(80, 80, 80));
 			setBorder(null);
-				}
-				if(isSelected) {
-					LPane.panel_2.getComponent(selected).setBackground(new Color(20, 148, 198));
-					((Container) LPane.panel_2.getComponent(selected)).getComponent(1).setForeground(Color.white);
-				}
+				}}
 			}
 		});
 
 	}
-	
-	
-	public static void color() {
 
-		for (int k = 0; k< LPane.panel_2.getComponentCount();k++) {
-			String str = ((JProgressBar) ((Container) LPane.panel_2.getComponent(k)).getComponent(0)).getString();
-			List note = Arrays.asList(str.trim().split("/"));
-			
-			Color color;
-			if(Double.parseDouble((String)note.get(0))/Double.parseDouble((String)note.get(1))*100 >=50) {
-				color = new Color(0, 168, 96);
-			}else {
-				color = new Color(255, 33, 94);
-			}
-			
-			Exam.progress.setUI(new BasicProgressBarUI() {
-				protected Color getSelectionBackground() { return color;}
-				protected Color getSelectionForeground() { return Color.white;
-				}
-			});
-			
-			
+
+
+	private void showTestData(String serie_id, String student_in_classroom_id) {
+
+		String note = LPane.loadStudentSerieNote(serie_id, student_in_classroom_id);
+		String percent = Test.getTestPercent(note);
+		LPane.points.setText(note);
+		LPane.prog.setText("Pas de progression");
+		LPane.pourcent.setText("Pourcentage: "+percent+"%");
+		List l = Arrays.asList(note.split("/"));
+		if(Double.parseDouble(percent)>=50) {
+		LPane.echec.setText("Augmentation: "+new DecimalFormat("##.##").format((Double.parseDouble(l.get(0).toString())-(Double.parseDouble(l.get(1).toString())/2)))+" points");
+		}else {
+			LPane.echec.setText("Echec: "+new DecimalFormat("##.##").format((Double.parseDouble(l.get(1).toString())/2)-Double.parseDouble(l.get(0).toString()))+" points");
 		}
 		
+		LPane.points.setForeground(new Color(255, 33, 94));
+		LPane.mention.setForeground(new Color(255, 33, 94));
+		LPane.mention();
+		
+		LPane.average.setVisible(false);
+		LPane.comboBox.setVisible(false);
+		LPane.no.setText(getSerieName(serie_id));
+		
+		
+		LPane.panel_2.revalidate();
+		LPane.panel_2.repaint();
 	}
 	
-	public static void deselect(String course_id, String student_id, String classroom_id) {
+	static void color(Container exam) {
+		String str = ((JProgressBar) ((Container) (exam)).getComponent(0)).getString();
+		List note = Arrays.asList(str.trim().split("/"));
 		
+		Color color;
+		if(Double.parseDouble((String)note.get(0))/Double.parseDouble((String)note.get(1))*100 >=50) {
+			color = new Color(0, 168, 96);
+		}else {
+			color = new Color(255, 33, 94);
+		}
+		
+		((JProgressBar) ((Container) (exam)).getComponent(0)).setUI(new BasicProgressBarUI() {
+			protected Color getSelectionBackground() { return color;}
+			protected Color getSelectionForeground() { return Color.white;
+			}
+		});
+		
+	
+}
+	
+	public static void deselect(String course_in_classroom_id, String student_in_classroom_id, String classroom_in_ay_id) {
 		for(int i = 0; i < LPane.panel_2.getComponents().length;i++) {
 			
-			Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-			
-			LPane.panel_2.getComponent(i).setPreferredSize(new Dimension((int) screensize.getWidth()*31/100,(int) (screensize.getHeight()*82/100*7/100)));
-			
+			if(((JComponent) LPane.panel_2.getComponent(i)) instanceof Exam) {
 			if(!((JComponent) LPane.panel_2.getComponent(i)).getComponent(0).isVisible()) {
 				((JComponent) LPane.panel_2.getComponent(i)).setBackground(LPane.panel_2.getBackground());
 				((Container) LPane.panel_2.getComponent(i)).getComponent(1).setForeground(Color.white);
 				((JComponent) LPane.panel_2.getComponent(i)).setBorder(new LineBorder(Color.white, 2));
 			}else {
-		((JComponent) LPane.panel_2.getComponent(i)).setBackground(new Color(60, 60, 60));
+		((JComponent) LPane.panel_2.getComponent(i)).setBackground(new Color(80, 80, 80));
 		((Container) LPane.panel_2.getComponent(i)).getComponent(1).setForeground(Color.white);
 		((Container) LPane.panel_2.getComponent(i)).getComponent(2).setForeground(Color.white);
 			}
-	}
+	}}
 		
-List l = StudentStats.getStudentExamStats(student_id, classroom_id, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
+		List l = StudentStats.getStudentExamStats(student_in_classroom_id, classroom_in_ay_id, course_in_classroom_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
 		
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 		
@@ -281,19 +286,19 @@ List l = StudentStats.getStudentExamStats(student_id, classroom_id, course_id, H
 		}else {
 			percentage = points1*100/maxima;
 		}
-		
+
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
-		
-
 		LPane.supprimer.setVisible(false);
 		LPane.modifier.setVisible(false);
-		LPane.no.setText(l.get(2).toString()+" Series effectuees");
+		
+		
+		LPane.no.setText((l.get(2))+" series effectuees");
+		
+		
 		
 
-		
-
-		LPane.prog.setText("Progression: "+ l.get(5).toString()+"%");
+		LPane.prog.setText("Progression: -");
 		LPane.pourcent.setText("Pourcentage: "+new DecimalFormat("##.##").format(percentage)+"%");
 		LPane.points.setText(l.get(1).toString());
 		if(percentage>=50) {
@@ -308,12 +313,12 @@ List l = StudentStats.getStudentExamStats(student_id, classroom_id, course_id, H
 		
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
-		//selectedTests.clear();
-		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_id, classroom_id, Login.selectedAcademicYearID));
+		selectedExams.clear();
+		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_in_classroom_id));
 		
 			LPane.mention();
 			LPane.average();
-		}
+	}
 	
 	
 	public static void saveExistingExam() {
@@ -483,12 +488,12 @@ public static String getExamCourse(String exam_id) {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("SELECT * from exam_information AS ei "
-					+ "JOIN course_examss AS ce "
+					+ "JOIN course_exams AS ce "
 					+ "WHERE ei.exam_id = ce.exam_id AND ei.is_active = 1 AND ei.exam_id = '"+exam_id+"' LIMIT 1");
 		
 		while(rs.next())
 		{
-			course = rs.getString("ce.course_id");
+			course = rs.getString("ce.courses_in_classroom_id");
 		}
 		
 		} catch (SQLException e1) {
@@ -510,7 +515,7 @@ public static String getExamClassroom(String exam_id) {
 		
 		while(rs.next())
 		{
-			classroom = rs.getString("classroom_id");
+			classroom = rs.getString("cia_id");
 		}
 		
 		} catch (SQLException e1) {

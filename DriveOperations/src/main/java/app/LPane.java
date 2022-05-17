@@ -286,7 +286,7 @@ public class LPane extends JPanel {
 		panel_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Test.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
+				Exam.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
 			}
 		});
 		panel_2.setBorder(null);
@@ -296,8 +296,11 @@ public class LPane extends JPanel {
 		
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				if(tabbedPane.getSelectedIndex() == 0) {
 				Test.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
-			}
+			}else{
+				Exam.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
+				}}
 		});
 		loadAllTests(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 		loadAllExams(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
@@ -326,22 +329,23 @@ public class LPane extends JPanel {
 		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 12));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 14));
 		LPane.panel_3.add(lblNdashimyeMaxBrillant);
 		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(280, 30));
 		
 	boolean hasTests = false;
-	
+	int i = 0;
 		try {
 			Statement stmt= mysql.con.createStatement();
 
 			ResultSet rs=stmt.executeQuery("SELECT * from test_information AS ti "
 					+ "JOIN course_tests AS ct "
-					+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 AND ti.cia_id = '"+course_in_classroom_id+"' AND ti.term_id = '"+term_id+"' AND ct.courses_in_classroom_id = '"+course_in_classroom_id+"'");
+					+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 AND ti.cia_id = '"+classroom_in_ay_id+"' AND ti.term_id = '"+term_id+"' AND ct.courses_in_classroom_id = '"+course_in_classroom_id+"'");
 			
 		
 		while(rs.next())
 		{
+			i++;
 			hasTests = true;
 				String n = loadStudentNote(rs.getString("ti.test_id"), student_in_classroom_id);
 			List note = Arrays.asList(n.split("/"));
@@ -355,8 +359,8 @@ public class LPane extends JPanel {
 
 			t.getComponent(t.getComponentCount()-1).setVisible(false);
 			t.progression.setText(Math.round(Double.parseDouble(Test.getTestProgression(rs.getString("ti.test_id"), student_in_classroom_id)))+"%");
-			t.percent.setText(Math.round(Double.parseDouble(Test.getTestPercent(rs.getString("ti.test_id"), student_in_classroom_id)))+"%");
-			t.number.setText(rs.getString("ti.test_name"));
+			t.percent.setText(Math.round(Double.parseDouble(Test.getTestPercent(n)))+"%");
+			t.number.setText(i+"");
 			LPane.panel_3.revalidate();
 			LPane.panel_3.repaint();
 
@@ -386,7 +390,7 @@ public class LPane extends JPanel {
 				JLabel lblNdashimyeMaxBrillant1 = new JLabel("Aucune interrogation effectuee.");
 				lblNdashimyeMaxBrillant1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
-				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 12));
+				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 14));
 				LPane.panel_3.add(lblNdashimyeMaxBrillant1);
 				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(280, 30));
 		}
@@ -433,12 +437,12 @@ public static void loadExams(String course_in_classroom_id, String student_in_cl
 		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 12));
+		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 14));
 		LPane.panel_2.add(lblNdashimyeMaxBrillant);
 		lblNdashimyeMaxBrillant.setPreferredSize(new Dimension(280, 30));
 		
 		boolean hasTests = false;
-		
+		int i = 0;
 		try {
 			Statement stmt= mysql.con.createStatement();
 
@@ -451,69 +455,51 @@ public static void loadExams(String course_in_classroom_id, String student_in_cl
 		
 		while(rs.next())
 		{
-
+			hasTests = true;
+			i++;
 			String n = loadStudentSerieNote(rs.getString("s.serie_id"), student_in_classroom_id);
 		List note = Arrays.asList(n.split("/"));
 		String s = (String) note.get(1);
 		String g = (String) note.get(0);
 		
-						Exam t = new Exam(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id, term_id);
-						t.setName(rs.getString("s.serie_id"));
-						
-						t.progress.setString(g+"/"+ s);
-						
-						//t.getComponent(4).setVisible(false);
-						int i = Integer.parseInt(LPane.no.getText().replaceAll("[^0-9]", ""));
-						LPane.panel_2.add(t, i);
-						
-						if(t.progress.getString().equals("0/0")) {
-							t.setBackground(LPane.panel_3.getBackground());
-							t.setBorder(new LineBorder(Color.white, 2));
-							for(int j = 0;j<3;j++) {
-								t.getComponent(j).setVisible(false);
-							}
-							//t.getComponent(4).setVisible(true);
-							t.number.setVisible(true);
-						}
-						else {
-						t.progress.setValue((int) (100*Double.parseDouble(g)/Double.parseDouble(s)));
-						if(100*Double.parseDouble(g)/Double.parseDouble(s)<50) {
-							t.progress.setForeground(new Color(255, 33, 94));
-							Exam.color();
-						}else {
-							t.progress.setForeground(new Color(0, 168, 96));
-							Exam.color();
-						}
-						}
-						
+		Exam e = new Exam(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id, term_id);
+		e.setName(rs.getString("s.serie_id"));
+		e.progress.setString(g+"/"+ s);
+		LPane.panel_2.add(e);
 
-						//LPane.percent();
-					
-						//LPane.ranking();
-						//LPane.progression();
+		e.getComponent(e.getComponentCount()-1).setVisible(false);
+		e.number.setText(i+"");
+		LPane.panel_2.revalidate();
+		LPane.panel_2.repaint();
 
-						LPane.scrollPane2.revalidate();
-						LPane.scrollPane2.repaint();
-						LPane.panel_2.revalidate();
-						LPane.panel_2.repaint();
-						
-						//Exam.deselect();
-						
-						
-						 SwingUtilities.invokeLater(() -> {
-					            JScrollBar bar = LPane.scrollPane2.getVerticalScrollBar();
-					            bar.setValue(bar.getMaximum());
-					    });
+		if(!n.equals("0/0")) {
+		e.progress.setValue((int) (100*Double.parseDouble(g)/Double.parseDouble(s)));
+		if(100*Double.parseDouble(g)/Double.parseDouble(s)<50) {
+			e.progress.setForeground(new Color(247, 101, 141));
+			Test.color(e);
+		}else {
+			e.progress.setForeground(new Color(0, 168, 96));
+			Test.color(e);
+		}
+			}else {
+				e.progress.setVisible(false);
+				//t.percent.setVisible(false);
+				e.progress.setVisible(false);
+				//t.progression.setVisible(false);
+				e.getComponent(e.getComponentCount()-1).setVisible(true);
 
-						LPane.panel_2.revalidate();
-						LPane.panel_2.repaint();
+				e.setBackground(LPane.panel_2.getBackground());
+				e.setBorder(new LineBorder(Color.white, 2));
+				e.getComponent(1).setForeground(Color.white);
+				e.getComponent(2).setForeground(Color.white);
+			}
 					}
 
 		if(!hasTests) {
 				JLabel lblNdashimyeMaxBrillant1 = new JLabel("Aucune serie effectuee.");
 				lblNdashimyeMaxBrillant1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNdashimyeMaxBrillant1.setForeground(new Color(255, 255, 255).darker());
-				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 12));
+				lblNdashimyeMaxBrillant1.setFont(new Font("Roboto", Font.PLAIN, 14));
 				LPane.panel_2.add(lblNdashimyeMaxBrillant1);
 				lblNdashimyeMaxBrillant1.setPreferredSize(new Dimension(280, 30));
 		}
@@ -531,10 +517,10 @@ public static String loadStudentSerieNote(String serie_id, String student_in_cla
 		try {
 			Statement stmt= mysql.con.createStatement();
 
-			ResultSet rs=stmt.executeQuery("SELECT * from series AS s "
+			ResultSet rs=stmt.executeQuery("SELECT * FROM series AS s "
 					+ "JOIN exam_information AS ei "
 					+ "JOIN students_grades_exams AS sge "
-					+ "WHERE ei.exam_id = s.exam_id AND s.serie_id = '"+serie_id+"' AND sgt.sic_id = '"+student_in_classroom_id+" AND s.serie_id = sge.serie_id AND ei.is_active = 1");
+					+ "WHERE ei.exam_id = s.exam_id AND s.serie_id = '"+serie_id+"' AND sge.sic_id = '"+student_in_classroom_id+"' AND s.serie_id = sge.serie_id AND ei.is_active = 1");
 		
 		while(rs.next())
 		{

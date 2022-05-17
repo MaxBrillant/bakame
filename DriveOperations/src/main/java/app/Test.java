@@ -68,18 +68,18 @@ public class Test extends JPanel {
 	public Test(String course_in_classroom_id, String student_in_classroom_id, String classroom_in_ay_id, String term_id) {
 		setBackground(new Color(80, 80, 80));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension(280, 35));
+		setPreferredSize(new Dimension(340, 45));
 		setLayout(null);
 		
 		progress = new JProgressBar();
 		progress.setBorder(new LineBorder(new Color(255, 255, 255)));
-		progress.setBounds(42, 5, 148, 25);
+		progress.setBounds(42, 7, 196, 30);
 		progress.setBackground(LPane.panel_3.getBackground());
 		UIManager.put("progress.selectionBackground", Color.black);
 		progress.setStringPainted(true);
 		progress.setForeground(new Color(46, 139, 87));
 		progress.setValue(58);
-		progress.setFont(new Font("Roboto", Font.PLAIN, 14));
+		progress.setFont(new Font("Roboto", Font.BOLD, 16));
 		progress.setString("58/100");
 		
 		
@@ -107,22 +107,22 @@ public class Test extends JPanel {
 		number.setForeground(Color.WHITE);
 		number.setText("22");
 		number.setHorizontalAlignment(SwingConstants.CENTER);
-		number.setFont(new Font("Roboto", Font.PLAIN, 12));
-		number.setBounds(0, 2, 37, 30);
+		number.setFont(new Font("Roboto", Font.PLAIN, 14));
+		number.setBounds(0, 7, 37, 30);
 		add(number);
 		
 		percent = new JLabel("100%");
 		percent.setHorizontalAlignment(SwingConstants.CENTER);
 		percent.setForeground(Color.WHITE);
-		percent.setFont(new Font("Roboto", Font.PLAIN, 12));
-		percent.setBounds(190, 2, 48, 30);
+		percent.setFont(new Font("Roboto", Font.PLAIN, 14));
+		percent.setBounds(243, 7, 48, 30);
 		add(percent);
 		
 		progression = new JLabel("-100%");
 		progression.setForeground(Color.WHITE);
 		progression.setHorizontalAlignment(SwingConstants.CENTER);
-		progression.setFont(new Font("Roboto", Font.PLAIN, 12));
-		progression.setBounds(232, 2, 48, 30);
+		progression.setFont(new Font("Roboto", Font.PLAIN, 14));
+		progression.setBounds(285, 7, 48, 30);
 		add(progression);
 		
 		JLabel pasfait = new JLabel("N'as pas fait l'interrogation");
@@ -132,7 +132,7 @@ public class Test extends JPanel {
 		pasfait.setForeground(Color.WHITE);
 		pasfait.setHorizontalAlignment(SwingConstants.CENTER);
 		pasfait.setFont(new Font("Roboto", Font.BOLD, 14));
-		pasfait.setBounds(10, 2, 270, 33);
+		pasfait.setBounds(35, 6, 270, 33);
 		add(pasfait);
 		
 
@@ -215,12 +215,12 @@ public class Test extends JPanel {
 
 	}
 	
-	public static void showTestData(String test_id, String student_id) {
+	public static void showTestData(String test_id, String student_in_classroom_id) {
 
-		String note = LPane.loadStudentNote(test_id, student_id);
-		String percent = Test.getTestPercent(test_id, student_id);
+		String note = LPane.loadStudentNote(test_id, student_in_classroom_id);
+		String percent = Test.getTestPercent(note);
 		LPane.points.setText(note);
-		LPane.prog.setText("Progression: "+Test.getTestProgression(test_id, student_id)+"%");
+		LPane.prog.setText("Progression: "+Test.getTestProgression(test_id, student_in_classroom_id)+"%");
 		LPane.pourcent.setText("Pourcentage: "+percent+"%");
 		List l = Arrays.asList(note.split("/"));
 		if(Double.parseDouble(percent)>=50) {
@@ -242,11 +242,11 @@ public class Test extends JPanel {
 		LPane.panel_3.repaint();
 	}
 
-	public static String getTestProgression(String test_id, String student_id) {
+	public static String getTestProgression(String test_id, String student_in_classroom_id) {
 		String progress;
 		if(hasPreviousTests(test_id, getTestCourse(test_id), getTestClassroom(test_id), getTestTerm(test_id))) {
-			String previousNote = LPane.loadStudentNote(getPreviousTest(test_id, getTestCourse(test_id), getTestClassroom(test_id), getTestTerm(test_id)), student_id);
-			String note = LPane.loadStudentNote(test_id, student_id);
+			String previousNote = LPane.loadStudentNote(getPreviousTest(test_id, getTestCourse(test_id), getTestClassroom(test_id), getTestTerm(test_id)), student_in_classroom_id);
+			String note = LPane.loadStudentNote(test_id, student_in_classroom_id);
 			if(!previousNote.equals("0/0") || !note.equals("0/0")) {
 			
 			List l = Arrays.asList(previousNote.split("/"));
@@ -278,7 +278,7 @@ public class Test extends JPanel {
 	}
 	
 	
-	public static String getPreviousTest(String test_id, String course_id, String classroom_id, String term_id) {
+	public static String getPreviousTest(String test_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
 	 
 		String previousTestId = null;
 		List<String> listOfTests = new ArrayList();
@@ -288,7 +288,7 @@ public class Test extends JPanel {
 
 			ResultSet rs=stmt.executeQuery("SELECT * from test_information AS ti "
 					+ "JOIN course_tests AS ct "
-					+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 AND ti.classroom_id = '"+classroom_id+"' AND ti.term_id = '"+term_id+"' AND ct.course_id = '"+course_id+"' "
+					+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 AND ti.cia_id = '"+classroom_in_ay_id+"' AND ti.term_id = '"+term_id+"' AND ct.courses_in_classroom_id = '"+classroom_in_ay_id+"' "
 							+ "ORDER BY ti.date ASC");
 			
 		
@@ -310,7 +310,7 @@ public class Test extends JPanel {
 		return previousTestId;
 	}
 
-	public static boolean hasPreviousTests(String test_id, String course_id, String classroom_id, String term_id) {
+	public static boolean hasPreviousTests(String test_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
 		boolean hasPreviousTests = false;
 		List<String> listOfTests = new ArrayList();
 		
@@ -319,7 +319,7 @@ public class Test extends JPanel {
 
 			ResultSet rs=stmt.executeQuery("SELECT * from test_information AS ti "
 					+ "JOIN course_tests AS ct "
-					+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 AND ti.classroom_id = '"+classroom_id+"' AND ti.term_id = '"+term_id+"' AND ct.course_id = '"+course_id+"' "
+					+ "WHERE ti.test_id = ct.test_id AND ti.is_active = 1 AND ti.cia_id = '"+course_in_classroom_id+"' AND ti.term_id = '"+term_id+"' AND ct.courses_in_classroom_id = '"+course_in_classroom_id+"' "
 							+ "ORDER BY ti.date ASC");
 			
 		
@@ -341,9 +341,8 @@ public class Test extends JPanel {
 		return hasPreviousTests;
 	}
 
-	public static String getTestPercent(String test_id, String student_id) {
+	public static String getTestPercent(String note) {
 		String percent;
-		String note = LPane.loadStudentNote(test_id, student_id);
 		if(!note.equals("0/0")) {
 		
 		List l1 = Arrays.asList(note.split("/"));
@@ -437,7 +436,7 @@ public static String getTestCourse(String test_id) {
 		
 		while(rs.next())
 		{
-			course = rs.getString("ct.course_id");
+			course = rs.getString("ct.courses_in_classroom_id");
 		}
 		
 		} catch (SQLException e1) {
@@ -459,7 +458,7 @@ public static String getTestClassroom(String test_id) {
 		
 		while(rs.next())
 		{
-			classroom = rs.getString("classroom_id");
+			classroom = rs.getString("cia_id");
 		}
 		
 		} catch (SQLException e1) {
@@ -503,7 +502,7 @@ public static String getTestTerm(String test_id) {
 				color = new Color(255, 33, 94);
 			}
 			
-			Test.progress.setUI(new BasicProgressBarUI() {
+			((JProgressBar) ((Container) (test)).getComponent(0)).setUI(new BasicProgressBarUI() {
 				protected Color getSelectionBackground() { return color;}
 				protected Color getSelectionForeground() { return Color.white;
 				}
@@ -511,7 +510,7 @@ public static String getTestTerm(String test_id) {
 			
 		
 	}
-	public static void deselect(String course_id, String student_id, String classroom_id) {
+	public static void deselect(String course_in_classroom_id, String student_in_classroom_id, String classroom_in_ay_id) {
 		for(int i = 0; i < LPane.panel_3.getComponents().length;i++) {
 			
 			if(((JComponent) LPane.panel_3.getComponent(i)) instanceof Test) {
@@ -526,7 +525,7 @@ public static String getTestTerm(String test_id) {
 			}
 	}}
 		
-		List l = StudentStats.getStudentTestsStats(student_id, classroom_id, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
+		List l = StudentStats.getStudentTestsStats(student_in_classroom_id, classroom_in_ay_id, course_in_classroom_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
 		
 		List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 		
@@ -567,7 +566,7 @@ public static String getTestTerm(String test_id) {
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
 		selectedTests.clear();
-		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_id));
+		LPane.comboBox.setSelectedItem(ExamInfo.loadCourseMaxima(course_in_classroom_id));
 		
 			LPane.mention();
 			LPane.average();
