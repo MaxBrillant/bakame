@@ -85,8 +85,6 @@ public class Cours extends JPanel {
 	setPreferredSize(new Dimension(220, 120));
 	setLayout(new BorderLayout(0, 0));
 	
-	
-	
 	courseBox = new JPanel();
 	courseBox.setBorder(null);
 	courseBox.setBackground(new Color(201,255,226));
@@ -110,7 +108,7 @@ public class Cours extends JPanel {
 	
 	percent = new JLabel("Pourcentage: 0%");
 	percent.setForeground(new Color(211, 211, 211));
-	percent.setFont(new Font("Roboto", Font.PLAIN, 14));
+	percent.setFont(new Font("Roboto", Font.BOLD, 14));
 	percent.setBounds(10, 3, 196, 22);
 	stats.add(percent);
 	stats.add(percent);
@@ -118,21 +116,21 @@ public class Cours extends JPanel {
 	
 	lblPoints = new JLabel("Points:");
 	lblPoints.setForeground(new Color(211, 211, 211));
-	lblPoints.setFont(new Font("Roboto", Font.PLAIN, 14));
+	lblPoints.setFont(new Font("Roboto", Font.BOLD, 14));
 	lblPoints.setBounds(10, 23, 196, 22);
 	stats.add(lblPoints);
 	stats.add(lblPoints);
 	
 	lblAverage = new JLabel("Moyenne:");
 	lblAverage.setForeground(new Color(211, 211, 211));
-	lblAverage.setFont(new Font("Roboto", Font.PLAIN, 14));
+	lblAverage.setFont(new Font("Roboto", Font.BOLD, 14));
 	lblAverage.setBounds(10, 43, 196, 22);
 	stats.add(lblAverage);
 	stats.add(lblAverage);
 	
 	lblImprovements = new JLabel("Echec:");
 	lblImprovements.setForeground(new Color(211, 211, 211));
-	lblImprovements.setFont(new Font("Roboto", Font.PLAIN, 14));
+	lblImprovements.setFont(new Font("Roboto", Font.BOLD, 14));
 	lblImprovements.setBounds(10, 63, 196, 22);
 	stats.add(lblImprovements);
 	stats.add(lblImprovements);

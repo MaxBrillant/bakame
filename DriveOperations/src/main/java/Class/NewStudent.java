@@ -625,7 +625,7 @@ isEmpty = false;
 			Student c = new Student(classroom_in_ay_id);
 			c.setName(lines[i].toString());
 			((JLabel) ((Container)((Container) c).getComponent(0)).getComponent(0)).setText(App.getStudentNumber(lines[i].toString()));
-			((JLabel) ((Container) c).getComponent(1)).setText(Home.getStudentName(lines[i].toString()));
+			((JLabel) ((Container) c).getComponent(1)).setText("  "+Home.getStudentName(lines[i].toString()));
 			
 				loadStudentdata(c, lines[i].toString(), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 
