@@ -1032,31 +1032,33 @@ public static void loadAllTests(List studentTestStats) {
 
 
 	
-public static List<String> getStudentExamStats(String student_id, String classroom_in_ay_id, String course_id, String term_id, String firstDate, String lastDate) {
+public static List getStudentExamStats(String student_id, String classroom_in_ay_id, String course_id, String term_id, String firstDate, String lastDate) {
 	
 	String ay_id;
 	ay_id = Login.selectedAcademicYearID;
 	
 		String percentage = "0";
 		String points = "0/0";
-		String Tests = "0";
+		String Series = "0";
 		String Echecs = "0";
 		String missed = "0";
-		List <String>stats = new ArrayList();
+		List stats = new ArrayList();
 			
 			Double sum = (double) 0;
 			Double sum1 = (double) 0;
 			Double tot = (double) 0;
 			Double tot1 = (double) 0;
-			int test = 0;
-			int tests = 0;
-			int missedTests = 0;
+			int series = 0;
+			int missedSeries = 0;
 			boolean echec = false;
 			int echecs = 0;
 			Object[] lines1 = null;
 			List <String>courses = new ArrayList();
 			List <String>students = new ArrayList();
 			List <String>terms = new ArrayList();
+			List <String>listOfSeries = new ArrayList();
+			List <String>listOfMissedSeries = new ArrayList();
+			List <String>listOfEchecs = new ArrayList();
 			
 				if(course_id == "All") {
 					courses.clear();
@@ -1126,7 +1128,6 @@ public static List<String> getStudentExamStats(String student_id, String classro
 								
 								tot = (double) 0;
 								tot1 = (double) 0;
-								test = 0;
 							
 								
 						List note = Arrays.asList(LPane.loadStudentSerieNote(rs.getString("s.serie_id"), students.get(k)).split("/"));
@@ -1138,11 +1139,13 @@ public static List<String> getStudentExamStats(String student_id, String classro
 							tot = tot+ d;
 							tot1 = tot1+e;
 							if(d == 0 && e == 0) {
-								test = test+0;
-								missedTests = missedTests+1;
+								series = series+0;
+								missedSeries = missedSeries+1;
+								listOfMissedSeries.add(rs.getString("s.serie_id"));
 							}else {
-								test++;
-								missedTests = missedTests+0;
+								series++;
+								missedSeries = missedSeries+0;
+								listOfSeries.add(rs.getString("s.serie_id"));
 							}
 								
 							sum = sum+tot;
@@ -1152,6 +1155,7 @@ public static List<String> getStudentExamStats(String student_id, String classro
 							
 								if(tot<(tot1/2)) {
 								echec = true;
+								listOfEchecs.add(rs.getString("s.serie_id"));
 							}else {
 								echec = false;
 							}
@@ -1162,7 +1166,6 @@ public static List<String> getStudentExamStats(String student_id, String classro
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 					}
-						tests = tests+test;
 						if(echec) {
 						echecs = echecs+1;
 						}else {
@@ -1173,7 +1176,7 @@ public static List<String> getStudentExamStats(String student_id, String classro
 						}else {
 							points =new DecimalFormat("##.##").format(sum)+"/"+new DecimalFormat("##.##").format(sum1);
 						}
-						Tests=String.valueOf(tests);
+						Series = String.valueOf(series);
 						
 						Double percent = sum/sum1*100;
 						if(sum==0 && sum1==0) {
@@ -1182,14 +1185,17 @@ public static List<String> getStudentExamStats(String student_id, String classro
 							percentage = new DecimalFormat("##.##").format(percent)+"%";
 						}
 						Echecs = String.valueOf(echecs);
-						missed = String.valueOf(missedTests);
+						missed = String.valueOf(missedSeries);
 				}
 							}}}
 		stats.add(percentage);
 		stats.add(points);
-		stats.add(Tests);
+		stats.add(Series);
 		stats.add(Echecs);
 		stats.add(missed);
+		stats.add(listOfSeries);
+		stats.add(listOfMissedSeries);
+		stats.add(listOfEchecs);
 		
 		return stats;
 		

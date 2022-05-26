@@ -254,7 +254,7 @@ c.setBackground(new Color(120, 120, 120));
 			((JLabel) ((Container) c.getComponent(1)).getComponent(1)).setText("Points"+": "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima1));
 			((JLabel) ((Container) c.getComponent(1)).getComponent(0)).setText("Pourcentage: "+new DecimalFormat("##.##").format(percentage)+"%");
 			
-			((JLabel) ((Container) c.getComponent(1)).getComponent(2)).setText("Moyenne: "+new DecimalFormat("##.##").format(points1/maxima1*Double.parseDouble(courseMaxima))+"/"+courseMaxima);
+			((JLabel) ((Container) c.getComponent(1)).getComponent(2)).setText("Moyenne: "+new DecimalFormat("##.##").format(points1/maxima1*Double.parseDouble(courseMaxima.replaceAll(",", ".")))+"/"+courseMaxima);
 			
 			if(percentage>=50) {
 				((JLabel) ((Container) c.getComponent(1)).getComponent(3)).setText("Augmentation : "+new DecimalFormat("##.##").format(points1-(maxima1/2))+" points");

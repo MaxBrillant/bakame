@@ -358,9 +358,18 @@ public class LPane extends JPanel {
 			LPane.panel_3.add(t);
 
 			t.getComponent(t.getComponentCount()-1).setVisible(false);
-			t.progression.setText(Math.round(Double.parseDouble(Test.getTestProgression(rs.getString("ti.test_id"), student_in_classroom_id)))+"%");
 			t.percent.setText(Math.round(Double.parseDouble(Test.getTestPercent(n)))+"%");
 			t.number.setText(i+"");
+			
+			String prog = Test.getTestProgression(rs.getString("ti.test_id"), student_in_classroom_id);
+			if(prog.contains("-")) {
+			t.progression.setText(Math.round(Double.parseDouble(prog))+"%");
+			t.progression.setForeground(new Color(255,221,221));
+			}else {
+				t.progression.setText("+"+Math.round(Double.parseDouble(prog))+"%");
+				t.progression.setForeground(new Color(201,255,226));
+				}
+			
 			LPane.panel_3.revalidate();
 			LPane.panel_3.repaint();
 

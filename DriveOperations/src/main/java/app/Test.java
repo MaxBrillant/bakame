@@ -114,7 +114,7 @@ public class Test extends JPanel {
 		percent = new JLabel("100%");
 		percent.setHorizontalAlignment(SwingConstants.CENTER);
 		percent.setForeground(Color.WHITE);
-		percent.setFont(new Font("Roboto", Font.PLAIN, 14));
+		percent.setFont(new Font("Roboto", Font.BOLD, 14));
 		percent.setBounds(243, 7, 48, 30);
 		add(percent);
 		
