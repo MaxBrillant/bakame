@@ -233,27 +233,6 @@ public class Class extends JPanel {
 				
 				
 				
-				if(selectedClasses.toArray().length>1) {
-					MainInfo m = new MainInfo(ay_id);
-					m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
-					Home.side.removeAll();
-					Home.side.add(m);
-					Home.frame.revalidate();
-					Home.frame.repaint();
-				}else {
-					new SwingWorker<Void, Void>() {
-			            public Void doInBackground() throws Exception{
-					ClassInfo c = new ClassInfo(((JLabel) ((Container) (((Container) selectedClasses.get(0)).getComponent(0))).getComponent(0)).getText().replace("<html><div style='text-align: center;'>", "").replace("</div></html>", ""));
-					Home.side.removeAll();
-					Home.side.add(c);
-					Home.frame.revalidate();
-					Home.frame.repaint();
-					 return null;
-			            }
-			         }.execute();
-					}
-				
-				
 				for(int i = 0; i<selectedClasses.toArray().length; i++) {
 					((JComponent) selectedClasses.get(i)).setBorder(new LineBorder(new Color(20, 148, 198),4));
 					((JComponent) ((JComponent) selectedClasses.get(i)).getComponent(0)).setBorder(new MatteBorder(0, 2, 2, 2, (Color) new Color(0, 0, 0)));
@@ -274,7 +253,7 @@ public class Class extends JPanel {
 
 						((Container) ((Container) (((Container) Home.panelClasses.getComponent(i)).getComponent(1))).getComponent(0)).getComponent(2).setVisible(true);
 						((Container) ((Container) Home.panelClasses.getComponent(i)).getComponent(1)).getComponent(1).setPreferredSize(new Dimension(
-								140, 45));
+								80, 45));
 						Home.panelClasses.revalidate();
 
 						Home.panelClasses.repaint();
@@ -297,7 +276,7 @@ public class Class extends JPanel {
 
 								((Container) ((Container) (((Container) Home.panelClasses.getComponent(i)).getComponent(1))).getComponent(0)).getComponent(2).setVisible(false);
 								((Container) ((Container) Home.panelClasses.getComponent(i)).getComponent(1)).getComponent(1).setPreferredSize(new Dimension(
-										300, 45));
+										160, 45));
 								Home.panelClasses.revalidate();
 
 								Home.panelClasses.repaint();}}
@@ -690,13 +669,6 @@ public static void deselectAll(String ay_id) {
 	}
 
 	Class.selectedClasses.clear();
-
-	MainInfo m = new MainInfo(ay_id);
-	m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
-	if(Home.side.getComponentCount()>0) {
-	Home.side.removeAll();
-	}
-	Home.side.add(m);
 	Home.frame.revalidate();
 	Home.frame.repaint();
 	

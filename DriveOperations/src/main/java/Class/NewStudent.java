@@ -700,8 +700,6 @@ isEmpty = false;
 	}
 public static void loadStudentdata(Container c, String student_in_classroom_id, String classroom_in_ay_id, String term_id) { 
 	//to calculate the different stats about the student
-	new SwingWorker<Void, Void>() {
-        public Void doInBackground() throws Exception{
 		Application.manageTabs(classroom_in_ay_id);
 		
 		List l = new ArrayList();
@@ -731,7 +729,7 @@ if(points1==0 && maxima==0 ) {
 }else {
 	percentage = points1*100/maxima;
 }
-	
+	if(l.toArray().length>2) {
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(2)))).setText("Points: "+new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
 	
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(0)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
@@ -741,10 +739,7 @@ if(points1==0 && maxima==0 ) {
 	
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(8)))).setText(String.valueOf(((List)l.get(6)).toArray().length)+" interros");
 	((((JLabel) ((Container) ((Container) c).getComponent(2)).getComponent(12)))).setText("Progres: "+String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5).toString())))+"%");
-	
-	return null;
-        }
-    }.execute();
+	}
 }
 }
 

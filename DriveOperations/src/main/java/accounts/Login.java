@@ -14,6 +14,7 @@ import app.Cours;
 import app.LPane;
 import app.NewTest;
 import app.WrapLayout;
+import elements.CustomButton;
 
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -121,7 +122,9 @@ public class Login extends JFrame {
 	contentPane.setLayout(null);
 	setLocationRelativeTo(null);
 	
-	create = new JButton("Continuer");
+	create = new CustomButton();
+	create.setText("Continuer");
+	((CustomButton) create).setRadius(10);
 	create.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			Loading l = new Loading();
@@ -168,20 +171,6 @@ public class Login extends JFrame {
 	create.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
 	create.setBounds(131, 289, 161, 31);
 	contentPane.add(create);
-	
-	actualiser = new JButton("Actualiser");
-	actualiser.setVisible(false);
-	actualiser.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-	});
-	actualiser.setFocusPainted(false);
-	actualiser.setForeground(Color.WHITE);
-	actualiser.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-	actualiser.setBackground(new Color(171, 145, 0));
-	actualiser.setBounds(new Rectangle(132, 289, 161, 31));
-	contentPane.add(actualiser);
 	
 	JLabel lblNouveauCours = new JLabel("Connectez vous a votre compte");
 	lblNouveauCours.setVerticalTextPosition(SwingConstants.BOTTOM);

@@ -90,7 +90,6 @@ public class Group extends JPanel {
 		
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(null);
 		panel_2.setBackground(panel_2.getParent().getBackground());
 		
 
@@ -110,39 +109,37 @@ public class Group extends JPanel {
 				setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
 			}
 		});
+		panel_2.setLayout(new FlowLayout(FlowLayout.LEADING, 15, 11));
 		
 		groupName = new JLabel("Section Economique");
-		groupName.setBounds(10, 10, 299, 23);
 		panel_2.add(groupName);
 		groupName.setForeground(new Color(255, 255, 255));
-		groupName.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-		groupName.setFont(new Font("Roboto", Font.BOLD, 20));
+		groupName.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		groupName.setFont(new Font("Roboto", Font.BOLD, 14));
 		
 		classNumber = new JLabel("20 classes");
-		classNumber.setBounds(309, 10, 93, 23);
 		panel_2.add(classNumber);
-		classNumber.setForeground(new Color(255, 255, 255));
+		classNumber.setForeground(new Color(211, 211, 211));
 		classNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		classNumber.setFont(new Font("Roboto", Font.PLAIN, 18));
+		classNumber.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		JLabel lblEleves = new JLabel("640 eleves");
 		lblEleves.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEleves.setForeground(Color.WHITE);
-		lblEleves.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblEleves.setBounds(437, 10, 116, 23);
+		lblEleves.setForeground(new Color(211, 211, 211));
+		lblEleves.setFont(new Font("Roboto", Font.PLAIN, 14));
 		panel_2.add(lblEleves);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setPreferredSize(new Dimension(140, 45));
+		panel_3.setPreferredSize(new Dimension(80, 45));
 		panel_1.add(panel_3, BorderLayout.EAST);
 		panel_3.setBackground(panel_3.getParent().getBackground());
 		panel_3.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 0));
 		
 		btnExtraire = new JButton("Extraire");
 		btnExtraire.setVisible(false);
-		btnExtraire.setPreferredSize(new Dimension(120, 45));
+		btnExtraire.setPreferredSize(new Dimension(70, 45));
 		btnExtraire.setForeground(Color.WHITE);
-		btnExtraire.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		btnExtraire.setFont(new Font("Roboto", Font.PLAIN, 14));
 		btnExtraire.setFocusPainted(false);
 		btnExtraire.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		btnExtraire.setBackground(new Color(80, 80, 80));
@@ -161,13 +158,13 @@ public class Group extends JPanel {
 		
 		
 		addButton = new JButton(" Ajouter");
-		addButton.setPreferredSize(new Dimension(120, 45));
+		addButton.setPreferredSize(new Dimension(70, 45));
 		panel_3.add(addButton);
 		addButton.setForeground(new Color(255, 255, 255));
 		addButton.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		addButton.setBackground(panel_1.getBackground());
 		addButton.setFocusPainted(false);
-		addButton.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		addButton.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 
 		((Container) ((Container) getComponent(1)).getComponent(1)).getComponent(1).addMouseListener(new MouseAdapter() {
@@ -194,19 +191,20 @@ public class Group extends JPanel {
 
 				((JComponent) ((Container) c).getComponent(i)).setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
 				((JComponent) ((JComponent) ((Container) c).getComponent(i)).getComponent(0)).setBorder(null);
-				((Container) ((JComponent) ((Container) c).getComponent(i)).getComponent(1)).setLayout(new FlowLayout(FlowLayout.LEFT, 7, 9));
+				//((Container) ((JComponent) ((Container) c).getComponent(i)).getComponent(1)).setLayout(new FlowLayout(FlowLayout.LEFT, 7, 9));
 
-				((Container) ((JComponent) ((Container) c).getComponent(i)).getComponent(3)).setVisible(false);
-				
+
+				((JComponent) ((JComponent) ((Container) c).getComponent(i)).getComponent(1)).setVisible(false);
+				(((JComponent) ((JComponent) ((Container) c).getComponent(i)).getComponent(0)).getComponent(1)).setVisible(true);
 			}
 
 			((Container) ((Container) ((JComponent) ((Container) c).getParent()).getComponent(1)).getComponent(1)).setPreferredSize(new Dimension(
-				140, 45));
+			80, 45));
 				((Container) ((Container) ((JComponent) ((Container) c).getParent()).getComponent(1)).getComponent(1)).getComponent(0).setVisible(false);
 				((Container) ((Container) ((JComponent) ((Container) c).getParent()).getComponent(1)).getComponent(0)).getComponent(2).setVisible(true);
 				
 
-				number = number+StudentStats.getNumberOfStudents(((JLabel) ((Container) ((Container) ((Container) c).getComponent(i)).getComponent(0)).getComponent(0)).getName(), ay_id);
+				number = number+StudentStats.getNumberOfStudents(((JLabel) ((Container) ((Container) ((Container) c).getComponent(i)).getComponent(0)).getComponent(0)).getName());
 					
 				Home.panelClasses.revalidate();
 
@@ -217,17 +215,6 @@ public class Group extends JPanel {
 		((JLabel) ((Container) ((Container) c.getParent().getComponent(1)).getComponent(0)).getComponent(1))
 		.setText(String.valueOf(((Container) c).getComponentCount())+" classes");
 		((JLabel) ((Container) ((Container) c.getParent().getComponent(1)).getComponent(0)).getComponent(2)).setText(number+" eleves");
-
-		if(Class.selectedClasses.toArray().length == 0) {
-
-			MainInfo m = new MainInfo(ay_id);
-			m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
-			Home.side.removeAll();
-			Home.side.add(m);
-			Home.frame.revalidate();
-			Home.frame.repaint();
-		}
-		
 		
 		HomeMenu1.panel.getComponent(2).setVisible(true);
 
@@ -311,10 +298,10 @@ public class Group extends JPanel {
 					Statement stmt= mysql.con.createStatement();
 
 					ResultSet rs=stmt.executeQuery("select * from classroom_parents AS cp "
-							+ "JOIN parents_of_classrooms AS poc"
+							+ "JOIN parents_of_classrooms AS poc "
 							+ "JOIN classrooms as c "
 							+ "JOIN classrooms_in_ay as cia "
-							+ "WHERE poc.ay_id = '"+ay_id+"' AND poc.parent_id = cp.parent_id AND poc.parent_id = '"+parent_id+"' AND cp.classroom_id = c.classroom_id "
+							+ "WHERE poc.parent_id = cp.parent_id AND poc.parent_id = '"+parent_id+"' AND cp.cia_id = cia.cia_id "
 									+ "AND c.classroom_id = cia.classroom_id AND c.is_active = 1 AND cia.is_active = 1");
 					while(rs.next())
 					{
@@ -322,24 +309,20 @@ public class Group extends JPanel {
 							
 				Class c = new Class(ay_id);
 				((JPanel)((Container) Home.panelClasses.getComponent(j)).getComponent(0)).add(c);
-				c.className.setText("<html><div style='text-align: center;'>"+Class.getClassName(rs.getString("cp.classroom_id"))+"</div></html>");
-				c.setName(rs.getString("cp.classroom_id"));
+				c.className.setText("<html><div style='text-align: center;'>"+Class.getClassName(rs.getString("cia.cia_id"))+"</div></html>");
+				c.setName(rs.getString("cia.cia_id"));
 				Class.Actions(c, term_id, ay_id);
+
+				c.courseBox.setBackground(Home.getClassColors(rs.getString("cia.cia_id")).get(0));
 				
-				List<Color> words = Home.getClassColors(rs.getString("cp.classroom_id"), ay_id);
-				List<String> colors = Arrays.asList(words.get(0).toString().split(","));
-				List<String> colors2 = Arrays.asList(words.get(1).toString().split(","));
-				c.courseBox.setBackground(new Color(Integer.parseInt(colors.get(0)), Integer.parseInt(colors.get(1)), Integer.parseInt(colors.get(2))));
-				
-				c.className.setForeground(new Color(Integer.parseInt(colors2.get(0)), Integer.parseInt(colors2.get(1)), Integer.parseInt(colors2.get(2))));
-				
+				c.className.setForeground(Home.getClassColors(rs.getString("cia.cia_id")).get(1));
 
 				((Container) c.getComponent(0)).getComponent(1).setBackground(c.courseBox.getBackground().darker());
 				
 
 	    		Group.resizeGroup(Home.panelClasses.getComponent(j));
 
-				Class.loadData(c, rs.getString("cp.classroom_id"), term_id, ay_id);
+				Class.loadData(c, rs.getString("cia.cia_id"), term_id, ay_id);
 				}
 						
 					Home.panelClasses.revalidate();

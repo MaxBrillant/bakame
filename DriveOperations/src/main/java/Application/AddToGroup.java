@@ -187,7 +187,6 @@ public static void populateCourseList() {
 				}	else {
 					deselectAll();
 				}
-				
 			}
 		});
 		

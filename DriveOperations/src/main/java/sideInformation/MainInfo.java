@@ -4,7 +4,9 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
@@ -23,6 +25,7 @@ import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
 import app.WrapLayout;
+import elements.CustomButton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,12 +36,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 
 public class MainInfo extends JPanel {
 	public static JLabel numberOfTeachers;
 	public static JLabel numberOfStudents;
 	public static JLabel numberOfClasses;
-	public static JLabel guide;
 
 	/**
 	 * Create the panel.
@@ -47,166 +50,224 @@ public class MainInfo extends JPanel {
 		setBorder(new LineBorder(Color.WHITE));
 		setBackground(new Color(40, 40, 40));
 		setPreferredSize(new Dimension(400, 550));
-		setLayout(null);
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel_1 = new JLabel("Informations generales");
-		lblNewLabel_1.setForeground(new Color(192, 192, 192));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(10, 23, 380, 19);
-		add(lblNewLabel_1);
+		
+		CustomButton btnNewButton = new CustomButton();
+		btnNewButton.setRadius(100);
+		btnNewButton.setPreferredSize(new Dimension(100, 100));
+		btnNewButton.setBorderColor(new Color(20, 148, 198));
+		btnNewButton.setBackground(new Color(40, 40, 40));
+		add(btnNewButton);
+		
+		
+		JLabel label = new JLabel(ScholarYears.getAcademicYearName(ay_id));
+		label.setPreferredSize(new Dimension(360, 20));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font("Roboto", Font.BOLD, 16));
+		add(label);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(40, 40, 40));
+		panel_3.setPreferredSize(new Dimension(370, 100));
+		add(panel_3);
+		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setPreferredSize(new Dimension(500, 40));
-		panel_1.setBackground(new Color(80, 80, 80));
-		panel_1.setBounds(35, 62, 330, 40);
-		add(panel_1);
+		panel_1.setBorder(new LineBorder(new Color(20, 148, 198), 2));
+		panel_3.add(panel_1);
+		panel_1.setPreferredSize(new Dimension(110, 70));
+		panel_1.setBackground(new Color(40, 40, 40));
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblPoints = new JLabel("<html><div style='text-align: center;'>Nombre de classes</div></html>");
-		lblPoints.setPreferredSize(new Dimension(220, 25));
+		JLabel lblPoints = new JLabel("Classes");
+		lblPoints.setBackground(new Color(20, 148, 198));
+		lblPoints.setOpaque(true);
+		lblPoints.setPreferredSize(new Dimension(10, 27));
 		lblPoints.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPoints.setForeground(Color.WHITE);
-		lblPoints.setFont(new Font("Roboto", Font.BOLD, 18));
-		panel_1.add(lblPoints, BorderLayout.WEST);
+		lblPoints.setForeground(new Color(40, 40, 40));
+		lblPoints.setFont(new Font("Roboto", Font.BOLD, 14));
+		panel_1.add(lblPoints, BorderLayout.SOUTH);
 		
 		numberOfClasses = new JLabel("40");
-		numberOfClasses.setBorder(new LineBorder(Color.WHITE));
+		numberOfClasses.setHorizontalTextPosition(SwingConstants.CENTER);
+		numberOfClasses.setIcon(null);
+		numberOfClasses.setBorder(null);
 		numberOfClasses.setHorizontalAlignment(SwingConstants.CENTER);
-		numberOfClasses.setForeground(Color.WHITE);
-		numberOfClasses.setFont(new Font("Roboto", Font.BOLD, 27));
+		numberOfClasses.setForeground(new Color(20, 148, 198));
+		numberOfClasses.setFont(new Font("Roboto", Font.BOLD, 37));
 		panel_1.add(numberOfClasses, BorderLayout.CENTER);
 		
-		
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(null);
-		scrollPane.setVisible(false);
-		scrollPane.setBounds(10, 268, 380, 280);
-		add(scrollPane);
-		
-
-		scrollPane.getVerticalScrollBar().setUnitIncrement(7);
-		
-
-		scrollPane.getVerticalScrollBar().setUI(new CustomVerticalScrollBarUI());
-		scrollPane.getHorizontalScrollBar().setUI(new CustomVerticalScrollBarUI());
-		
-		JLabel lblCommandes = new JLabel("Guide");
-		lblCommandes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-				lblCommandes.setForeground(Color.white);
-			}public void mouseExited(MouseEvent e) {
-
-				lblCommandes.setForeground(Color.LIGHT_GRAY);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(!scrollPane.isVisible()) {
-				scrollPane.setVisible(true);
-			}else{
-				scrollPane.setVisible(false);
-			}}
-		});
-		lblCommandes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCommandes.setForeground(Color.LIGHT_GRAY);
-		lblCommandes.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblCommandes.setBounds(78, 238, 227, 19);
-		add(lblCommandes);
-		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(Color.WHITE);
-		separator_1.setPreferredSize(new Dimension(0, 1));
-		separator_1.setBackground(Color.BLACK);
-		separator_1.setBounds(0, 230, 400, 10);
-		add(separator_1);
-		
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(500, 40));
-		panel.setBackground(new Color(80, 80, 80));
-		panel.setBounds(35, 113, 330, 40);
-		add(panel);
+		panel.setBorder(new LineBorder(new Color(20, 148, 198), 2));
+		panel_3.add(panel);
+		panel.setPreferredSize(new Dimension(110, 70));
+		panel.setBackground(new Color(40, 40, 40));
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblnombreDeleves = new JLabel("<html><div style='text-align: center;'>Nombre d'eleves</div></html>");
-		lblnombreDeleves.setPreferredSize(new Dimension(220, 25));
+		JLabel lblnombreDeleves = new JLabel("Eleves");
+		lblnombreDeleves.setBackground(new Color(20, 148, 198));
+		lblnombreDeleves.setOpaque(true);
+		lblnombreDeleves.setPreferredSize(new Dimension(10, 27));
 		lblnombreDeleves.setHorizontalAlignment(SwingConstants.CENTER);
-		lblnombreDeleves.setForeground(Color.WHITE);
-		lblnombreDeleves.setFont(new Font("Roboto", Font.BOLD, 18));
-		panel.add(lblnombreDeleves, BorderLayout.WEST);
+		lblnombreDeleves.setForeground(new Color(40, 40, 40));
+		lblnombreDeleves.setFont(new Font("Roboto", Font.BOLD, 14));
+		panel.add(lblnombreDeleves, BorderLayout.SOUTH);
 		
 		numberOfStudents = new JLabel("3000");
+		numberOfStudents.setIcon(null);
 		numberOfStudents.setHorizontalAlignment(SwingConstants.CENTER);
-		numberOfStudents.setForeground(Color.WHITE);
-		numberOfStudents.setFont(new Font("Roboto", Font.BOLD, 27));
-		numberOfStudents.setBorder(new LineBorder(Color.WHITE));
+		numberOfStudents.setForeground(new Color(20, 148, 198));
+		numberOfStudents.setFont(new Font("Roboto", Font.BOLD, 37));
+		numberOfStudents.setBorder(null);
 		panel.add(numberOfStudents, BorderLayout.CENTER);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setPreferredSize(new Dimension(500, 40));
-		panel_2.setBackground(new Color(80, 80, 80));
-		panel_2.setBounds(35, 164, 330, 40);
-		add(panel_2);
+		panel_2.setBorder(new LineBorder(new Color(20, 148, 198), 2));
+		panel_3.add(panel_2);
+		panel_2.setPreferredSize(new Dimension(110, 70));
+		panel_2.setBackground(new Color(40, 40, 40));
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblnombreDeProfesseurs = new JLabel("<html><div style='text-align: center;'>Nombre de professeurs</div></html>");
-		lblnombreDeProfesseurs.setPreferredSize(new Dimension(220, 25));
+		JLabel lblnombreDeProfesseurs = new JLabel("Professeurs");
+		lblnombreDeProfesseurs.setBackground(new Color(20, 148, 198));
+		lblnombreDeProfesseurs.setOpaque(true);
+		lblnombreDeProfesseurs.setPreferredSize(new Dimension(10, 27));
 		lblnombreDeProfesseurs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblnombreDeProfesseurs.setForeground(Color.WHITE);
-		lblnombreDeProfesseurs.setFont(new Font("Roboto", Font.BOLD, 18));
-		panel_2.add(lblnombreDeProfesseurs, BorderLayout.WEST);
+		lblnombreDeProfesseurs.setForeground(new Color(40, 40, 40));
+		lblnombreDeProfesseurs.setFont(new Font("Roboto", Font.BOLD, 14));
+		panel_2.add(lblnombreDeProfesseurs, BorderLayout.SOUTH);
 		
 		numberOfTeachers = new JLabel("54");
+		numberOfTeachers.setIcon(null);
 		numberOfTeachers.setHorizontalAlignment(SwingConstants.CENTER);
-		numberOfTeachers.setForeground(Color.WHITE);
-		numberOfTeachers.setFont(new Font("Roboto", Font.BOLD, 27));
-		numberOfTeachers.setBorder(new LineBorder(Color.WHITE));
+		numberOfTeachers.setForeground(new Color(20, 148, 198));
+		numberOfTeachers.setFont(new Font("Roboto", Font.BOLD, 37));
+		numberOfTeachers.setBorder(null);
 		panel_2.add(numberOfTeachers, BorderLayout.CENTER);
 		
-		JPanel panel_3 = new JPanel();
-		scrollPane.setViewportView(panel_3);
-		panel_3.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
-		panel_3.setBackground(new Color(40, 40, 40));
+		JSeparator separator = new JSeparator();
+		separator.setPreferredSize(new Dimension(350, 1));
+		separator.setForeground(Color.WHITE);
+		add(separator);
 		
-		guide = new JLabel("<html>- Cliquez sur une classe pour voir les eleves<br/> appartenants a cette classe selon la methode de <br/>triage selectionnee.<br/><br/>\r\n- Cliquez sur un eleve pour le selectonner.<br/><br/>\r\n- Selectionnez un pour voir les options <br/>disponibles ainsi que quelques statistiques rapides.<br/><br/>\r\n- Cliquez sur le bas de la classe la ou c'est ecrit <br/>\"voir la classe\" pour ouvrir cette classe.<br/><br/>\r\n- Cliquez sur l'ordre de classement (croissant <br/>ou decroissant) pour changer l'ordre.</html>");
-		panel_3.add(guide);
-		guide.setVerticalAlignment(SwingConstants.TOP);
-		guide.setForeground(Color.LIGHT_GRAY);
-		guide.setFont(new Font("Roboto", Font.PLAIN, 15));
+		CustomButton trimestres = new CustomButton("<html><div style='text-align: leading;'>Trimestres</div></html>");
+		trimestres.setRadius(15);
+		trimestres.setAlignmentX(Component.CENTER_ALIGNMENT);
+		trimestres.setMultiClickThreshhold(2000L);
+		trimestres.setMargin(new Insets(2, 10, 2, 14));
+		trimestres.setHorizontalAlignment(SwingConstants.LEADING);
+		trimestres.setPreferredSize(new Dimension(350, 40));
+		trimestres.setIconTextGap(10);
+		trimestres.setForeground(Color.WHITE);
+		trimestres.setFont(new Font("Roboto", Font.BOLD, 14));
+		trimestres.setFocusPainted(false);
+		trimestres.setBorderColor(new Color(255, 255, 255));
+		trimestres.setBackground(new Color(40, 40, 40));
+		trimestres.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(trimestres);
 		
-		JButton button = new JButton("<html><div style='text-align: center;'>Education</div></html>");
-		button.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\discipline.png"));
-		button.setVerticalTextPosition(SwingConstants.BOTTOM);
-		button.setIconTextGap(0);
-		button.setHorizontalTextPosition(SwingConstants.CENTER);
-		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Roboto", Font.PLAIN, 18));
-		button.setFocusPainted(false);
-		button.setBorder(new LineBorder(new Color(255, 255, 255), 2));
-		button.setBackground(new Color(40, 40, 40));
-		button.setBounds(30, 290, 165, 100);
-		add(button);
+		CustomButton punitions = new CustomButton("<html><div style='text-align: leading;'>Liste des punitions</div></html>");
+		punitions.setRadius(15);
+		punitions.setAlignmentX(Component.CENTER_ALIGNMENT);
+		punitions.setMultiClickThreshhold(2000L);
+		punitions.setMargin(new Insets(2, 10, 2, 14));
+		punitions.setHorizontalAlignment(SwingConstants.LEADING);
+		punitions.setPreferredSize(new Dimension(350, 40));
+		punitions.setIconTextGap(10);
+		punitions.setForeground(Color.WHITE);
+		punitions.setFont(new Font("Roboto", Font.BOLD, 14));
+		punitions.setFocusPainted(false);
+		punitions.setBorderColor(new Color(255, 255, 255));
+		punitions.setBackground(new Color(40, 40, 40));
+		punitions.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(punitions);
+		
+		
+		
+		CustomButton utilisateurs = new CustomButton("<html><div style='text-align: leading;'>Utilisateurs</div></html>");
+		utilisateurs.setRadius(15);
+		utilisateurs.setAlignmentX(Component.CENTER_ALIGNMENT);
+		utilisateurs.setMultiClickThreshhold(2000L);
+		utilisateurs.setMargin(new Insets(2, 10, 2, 14));
+		utilisateurs.setHorizontalAlignment(SwingConstants.LEADING);
+		utilisateurs.setPreferredSize(new Dimension(350, 40));
+		utilisateurs.setIconTextGap(10);
+		utilisateurs.setForeground(Color.WHITE);
+		utilisateurs.setFont(new Font("Roboto", Font.BOLD, 14));
+		utilisateurs.setFocusPainted(false);
+		utilisateurs.setBorderColor(new Color(255, 255, 255));
+		utilisateurs.setBackground(new Color(40, 40, 40));
+		utilisateurs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(utilisateurs);
+		
 		
 
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		CustomButton historique = new CustomButton("<html><div style='text-align: leading;'>Historique des utilisateurs</div></html>");
+		historique.setRadius(15);
+		historique.setAlignmentX(Component.CENTER_ALIGNMENT);
+		historique.setMultiClickThreshhold(2000L);
+		historique.setMargin(new Insets(2, 10, 2, 14));
+		historique.setHorizontalAlignment(SwingConstants.LEADING);
+		historique.setPreferredSize(new Dimension(350, 40));
+		historique.setIconTextGap(10);
+		historique.setForeground(Color.WHITE);
+		historique.setFont(new Font("Roboto", Font.BOLD, 14));
+		historique.setFocusPainted(false);
+		historique.setBorderColor(new Color(255, 255, 255));
+		historique.setBackground(new Color(40, 40, 40));
+		historique.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(historique);
+		
+		
+		
+		CustomButton studentRoles = new CustomButton("<html><div style='text-align: leading;'>Roles et titres des eleves</div></html>");
+		studentRoles.setRadius(15);
+		studentRoles.setAlignmentX(Component.CENTER_ALIGNMENT);
+		studentRoles.setMultiClickThreshhold(2000L);
+		studentRoles.setMargin(new Insets(2, 10, 2, 14));
+		studentRoles.setHorizontalAlignment(SwingConstants.LEADING);
+		studentRoles.setPreferredSize(new Dimension(350, 40));
+		studentRoles.setIconTextGap(10);
+		studentRoles.setForeground(Color.WHITE);
+		studentRoles.setFont(new Font("Roboto", Font.BOLD, 14));
+		studentRoles.setFocusPainted(false);
+		studentRoles.setBorderColor(new Color(255, 255, 255));
+		studentRoles.setBackground(new Color(40, 40, 40));
+		studentRoles.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(studentRoles);
+		
+		CustomButton Accounting = new CustomButton("<html><div style='text-align: leading;'>Comptabilite</div></html>");
+		Accounting.setRadius(15);
+		Accounting.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Accounting.setMultiClickThreshhold(2000L);
+		Accounting.setMargin(new Insets(2, 10, 2, 14));
+		Accounting.setHorizontalAlignment(SwingConstants.LEADING);
+		Accounting.setPreferredSize(new Dimension(350, 40));
+		Accounting.setIconTextGap(10);
+		Accounting.setForeground(Color.WHITE);
+		Accounting.setFont(new Font("Roboto", Font.BOLD, 14));
+		Accounting.setFocusPainted(false);
+		Accounting.setBorderColor(new Color(255, 255, 255));
+		Accounting.setBackground(new Color(40, 40, 40));
+		Accounting.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(Accounting);
+		
+		
 
-				EducationFrame ef = new EducationFrame(Login.selectedAcademicYearID);
-				ef.setVisible(true);
-			}
-		});
-		
-		
-		button.addMouseListener(new MouseAdapter() {
+		for(int i = 0; i< getComponentCount(); i++) {
+			int k = i;
+			if(getComponent(i) instanceof CustomButton) {
+				getComponent(i).addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				button.setBackground(new Color(20, 148, 198));
+				getComponent(k).setBackground(new Color(20, 148, 198));
 			}public void mouseExited(MouseEvent e) {
-				button.setBackground(button.getParent().getBackground());
+				getComponent(k).setBackground(getComponent(k).getParent().getBackground());
 			}
 		});
+	}}
 
 		loadStudentInfo(ay_id);
 	}
@@ -224,14 +285,5 @@ public class MainInfo extends JPanel {
 		numberOfTeachers.setText(profs.length+"");
 		numberOfStudents.setText(students+"");
 		numberOfClasses.setText(classes.length+"");
-}	
-	public static void deselect(String ay_id) {
-
-		MainInfo m = new MainInfo(ay_id);
-		m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
-		Home.side.removeAll();
-		Home.side.add(m);
-		Home.frame.revalidate();
-		Home.frame.repaint();
-	}
+}
 }

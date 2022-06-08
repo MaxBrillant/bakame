@@ -162,7 +162,7 @@ public class TeacherSchedule extends JFrame {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 	setBounds(100,100,screensize.width,screensize.height);
 	setExtendedState(JFrame.MAXIMIZED_BOTH);
-	setMinimumSize(new Dimension(screensize.width*80/100,screensize.height*80/100));
+	setMinimumSize(new Dimension(720, 0));
 	contentPane = new JPanel();
 	contentPane.setBackground(new Color(60, 60, 60));
 	setContentPane(contentPane);

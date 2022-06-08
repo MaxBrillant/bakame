@@ -764,14 +764,6 @@ public class CourseStats extends JPanel {
 							Double e = Double.parseDouble((String) note.get(1));
 							
 							
-							for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
-								List f = Arrays.asList(listOfTestProgress.get(z).split("//"));
-								if(!f.get(0).equals(rs.getString("ti.test_id"))) {
-							Double testProgress = Double.parseDouble(Test.getTestCourseProgression(rs.getString("ti.test_id")));
-							progress = progress+ testProgress;
-							listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
-							break;
-							}}
 							tot = tot+ d;
 							tot1 = tot1+e;
 							
@@ -786,8 +778,22 @@ public class CourseStats extends JPanel {
 								listOfTests.add(rs.getString("ti.test_id"));
 							}}
 							
-							sum = sum+tot;
-							sum1 = sum1+tot1;
+							if(courses.toArray().length == 1 || Home.courseIsCalculated(courses.get(j))) {
+								sum = sum+tot;
+								sum1 = sum1+tot1;
+								
+
+								
+								for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
+									List f = Arrays.asList(listOfTestProgress.get(z).split("//"));
+									if(!f.get(0).equals(rs.getString("ti.test_id"))) {
+								Double testProgress = Double.parseDouble(Test.getTestCourseProgression(rs.getString("ti.test_id")));
+								progress = progress+ testProgress;
+								listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
+								break;
+								}}
+								
+								}
 							
 							
 								if(tot<(tot1/2)) {
@@ -1098,8 +1104,10 @@ public static List getStudentExamStats(String student_in_classroom_id, String cl
 								listOfSeries.add(rs.getString("s.serie_id"));
 							}}
 								
-							sum = sum+tot;
-							sum1 = sum1+tot1;
+							if(courses.toArray().length == 1 || Home.courseIsCalculated(courses.get(j))) {
+								sum = sum+tot;
+								sum1 = sum1+tot1;
+							}
 							
 							
 							

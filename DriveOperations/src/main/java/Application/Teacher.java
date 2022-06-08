@@ -193,10 +193,7 @@ public class Teacher extends JPanel {
 					selectedTeacher = ((JLabel) ((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).getComponent(0)).getText();
 					((JComponent) Home.panelProf.getComponent(k)).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 					
-					Home.side.removeAll();
 					TeacherInfo.selectedClass = 0;
-					TeacherInfo t = new TeacherInfo(lines1[k].toString(), ay_id);
-					Home.side.add(t);
 
 					HomeMenu3.panel.getComponent(1).setVisible(true);
 					HomeMenu3.panel.getComponent(2).setVisible(true);
@@ -286,10 +283,6 @@ public class Teacher extends JPanel {
 			}
 		selectedTeacher = "";
 		}}}
-		MainInfo m = new MainInfo(ay_id);
-		m.guide.setText("<html>- Cliquez sur un professeur pour le selectionner.<br/><br/>\r\n- Cliquez sur la fleche correspondante au professeur <br/>pour rapidement voir ses differentes performances <br/>dans differentes classes et cours.<br/><br/>\r\n- Selectionnez le professeur pour voir les options <br/>disponibles.<br/><br/>\r\n- Double-cliquez sur une des classes disponibles<br/> pour le professeur pour l'ouvrir.</html>");
-		Home.side.removeAll();
-		Home.side.add(m);
 		Home.frame.revalidate();
 		Home.frame.repaint();
 		HomeMenu3.deselect();
@@ -578,7 +571,7 @@ public class Teacher extends JPanel {
 									
 									if(e.getClickCount() == 2) {
 										StatsPane frame = new StatsPane("All", ((((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(0))).getName())), ((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(m)).getComponent(0)).getName(),
-												Login.selectedAcademicYearID, ay_id);
+												Login.selectedAcademicYearID);
 										frame.setVisible(true);
 									}
 								}

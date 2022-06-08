@@ -783,9 +783,6 @@ public class StudentStats extends JPanel {
 							/*for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
 								List f = Arrays.asList(listOfTestProgress.get(z).split("//"));
 								if(!f.get(0).equals(rs.getString("ti.test_id"))) {*/
-							Double testProgress = Double.parseDouble(Test.getTestProgression(rs.getString("ti.test_id"), students.get(k)));
-							progress = progress+ testProgress;
-							listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
 							/*
 							 * break; }
 							 */
@@ -805,9 +802,15 @@ public class StudentStats extends JPanel {
 							}
 							}
 							
+							if(courses.toArray().length == 1 || Home.courseIsCalculated(courses.get(j))) {
 							sum = sum+tot;
 							sum1 = sum1+tot1;
 							
+
+							Double testProgress = Double.parseDouble(Test.getTestProgression(rs.getString("ti.test_id"), students.get(k)));
+							progress = progress+ testProgress;
+							listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
+							}
 							
 								if(tot<(tot1/2)) {
 								echec = true;
@@ -1147,10 +1150,11 @@ public static List getStudentExamStats(String student_id, String classroom_in_ay
 								missedSeries = missedSeries+0;
 								listOfSeries.add(rs.getString("s.serie_id"));
 							}
-								
+							
+							if(courses.toArray().length == 1 || Home.courseIsCalculated(courses.get(j))) {
 							sum = sum+tot;
 							sum1 = sum1+tot1;
-							
+							}
 							
 							
 								if(tot<(tot1/2)) {

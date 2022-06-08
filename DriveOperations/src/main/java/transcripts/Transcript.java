@@ -1,4 +1,4 @@
-package elements;
+package transcripts;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -19,10 +19,12 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Application.Home;
+import Application.ResizeImages;
 import Class.ExamInfo;
 import Class.TestBox;
 import CloudOperations.Mongo;
@@ -38,8 +40,12 @@ import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.border.LineBorder;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class transcript extends JFrame {
+public class Transcript extends JFrame {
 
 	private static JPanel contentPane;
 	private JTable table;
@@ -54,7 +60,7 @@ public class transcript extends JFrame {
 			public void run() {
 				try {
 					mysql.connectToDB();
-					transcript frame = new transcript();
+					Transcript frame = new Transcript();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -66,7 +72,7 @@ public class transcript extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public transcript() {
+	public Transcript() {
 		setPreferredSize(new Dimension(1920, 1080));
 		setPreferredSize(new Dimension(1200, 300));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,7 +112,6 @@ public class transcript extends JFrame {
 		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(Color.BLACK, 2));
-		panel_1.setBackground(Color.ORANGE);
 		panel_1.setPreferredSize(new Dimension(210, 300));
 		panel.add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -116,17 +121,60 @@ public class transcript extends JFrame {
 		panel_6.setPreferredSize(new Dimension(210, 70));
 		panel_1.add(panel_6);
 		
+		JPanel panel_36 = new JPanel();
+		panel_36.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_1.add(panel_36);
+		panel_36.setLayout(new BorderLayout(0, 0));
+		panel_36.setPreferredSize(new Dimension(panel_36.getParent().getPreferredSize().width, panel_36.getParent().getPreferredSize().height-panel_36.getParent().getComponent(0).getPreferredSize().height));
+		
+		JPanel panel_34 = new JPanel();
+		panel_36.add(panel_34, BorderLayout.WEST);
+		panel_34.setPreferredSize(new Dimension(61, 230));
+		panel_34.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setBackground(new Color(40, 40, 40));
+		btnNewButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		btnNewButton.setFocusPainted(false);
+		btnNewButton.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\up.png"));
+		panel_34.add(btnNewButton);
+		btnNewButton.setPreferredSize(new Dimension(20, 30));
+		
+		JButton button = new JButton("");
+		button.setBorderPainted(false);
+		button.setBackground(new Color(40, 40, 40));
+		button.setBorder(new LineBorder(new Color(255, 255, 255)));
+		button.setFocusPainted(false);
+		button.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\down.png"));
+		panel_34.add(button);
+		button.setPreferredSize(new Dimension(20, 30));
+		
+		JButton button_1 = new JButton("");
+		button_1.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\check.png"));
+		button_1.setPreferredSize(new Dimension(20, 30));
+		button_1.setFocusPainted(false);
+		button_1.setBorderPainted(false);
+		button_1.setBorder(new LineBorder(new Color(255, 255, 255)));
+		button_1.setBackground(new Color(40, 40, 40));
+		panel_34.add(button_1);
+		
+		JPanel panel_35 = new JPanel();
+		panel_36.add(panel_35);
+		panel_35.setPreferredSize(new Dimension(panel_35.getParent().getPreferredSize().width-panel_35.getParent().getComponent(0).getPreferredSize().width, panel_35.getParent().getPreferredSize().height));
+		panel_35.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		
 		JLabel lblFormationPatriotiqueEt = new JLabel("<html>14. Comptabilite Generale</html>");
-		lblFormationPatriotiqueEt.setPreferredSize(new Dimension(210, 30));
+		panel_35.add(lblFormationPatriotiqueEt);
+		lblFormationPatriotiqueEt.setPreferredSize(new Dimension(165, 30));
 		lblFormationPatriotiqueEt.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.BOLD, 12));
 		lblFormationPatriotiqueEt.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.add(lblFormationPatriotiqueEt);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new LineBorder(Color.BLACK, 2));
+		panel_2.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		panel_2.setPreferredSize(new Dimension(180, 300));
-		panel_2.setBackground(Color.ORANGE);
+		panel_2.setBackground(panel.getBackground());
 		panel.add(panel_2);
 		panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
@@ -237,7 +285,7 @@ public class transcript extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new LineBorder(Color.BLACK, 2));
 		panel_3.setPreferredSize(new Dimension(180, 300));
-		panel_3.setBackground(Color.ORANGE);
+		panel_3.setBackground(panel.getBackground());
 		panel.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
@@ -348,7 +396,7 @@ public class transcript extends JFrame {
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new LineBorder(Color.BLACK, 2));
 		panel_4.setPreferredSize(new Dimension(180, 300));
-		panel_4.setBackground(Color.ORANGE);
+		panel_4.setBackground(panel.getBackground());
 		panel.add(panel_4);
 		panel_4.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
@@ -460,7 +508,7 @@ public class transcript extends JFrame {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new LineBorder(Color.BLACK, 2));
 		panel_5.setPreferredSize(new Dimension(180, 300));
-		panel_5.setBackground(Color.ORANGE);
+		panel_5.setBackground(panel.getBackground());
 		panel.add(panel_5);
 		panel_5.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
@@ -572,7 +620,7 @@ public class transcript extends JFrame {
 		JPanel panel_9 = new JPanel();
 		panel_9.setPreferredSize(new Dimension(200, 300));
 		panel_9.setBorder(new LineBorder(Color.BLACK, 2));
-		panel_9.setBackground(Color.ORANGE);
+		panel_9.setBackground(panel.getBackground());
 		panel.add(panel_9);
 		panel_9.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
@@ -676,7 +724,8 @@ public class transcript extends JFrame {
 		panel_32.add(label_21);
 		
 		JPanel panel_33 = new JPanel();
-		panel_33.setBackground(Color.PINK);
+		panel_33.setBorder(new LineBorder(Color.BLACK));
+		panel_33.setBackground(panel.getBackground());
 		panel_33.setPreferredSize(new Dimension(1000, 100));
 		panel.add(panel_33);
 		
@@ -688,31 +737,195 @@ public class transcript extends JFrame {
 	
 	public static void loadCourses(String classroom_in_ay_id, String student_in_classroom_id) {
 		
-		for(int j = 1; j< panel_1.getComponentCount(); j++) {
-			panel_1.remove(1);
-		}
+			((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).removeAll();
+			((Container) ((Container) panel_1.getComponent(1)).getComponent(0)).removeAll();
 		
 		Object[] lines = Home.loadActiveCourses(classroom_in_ay_id);
 		
 		for(int i = 0; i<lines.length;i++) {
-			String courseName = "<html><div style='text-align: left;'>"+(i+1)+". "+TestBox.getFullName(lines[i].toString())+"</div></html>";
+			if(Home.courseIsCalculated(lines[i].toString())) {
+			String courseName = "<html><div style='text-align: left;'>"+(((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount()+1)+". "+TestBox.getFullName(lines[i].toString())+"</div></html>";
 			JLabel lblFormationPatriotiqueEt = new JLabel(courseName);
 			lblFormationPatriotiqueEt.setName(lines[i].toString());
-			lblFormationPatriotiqueEt.setPreferredSize(new Dimension(210, 30));
 			lblFormationPatriotiqueEt.setHorizontalAlignment(SwingConstants.LEADING);
 			lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.BOLD, 12));
 			lblFormationPatriotiqueEt.setBorder(new LineBorder(new Color(0, 0, 0)));
-			panel_1.add(lblFormationPatriotiqueEt);
+			((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(lblFormationPatriotiqueEt);
+			lblFormationPatriotiqueEt.setPreferredSize(new Dimension(lblFormationPatriotiqueEt.getParent().getPreferredSize().width, 30));
+			lblFormationPatriotiqueEt.setOpaque(true);
 			
 			//generateStudentTranscript(student_in_classroom_id, lines[i].toString(), classroom_in_ay_id);
+	}}
+		
+		for(int i = 0; i< ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount(); i++) {
+		
+			JButton btnNewButton = new JButton("");
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setBackground(new Color(40, 40, 40));
+		//btnNewButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		btnNewButton.setFocusPainted(false);
+		btnNewButton.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\up.png"));
+		((Container) ((Container) panel_1.getComponent(1)).getComponent(0)).add(btnNewButton);
+		btnNewButton.setPreferredSize(new Dimension(20, 30));
+		if(i == 0) {
+			btnNewButton.setEnabled(false);
 		}
+		
+		JButton button = new JButton("");
+		button.setBorderPainted(false);
+		button.setBackground(new Color(40, 40, 40));
+		//button.setBorder(new LineBorder(new Color(255, 255, 255)));
+		button.setFocusPainted(false);
+		button.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\down.png"));
+		((Container) ((Container) panel_1.getComponent(1)).getComponent(0)).add(button);
+		button.setPreferredSize(new Dimension(20, 30));
+		if(i == ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount()-1) {
+			button.setEnabled(false);
+		}
+	
+		JButton button_1 = new JButton("");
+		button_1.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\check.png"));
+		button_1.setPreferredSize(new Dimension(20, 30));
+		button_1.setFocusPainted(false);
+		button_1.setBorderPainted(false);
+		button_1.setBorder(new LineBorder(new Color(255, 255, 255)));
+		button_1.setBackground(new Color(40, 40, 40));
+		((Container) ((Container) panel_1.getComponent(1)).getComponent(0)).add(button_1);
+		
+
+		int l = i;
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int k = 0; k< panel.getComponentCount(); k++) {
+					if(k == 0) {
+						((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(
+								((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l), l-1);
+					}else {
+						for(int j = 1; j< ((Container) panel.getComponent(k)).getComponentCount(); j++) {
+							((Container) ((Container) panel.getComponent(k)).getComponent(j)).add(
+									((Container) ((Container) panel.getComponent(k)).getComponent(j)).getComponent(l), l-1);
+						}
+					}
+					panel.revalidate();
+					panel.repaint();
+			}}
+		});
+
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int k = 0; k< panel.getComponentCount(); k++) {
+					if(k == 0) {
+						((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(
+								((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l), l+1);
+					}else {
+						for(int j = 1; j< ((Container) panel.getComponent(k)).getComponentCount(); j++) {
+							((Container) ((Container) panel.getComponent(k)).getComponent(j)).add(
+									((Container) ((Container) panel.getComponent(k)).getComponent(j)).getComponent(l), l+1);
+					//((JLabel) ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l-1)).setText("<html><div style='text-align: left;'>"+(l-1)+". "+TestBox.getFullName(((JLabel) ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l-1)).getName())+"</div></html>");
+					//	((JLabel) ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l)).setText("<html><div style='text-align: left;'>"+(l)+". "+TestBox.getFullName(((JLabel) ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l)).getName())+"</div></html>");
+						
+					
+					panel.revalidate();
+					panel.repaint();
+				}}
+				}
+			}
+		});
+	button_1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if(((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l).getBackground().equals(((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l).getParent().getBackground()))
+			{
+			for(int k = 0; k< panel.getComponentCount(); k++) {
+				if(k == 0) {
+					((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l).setBackground(((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l).getForeground());
+				}else {
+					for(int j = 1; j< ((Container) panel.getComponent(k)).getComponentCount(); j++) {
+						((Container) ((Container) panel.getComponent(k)).getComponent(j)).getComponent(l).setBackground(((Container) ((Container) panel.getComponent(k)).getComponent(j)).getComponent(l).getForeground());
+					}
+				}
+				panel.revalidate();
+				panel.repaint();
+			}
+		
+		}else {
+			for(int k = 0; k< panel.getComponentCount(); k++) {
+				if(k == 0) {
+					((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l).setBackground(((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(l).getParent().getBackground());
+				}else {
+					for(int j = 1; j< ((Container) panel.getComponent(k)).getComponentCount(); j++) {
+						((Container) ((Container) panel.getComponent(k)).getComponent(j)).getComponent(l).setBackground(((Container) ((Container) panel.getComponent(k)).getComponent(j)).getComponent(l).getParent().getBackground());
+					}
+				}
+				panel.revalidate();
+				panel.repaint();
+			}
+		
+		}
+		}
+	});}
+		
+		JLabel lblFormationPatriotiqueEt = new JLabel((((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount()+1)+". Conduite");
+		lblFormationPatriotiqueEt.setName("Conduite");
+		lblFormationPatriotiqueEt.setHorizontalAlignment(SwingConstants.LEADING);
+		lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.BOLD, 12));
+		lblFormationPatriotiqueEt.setBorder(new LineBorder(new Color(0, 0, 0)));
+		((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(lblFormationPatriotiqueEt);
+		lblFormationPatriotiqueEt.setPreferredSize(new Dimension(lblFormationPatriotiqueEt.getParent().getPreferredSize().width, 30));
+		lblFormationPatriotiqueEt.setOpaque(true);
+		
+
+		JLabel lblFormationPatriotiqueEt1 = new JLabel("Total");
+		lblFormationPatriotiqueEt1.setName("Total");
+		lblFormationPatriotiqueEt1.setHorizontalAlignment(SwingConstants.LEADING);
+		lblFormationPatriotiqueEt1.setFont(new Font("Roboto", Font.BOLD, 12));
+		lblFormationPatriotiqueEt1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(lblFormationPatriotiqueEt1);
+		lblFormationPatriotiqueEt1.setPreferredSize(new Dimension(lblFormationPatriotiqueEt1.getParent().getPreferredSize().width, 30));
+		lblFormationPatriotiqueEt1.setOpaque(true);
+		
+		JLabel lblFormationPatriotiqueEt11 = new JLabel("Pourcentage");
+		lblFormationPatriotiqueEt11.setName("Pourcentage");
+		lblFormationPatriotiqueEt11.setHorizontalAlignment(SwingConstants.LEADING);
+		lblFormationPatriotiqueEt11.setFont(new Font("Roboto", Font.BOLD, 12));
+		lblFormationPatriotiqueEt11.setBorder(new LineBorder(new Color(0, 0, 0)));
+		((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(lblFormationPatriotiqueEt11);
+		lblFormationPatriotiqueEt11.setPreferredSize(new Dimension(lblFormationPatriotiqueEt11.getParent().getPreferredSize().width, 30));
+		lblFormationPatriotiqueEt11.setOpaque(true);
+		
+		JLabel lblFormationPatriotiqueEt111 = new JLabel("Place");
+		lblFormationPatriotiqueEt111.setName("Place");
+		lblFormationPatriotiqueEt111.setHorizontalAlignment(SwingConstants.LEADING);
+		lblFormationPatriotiqueEt111.setFont(new Font("Roboto", Font.BOLD, 12));
+		lblFormationPatriotiqueEt111.setBorder(new LineBorder(new Color(0, 0, 0)));
+		((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(lblFormationPatriotiqueEt111);
+		lblFormationPatriotiqueEt111.setPreferredSize(new Dimension(lblFormationPatriotiqueEt111.getParent().getPreferredSize().width, 30));
+		lblFormationPatriotiqueEt111.setOpaque(true);
+		
+		
+		
+		for(int i = 0; i<lines.length;i++) {
+			if(!Home.courseIsCalculated(lines[i].toString())) {
+			String courseName = "<html><div style='text-align: left;'>"+TestBox.getFullName(lines[i].toString())+"</div></html>";
+			JLabel lblFormationPatriotiqueEt12 = new JLabel(courseName);
+			lblFormationPatriotiqueEt12.setName(lines[i].toString());
+			lblFormationPatriotiqueEt12.setHorizontalAlignment(SwingConstants.LEADING);
+			lblFormationPatriotiqueEt12.setFont(new Font("Roboto", Font.BOLD, 12));
+			lblFormationPatriotiqueEt12.setBorder(new LineBorder(new Color(0, 0, 0)));
+			((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).add(lblFormationPatriotiqueEt12);
+			lblFormationPatriotiqueEt12.setPreferredSize(new Dimension(lblFormationPatriotiqueEt12.getParent().getPreferredSize().width, 30));
+			lblFormationPatriotiqueEt12.setOpaque(true);
+			
+			}
+			}
+		
 		loadTermsAndGrids();
-		for(int i = 1; i< panel_1.getComponentCount(); i++) {
-			generateMaxima(student_in_classroom_id, panel_1.getComponent(i).getName(), classroom_in_ay_id);
+		for(int i = 0; i< lines.length; i++) {
+			generateMaxima(student_in_classroom_id, lines[i].toString(), classroom_in_ay_id);
 			
 		for(int i1 = 2; i1< panel.getComponentCount()-2; i1++) {
-		generateStudentTranscript(student_in_classroom_id, panel_1.getComponent(i).getName(), classroom_in_ay_id, panel.getComponent(i1).getName());
+		generateStudentTranscript(student_in_classroom_id, lines[i].toString(), classroom_in_ay_id, panel.getComponent(i1).getName());
 	}}
+		loadCourseTotals();
 		resize ();
 	}
 	
@@ -733,7 +946,7 @@ public static void loadTermsAndGrids() {
 	JPanel panel_2 = new JPanel();
 	panel_2.setBorder(new LineBorder(Color.BLACK, 2));
 	panel_2.setPreferredSize(new Dimension(180, 300));
-	panel_2.setBackground(Color.ORANGE);
+	panel_2.setBackground(panel.getBackground());
 	panel.add(panel_2, 1);
 	panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	
@@ -749,6 +962,7 @@ public static void loadTermsAndGrids() {
 	lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 	lblNewLabel_2.setPreferredSize(new Dimension(46, 30));
 	panel_7.add(lblNewLabel_2, BorderLayout.NORTH);
+	lblNewLabel_2.setOpaque(true);
 	
 	JLabel lblNewLabel_3 = new JLabel("TJ.");
 	lblNewLabel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -756,6 +970,7 @@ public static void loadTermsAndGrids() {
 	lblNewLabel_3.setFont(new Font("Roboto", Font.BOLD, 14));
 	lblNewLabel_3.setPreferredSize(new Dimension(41, 0));
 	panel_7.add(lblNewLabel_3, BorderLayout.WEST);
+	lblNewLabel_3.setOpaque(true);
 	
 	JLabel lblNewLabel_4 = new JLabel("TOT.");
 	lblNewLabel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -763,6 +978,7 @@ public static void loadTermsAndGrids() {
 	lblNewLabel_4.setVerticalAlignment(SwingConstants.TOP);
 	lblNewLabel_4.setFont(new Font("Roboto", Font.BOLD, 14));
 	panel_7.add(lblNewLabel_4, BorderLayout.EAST);
+	lblNewLabel_4.setOpaque(true);
 	
 	JPanel panel_8 = new JPanel();
 	panel_7.add(panel_8, BorderLayout.CENTER);
@@ -774,6 +990,7 @@ public static void loadTermsAndGrids() {
 	lblNewLabel_5.setFont(new Font("Roboto", Font.BOLD, 14));
 	lblNewLabel_5.setPreferredSize(new Dimension(46, 20));
 	panel_8.add(lblNewLabel_5, BorderLayout.NORTH);
+	lblNewLabel_5.setOpaque(true);
 	
 	JLabel lblNewLabel_6 = new JLabel("COM.");
 	lblNewLabel_6.setBorder(new LineBorder(Color.BLACK));
@@ -781,6 +998,7 @@ public static void loadTermsAndGrids() {
 	lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
 	lblNewLabel_6.setFont(new Font("Roboto", Font.BOLD, 14));
 	panel_8.add(lblNewLabel_6, BorderLayout.CENTER);
+	lblNewLabel_6.setOpaque(true);
 	
 	JLabel lblNewLabel_7 = new JLabel("RES.");
 	lblNewLabel_7.setBorder(new LineBorder(Color.BLACK));
@@ -788,6 +1006,7 @@ public static void loadTermsAndGrids() {
 	lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
 	lblNewLabel_7.setFont(new Font("Roboto", Font.BOLD, 14));
 	panel_8.add(lblNewLabel_7, BorderLayout.EAST);
+	lblNewLabel_7.setOpaque(true);
 	
 	JPanel panel_14 = new JPanel();
 	panel_14.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -819,13 +1038,14 @@ public static void loadTermsAndGrids() {
 	((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(2)).removeAll();
 	((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(3)).removeAll();
 	
-	for(int j = 1; j< panel_1.getComponentCount(); j++) {
+	for(int j = 0; j< ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount(); j++) {
 	JLabel lblNewLabel_9 = new JLabel();
 	lblNewLabel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
 	lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
 	lblNewLabel_9.setPreferredSize(new Dimension(41, 30));
 	lblNewLabel_9.setFont(new Font("Handlee", Font.BOLD, 14));
 	panel_14.add(lblNewLabel_9);
+	lblNewLabel_9.setOpaque(true);
 
 
 	JLabel label_1 = new JLabel();
@@ -834,6 +1054,7 @@ public static void loadTermsAndGrids() {
 	label_1.setFont(new Font("Handlee", Font.BOLD, 14));
 	label_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 	panel_15.add(label_1);
+	label_1.setOpaque(true);
 	
 	
 
@@ -843,6 +1064,7 @@ public static void loadTermsAndGrids() {
 	label_5.setFont(new Font("Handlee", Font.BOLD, 14));
 	label_5.setBorder(new LineBorder(new Color(0, 0, 0)));
 	panel_16.add(label_5);
+	label_5.setOpaque(true);
 	
 	JLabel label_6 = new JLabel();
 	label_6.setPreferredSize(new Dimension(41, 30));
@@ -850,6 +1072,7 @@ public static void loadTermsAndGrids() {
 	label_6.setFont(new Font("Handlee", Font.BOLD, 14));
 	label_6.setBorder(new LineBorder(new Color(0, 0, 0)));
 	panel_17.add(label_6);
+	label_6.setOpaque(true);
 	
 	
 	
@@ -860,6 +1083,7 @@ public static void loadTermsAndGrids() {
 	label_19.setFont(new Font("Handlee", Font.BOLD, 14));
 	label_19.setBorder(new LineBorder(new Color(0, 0, 0)));
 	((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(1)).add(label_19);
+	label_19.setOpaque(true);
 	
 	
 	JLabel label_20 = new JLabel();
@@ -868,6 +1092,7 @@ public static void loadTermsAndGrids() {
 	label_20.setFont(new Font("Handlee", Font.BOLD, 14));
 	label_20.setBorder(new LineBorder(new Color(0, 0, 0)));
 	((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(2)).add(label_20);
+	label_20.setOpaque(true);
 	
 	JLabel label_21 = new JLabel();
 	label_21.setPreferredSize(new Dimension(66, 30));
@@ -875,6 +1100,7 @@ public static void loadTermsAndGrids() {
 	label_21.setFont(new Font("Handlee", Font.BOLD, 14));
 	label_21.setBorder(new LineBorder(new Color(0, 0, 0)));
 	((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(3)).add(label_21);
+	label_21.setOpaque(true);
 	}
 	
 	
@@ -884,7 +1110,7 @@ public static void loadTermsAndGrids() {
 		panel_21.setName(terms.get(i));
 		panel_21.setBorder(new LineBorder(Color.BLACK, 2));
 		panel_21.setPreferredSize(new Dimension(180, 300));
-		panel_21.setBackground(Color.ORANGE);
+		panel_21.setBackground(panel.getBackground());
 		panel.add(panel_21, i+2);
 		panel_21.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
@@ -900,6 +1126,7 @@ public static void loadTermsAndGrids() {
 		lblNewLabel_21.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_21.setPreferredSize(new Dimension(46, 30));
 		panel_71.add(lblNewLabel_21, BorderLayout.NORTH);
+		lblNewLabel_21.setOpaque(true);
 		
 		JLabel lblNewLabel_31 = new JLabel("TJ.");
 		lblNewLabel_31.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -907,6 +1134,7 @@ public static void loadTermsAndGrids() {
 		lblNewLabel_31.setFont(new Font("Roboto", Font.BOLD, 14));
 		lblNewLabel_31.setPreferredSize(new Dimension(41, 0));
 		panel_71.add(lblNewLabel_31, BorderLayout.WEST);
+		lblNewLabel_31.setOpaque(true);
 		
 		JLabel lblNewLabel_41 = new JLabel("TOT.");
 		lblNewLabel_41.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -914,6 +1142,7 @@ public static void loadTermsAndGrids() {
 		lblNewLabel_41.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_41.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_71.add(lblNewLabel_41, BorderLayout.EAST);
+		lblNewLabel_41.setOpaque(true);
 		
 		JPanel panel_81 = new JPanel();
 		panel_71.add(panel_81, BorderLayout.CENTER);
@@ -925,6 +1154,7 @@ public static void loadTermsAndGrids() {
 		lblNewLabel_51.setFont(new Font("Roboto", Font.BOLD, 14));
 		lblNewLabel_51.setPreferredSize(new Dimension(46, 20));
 		panel_81.add(lblNewLabel_51, BorderLayout.NORTH);
+		lblNewLabel_51.setOpaque(true);
 		
 		JLabel lblNewLabel_61 = new JLabel("COM.");
 		lblNewLabel_61.setBorder(new LineBorder(Color.BLACK));
@@ -932,6 +1162,7 @@ public static void loadTermsAndGrids() {
 		lblNewLabel_61.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_61.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_81.add(lblNewLabel_61, BorderLayout.CENTER);
+		lblNewLabel_61.setOpaque(true);
 		
 		JLabel lblNewLabel_71 = new JLabel("RES.");
 		lblNewLabel_71.setBorder(new LineBorder(Color.BLACK));
@@ -939,6 +1170,7 @@ public static void loadTermsAndGrids() {
 		lblNewLabel_71.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_71.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_81.add(lblNewLabel_71, BorderLayout.EAST);
+		lblNewLabel_71.setOpaque(true);
 		
 		JPanel panel_141 = new JPanel();
 		panel_141.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -964,13 +1196,14 @@ public static void loadTermsAndGrids() {
 		panel_21.add(panel_171);
 		panel_171.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
-		for(int j = 1; j< panel_1.getComponentCount(); j++) {
+		for(int j = 0; j< ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount(); j++) {
 		JLabel lblNewLabel_91 = new JLabel();
 		lblNewLabel_91.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblNewLabel_91.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_91.setPreferredSize(new Dimension(41, 30));
 		lblNewLabel_91.setFont(new Font("Handlee", Font.BOLD, 14));
 		panel_141.add(lblNewLabel_91);
+		lblNewLabel_91.setOpaque(true);
 		
 
 		JLabel label_11 = new JLabel();
@@ -979,6 +1212,7 @@ public static void loadTermsAndGrids() {
 		label_11.setFont(new Font("Handlee", Font.BOLD, 14));
 		label_11.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_151.add(label_11);
+		label_11.setOpaque(true);
 		
 
 		JLabel label_51 = new JLabel();
@@ -987,6 +1221,7 @@ public static void loadTermsAndGrids() {
 		label_51.setFont(new Font("Handlee", Font.BOLD, 14));
 		label_51.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_161.add(label_51);
+		label_51.setOpaque(true);
 		
 		JLabel label_61 = new JLabel();
 		label_61.setPreferredSize(new Dimension(41, 30));
@@ -994,6 +1229,7 @@ public static void loadTermsAndGrids() {
 		label_61.setFont(new Font("Handlee", Font.BOLD, 14));
 		label_61.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_171.add(label_61);
+		label_61.setOpaque(true);
 		}
 	}
 	
@@ -1001,10 +1237,10 @@ public static void loadTermsAndGrids() {
 
 public static void generateMaxima(String student_in_classroom_id, String course_in_classroom_id, String classroom_in_ay_id) {
 	
-	for(int j = 1; j < panel_1.getComponentCount(); j++) {
+	for(int j = 0; j < ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount(); j++) {
 		
-		if(panel_1.getComponent(j).getName().equals(course_in_classroom_id)) {
-		  Double maxAnnuel = 0.0; Double totAnnuel = 0.0;
+		if(((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(j).getName().equals(course_in_classroom_id)) {
+		  Double maxAnnuel = 0.0; 
 		  
 		  List l1 = StudentStats.getStudentExamStats(student_in_classroom_id,
 		  classroom_in_ay_id, course_in_classroom_id, panel.getComponent(2).getName(), "All", "All");
@@ -1013,46 +1249,51 @@ public static void generateMaxima(String student_in_classroom_id, String course_
 		  String courseMaxima =
 		  ExamInfo.loadCourseMaxima(course_in_classroom_id);
 		  
-		  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(1)).getComponent(j-1)).setText(courseMaxima); 
+		  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(1)).getComponent(j)).setText(courseMaxima); 
 		  
 		  total = total+Double.parseDouble(courseMaxima.replaceAll(",", "."));
 		  
 		  
 		  if(((List)l1.get(5)).toArray().length>0) { 
 			  String s = Exam.getSerieMaxima(((List)l1.get(5)).get(0).toString()); 
-			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(2)).getComponent(j-1)).setText(s);
+			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(2)).getComponent(j)).setText(s);
 		  
 		  total = total+ Double.parseDouble(s.replaceAll(",", ".")); 
 		  
 		  }else {
-			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(2)).getComponent(j-1)).setText("-"); 
+			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(2)).getComponent(j)).setText("-"); 
 		  }
 		  
 		  
 		  if(((List)l1.get(5)).toArray().length>1) {
 			  String s1 = Exam.getSerieMaxima(((List)l1.get(5)).get(1).toString());
-			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(3)).getComponent(j-1)).setText(s1); 
+			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(3)).getComponent(j)).setText(s1); 
 		  total = total+ Double.parseDouble(s1.replaceAll(",",".")); 
 		  
 		  }else{ 
-			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(3)).getComponent(j-1)).setText("-"); 
+			  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(3)).getComponent(j)).setText("-"); 
 			  }
 		  
-		  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(4)).getComponent(j-1)).setText(""+total);
+		  ((JLabel) ((Container)((Container) panel.getComponent(1)).getComponent(4)).getComponent(j)).setText(""+total);
 		  
 		  
 		  maxAnnuel = total*(panel.getComponentCount()-4);
 
 			((JLabel) ((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(1))
-			.getComponent(j-1)).setText(new DecimalFormat("##.##").format(maxAnnuel));
+			.getComponent(j)).setText(new DecimalFormat("##.##").format(maxAnnuel));
 	}}
 }
 	  
 	
 public static void generateStudentTranscript(String student_in_classroom_id, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
-	  
-	for(int j = 1; j< panel_1.getComponentCount(); j++) {
-		  if(panel_1.getComponent(j).getName().equals(course_in_classroom_id)) {
+
+    new SwingWorker<Void, Void>() {
+        public Void doInBackground() throws Exception{
+        	
+	for(int j = 0; j< ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount(); j++) {
+		  if(((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(j).getName().equals(course_in_classroom_id)) {
+
+			  Double totAnnuel = 0.0;
 			  
 		  
 	for(int i = 2; i< panel.getComponentCount()-2; i++) {
@@ -1070,9 +1311,9 @@ public static void generateStudentTranscript(String student_in_classroom_id, Str
 	  String courseMaxima1 = ExamInfo.loadCourseMaxima(course_in_classroom_id);
 	  
 	  if(l.get(1).toString().equals("0/0")) {
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(1)).getComponent(j-1)).setText("-"); 
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(1)).getComponent(j)).setText("-"); 
 	  }else {
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(1)).getComponent(j-1)).setText(new DecimalFormat("##.##").format(points1/maxima1*Double.parseDouble(courseMaxima1.replaceAll(",", "."))));
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(1)).getComponent(j)).setText(new DecimalFormat("##.##").format(points1/maxima1*Double.parseDouble(courseMaxima1.replaceAll(",", "."))));
 	  
 	  total1 = total1+points1/maxima1*Double.parseDouble(courseMaxima1); 
 	  }
@@ -1081,41 +1322,55 @@ public static void generateStudentTranscript(String student_in_classroom_id, Str
 	  if(((List)l11.get(5)).toArray().length>0) { 
 		  String s = LPane.loadStudentSerieNote(((List)l11.get(5)).get(0).toString(), student_in_classroom_id); 
 		  List<String> note1 = Arrays.asList(s.split("/"));
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(2)).getComponent(j-1)).setText(note1.get(0));
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(2)).getComponent(j)).setText(note1.get(0));
 	  
 	  total1 = total1+ Double.parseDouble(note1.get(0).replaceAll(",", ".")); 
 	  }else{
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(2)).getComponent(j-1)).setText("-"); 
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(2)).getComponent(j)).setText("-"); 
 	  }
 	  
 	  
 	  if(((List)l11.get(5)).toArray().length>1) { 
 		  String s1 = LPane.loadStudentSerieNote(((List)l11.get(5)).get(1).toString(), student_in_classroom_id); 
 		  List<String> note2 = Arrays.asList(s1.split("/"));
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(3)).getComponent(j-1)).setText(note2.get(0)); total1 = total1+ Double.parseDouble(note2.get(0).replaceAll(",", ".")); 
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(3)).getComponent(j)).setText(note2.get(0)); 
+		  total1 = total1+ Double.parseDouble(note2.get(0).replaceAll(",", ".")); 
 	  }else{
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(3)).getComponent(j-1)).setText("-"); 
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(3)).getComponent(j)).setText("-"); 
 	  }
 	  
 	  
 	  if(total1 == 0) { 
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(4)).getComponent(j-1)).setText("-"); 
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(4)).getComponent(j)).setText("-"); 
 	  }else { 
-		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(4)).getComponent(j-1)).setText(new DecimalFormat("##.##").format(total1));
+		  ((JLabel) ((Container)((Container) panel.getComponent(i)).getComponent(4)).getComponent(j)).setText(new DecimalFormat("##.##").format(total1));
 	  
 	  }
 	  
-	  //totAnnuel = totAnnuel+ total1;
-	  
-	  }}}
+	  totAnnuel = totAnnuel+ total1;
+
+	  ((JLabel) ((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(2)).getComponent(j)).setText(new DecimalFormat("##.##").format(totAnnuel));
+	  Double maxima = Double.parseDouble(((JLabel) ((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(1)).getComponent(j)).getText().replaceAll(",", "."));
+
+	  ((JLabel) ((Container)((Container) panel.getComponent(panel.getComponentCount()-2)).getComponent(3)).getComponent(j)).setText(new DecimalFormat("##.##").format((totAnnuel*100)/maxima));
+	 }}}
 	}
+	return null;
+        }
+    }.execute();
 }
 
+public static void loadCourseTotals() {}
+	
 	public static void resize () {
-		int height = 0;
-		for(int i = 0; i< panel_1.getComponentCount(); i++) {
-			height = height + panel_1.getComponent(i).getPreferredSize().height;
+		int height = 0 + panel_1.getComponent(0).getPreferredSize().height;
+		for(int i = 0; i< ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount(); i++) {
+			height = height + ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponent(i).getPreferredSize().height;
 		}
+		((Container) panel_1.getComponent(1)).setPreferredSize(new Dimension(((Container) panel_1.getComponent(1)).getPreferredSize().width, height-(((Container) panel_1.getComponent(0)).getComponentCount())));
+		((Container) panel_1.getComponent(1)).getComponent(0).setPreferredSize(new Dimension(((Container) panel_1.getComponent(1)).getComponent(0).getPreferredSize().width, height-(((Container) panel_1.getComponent(0)).getComponentCount())));
+		((Container) panel_1.getComponent(1)).getComponent(1).setPreferredSize(new Dimension(((Container) panel_1.getComponent(1)).getComponent(1).getPreferredSize().width, height-(((Container) panel_1.getComponent(0)).getComponentCount())));
+		
 		for(int i = 0; i< panel.getComponentCount()-1; i++) {
 			panel.getComponent(i).setPreferredSize(new Dimension(panel.getComponent(i).getPreferredSize().width, height));
 			if(i>0) {

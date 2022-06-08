@@ -33,217 +33,232 @@ import Publishing.PersonalMessage;
 import Stats.CourseStats;
 import Stats.StatsPane;
 import Stats.StudentStats;
+import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
+import elements.CustomButton;
+
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
+import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.Component;
 
 public class StudentInfo extends JPanel {
-	public static JLabel percent;
-	public static JLabel points;
-	public static JLabel echec;
-	public static JLabel education;
-	public static JLabel className;
-	public static JLabel number;
 	public static JLabel name;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel label;
+	private JSeparator separator;
 
 	/**
 	 * Create the panel.
 	 */
-	public StudentInfo(String student_id, String classroom_id, String ay_id, String start, String end) {
+	public StudentInfo(String classroom_in_ay_id) {
 		setBorder(new LineBorder(Color.WHITE, 1, true));
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(400, 500));
-		setLayout(null);
+		setPreferredSize(new Dimension(370, 700));
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		name = new JLabel("Umuhoza Chris Koen Michael");
+		CustomButton btnNewButton = new CustomButton();
+		btnNewButton.setRadius(100);
+		btnNewButton.setPreferredSize(new Dimension(100, 100));
+		btnNewButton.setBorderColor(new Color(20, 148, 198));
+		btnNewButton.setBackground(new Color(40, 40, 40));
+		add(btnNewButton);
+		
+		name = new JLabel(Home.getClassName(classroom_in_ay_id));
+		name.setHorizontalAlignment(SwingConstants.CENTER);
+		name.setPreferredSize(new Dimension(360, 20));
 		name.setForeground(new Color(255, 255, 255));
-		name.setFont(new Font("Futura Hv BT", Font.PLAIN, 20));
-		name.setBounds(10, 21, 294, 28);
+		name.setFont(new Font("Roboto", Font.BOLD, 16));
 		add(name);
 		
-		number = new JLabel("No 129");
-		number.setForeground(Color.WHITE);
-		number.setFont(new Font("Futura Hv BT", Font.PLAIN, 20));
-		number.setBounds(314, 21, 76, 28);
-		add(number);
+		lblNewLabel = new JLabel(Home.loadActiveStudents(classroom_in_ay_id).length+" eleves");
+		lblNewLabel.setForeground(new Color(211, 211, 211));
+		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+		add(lblNewLabel);
 		
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(200, 70));
-		panel.setBackground(new Color(80, 80, 80));
-		panel.setBounds(18, 119, 178, 70);
-		add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
+		label = new JLabel("-");
+		label.setForeground(new Color(211, 211, 211));
+		label.setFont(new Font("Roboto", Font.PLAIN, 14));
+		add(label);
 		
-		JLabel label = new JLabel("Pourcentage");
-		label.setPreferredSize(new Dimension(61, 25));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(Color.WHITE);
-		label.setFont(new Font("Roboto", Font.BOLD, 18));
-		panel.add(label, BorderLayout.NORTH);
-		
-		percent = new JLabel("75,28%");
-		percent.setHorizontalAlignment(SwingConstants.CENTER);
-		percent.setForeground(Color.WHITE);
-		percent.setFont(new Font("Roboto", Font.BOLD, 30));
-		panel.add(percent, BorderLayout.CENTER);
-		
-		JLabel lblNewLabel_1 = new JLabel("Informations rapides");
-		lblNewLabel_1.setForeground(new Color(192, 192, 192));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(78, 93, 227, 19);
+		lblNewLabel_1 = new JLabel(Home.loadActiveCourses(classroom_in_ay_id).length+" cours");
+		lblNewLabel_1.setForeground(new Color(211, 211, 211));
+		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 14));
 		add(lblNewLabel_1);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setPreferredSize(new Dimension(200, 70));
-		panel_1.setBackground(new Color(80, 80, 80));
-		panel_1.setBounds(204, 119, 178, 70);
-		add(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblPoints = new JLabel("Points");
-		lblPoints.setPreferredSize(new Dimension(61, 25));
-		lblPoints.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPoints.setForeground(Color.WHITE);
-		lblPoints.setFont(new Font("Roboto", Font.BOLD, 18));
-		panel_1.add(lblPoints, BorderLayout.NORTH);
-		
-		points = new JLabel("1250,5/1600");
-		points.setHorizontalAlignment(SwingConstants.CENTER);
-		points.setForeground(Color.WHITE);
-		points.setFont(new Font("Roboto", Font.BOLD, 30));
-		panel_1.add(points, BorderLayout.CENTER);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setPreferredSize(new Dimension(200, 70));
-		panel_2.setBackground(new Color(80, 80, 80));
-		panel_2.setBounds(18, 197, 178, 70);
-		add(panel_2);
-		panel_2.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblEchecs = new JLabel("Echecs");
-		lblEchecs.setPreferredSize(new Dimension(61, 25));
-		lblEchecs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEchecs.setForeground(Color.WHITE);
-		lblEchecs.setFont(new Font("Roboto", Font.BOLD, 18));
-		panel_2.add(lblEchecs, BorderLayout.NORTH);
-		
-		echec = new JLabel("2");
-		echec.setHorizontalAlignment(SwingConstants.CENTER);
-		echec.setForeground(Color.WHITE);
-		echec.setFont(new Font("Roboto", Font.BOLD, 30));
-		panel_2.add(echec, BorderLayout.CENTER);
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setPreferredSize(new Dimension(200, 70));
-		panel_3.setBackground(new Color(80, 80, 80));
-		panel_3.setBounds(204, 197, 178, 70);
-		add(panel_3);
-		panel_3.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblEducation = new JLabel("Education");
-		lblEducation.setPreferredSize(new Dimension(61, 25));
-		lblEducation.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEducation.setForeground(Color.WHITE);
-		lblEducation.setFont(new Font("Roboto", Font.BOLD, 18));
-		panel_3.add(lblEducation, BorderLayout.NORTH);
-		
-		education = new JLabel("54/60");
-		education.setHorizontalAlignment(SwingConstants.CENTER);
-		education.setForeground(Color.WHITE);
-		education.setFont(new Font("Roboto", Font.BOLD, 30));
-		panel_3.add(education, BorderLayout.CENTER);
-		
-		className = new JLabel(Home.getClassName(classroom_id));
-		className.setHorizontalAlignment(SwingConstants.CENTER);
-		className.setForeground(new Color(192, 192, 192));
-		className.setFont(new Font("Futura Hv BT", Font.PLAIN, 18));
-		className.setBounds(53, 50, 294, 28);
-		add(className);
-		
-		JSeparator separator = new JSeparator();
-		separator.setForeground(Color.WHITE);
-		separator.setPreferredSize(new Dimension(0, 1));
-		separator.setBackground(Color.BLACK);
-		separator.setBounds(0, 85, 400, 10);
+		separator = new JSeparator();
+		separator.setForeground(new Color(255, 255, 255));
+		separator.setPreferredSize(new Dimension(350, 1));
 		add(separator);
 		
-		JLabel lblCommandes = new JLabel("Commandes");
-		lblCommandes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCommandes.setForeground(Color.LIGHT_GRAY);
-		lblCommandes.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblCommandes.setBounds(78, 300, 227, 19);
-		add(lblCommandes);
+		CustomButton btnstructuresDeLhoraire = new CustomButton("<html><div style='text-align: leading;'>Structure de l'horaire</div></html>");
+		btnstructuresDeLhoraire.setRadius(15);
+		btnstructuresDeLhoraire.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnstructuresDeLhoraire.setMultiClickThreshhold(2000L);
+		btnstructuresDeLhoraire.setMargin(new Insets(2, 10, 2, 14));
+		btnstructuresDeLhoraire.setHorizontalAlignment(SwingConstants.LEADING);
+		btnstructuresDeLhoraire.setPreferredSize(new Dimension(350, 40));
+		btnstructuresDeLhoraire.setIconTextGap(10);
+		btnstructuresDeLhoraire.setForeground(Color.WHITE);
+		btnstructuresDeLhoraire.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnstructuresDeLhoraire.setFocusPainted(false);
+		btnstructuresDeLhoraire.setBorderColor(new Color(255, 255, 255));
+		btnstructuresDeLhoraire.setBackground(new Color(40, 40, 40));
+		btnstructuresDeLhoraire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnstructuresDeLhoraire);
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(Color.WHITE);
-		separator_1.setPreferredSize(new Dimension(0, 1));
-		separator_1.setBackground(Color.BLACK);
-		separator_1.setBounds(0, 292, 400, 10);
-		add(separator_1);
+		CustomButton btnhoraireDeClasse = new CustomButton("<html><div style='text-align: leading;'>Horaire de classe</div></html>");
+		btnhoraireDeClasse.setRadius(15);
+		btnhoraireDeClasse.setMargin(new Insets(2, 10, 2, 14));
+		btnhoraireDeClasse.setHorizontalAlignment(SwingConstants.LEADING);
+		btnhoraireDeClasse.setPreferredSize(new Dimension(350, 40));
+		btnhoraireDeClasse.setIconTextGap(10);
+		btnhoraireDeClasse.setForeground(Color.WHITE);
+		btnhoraireDeClasse.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnhoraireDeClasse.setFocusPainted(false);
+		btnhoraireDeClasse.setBorderColor(new Color(255, 255, 255));
+		btnhoraireDeClasse.setBackground(new Color(40, 40, 40));
+		btnhoraireDeClasse.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnhoraireDeClasse);
 		
-		JButton btnvoirLeleve = new JButton("<html><div style='text-align: left;'>Voir l'eleve</div></html>");
-		btnvoirLeleve.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Student.openStudent(student_id, classroom_id, ay_id);
-				Home.frame.setVisible(false);
-			}
-		});
-		btnvoirLeleve.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\open.png"));
-		btnvoirLeleve.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnvoirLeleve.setIconTextGap(0);
-		btnvoirLeleve.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnvoirLeleve.setForeground(Color.WHITE);
-		btnvoirLeleve.setFont(new Font("Roboto", Font.PLAIN, 18));
-		btnvoirLeleve.setFocusPainted(false);
-		btnvoirLeleve.setBorder(new LineBorder(new Color(255, 255, 255), 2));
-		btnvoirLeleve.setBackground(new Color(40, 40, 40));
-		btnvoirLeleve.setBounds(25, 330, 165, 155);
-		add(btnvoirLeleve);
-		
-		btnvoirLeleve.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnvoirLeleve.setBackground(new Color(20, 148, 198));
-			}public void mouseExited(MouseEvent e) {
-				btnvoirLeleve.setBackground(btnvoirLeleve.getParent().getBackground());
-			}
-		});
-		
-		JButton btnstatistiquesAvances = new JButton("<html><div style='text-align: center;'>Statistiques avanc\u00E9es</div></html>");
+
+		CustomButton btnstatistiquesAvances = new CustomButton("<html><div style='text-align: leading;'>Statistiques avanc\u00E9es</div></html>");
+		btnstatistiquesAvances.setRadius(15);
+		btnstatistiquesAvances.setMargin(new Insets(0, 10, 0, 0));
+		btnstatistiquesAvances.setHorizontalAlignment(SwingConstants.LEADING);
+		btnstatistiquesAvances.setPreferredSize(new Dimension(350, 40));
 		btnstatistiquesAvances.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StatsPane frame = new StatsPane(student_id, "All", classroom_id, Home.termsText.get(Home.selectedTermIndex), ay_id);
+				StatsPane frame = new StatsPane("All", "All", classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				frame.setVisible(true);
 				}
 		});
-		btnstatistiquesAvances.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnstatistiquesAvances.setIconTextGap(0);
-		btnstatistiquesAvances.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnstatistiquesAvances.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnstatistiquesAvances.setIconTextGap(10);
+		btnstatistiquesAvances.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		btnstatistiquesAvances.setForeground(Color.WHITE);
-		btnstatistiquesAvances.setFont(new Font("Roboto", Font.PLAIN, 18));
+		btnstatistiquesAvances.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnstatistiquesAvances.setFocusPainted(false);
-		btnstatistiquesAvances.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		btnstatistiquesAvances.setBorderColor(new Color(255, 255, 255));
 		btnstatistiquesAvances.setBackground(new Color(40, 40, 40));
-		btnstatistiquesAvances.setBounds(210, 330, 165, 155);
 		add(btnstatistiquesAvances);
 		
+		CustomButton btnlisteDesPresences = new CustomButton("<html><div style='text-align: leading;'>Liste des presences</div></html>");
+		btnlisteDesPresences.setRadius(15);
+		btnlisteDesPresences.setMargin(new Insets(2, 10, 2, 14));
+		btnlisteDesPresences.setHorizontalAlignment(SwingConstants.LEADING);
+		btnlisteDesPresences.setPreferredSize(new Dimension(350, 40));
+		btnlisteDesPresences.setIconTextGap(10);
+		btnlisteDesPresences.setForeground(Color.WHITE);
+		btnlisteDesPresences.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnlisteDesPresences.setFocusPainted(false);
+		btnlisteDesPresences.setBorderColor(new Color(255, 255, 255));
+		btnlisteDesPresences.setBackground(new Color(40, 40, 40));
+		btnlisteDesPresences.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnlisteDesPresences);
+		
+		CustomButton btnpaiementDuMinerval = new CustomButton("<html><div style='text-align: leading;'>Paiement du minerval</div></html>");
+		btnpaiementDuMinerval.setRadius(15);
+		btnpaiementDuMinerval.setMargin(new Insets(2, 10, 2, 14));
+		btnpaiementDuMinerval.setHorizontalAlignment(SwingConstants.LEADING);
+		btnpaiementDuMinerval.setPreferredSize(new Dimension(350, 40));
+		btnpaiementDuMinerval.setIconTextGap(10);
+		btnpaiementDuMinerval.setForeground(Color.WHITE);
+		btnpaiementDuMinerval.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnpaiementDuMinerval.setFocusPainted(false);
+		btnpaiementDuMinerval.setBorderColor(new Color(255, 255, 255));
+		btnpaiementDuMinerval.setBackground(new Color(40, 40, 40));
+		btnpaiementDuMinerval.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnpaiementDuMinerval);
+		
+		CustomButton btnhistoriqueDeConduite = new CustomButton("<html><div style='text-align: leading;'>Historique de conduite</div></html>");
+		btnhistoriqueDeConduite.setRadius(15);
+		btnhistoriqueDeConduite.setMargin(new Insets(2, 10, 2, 14));
+		btnhistoriqueDeConduite.setHorizontalAlignment(SwingConstants.LEADING);
+		btnhistoriqueDeConduite.setPreferredSize(new Dimension(350, 40));
+		btnhistoriqueDeConduite.setIconTextGap(10);
+		btnhistoriqueDeConduite.setForeground(Color.WHITE);
+		btnhistoriqueDeConduite.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnhistoriqueDeConduite.setFocusPainted(false);
+		btnhistoriqueDeConduite.setBorderColor(new Color(255, 255, 255));
+		btnhistoriqueDeConduite.setBackground(new Color(40, 40, 40));
+		btnhistoriqueDeConduite.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnhistoriqueDeConduite);
+		
+		CustomButton btnbulletinScolaire = new CustomButton("<html><div style='text-align: leading;'>Bulletin scolaire</div></html>");
+		btnbulletinScolaire.setRadius(15);
+		btnbulletinScolaire.setMargin(new Insets(2, 10, 2, 14));
+		btnbulletinScolaire.setHorizontalAlignment(SwingConstants.LEADING);
+		btnbulletinScolaire.setPreferredSize(new Dimension(350, 40));
+		btnbulletinScolaire.setIconTextGap(10);
+		btnbulletinScolaire.setForeground(Color.WHITE);
+		btnbulletinScolaire.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnbulletinScolaire.setFocusPainted(false);
+		btnbulletinScolaire.setBorderColor(new Color(255, 255, 255));
+		btnbulletinScolaire.setBackground(new Color(40, 40, 40));
+		btnbulletinScolaire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnbulletinScolaire);
+		
+		CustomButton btnconditionsDeReussite = new CustomButton("<html><div style='text-align: leading;'>Conditions de reussite</div></html>");
+		btnconditionsDeReussite.setRadius(15);
+		btnconditionsDeReussite.setMargin(new Insets(2, 10, 2, 14));
+		btnconditionsDeReussite.setHorizontalAlignment(SwingConstants.LEADING);
+		btnconditionsDeReussite.setPreferredSize(new Dimension(350, 40));
+		btnconditionsDeReussite.setIconTextGap(10);
+		btnconditionsDeReussite.setForeground(Color.WHITE);
+		btnconditionsDeReussite.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnconditionsDeReussite.setFocusPainted(false);
+		btnconditionsDeReussite.setBorderColor(new Color(255, 255, 255));
+		btnconditionsDeReussite.setBackground(new Color(40, 40, 40));
+		btnconditionsDeReussite.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnconditionsDeReussite);
+		
+		CustomButton btnelevesSupprimes = new CustomButton("<html><div style='text-align: leading;'>Eleves supprimes</div></html>");
+		btnelevesSupprimes.setRadius(15);
+		btnelevesSupprimes.setMargin(new Insets(2, 10, 2, 14));
+		btnelevesSupprimes.setHorizontalAlignment(SwingConstants.LEADING);
+		btnelevesSupprimes.setPreferredSize(new Dimension(350, 40));
+		btnelevesSupprimes.setIconTextGap(10);
+		btnelevesSupprimes.setForeground(Color.WHITE);
+		btnelevesSupprimes.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnelevesSupprimes.setFocusPainted(false);
+		btnelevesSupprimes.setBorderColor(new Color(255, 255, 255));
+		btnelevesSupprimes.setBackground(new Color(40, 40, 40));
+		btnelevesSupprimes.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnelevesSupprimes);
+		
+		CustomButton btncoursSupprimes = new CustomButton("<html><div style='text-align: leading;'>Cours supprimes</div></html>");
+		btncoursSupprimes.setRadius(15);
+		btncoursSupprimes.setMargin(new Insets(2, 10, 2, 14));
+		btncoursSupprimes.setHorizontalAlignment(SwingConstants.LEADING);
+		btncoursSupprimes.setPreferredSize(new Dimension(350, 40));
+		btncoursSupprimes.setIconTextGap(10);
+		btncoursSupprimes.setForeground(Color.WHITE);
+		btncoursSupprimes.setFont(new Font("Roboto", Font.BOLD, 14));
+		btncoursSupprimes.setFocusPainted(false);
+		btncoursSupprimes.setBorderColor(new Color(255, 255, 255));
+		btncoursSupprimes.setBackground(new Color(40, 40, 40));
+		btncoursSupprimes.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btncoursSupprimes);
+		
 
-		btnstatistiquesAvances.addMouseListener(new MouseAdapter() {
+		for(int i = 0; i< getComponentCount(); i++) {
+			int k = i;
+			if(getComponent(i) instanceof CustomButton) {
+				getComponent(i).addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnstatistiquesAvances.setBackground(new Color(20, 148, 198));
+				getComponent(k).setBackground(new Color(20, 148, 198));
 			}public void mouseExited(MouseEvent e) {
-				btnstatistiquesAvances.setBackground(btnstatistiquesAvances.getParent().getBackground());
+				getComponent(k).setBackground(getComponent(k).getParent().getBackground());
 			}
 		});
-		
-		
-		loadStudentInfo(student_id, classroom_id, ay_id, start, end);
+	}}
 	}
 	
 	public static void loadStudentInfo(String student_id, String classroom_id, String ay_id, String start, String end) {
@@ -276,10 +291,6 @@ public class StudentInfo extends JPanel {
 		}else {
 		percentage = points1*100/maxima;
 		}
-		percent.setText(new DecimalFormat("##.##").format(percentage)+"%");
-		points.setText(new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
-		echec.setText(StudentStats.getNumberOfechecs(student_id, "All", classroom_id, ay_id
-				, "Toute l'annee", start, end)+"");
 		
 	}
 }

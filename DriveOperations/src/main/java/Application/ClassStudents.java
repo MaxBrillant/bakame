@@ -508,10 +508,6 @@ public class ClassStudents extends JPanel {
 					deselectAll(ay_id);
 					((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).setBackground(new Color(20, 148, 198));
 					selectedStudent = ((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getName();
-					StudentInfo s = new StudentInfo(((JLabel) ((Container) (((JPanel)((JPanel) te).getComponent(1))).getComponent(k)).getComponent(1)).getName(),
-							(((JLabel) ((JPanel) ((JPanel) te).getComponent(0)).getComponent(0)).getName()), ay_id, start, end);
-					Home.side.removeAll();
-					Home.side.add(s);
 					Home.frame.revalidate();
 					Home.frame.repaint();
 				}
@@ -666,11 +662,6 @@ c.addItem("Tous");
 			(((Container) ((JPanel) Home.panelStudents.getComponent(j)).getComponent(1))).getComponent(i).setBackground(new Color(40, 40, 40).darker());
 		}
 		}selectedStudent = "";
-
-		MainInfo m = new MainInfo(ay_id);
-		m.guide.setText("<html>- Cliquez sur une classe pour voir les eleves<br/> appartenants a cette classe selon la methode de <br/>triage selectionnee.<br/><br/>\r\n- Cliquez sur un eleve pour le selectonner.<br/><br/>\r\n- Selectionnez un pour voir les options <br/>disponibles ainsi que quelques statistiques rapides.<br/><br/>\r\n- Cliquez sur le bas de la classe la ou c'est ecrit <br/>\"voir la classe\" pour ouvrir cette classe.<br/><br/>\r\n- Cliquez sur l'ordre de classement (croissant <br/>ou decroissant) pour changer l'ordre.</html>");
-		Home.side.removeAll();
-		Home.side.add(m);
 		Home.frame.revalidate();
 		Home.frame.repaint();
 	}

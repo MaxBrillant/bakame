@@ -118,6 +118,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JLayeredPane;
 import java.awt.ComponentOrientation;
 import com.toedter.calendar.JDateChooser;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.WindowStateListener;
+import java.awt.event.WindowEvent;
 
 public class Home {
 
@@ -203,7 +207,7 @@ public class Home {
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(0,0,screensize.width,screensize.height);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setMinimumSize(new Dimension(screensize.width*80/100,screensize.height*80/100));
+		frame.setMinimumSize(new Dimension(720, 0));
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		if(Connection.isConnectedToInternet()) {  try {
@@ -274,6 +278,20 @@ public class Home {
 		panel_2.setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(0, 0, 0)));
 		
 		scrollPane = new JScrollPane();
+		scrollPane.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				for(int i = 0; i< ((Container) scrollPane.getViewport().getComponent(0)).getComponentCount(); i++) {
+					if(((Container) scrollPane.getViewport().getComponent(0)).getComponent(i) instanceof Group) {
+						((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).setPreferredSize(new Dimension(scrollPane.getWidth()-50, ((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).getPreferredSize().height));
+
+						scrollPane.revalidate();
+						scrollPane.repaint();
+						}
+				}
+			
+			}
+		});
 		scrollPane.setBorder(null);
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
@@ -283,14 +301,6 @@ public class Home {
 			public void mouseClicked(MouseEvent e) {
 				Class.deselectAll(ay_id);
 				HomeMenu1.deselect();
-				if(Class.selectedClasses.toArray().length == 0) {
-					MainInfo m = new MainInfo(ay_id);
-					m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
-					Home.side.removeAll();
-					Home.side.add(m);
-					Home.frame.revalidate();
-					Home.frame.repaint();
-				}
 			}
 		});
 		panelClasses.setForeground(new Color(0, 128, 128));
@@ -357,55 +367,56 @@ public class Home {
 		panel_4 = new JPanel();
 		panel_4.setBorder(new MatteBorder(0, 0, 0, 2, (Color) new Color(0, 0, 0)));
 		panel_4.setBackground(new Color(60, 60, 60));
-		panel_4.setPreferredSize(new Dimension(151, 200));
+		panel_4.setPreferredSize(new Dimension(100, 200));
 		frame.getContentPane().add(panel_4, BorderLayout.WEST);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_7 = new JPanel();
 		panel_4.add(panel_7, BorderLayout.CENTER);
-		panel_7.setLayout(null);
 		panel_7.setBackground(panel_7.getParent().getBackground());
+		panel_7.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
 		JButton btnNewButton = new JButton("Classes");
+		btnNewButton.setPreferredSize(new Dimension(100, 100));
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.WHITE));
-		btnNewButton.setIconTextGap(0);
+		btnNewButton.setIconTextGap(5);
 		btnNewButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNewButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNewButton.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
-		btnNewButton.setFont(new Font("Roboto", Font.PLAIN, 25));
+		btnNewButton.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+		btnNewButton.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBounds(0, 0, 150, 130);
 		panel_7.add(btnNewButton);
 
 		btnNewButton.setBackground(new Color(20, 148, 198));
 		button = new JButton("El\u00E8ves");
+		button.setBorderPainted(false);
+		button.setPreferredSize(new Dimension(100, 100));
 		button.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.WHITE));
 		//button.setBorderPainted(true);
-		button.setIconTextGap(0);
+		button.setIconTextGap(5);
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
-		button.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-student.png"));
+		button.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-student.png"));
 		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Roboto", Font.PLAIN, 25));
+		button.setFont(new Font("Roboto", Font.BOLD, 14));
 		button.setFocusPainted(false);
 		button.setBackground(new Color(60, 60, 60));
-		button.setBounds(0, 130, 150, 130);
 		panel_7.add(button);
 		
 		
 		JButton btnProfesseurs = new JButton("Professeurs");
+		btnProfesseurs.setPreferredSize(new Dimension(100, 100));
 		btnProfesseurs.setBorderPainted(false);
 		btnProfesseurs.setBorder(new MatteBorder(0, 0, 1, 0, (Color) Color.WHITE));
-		btnProfesseurs.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+		btnProfesseurs.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
 		btnProfesseurs.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnProfesseurs.setIconTextGap(0);
+		btnProfesseurs.setIconTextGap(5);
 		btnProfesseurs.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnProfesseurs.setForeground(Color.WHITE);
-		btnProfesseurs.setFont(new Font("Roboto", Font.PLAIN, 21));
+		btnProfesseurs.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnProfesseurs.setFocusPainted(false);
 		btnProfesseurs.setBackground(new Color(60, 60, 60));
-		btnProfesseurs.setBounds(0, 260, 150, 130);
 		panel_7.add(btnProfesseurs);
 		
 		JButton users = new JButton("Utilisateurs");
@@ -415,7 +426,7 @@ public class Home {
 				u.setVisible(true);
 			}
 		});
-		users.setFont(new Font("Roboto", Font.PLAIN, 18));
+		users.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_4.add(users, BorderLayout.SOUTH);
 		
 		scrollPane_3 = new JScrollPane();
@@ -427,11 +438,8 @@ public class Home {
 		scrollPane_3.getHorizontalScrollBar().setUI(new CustomVerticalScrollBarUI());
 		scrollPane_3.getVerticalScrollBar().setUnitIncrement(15);
 		
-		side = new JPanel();
-		side.setForeground(new Color(0, 128, 128));
-		side.setBackground(new Color(40, 40, 40));
+		MainInfo side = new MainInfo(ay_id);
 		scrollPane_3.setViewportView(side);
-		side.setLayout(new BorderLayout(0, 0));
 		
 		
 		btnNewButton.addActionListener(new ActionListener() {
@@ -519,12 +527,7 @@ public class Home {
             public Void doInBackground() throws Exception{
         		Class.loadClasses(Home.termsText.get(Home.selectedTermIndex), ay_id);
 
-				MainInfo m = new MainInfo(ay_id);
-				m.guide.setText("<html>- Cliquez sur une classe pour la selectionner.<br/><br/>\r\n- Double-cliquez sur une classe pour l'ouvrir.<br/><br/>\r\n- Cliquez sur la fleche correspondante a une classe <br/>pour rapidement voir les details de cette classe.<br/><br/>\r\n- Pour creer un groupe de classe, selectionnez deux<br/> ou plusieurs classe, et puis choisissez l'option <br/>\"regrouper\".<br/><br/>\r\n- Pour ajouter une classe dans un groupe, cliquez <br/>sur le bouton \"ajouter\" qui se situe sur le groupe <br/>voulu, puis choisissez parmi les classes donnees.</html>");
-				Home.side.removeAll();
-				Home.side.add(m);
-				Home.frame.revalidate();
-				Home.frame.repaint(); return null;
+			return null;
             }
         }.execute();
 
@@ -896,6 +899,34 @@ public static boolean courseExists(String courseId, String ay_id) {
 } 
 	return exists;
 }
+
+public static boolean courseIsCalculated(String course_in_classroom_id) {
+	boolean exists = false;
+	
+	try {
+		Statement stmt= mysql.con.createStatement();
+
+		ResultSet rs=stmt.executeQuery("select * from courses_in_classroom "
+				+ "WHERE courses_in_classroom_id = '"+course_in_classroom_id+"' AND is_calculated = 1");
+
+		int i = 0;
+		while(rs.next())
+		{
+			i++;
+		}
+		if(i == 1) {
+			exists = true;
+		}else {
+			exists = false;
+		}
+
+	} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+} 
+	return exists;
+}
+
 public static Object[] loadActiveCourses(String classroom_in_ay_id) {
 	
 	List<String> s = new ArrayList();

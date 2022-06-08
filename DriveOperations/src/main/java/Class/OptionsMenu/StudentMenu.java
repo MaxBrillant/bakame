@@ -42,6 +42,7 @@ import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
+import app.WrapLayout;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -61,7 +62,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class StudentMenu extends JPanel {
-	public static JTextField textField;
 	public static JButton open;
 	public static JButton add;
 	public static JButton stats;
@@ -70,11 +70,6 @@ public class StudentMenu extends JPanel {
 	public static JButton edit;
 	public static JButton delete;
 	public static JButton settings2;
-	private JPanel panel_3;
-	private JPanel panel_4;
-	private JLabel lblerTrimestre;
-	private JButton btnNewButton;
-	public static JComboBox comboBox;
 
 	/**
 	 * Create the panel.
@@ -88,7 +83,7 @@ public class StudentMenu extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane.setPreferredSize(new Dimension((int) screensize.getWidth()*0/100, 2));
+		//scrollPane.setPreferredSize(new Dimension((int) screensize.getWidth()*0/100, 2));
 		add(scrollPane, BorderLayout.CENTER);
 
 		scrollPane.getHorizontalScrollBar().setUnitIncrement(10);
@@ -98,9 +93,9 @@ public class StudentMenu extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(40, 40, 40));
 		scrollPane.setViewportView(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 2));
+		panel.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 2));
 		
-		open = new JButton("");
+		open = new JButton("Ouvrir");
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -115,7 +110,7 @@ public class StudentMenu extends JPanel {
 		open.setIconTextGap(0);
 		open.setHorizontalTextPosition(SwingConstants.CENTER);
 		open.setForeground(new Color(255, 255, 255));
-		open.setFont(new Font("Roboto", Font.PLAIN, 18));
+		open.setFont(new Font("Roboto", Font.PLAIN, 14));
 		open.setFocusPainted(false);
 		open.setBorder(null);
 		open.setBackground(new Color(60, 60, 60));
@@ -128,7 +123,7 @@ public class StudentMenu extends JPanel {
 		add.setIconTextGap(0);
 		add.setHorizontalTextPosition(SwingConstants.CENTER);
 		add.setForeground(new Color(255, 255, 255));
-		add.setFont(new Font("Roboto", Font.PLAIN, 18));
+		add.setFont(new Font("Roboto", Font.PLAIN, 14));
 		add.setFocusPainted(false);
 		add.setBorder(null);
 		add.setBackground(new Color(60, 60, 60));
@@ -160,7 +155,7 @@ public class StudentMenu extends JPanel {
 		stats.setIconTextGap(0);
 		stats.setHorizontalTextPosition(SwingConstants.CENTER);
 		stats.setForeground(Color.WHITE);
-		stats.setFont(new Font("Roboto", Font.PLAIN, 18));
+		stats.setFont(new Font("Roboto", Font.PLAIN, 14));
 		stats.setFocusPainted(false);
 		stats.setBorder(null);
 		stats.setBackground(new Color(60, 60, 60));
@@ -181,7 +176,7 @@ public class StudentMenu extends JPanel {
 		edit.setIconTextGap(0);
 		edit.setHorizontalTextPosition(SwingConstants.CENTER);
 		edit.setForeground(Color.WHITE);
-		edit.setFont(new Font("Roboto", Font.PLAIN, 18));
+		edit.setFont(new Font("Roboto", Font.PLAIN, 14));
 		edit.setFocusPainted(false);
 		edit.setBorder(null);
 		edit.setBackground(new Color(60, 60, 60));
@@ -209,7 +204,7 @@ public class StudentMenu extends JPanel {
 		delete.setIconTextGap(0);
 		delete.setHorizontalTextPosition(SwingConstants.CENTER);
 		delete.setForeground(Color.WHITE);
-		delete.setFont(new Font("Roboto", Font.PLAIN, 18));
+		delete.setFont(new Font("Roboto", Font.PLAIN, 14));
 		delete.setFocusPainted(false);
 		delete.setBorder(null);
 		delete.setBackground(new Color(60, 60, 60));
@@ -232,7 +227,7 @@ public class StudentMenu extends JPanel {
 		retirer.setIconTextGap(0);
 		retirer.setHorizontalTextPosition(SwingConstants.CENTER);
 		retirer.setForeground(Color.WHITE);
-		retirer.setFont(new Font("Roboto", Font.PLAIN, 18));
+		retirer.setFont(new Font("Roboto", Font.PLAIN, 14));
 		retirer.setFocusPainted(false);
 		retirer.setBorder(null);
 		retirer.setBackground(new Color(60, 60, 60));
@@ -251,7 +246,7 @@ public class StudentMenu extends JPanel {
 		publish.setIconTextGap(0);
 		publish.setForeground(new Color(255, 255, 255));
 		publish.setPreferredSize(new Dimension(100, 100));
-		publish.setFont(new Font("Roboto", Font.PLAIN, 18));
+		publish.setFont(new Font("Roboto", Font.PLAIN, 14));
 		publish.setFocusPainted(false);
 		publish.setBorderPainted(false);
 		publish.setBackground(new Color(60, 60, 60));
@@ -259,15 +254,9 @@ public class StudentMenu extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(panel.getBackground());
-		panel_1.setPreferredSize(new Dimension(350, 10));
+		panel_1.setPreferredSize(new Dimension(20, 10));
 		add(panel_1, BorderLayout.EAST);
 		panel_1.setLayout(null);
-		
-		textField = new JTextField();
-		textField.setFont(new Font("Arial", Font.PLAIN, 20));
-		textField.setColumns(10);
-		textField.setBounds(59, 0, 291, 29);
-		panel_1.add(textField);
 		
 		JButton btnElevesSupprimes = new JButton("eleves supprimes");
 		btnElevesSupprimes.addMouseListener(new MouseAdapter() {
@@ -290,7 +279,7 @@ public class StudentMenu extends JPanel {
 		btnElevesSupprimes.setFocusPainted(false);
 		btnElevesSupprimes.setBorder(null);
 		btnElevesSupprimes.setBackground(new Color(60, 60, 60));
-		btnElevesSupprimes.setBounds(206, 40, 134, 24);
+		btnElevesSupprimes.setBounds(30, 72, 134, 24);
 		panel_1.add(btnElevesSupprimes);
 		
 		settings2 = new JButton("");
@@ -316,160 +305,6 @@ public class StudentMenu extends JPanel {
 		settings2.setBorder(null);
 		settings2.setBackground(new Color(60, 60, 60));
 		settings2.setBounds(10, 0, 66, 66);
-	//	panel_1.add(settings2);
-		
-		panel_3 = new JPanel();
-		panel_3.setBackground(new Color(60, 60, 60));
-		panel_3.setBounds(39, 40, 155, 30);
-		panel_1.add(panel_3);
-		panel_3.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_1 = new JLabel("Travaux");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 17));
-		panel_3.add(lblNewLabel_1, BorderLayout.CENTER);
-		lblNewLabel_1.setText(Home.periodText.get(Home.selectedPeriod));
-		
-		btnNewButton = new JButton("");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Home.selectedPeriod>0) {
-					Home.selectedPeriod--;
-				}else {
-					Home.selectedPeriod = Home.periodText.toArray().length-1;
-				}
-				lblNewLabel_1.setText(Home.periodText.get(Home.selectedPeriod));
-				
-				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
-					if(Application.panel1.getComponent(i) instanceof Student) {
-						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-					}}}
-		});
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setBackground(panel_3.getBackground());
-		btnNewButton.setBorder(null);
-		btnNewButton.setPreferredSize(new Dimension(30, 30));
-		btnNewButton.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
-		panel_3.add(btnNewButton, BorderLayout.WEST);
-		
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Home.selectedPeriod<Home.periodText.toArray().length-1) {
-					Home.selectedPeriod++;
-				}else {
-					Home.selectedPeriod = 0;
-				}
-				lblNewLabel_1.setText(Home.periodText.get(Home.selectedPeriod));
-				
-				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
-					if(Application.panel1.getComponent(i) instanceof Student) {
-						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-					}}
-			}
-		});
-		button_1.setFocusPainted(false);
-		button_1.setBorderPainted(false);
-		button_1.setBackground(panel_3.getBackground());
-		button_1.setBorder(null);
-		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
-		button_1.setPreferredSize(new Dimension(30, 30));
-		panel_3.add(button_1, BorderLayout.EAST);
-		
-		panel_4 = new JPanel();
-		panel_4.setBackground(new Color(60, 60, 60));
-		panel_4.setBounds(39, 77, 195, 30);
-		panel_1.add(panel_4);
-		panel_4.setLayout(new BorderLayout(0, 0));
-		
-		lblerTrimestre = new JLabel("2eme Trimestre");
-		lblerTrimestre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblerTrimestre.setForeground(Color.WHITE);
-		lblerTrimestre.setFont(new Font("Roboto", Font.BOLD, 17));
-		panel_4.add(lblerTrimestre, BorderLayout.CENTER);
-		lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
-		
-		JButton button_2 = new JButton("");
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Home.selectedTermIndex>0) {
-					Home.selectedTermIndex--;
-				}else {
-					Home.selectedTermIndex = Home.termsText.toArray().length-1;
-				}
-				Home.terms.clear();
-				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
-					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
-					Home.terms.add(Home.termsText.get(i));
-					}
-				}else {
-					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
-					}
-				lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
-				
-				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
-					if(Application.panel1.getComponent(i) instanceof Student) {
-						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-					}}
-				}
-		});
-		button_2.setFocusPainted(false);
-		button_2.setBorderPainted(false);
-		button_2.setBackground(panel_4.getBackground());
-		button_2.setBorder(null);
-		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
-		button_2.setPreferredSize(new Dimension(30, 30));
-		panel_4.add(button_2, BorderLayout.WEST);
-		
-		JButton button_3 = new JButton("");
-		button_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Home.selectedTermIndex<Home.termsText.toArray().length-1) {
-					Home.selectedTermIndex++;
-				}else {
-					Home.selectedTermIndex = 0;
-				}
-				Home.terms.clear();
-				if(Home.selectedTermIndex == Home.termsText.toArray().length-1) {
-					for(int i = 0; i< Home.termsText.toArray().length-2; i++) {
-					Home.terms.add(Home.termsText.get(i));
-					}
-				}else {
-					Home.terms.clear();
-					Home.terms.add(Home.termsText.get(Home.selectedTermIndex));
-					}
-				lblerTrimestre.setText(Home.termsText.get(Home.selectedTermIndex));
-				
-				for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
-					if(Application.panel1.getComponent(i) instanceof Student) {
-						String student_id = ((Container) Application.panel1.getComponent(i)).getName();
-					NewStudent.loadStudentdata((Container) Application.panel1.getComponent(i), student_id, classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-					}}
-			}
-		});
-		button_3.setFocusPainted(false);
-		button_3.setBorderPainted(false);
-		button_3.setBackground(panel_4.getBackground());
-		button_3.setBorder(null);
-		button_3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
-		button_3.setPreferredSize(new Dimension(30, 30));
-		panel_4.add(button_3, BorderLayout.EAST);
-		
-		comboBox = new JComboBox();
-		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				Application.ranking();
-			}
-		});
-		comboBox.setFont(new Font("Roboto", Font.BOLD, 17));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"A-z", "merite", "Progres", "Echecs"}));
-		comboBox.setBounds(244, 77, 96, 30);
-		panel_1.add(comboBox);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(panel.getBackground());
@@ -522,7 +357,7 @@ public class StudentMenu extends JPanel {
 		for(int i = 0;i<((Container) Application.panel1.getComponent(k)).getComponentCount();i++) {
 			for(int j = 0;j<Application.panel1.getComponentCount();j++) {
 				//((Container) Application.panel1.getComponent(j)).getComponent(i).setForeground(Color.white);
-			Application.panel1.getComponent(j).setBackground(new Color(60, 60, 60));
+			//Application.panel1.getComponent(j).setBackground(new Color(60, 60, 60));
 			((Container) Application.panel1.getComponent(j)).getComponent(0).setForeground(Color.black);
 		}
 		}

@@ -126,6 +126,10 @@ public class App {
 	
 		/*
 		 * 
+		 * 
+		 * 
+		 * 
+		 * 
 		 * File file = new File("C:/Users/User/Desktop/db_script.sql");
 		 * aws.downloadContent(file.getPath()); FileReader fr; fr = new
 		 * FileReader(file);
@@ -182,7 +186,7 @@ public class App {
 		frame.setBounds(0,0,screensize.width,screensize.height);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		//frame.setMinimumSize(new Dimension(screensize.width*80/100, screensize.height*80/100));
+		frame.setMinimumSize(new Dimension(480, 0));
 		
 		panel = new JPanel();
 		panel.setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(0, 0, 0)));
