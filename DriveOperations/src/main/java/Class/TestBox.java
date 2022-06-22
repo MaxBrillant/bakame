@@ -377,7 +377,7 @@ public static String getShortName(String course_in_classroom_id) {
 	
 	public static void loadTests(String classroom_in_ay_id, String term_id) {
 		
-		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(true);
+		//((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(2)).getComponent(0).setVisible(true);
 				int i = 0;
 					
 					JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));

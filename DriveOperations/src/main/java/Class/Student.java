@@ -35,6 +35,7 @@ import javax.swing.border.MatteBorder;
 import Application.Class;
 import Application.Group;
 import Application.Home;
+import Application.ResizeImages;
 import Class.OptionsMenu.HomeMenu1;
 import Class.OptionsMenu.StudentMenu;
 import CloudOperations.aws;
@@ -54,6 +55,7 @@ import sideInformation.ClassInfo;
 import sideInformation.MainInfo;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JButton;
 
 public class Student extends JPanel {
 	public static JPanel Box1;
@@ -91,9 +93,9 @@ public class Student extends JPanel {
 					if(selectedStudents.toArray().length==1) {
 						Component comp = null;
 
-					for(int i = 0; i< Application.panel1.getComponentCount(); i++) {
-							if(Application.panel1.getComponent(i).equals(selectedStudents.get(0))) {
-								comp = Application.panel1.getComponent(i);
+					for(int i = 0; i< Application.panelStudents.getComponentCount(); i++) {
+							if(Application.panelStudents.getComponent(i).equals(selectedStudents.get(0))) {
+								comp = Application.panelStudents.getComponent(i);
 							}
 						}
 					
@@ -101,19 +103,18 @@ public class Student extends JPanel {
 					}}
 					
 					for(int i = 0; i<selectedStudents.toArray().length; i++) {
-						for(int j = 0; j< Application.panel1.getComponentCount(); j++) {
-							if(Application.panel1.getComponent(j).equals(selectedStudents.get(i))) {
-								Application.panel1.getComponent(j).setBackground(new Color(20, 148, 198));
-								((Container) Application.panel1.getComponent(j)).getComponent(2).setBackground(new Color(20, 148, 198));
+						for(int j = 0; j< Application.panelStudents.getComponentCount(); j++) {
+							if(Application.panelStudents.getComponent(j).equals(selectedStudents.get(i))) {
+								((Container) Application.panelStudents.getComponent(j)).getComponent(0).setBackground(new Color(20, 148, 198));
+								((Container) Application.panelStudents.getComponent(j)).getComponent(1).setBackground(new Color(20, 148, 198));
 								
-								for(int k = 0;k<((Container) Application.panel1.getComponent(j)).getComponentCount();k++) {
-									((Container) Application.panel1.getComponent(j)).getComponent(k).setForeground(Color.white);
+								for(int k = 0;k<((Container) Application.panelStudents.getComponent(j)).getComponentCount();k++) {
+									((Container) Application.panelStudents.getComponent(j)).getComponent(k).setForeground(Color.white);
 								}
 					}}}
 					
 				//
 
-					StudentMenu.open.setVisible(true);
 					StudentMenu.edit.setVisible(true);
 					StudentMenu.settings2.setVisible(true);
 					StudentMenu.delete.setVisible(true);
@@ -121,7 +122,6 @@ public class Student extends JPanel {
 					StudentMenu.publish.setVisible(true);
 					StudentMenu.stats.setVisible(true);
 					if(selectedStudents.toArray().length>1) {
-						StudentMenu.open.setVisible(false);
 						StudentMenu.edit.setVisible(false);
 						StudentMenu.settings2.setVisible(false);
 						StudentMenu.stats.setVisible(false);
@@ -139,14 +139,14 @@ public class Student extends JPanel {
 			}
 			public void mouseEntered(MouseEvent e) {
 				if(!selectedStudents.contains(getComponent(0).getParent())) {
-					setBackground(new Color(60, 60, 60));
-					getComponent(2).setBackground(new Color(60, 60, 60));
+					getComponent(0).setBackground(new Color(60, 60, 60));
+					getComponent(1).setBackground(new Color(60, 60, 60));
 					//setBorder(new LineBorder(new Color(20, 148, 198)));
 				}
 			}public void mouseExited(MouseEvent e) {
 				if(!selectedStudents.contains(getComponent(0).getParent())) {
-					setBackground(new Color(40, 40, 40));
-					getComponent(2).setBackground(new Color(40, 40, 40));
+					getComponent(0).setBackground(new Color(40, 40, 40));
+					getComponent(1).setBackground(new Color(40, 40, 40));
 					setBorder(null);
 				}
 				
@@ -157,24 +157,39 @@ public class Student extends JPanel {
 		setPreferredSize(new Dimension(1325, 67));
 		setLayout(new BorderLayout(0, 0));
 		
+		
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(35, 40));
-		panel.setBackground(new Color(51, 255, 204));
-		add(panel, BorderLayout.WEST);
+		panel.setBackground(new Color(40, 40, 40));
+		add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
+		
+		
+		JPanel panel1 = new JPanel();
+		panel1.setPreferredSize(new Dimension(35, 40));
+		panel1.setBackground(new Color(51, 255, 204));
+		panel.add(panel1, BorderLayout.WEST);
+		panel1.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("203");
 		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setPreferredSize(new Dimension(30, 20));
-		panel.add(lblNewLabel_1);
+		panel1.add(lblNewLabel_1);
 		
 		JLabel lblUmuhozaChrisKoen = new JLabel();
 		lblUmuhozaChrisKoen.setAlignmentX(1.0f);
 		lblUmuhozaChrisKoen.setText("Umuhoza Chris Koen Michael");
 		lblUmuhozaChrisKoen.setForeground(Color.WHITE);
 		lblUmuhozaChrisKoen.setFont(new Font("Roboto", Font.BOLD, 16));
-		add(lblUmuhozaChrisKoen, BorderLayout.CENTER);
+		panel.add(lblUmuhozaChrisKoen, BorderLayout.CENTER);
+		
+		JButton stats = new JButton();
+		stats.setFocusPainted(false);
+		stats.setBorder(null);
+		stats.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		stats.setBackground(new Color(40, 40, 40));
+		panel.add(stats, BorderLayout.EAST);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(null);
@@ -309,15 +324,16 @@ public class Student extends JPanel {
 	
 
 public static void deselectAll() {
-	for(int i = 0; i< ((Container) Application.panel1).getComponentCount(); i++) {
-		if(selectedStudents.contains(((Container) Application.panel1).getComponent(i))) {
-			((JComponent) ((Container) Application.panel1).getComponent(i)).setBackground(new Color(40, 40, 40));
-			((JComponent) ((Container) Application.panel1).getComponent(i)).getComponent(2).setBackground(new Color(40, 40, 40));
-			((JComponent) ((Container) Application.panel1).getComponent(i)).setBorder(null);
+	for(int i = 0; i< ((Container) Application.panelStudents).getComponentCount(); i++) {
+		if(selectedStudents.contains(((Container) Application.panelStudents).getComponent(i))) {
+			((JComponent) ((Container) Application.panelStudents).getComponent(i)).setBackground(new Color(40, 40, 40));
+			((JComponent) ((Container) Application.panelStudents).getComponent(i)).getComponent(0).setBackground(new Color(40, 40, 40));
+			((JComponent) ((Container) Application.panelStudents).getComponent(i)).getComponent(1).setBackground(new Color(40, 40, 40));
+			((JComponent) ((Container) Application.panelStudents).getComponent(i)).setBorder(null);
 		}
-			Application.panel1.revalidate();
+			Application.panelStudents.revalidate();
 
-			Application.panel1.repaint();
+			Application.panelStudents.repaint();
 	
 	}
 

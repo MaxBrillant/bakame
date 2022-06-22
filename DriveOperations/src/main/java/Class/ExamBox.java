@@ -299,8 +299,8 @@ public class ExamBox extends JPanel {
 	}
 	
 public static void loadExams(String classroom_in_ay_id, String term_id) {
-		int  i = 0;
-		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(3)).getComponent(0).setVisible(true);
+	int  i = 0;
+		//((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(3)).getComponent(0).setVisible(true);
 		JLabel lblNdashimyeMaxBrillant = new JLabel(Home.getTermName(term_id));
 		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
@@ -349,7 +349,6 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 
 						loadExamData(eb, listOfSeries, eb.getName(), classroom_in_ay_id);
 						}
-					
 					Application.panelExams.revalidate();
 					Application.panelExams.repaint();
 				} catch (SQLException e) {
@@ -386,6 +385,7 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 							ExamInfo nt = new ExamInfo(classroom_in_ay_id);
 							nt.setVisible(true);
 						}
+
 					});
 					btnNewButton_1.addMouseListener(new MouseAdapter() {
 						@Override
@@ -530,6 +530,10 @@ public static void loadExamData(Component c, List<String> listOfSeries, String e
 					c.repaint();
 				
 	}
+	
+}
+
+public static void deselectAll() {
 	
 }
 }

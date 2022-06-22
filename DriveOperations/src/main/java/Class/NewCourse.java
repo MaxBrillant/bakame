@@ -242,7 +242,7 @@ public class NewCourse extends JFrame {
 	
 	
 	public static void load(String classroom_in_ay_id) {
-		Application.panel2.removeAll();
+		Application.panelCourses.removeAll();
 		isEmpty = false;
 		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(1)).getComponent(0).setVisible(true);
 		
@@ -253,12 +253,12 @@ public class NewCourse extends JFrame {
 				((JLabel) ((Container) c).getComponent(0)).setText(TestBox.getFullName(lines[i].toString()));
 				loadCoursedata(c, lines[i].toString(), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				c.setName(lines[i].toString());
-				Application.panel2.add(c);
+				Application.panelCourses.add(c);
 				}
-				Application.panel2.revalidate();
-				Application.panel2.repaint();
+				Application.panelCourses.revalidate();
+				Application.panelCourses.repaint();
 				
-			if(Application.panel2.getComponentCount()==0) {
+			if(Application.panelCourses.getComponentCount()==0) {
 				isEmpty = true;
 				((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(1)).getComponent(0).setVisible(false);
 				
@@ -266,7 +266,7 @@ public class NewCourse extends JFrame {
 				panel_10.setBorder(new MatteBorder(1, 3, 5, 3, (Color) new Color(0, 0, 0, 120)));
 				panel_10.setBackground(new Color(0, 0, 0, 20));
 				panel_10.setPreferredSize(new Dimension(300, 400));
-				Application.panel2.add(panel_10);
+				Application.panelCourses.add(panel_10);
 				panel_10.setLayout(null);
 				
 				JPanel panel_11 = new JPanel();

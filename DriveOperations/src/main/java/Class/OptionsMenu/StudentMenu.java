@@ -62,7 +62,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class StudentMenu extends JPanel {
-	public static JButton open;
 	public static JButton add;
 	public static JButton stats;
 	public static JButton publish;
@@ -77,11 +76,12 @@ public class StudentMenu extends JPanel {
 	public StudentMenu(String classroom_in_ay_id) {
 
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension((int) screensize.getWidth(), (int) screensize.getHeight()*20/100*70/100));
+		setPreferredSize(new Dimension(1366, 70));
 		setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
+		scrollPane.setPreferredSize(new Dimension(360, 2));
+		scrollPane.setBorder(null);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		//scrollPane.setPreferredSize(new Dimension((int) screensize.getWidth()*0/100, 2));
 		add(scrollPane, BorderLayout.CENTER);
@@ -91,34 +91,13 @@ public class StudentMenu extends JPanel {
 		scrollPane.getHorizontalScrollBar().setUI(new CustomHorizontalScrollBarUI());
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(40, 40, 40));
+		panel.setBackground(new Color(40, 40, 40).darker());
 		scrollPane.setViewportView(panel);
-		panel.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 2));
-		
-		open = new JButton("Ouvrir");
-		open.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				if(Student.selectedStudents.toArray().length==1) {
-					Student.openStudent(Student.selectedStudents.get(0).getName(), classroom_in_ay_id);
-			}
-			}
-		});
-		open.setVerticalTextPosition(SwingConstants.BOTTOM);
-		open.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\open.png"));
-		open.setPreferredSize(new Dimension(100, 100));
-		open.setIconTextGap(0);
-		open.setHorizontalTextPosition(SwingConstants.CENTER);
-		open.setForeground(new Color(255, 255, 255));
-		open.setFont(new Font("Roboto", Font.PLAIN, 14));
-		open.setFocusPainted(false);
-		open.setBorder(null);
-		open.setBackground(new Color(60, 60, 60));
-		panel.add(open);
+		panel.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
 		
 		add = new JButton("");
-		add.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
-		add.setPreferredSize(new Dimension(100, 100));
+		add.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
+		add.setPreferredSize(new Dimension(50, 50));
 		add.setVerticalTextPosition(SwingConstants.BOTTOM);
 		add.setIconTextGap(0);
 		add.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -126,7 +105,7 @@ public class StudentMenu extends JPanel {
 		add.setFont(new Font("Roboto", Font.PLAIN, 14));
 		add.setFocusPainted(false);
 		add.setBorder(null);
-		add.setBackground(new Color(60, 60, 60));
+		add.setBackground(panel.getBackground());
 		panel.add(add);
 		
 		add.addActionListener(new ActionListener() {
@@ -149,8 +128,8 @@ public class StudentMenu extends JPanel {
 				
 				}}
 		});
-		stats.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		stats.setPreferredSize(new Dimension(100, 100));
+		stats.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		stats.setPreferredSize(new Dimension(50, 50));
 		stats.setVerticalTextPosition(SwingConstants.BOTTOM);
 		stats.setIconTextGap(0);
 		stats.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -158,7 +137,7 @@ public class StudentMenu extends JPanel {
 		stats.setFont(new Font("Roboto", Font.PLAIN, 14));
 		stats.setFocusPainted(false);
 		stats.setBorder(null);
-		stats.setBackground(new Color(60, 60, 60));
+		stats.setBackground(panel.getBackground());
 		panel.add(stats);
 		
 		edit = new JButton("");
@@ -170,8 +149,8 @@ public class StudentMenu extends JPanel {
 				nt.add.setVisible(false);
 			}
 		});
-		edit.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
-		edit.setPreferredSize(new Dimension(100, 100));
+		edit.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		edit.setPreferredSize(new Dimension(50, 50));
 		edit.setVerticalTextPosition(SwingConstants.BOTTOM);
 		edit.setIconTextGap(0);
 		edit.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -179,7 +158,7 @@ public class StudentMenu extends JPanel {
 		edit.setFont(new Font("Roboto", Font.PLAIN, 14));
 		edit.setFocusPainted(false);
 		edit.setBorder(null);
-		edit.setBackground(new Color(60, 60, 60));
+		edit.setBackground(panel.getBackground());
 		panel.add(edit);
 		
 		delete = new JButton("");
@@ -198,8 +177,8 @@ public class StudentMenu extends JPanel {
 		        }.execute();
 			}
 		});
-		delete.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
-		delete.setPreferredSize(new Dimension(100, 100));
+		delete.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
+		delete.setPreferredSize(new Dimension(50, 50));
 		delete.setVerticalTextPosition(SwingConstants.BOTTOM);
 		delete.setIconTextGap(0);
 		delete.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -207,7 +186,7 @@ public class StudentMenu extends JPanel {
 		delete.setFont(new Font("Roboto", Font.PLAIN, 14));
 		delete.setFocusPainted(false);
 		delete.setBorder(null);
-		delete.setBackground(new Color(60, 60, 60));
+		delete.setBackground(panel.getBackground());
 		panel.add(delete);
 		
 		retirer = new JButton("");
@@ -221,22 +200,22 @@ public class StudentMenu extends JPanel {
 				p.setVisible(true);
 			}
 		});
-		retirer.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\discipline.png"));
+		retirer.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\discipline.png"));
 		retirer.setVerticalTextPosition(SwingConstants.BOTTOM);
-		retirer.setPreferredSize(new Dimension(100, 100));
+		retirer.setPreferredSize(new Dimension(50, 50));
 		retirer.setIconTextGap(0);
 		retirer.setHorizontalTextPosition(SwingConstants.CENTER);
 		retirer.setForeground(Color.WHITE);
 		retirer.setFont(new Font("Roboto", Font.PLAIN, 14));
 		retirer.setFocusPainted(false);
 		retirer.setBorder(null);
-		retirer.setBackground(new Color(60, 60, 60));
+		retirer.setBackground(panel.getBackground());
 		panel.add(retirer);
 		
 		publish = new JButton("");
 		publish.setHorizontalTextPosition(SwingConstants.CENTER);
 		publish.setVerticalTextPosition(SwingConstants.BOTTOM);
-		publish.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Send.png"));
+		publish.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Send.png"));
 		publish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewPublication np = new NewPublication();
@@ -245,42 +224,12 @@ public class StudentMenu extends JPanel {
 		});
 		publish.setIconTextGap(0);
 		publish.setForeground(new Color(255, 255, 255));
-		publish.setPreferredSize(new Dimension(100, 100));
+		publish.setPreferredSize(new Dimension(50, 50));
 		publish.setFont(new Font("Roboto", Font.PLAIN, 14));
 		publish.setFocusPainted(false);
 		publish.setBorderPainted(false);
-		publish.setBackground(new Color(60, 60, 60));
+		publish.setBackground(panel.getBackground());
 		panel.add(publish);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(panel.getBackground());
-		panel_1.setPreferredSize(new Dimension(20, 10));
-		add(panel_1, BorderLayout.EAST);
-		panel_1.setLayout(null);
-		
-		JButton btnElevesSupprimes = new JButton("eleves supprimes");
-		btnElevesSupprimes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnElevesSupprimes.setBackground(new Color(120, 120, 120));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnElevesSupprimes.setBackground(new Color(60, 60, 60));
-			}
-			
-		});
-		btnElevesSupprimes.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnElevesSupprimes.setPreferredSize(new Dimension(100, 100));
-		btnElevesSupprimes.setIconTextGap(0);
-		btnElevesSupprimes.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnElevesSupprimes.setForeground(Color.WHITE);
-		btnElevesSupprimes.setFont(new Font("Roboto", Font.PLAIN, 15));
-		btnElevesSupprimes.setFocusPainted(false);
-		btnElevesSupprimes.setBorder(null);
-		btnElevesSupprimes.setBackground(new Color(60, 60, 60));
-		btnElevesSupprimes.setBounds(30, 72, 134, 24);
-		panel_1.add(btnElevesSupprimes);
 		
 		settings2 = new JButton("");
 		settings2.addMouseListener(new MouseAdapter() {
@@ -303,41 +252,24 @@ public class StudentMenu extends JPanel {
 		settings2.setFont(new Font("Arial", Font.PLAIN, 19));
 		settings2.setFocusPainted(false);
 		settings2.setBorder(null);
-		settings2.setBackground(new Color(60, 60, 60));
+		settings2.setBackground(panel.getBackground());
 		settings2.setBounds(10, 0, 66, 66);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(panel.getBackground());
-		panel_2.setPreferredSize(new Dimension(130, 200));
-		add(panel_2, BorderLayout.WEST);
-		
-		JButton button = new JButton("");
-		button.setIcon(ResizeImages.resize(110, 110, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\School Project\\Icons\\Bakame.png"));
-		button.setPreferredSize(new Dimension(100, 100));
-		button.setFont(new Font("Arial", Font.PLAIN, 27));
-		button.setFocusPainted(false);
-		button.setBorder(null);
-		button.setBackground(panel_2.getBackground());
-		panel_2.add(button);
-		
 
-		Application.deselect();
+		//Application.deselect();
 		Home.deselect();
 		
 		for(int i = 0;i<panel.getComponentCount(); i++) {
 			int j = i;
-			String[] s = {"Ouvrir","Ajouter","Statistiques","Modifier","Supprimer","Education","Publier"};
 			panel.getComponent(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					panel.getComponent(j).setBackground(new Color(120, 120, 120));
-					((AbstractButton) panel.getComponent(j)).setText(s[j]);
-				}
+					panel.getComponent(j).setBackground(new Color(60, 60, 60));
+					}
 				@Override
 				public void mouseExited(MouseEvent e) {
-					panel.getComponent(j).setBackground(new Color(60, 60, 60));
-					((AbstractButton) panel.getComponent(j)).setText(null);
-				}
+					panel.getComponent(j).setBackground(panel.getBackground());
+					}
 				
 			});
 		}
@@ -347,22 +279,21 @@ public class StudentMenu extends JPanel {
 	public static void deselect() {
 		//Student.isSelected = false;
 		stats.setVisible(true);
-		open.setVisible(false);
 		edit.setVisible(false);
 		delete.setVisible(false);
 		settings2.setVisible(false);
 		
 		if(!NewStudent.isEmpty) {
-		for(int k = 0;k<Application.panel1.getComponentCount(); k++) {
-		for(int i = 0;i<((Container) Application.panel1.getComponent(k)).getComponentCount();i++) {
-			for(int j = 0;j<Application.panel1.getComponentCount();j++) {
-				//((Container) Application.panel1.getComponent(j)).getComponent(i).setForeground(Color.white);
-			//Application.panel1.getComponent(j).setBackground(new Color(60, 60, 60));
-			((Container) Application.panel1.getComponent(j)).getComponent(0).setForeground(Color.black);
+		for(int k = 0;k<Application.panelStudents.getComponentCount(); k++) {
+		for(int i = 0;i<((Container) Application.panelStudents.getComponent(k)).getComponentCount();i++) {
+			for(int j = 0;j<Application.panelStudents.getComponentCount();j++) {
+				//((Container) Application.panelStudents.getComponent(j)).getComponent(i).setForeground(Color.white);
+			//Application.panelStudents.getComponent(j).setBackground(new Color(60, 60, 60));
+			((Container) Application.panelStudents.getComponent(j)).getComponent(0).setForeground(Color.black);
 		}
 		}
 }
-		Application.no.setText(String.valueOf(Application.panel1.getComponentCount()));
+		Application.no.setText(String.valueOf(Application.panelStudents.getComponentCount()));
 		}else {
 			Application.no.setText("0");
 }

@@ -157,7 +157,7 @@ public class Cours extends JPanel {
 								setSelected(App.panel_5.getComponent(j));
 							}}
 						
-						App.panel_1.remove(1);
+						App.panel_1.remove(0);
 						LPane tp = new LPane(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 						App.panel_1.add(tp);
 						App.panel_1.revalidate();

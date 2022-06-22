@@ -1,6 +1,8 @@
 package sideInformation;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -26,6 +28,7 @@ import javax.swing.border.LineBorder;
 import Application.Home;
 import Application.ResizeImages;
 import Application.Teacher;
+import Class.CustomVerticalScrollBarUI;
 import Class.Student;
 import Class.TestBox;
 import CloudOperations.aws;
@@ -37,8 +40,16 @@ import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
+import app.App;
+import app.Cours;
+import app.General;
+import app.LPane;
+import app.Test;
+import app.WrapLayout;
 import elements.CustomButton;
+import elements.RoundLabel;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -58,87 +69,291 @@ public class StudentInfo extends JPanel {
 	 * Create the panel.
 	 */
 	public StudentInfo(String classroom_in_ay_id) {
-		setBorder(new LineBorder(Color.WHITE, 1, true));
+		setBorder(null);
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(370, 700));
+		setPreferredSize(new Dimension(350, 750));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		CustomButton btnNewButton = new CustomButton();
-		btnNewButton.setRadius(100);
-		btnNewButton.setPreferredSize(new Dimension(100, 100));
-		btnNewButton.setBorderColor(new Color(20, 148, 198));
+		RoundLabel btnNewButton = new RoundLabel(100, 100, "C:\\Users\\User\\Pictures\\photoshop max\\CG Projects\\cartoonproject.jpg");
+		//btnNewButton.setPreferredSize(new Dimension(100, 100));
 		btnNewButton.setBackground(new Color(40, 40, 40));
 		add(btnNewButton);
 		
-		name = new JLabel(Home.getClassName(classroom_in_ay_id));
+		
+		
+		
+		
+		
+		JPanel panelName = new JPanel();
+		panelName.setBackground(new Color(60, 60, 60));
+		add(panelName, BorderLayout.NORTH);
+		panelName.setPreferredSize(new Dimension(320, 50));
+		panelName.setLayout(new BorderLayout(0, 0));
+		
+		name = new JLabel("UMUHOZA Chris Koen Michael");
+		name.setForeground(Color.WHITE);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
-		name.setPreferredSize(new Dimension(360, 20));
-		name.setForeground(new Color(255, 255, 255));
 		name.setFont(new Font("Roboto", Font.BOLD, 16));
-		add(name);
+		panelName.add(name, BorderLayout.NORTH);
 		
-		lblNewLabel = new JLabel(Home.loadActiveStudents(classroom_in_ay_id).length+" eleves");
-		lblNewLabel.setForeground(new Color(211, 211, 211));
-		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
-		add(lblNewLabel);
+		JButton previous = new JButton("");
+		previous.setFocusPainted(false);
+		previous.setBorderPainted(false);
+		previous.setBackground(new Color(25, 25, 25));
+		previous.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		panelName.add(previous, BorderLayout.WEST);
 		
-		label = new JLabel("-");
-		label.setForeground(new Color(211, 211, 211));
-		label.setFont(new Font("Roboto", Font.PLAIN, 14));
-		add(label);
+		JPanel panel_6 = new JPanel();
+		panel_6.setBorder(null);
+		panelName.add(panel_6, BorderLayout.CENTER);
+		panel_6.setBackground(new Color(60, 60, 60));
 		
-		lblNewLabel_1 = new JLabel(Home.loadActiveCourses(classroom_in_ay_id).length+" cours");
-		lblNewLabel_1.setForeground(new Color(211, 211, 211));
-		lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 14));
-		add(lblNewLabel_1);
+
+		
+		JLabel num = new JLabel("15");
+		num.setForeground(Color.WHITE);
+		panel_6.setLayout(new BorderLayout(0, 0));
+		num.setBackground(new Color(245, 245, 245));
+		panel_6.add(num);
+		num.setHorizontalAlignment(SwingConstants.CENTER);
+		num.setFont(new Font("Roboto", Font.BOLD, 16));
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setPreferredSize(new Dimension(2, 0));
+		scrollPane_1.setBorder(null);
+		panelName.add(scrollPane_1, BorderLayout.SOUTH);
+		
+		
+
+		scrollPane_1.getVerticalScrollBar().setUI(new CustomVerticalScrollBarUI());
+		scrollPane_1.getHorizontalScrollBar().setUI(new CustomVerticalScrollBarUI());
+		scrollPane_1.getVerticalScrollBar().setUnitIncrement(5);
+		
+		JPanel numbers = new JPanel();
+		numbers.setBackground(new Color(25, 25, 25));
+		scrollPane_1.setViewportView(numbers);
+
+		numbers.setLayout(new WrapLayout(WrapLayout.CENTER,3,3));
+		
+		JButton next = new JButton("");
+		panelName.add(next, BorderLayout.EAST);
+		next.setFocusPainted(false);
+		next.setBorderPainted(false);
+		next.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		next.setBackground(new Color(25, 25, 25));
+		
+		
+
+		num.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(panelName.getHeight() == 50) {
+						panelName.setPreferredSize(new Dimension(panelName.getPreferredSize().width, 100));
+						panelName.getComponent(panelName.getComponentCount()-2).setPreferredSize(new Dimension(panelName.getPreferredSize().width, 50));
+					panelName.revalidate();
+					panelName.repaint();
+					loadnumbers(classroom_in_ay_id, numbers);
+					
+					}
+					else{
+						panelName.setPreferredSize(new Dimension(panelName.getPreferredSize().width, 50));
+						panelName.getComponent(panelName.getComponentCount()-2).setPreferredSize(new Dimension(panelName.getPreferredSize().width, 0));
+						panelName.revalidate();
+						panelName.repaint();
+					}
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				panel_6.setBackground(new Color(120, 120, 120));
+			}
+
+			public void mouseExited(MouseEvent e) {
+				panel_6.setBackground(new Color(60, 60, 60));
+			
+			}
+		});
+		
+		
+		
+		next.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Component selectedCourse = null;
+
+				int opened = 0;
+				if(Cours.selectedCourses.toArray().length>0) {
+					selectedCourse = Cours.selectedCourses.get(0);
+					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
+					
+				if(LPane.tabbedPane.getSelectedIndex()==1) {
+					opened = 1;
+				}
+				LPane.tabbedPane.setSelectedIndex(0);
+
+				Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+				}
+				
+				if(App.n<App.students.toArray().length-1) {
+					App.n++;
+				}else{
+					App.n = 0;
+				}
+				General.loadName(App.students.get(App.n), numbers);
+				
+				App.loadCourses(classroom_in_ay_id, App.students.get(App.n));
+
+				loadnumbers(classroom_in_ay_id, numbers);
+				
+				if(selectedCourse != null) {
+					
+					LPane.tabbedPane.setSelectedIndex(opened);
+					LPane.panel_3.removeAll();
+					LPane.loadAllTests(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					
+				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
+					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
+						Cours.selectedCourses.add(App.panel_5.getComponent(i));
+				}}
+				
+				for(int j = 0; j< App.panel_5.getComponentCount(); j++) {
+					if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
+						Cours.setSelected(App.panel_5.getComponent(j));
+					}}}else{
+						General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
+					}
+				panelName.revalidate();
+				panelName.repaint();
+			
+			}
+		});
+		
+		
+		previous.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Component selectedCourse = null;
+
+				int opened = 0;
+				if(Cours.selectedCourses.toArray().length>0) {
+					selectedCourse = Cours.selectedCourses.get(0);
+					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
+					
+				if(LPane.tabbedPane.getSelectedIndex()==1) {
+					opened = 1;
+				}
+				LPane.tabbedPane.setSelectedIndex(0);
+
+				Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+				}
+				
+				//loadStudents(classroom_id, ay_id);
+				
+				if(App.n>0) {
+					App.n--;
+				}else{
+					App.n = App.students.toArray().length-1;
+				}
+				General.loadName(App.students.get(App.n), numbers);
+
+				App.loadCourses(classroom_in_ay_id, App.students.get(App.n));
+
+				loadnumbers(classroom_in_ay_id, numbers);
+				if(selectedCourse != null) {
+					LPane.tabbedPane.setSelectedIndex(opened);
+					LPane.panel_3.removeAll();
+					LPane.loadAllTests(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					
+					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
+						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
+							Cours.selectedCourses.add(App.panel_5.getComponent(i));
+					}}
+					
+					for(int j = 0; j< App.panel_5.getComponentCount(); j++) {
+						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
+							Cours.setSelected(App.panel_5.getComponent(j));
+						}}}else{
+							General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
+						}
+				
+				
+				panelName.revalidate();
+				panelName.repaint();
+			
+			}
+		});
+		
+		
+		
+		General.loadName(App.students.get(App.n), numbers);
+		
+		
+		
+
+		CustomButton changePhoto = new CustomButton("<html><div style='text-align: leading;'>Changer la photo</div></html>");
+		changePhoto.setRadius(15);
+		changePhoto.setAlignmentX(Component.CENTER_ALIGNMENT);
+		changePhoto.setMultiClickThreshhold(2000L);
+		changePhoto.setMargin(new Insets(2, 10, 2, 14));
+		changePhoto.setHorizontalAlignment(SwingConstants.CENTER);
+		changePhoto.setPreferredSize(new Dimension(170, 25));
+		changePhoto.setIconTextGap(10);
+		changePhoto.setForeground(Color.WHITE);
+		changePhoto.setFont(new Font("Roboto", Font.BOLD, 14));
+		changePhoto.setFocusPainted(false);
+		changePhoto.setBorderColor(new Color(255, 255, 255));
+		changePhoto.setBackground(new Color(40, 40, 40));
+		changePhoto.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		add(changePhoto);
+		
 		
 		separator = new JSeparator();
 		separator.setForeground(new Color(255, 255, 255));
-		separator.setPreferredSize(new Dimension(350, 1));
+		separator.setPreferredSize(new Dimension(320, 1));
 		add(separator);
-		
-		CustomButton btnstructuresDeLhoraire = new CustomButton("<html><div style='text-align: leading;'>Structure de l'horaire</div></html>");
-		btnstructuresDeLhoraire.setRadius(15);
-		btnstructuresDeLhoraire.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnstructuresDeLhoraire.setMultiClickThreshhold(2000L);
-		btnstructuresDeLhoraire.setMargin(new Insets(2, 10, 2, 14));
-		btnstructuresDeLhoraire.setHorizontalAlignment(SwingConstants.LEADING);
-		btnstructuresDeLhoraire.setPreferredSize(new Dimension(350, 40));
-		btnstructuresDeLhoraire.setIconTextGap(10);
-		btnstructuresDeLhoraire.setForeground(Color.WHITE);
-		btnstructuresDeLhoraire.setFont(new Font("Roboto", Font.BOLD, 14));
-		btnstructuresDeLhoraire.setFocusPainted(false);
-		btnstructuresDeLhoraire.setBorderColor(new Color(255, 255, 255));
-		btnstructuresDeLhoraire.setBackground(new Color(40, 40, 40));
-		btnstructuresDeLhoraire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btnstructuresDeLhoraire);
-		
-		CustomButton btnhoraireDeClasse = new CustomButton("<html><div style='text-align: leading;'>Horaire de classe</div></html>");
-		btnhoraireDeClasse.setRadius(15);
-		btnhoraireDeClasse.setMargin(new Insets(2, 10, 2, 14));
-		btnhoraireDeClasse.setHorizontalAlignment(SwingConstants.LEADING);
-		btnhoraireDeClasse.setPreferredSize(new Dimension(350, 40));
-		btnhoraireDeClasse.setIconTextGap(10);
-		btnhoraireDeClasse.setForeground(Color.WHITE);
-		btnhoraireDeClasse.setFont(new Font("Roboto", Font.BOLD, 14));
-		btnhoraireDeClasse.setFocusPainted(false);
-		btnhoraireDeClasse.setBorderColor(new Color(255, 255, 255));
-		btnhoraireDeClasse.setBackground(new Color(40, 40, 40));
-		btnhoraireDeClasse.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btnhoraireDeClasse);
 		
 
 		CustomButton btnstatistiquesAvances = new CustomButton("<html><div style='text-align: leading;'>Statistiques avanc\u00E9es</div></html>");
 		btnstatistiquesAvances.setRadius(15);
 		btnstatistiquesAvances.setMargin(new Insets(0, 10, 0, 0));
 		btnstatistiquesAvances.setHorizontalAlignment(SwingConstants.LEADING);
-		btnstatistiquesAvances.setPreferredSize(new Dimension(350, 40));
+		btnstatistiquesAvances.setPreferredSize(new Dimension(320, 40));
 		btnstatistiquesAvances.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StatsPane frame = new StatsPane("All", "All", classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				frame.setVisible(true);
 				}
 		});
+		
+		CustomButton btnNewButton_1 = new CustomButton();
+		btnNewButton_1.setRadius(15);
+		btnNewButton_1.setText("Delege de classe");
+		btnNewButton_1.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnNewButton_1.setBackground(new Color(255, 215, 0));
+		btnNewButton_1.setBorderColor(Color.black);
+		add(btnNewButton_1);
+		
+		CustomButton btnNewButton_11 = new CustomButton();
+		btnNewButton_11.setRadius(15);
+		btnNewButton_11.setText("Doyen");
+		btnNewButton_11.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnNewButton_11.setBackground(new Color(255, 215, 0));
+		btnNewButton_1.setBorderColor(Color.black);
+		add(btnNewButton_11);
+		
+		CustomButton btnNewButton_111 = new CustomButton();
+		btnNewButton_111.setRadius(15);
+		btnNewButton_111.setText("Prix innovation 2022");
+		btnNewButton_111.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnNewButton_111.setBackground(new Color(255, 215, 0));
+		btnNewButton_1.setBorderColor(Color.black);
+		add(btnNewButton_111);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setPreferredSize(new Dimension(320, 1));
+		separator_1.setForeground(Color.WHITE);
+		add(separator_1);
 		btnstatistiquesAvances.setIconTextGap(10);
 		btnstatistiquesAvances.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		btnstatistiquesAvances.setForeground(Color.WHITE);
@@ -148,53 +363,40 @@ public class StudentInfo extends JPanel {
 		btnstatistiquesAvances.setBackground(new Color(40, 40, 40));
 		add(btnstatistiquesAvances);
 		
-		CustomButton btnlisteDesPresences = new CustomButton("<html><div style='text-align: leading;'>Liste des presences</div></html>");
-		btnlisteDesPresences.setRadius(15);
-		btnlisteDesPresences.setMargin(new Insets(2, 10, 2, 14));
-		btnlisteDesPresences.setHorizontalAlignment(SwingConstants.LEADING);
-		btnlisteDesPresences.setPreferredSize(new Dimension(350, 40));
-		btnlisteDesPresences.setIconTextGap(10);
-		btnlisteDesPresences.setForeground(Color.WHITE);
-		btnlisteDesPresences.setFont(new Font("Roboto", Font.BOLD, 14));
-		btnlisteDesPresences.setFocusPainted(false);
-		btnlisteDesPresences.setBorderColor(new Color(255, 255, 255));
-		btnlisteDesPresences.setBackground(new Color(40, 40, 40));
-		btnlisteDesPresences.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btnlisteDesPresences);
+		CustomButton btnhoraireDeClasse = new CustomButton("<html><div style='text-align: leading;'>Horaire de classe</div></html>");
+		btnhoraireDeClasse.setRadius(15);
+		btnhoraireDeClasse.setMargin(new Insets(2, 10, 2, 14));
+		btnhoraireDeClasse.setHorizontalAlignment(SwingConstants.LEADING);
+		btnhoraireDeClasse.setPreferredSize(new Dimension(320, 40));
+		btnhoraireDeClasse.setIconTextGap(10);
+		btnhoraireDeClasse.setForeground(Color.WHITE);
+		btnhoraireDeClasse.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnhoraireDeClasse.setFocusPainted(false);
+		btnhoraireDeClasse.setBorderColor(new Color(255, 255, 255));
+		btnhoraireDeClasse.setBackground(new Color(40, 40, 40));
+		btnhoraireDeClasse.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnhoraireDeClasse);
 		
-		CustomButton btnpaiementDuMinerval = new CustomButton("<html><div style='text-align: leading;'>Paiement du minerval</div></html>");
-		btnpaiementDuMinerval.setRadius(15);
-		btnpaiementDuMinerval.setMargin(new Insets(2, 10, 2, 14));
-		btnpaiementDuMinerval.setHorizontalAlignment(SwingConstants.LEADING);
-		btnpaiementDuMinerval.setPreferredSize(new Dimension(350, 40));
-		btnpaiementDuMinerval.setIconTextGap(10);
-		btnpaiementDuMinerval.setForeground(Color.WHITE);
-		btnpaiementDuMinerval.setFont(new Font("Roboto", Font.BOLD, 14));
-		btnpaiementDuMinerval.setFocusPainted(false);
-		btnpaiementDuMinerval.setBorderColor(new Color(255, 255, 255));
-		btnpaiementDuMinerval.setBackground(new Color(40, 40, 40));
-		btnpaiementDuMinerval.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btnpaiementDuMinerval);
-		
-		CustomButton btnhistoriqueDeConduite = new CustomButton("<html><div style='text-align: leading;'>Historique de conduite</div></html>");
-		btnhistoriqueDeConduite.setRadius(15);
-		btnhistoriqueDeConduite.setMargin(new Insets(2, 10, 2, 14));
-		btnhistoriqueDeConduite.setHorizontalAlignment(SwingConstants.LEADING);
-		btnhistoriqueDeConduite.setPreferredSize(new Dimension(350, 40));
-		btnhistoriqueDeConduite.setIconTextGap(10);
-		btnhistoriqueDeConduite.setForeground(Color.WHITE);
-		btnhistoriqueDeConduite.setFont(new Font("Roboto", Font.BOLD, 14));
-		btnhistoriqueDeConduite.setFocusPainted(false);
-		btnhistoriqueDeConduite.setBorderColor(new Color(255, 255, 255));
-		btnhistoriqueDeConduite.setBackground(new Color(40, 40, 40));
-		btnhistoriqueDeConduite.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btnhistoriqueDeConduite);
+		CustomButton btnstructuresDeLhoraire = new CustomButton("<html><div style='text-align: leading;'>Historique des messages</div></html>");
+		btnstructuresDeLhoraire.setRadius(15);
+		btnstructuresDeLhoraire.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnstructuresDeLhoraire.setMargin(new Insets(2, 10, 2, 14));
+		btnstructuresDeLhoraire.setHorizontalAlignment(SwingConstants.LEADING);
+		btnstructuresDeLhoraire.setPreferredSize(new Dimension(320, 40));
+		btnstructuresDeLhoraire.setIconTextGap(10);
+		btnstructuresDeLhoraire.setForeground(Color.WHITE);
+		btnstructuresDeLhoraire.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnstructuresDeLhoraire.setFocusPainted(false);
+		btnstructuresDeLhoraire.setBorderColor(new Color(255, 255, 255));
+		btnstructuresDeLhoraire.setBackground(new Color(40, 40, 40));
+		btnstructuresDeLhoraire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnstructuresDeLhoraire);
 		
 		CustomButton btnbulletinScolaire = new CustomButton("<html><div style='text-align: leading;'>Bulletin scolaire</div></html>");
 		btnbulletinScolaire.setRadius(15);
 		btnbulletinScolaire.setMargin(new Insets(2, 10, 2, 14));
 		btnbulletinScolaire.setHorizontalAlignment(SwingConstants.LEADING);
-		btnbulletinScolaire.setPreferredSize(new Dimension(350, 40));
+		btnbulletinScolaire.setPreferredSize(new Dimension(320, 40));
 		btnbulletinScolaire.setIconTextGap(10);
 		btnbulletinScolaire.setForeground(Color.WHITE);
 		btnbulletinScolaire.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -204,52 +406,25 @@ public class StudentInfo extends JPanel {
 		btnbulletinScolaire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		add(btnbulletinScolaire);
 		
-		CustomButton btnconditionsDeReussite = new CustomButton("<html><div style='text-align: leading;'>Conditions de reussite</div></html>");
-		btnconditionsDeReussite.setRadius(15);
-		btnconditionsDeReussite.setMargin(new Insets(2, 10, 2, 14));
-		btnconditionsDeReussite.setHorizontalAlignment(SwingConstants.LEADING);
-		btnconditionsDeReussite.setPreferredSize(new Dimension(350, 40));
-		btnconditionsDeReussite.setIconTextGap(10);
-		btnconditionsDeReussite.setForeground(Color.WHITE);
-		btnconditionsDeReussite.setFont(new Font("Roboto", Font.BOLD, 14));
-		btnconditionsDeReussite.setFocusPainted(false);
-		btnconditionsDeReussite.setBorderColor(new Color(255, 255, 255));
-		btnconditionsDeReussite.setBackground(new Color(40, 40, 40));
-		btnconditionsDeReussite.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btnconditionsDeReussite);
-		
-		CustomButton btnelevesSupprimes = new CustomButton("<html><div style='text-align: leading;'>Eleves supprimes</div></html>");
-		btnelevesSupprimes.setRadius(15);
-		btnelevesSupprimes.setMargin(new Insets(2, 10, 2, 14));
-		btnelevesSupprimes.setHorizontalAlignment(SwingConstants.LEADING);
-		btnelevesSupprimes.setPreferredSize(new Dimension(350, 40));
-		btnelevesSupprimes.setIconTextGap(10);
-		btnelevesSupprimes.setForeground(Color.WHITE);
-		btnelevesSupprimes.setFont(new Font("Roboto", Font.BOLD, 14));
-		btnelevesSupprimes.setFocusPainted(false);
-		btnelevesSupprimes.setBorderColor(new Color(255, 255, 255));
-		btnelevesSupprimes.setBackground(new Color(40, 40, 40));
-		btnelevesSupprimes.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btnelevesSupprimes);
-		
-		CustomButton btncoursSupprimes = new CustomButton("<html><div style='text-align: leading;'>Cours supprimes</div></html>");
-		btncoursSupprimes.setRadius(15);
-		btncoursSupprimes.setMargin(new Insets(2, 10, 2, 14));
-		btncoursSupprimes.setHorizontalAlignment(SwingConstants.LEADING);
-		btncoursSupprimes.setPreferredSize(new Dimension(350, 40));
-		btncoursSupprimes.setIconTextGap(10);
-		btncoursSupprimes.setForeground(Color.WHITE);
-		btncoursSupprimes.setFont(new Font("Roboto", Font.BOLD, 14));
-		btncoursSupprimes.setFocusPainted(false);
-		btncoursSupprimes.setBorderColor(new Color(255, 255, 255));
-		btncoursSupprimes.setBackground(new Color(40, 40, 40));
-		btncoursSupprimes.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btncoursSupprimes);
+		CustomButton btnpaiementDuMinerval = new CustomButton("<html><div style='text-align: leading;'>Responsabilites et titres</div></html>");
+		btnpaiementDuMinerval.setRadius(15);
+		btnpaiementDuMinerval.setMargin(new Insets(2, 10, 2, 14));
+		btnpaiementDuMinerval.setHorizontalAlignment(SwingConstants.LEADING);
+		btnpaiementDuMinerval.setPreferredSize(new Dimension(320, 40));
+		btnpaiementDuMinerval.setIconTextGap(10);
+		btnpaiementDuMinerval.setForeground(Color.WHITE);
+		btnpaiementDuMinerval.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnpaiementDuMinerval.setFocusPainted(false);
+		btnpaiementDuMinerval.setBorderColor(new Color(255, 255, 255));
+		btnpaiementDuMinerval.setBackground(new Color(40, 40, 40));
+		btnpaiementDuMinerval.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnpaiementDuMinerval);
 		
 
 		for(int i = 0; i< getComponentCount(); i++) {
 			int k = i;
-			if(getComponent(i) instanceof CustomButton) {
+			if(getComponent(i) instanceof CustomButton && getComponent(i).getBackground().equals(getBackground())) {
+				((AbstractButton) getComponent(i)).setMultiClickThreshhold(500L);
 				getComponent(i).addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -260,6 +435,96 @@ public class StudentInfo extends JPanel {
 		});
 	}}
 	}
+	
+	
+	public static void loadnumbers(String classroom_in_ay_id, Container c) { //number selected
+		c.removeAll();
+		Object[] lines = Home.loadActiveStudents(classroom_in_ay_id);
+					
+		for(int i = 0;i<lines.length;i++) {
+		
+		JPanel button = new JPanel();
+		button.setPreferredSize(new Dimension(30, 25));
+		button.setBackground(new Color(80, 80, 80));
+		button.setName(String.valueOf(i));
+		JLabel num = new JLabel();
+		num.setText(App.getStudentNumber(lines[i].toString()));
+		num.setBounds(button.getBounds());
+		button.add(num);
+		
+		num.setVerticalAlignment(SwingConstants.CENTER);
+		num.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		num.setForeground(Color.white);
+		c.add(button);
+
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				
+
+				Component selectedCourse = null;
+
+				int opened = 0;
+				if(Cours.selectedCourses.toArray().length>0) {
+					selectedCourse = Cours.selectedCourses.get(0);
+					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
+					
+				if(LPane.tabbedPane.getSelectedIndex()==1) {
+					opened = 1;
+				}
+				LPane.tabbedPane.setSelectedIndex(0);
+
+				Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+				}
+				
+
+				App.n= Integer.parseInt(button.getName());
+				General.loadName(App.students.get(App.n), c);
+
+				App.loadCourses(classroom_in_ay_id, App.students.get(App.n));
+				loadnumbers(classroom_in_ay_id, c);
+				if(selectedCourse != null) {
+					LPane.tabbedPane.setSelectedIndex(opened);
+					LPane.panel_3.removeAll();
+					LPane.loadAllTests(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					LPane.loadAllExams(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					
+					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
+						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
+							Cours.selectedCourses.add(App.panel_5.getComponent(i));
+					}}
+					
+					for(int j = 0; j< App.panel_5.getComponentCount(); j++) {
+						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
+							Cours.setSelected(App.panel_5.getComponent(j));
+						}}}else{
+							General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
+						}
+
+				num.setForeground(Color.white);
+				c.revalidate();
+				c.repaint();
+			
+			}
+			public void mouseEntered(MouseEvent e) {
+				button.setBackground(new Color(120, 120, 120));
+				num.setForeground(Color.white);
+			}public void mouseExited(MouseEvent e) {
+				button.setBackground(new Color(80, 80, 80));
+				num.setForeground(Color.white);
+				c.getComponent(App.n).setBackground(new Color(20, 148, 198));
+				((Container) c.getComponent(App.n)).getComponent(0).setForeground(Color.white);
+			}
+		});
+		}
+
+		c.getComponent(App.n).setBackground(new Color(20, 148, 198));
+		((Container) c.getComponent(App.n)).getComponent(0).setForeground(Color.white);
+		
+	}
+	
+	
 	
 	public static void loadStudentInfo(String student_id, String classroom_id, String ay_id, String start, String end) {
 		name.setText(Home.getStudentName(student_id));

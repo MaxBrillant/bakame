@@ -69,6 +69,8 @@ import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import javax.swing.JFormattedTextField;
 import net.miginfocom.swing.MigLayout;
+import sideInformation.StudentInfo;
+
 import javax.swing.JScrollBar;
 import javax.swing.ImageIcon;
 import java.awt.SystemColor;
@@ -87,16 +89,9 @@ public class App {
 	public static boolean saveTests = false;
 	public static JButton btnAjouter;
 	public static JButton edit;
-	public static JPanel panelName;
 	
 	public static int n;
 	public static List<String> students = new ArrayList();
-	public static JLabel name;
-	public static JButton previous;
-	public static JButton next;
-	public static JLabel num;
-	private JPanel panel_6;
-	public static JPanel numbers;
 	private JLabel button_1;
 	private JPanel back;
 	public static JScrollPane scrollPane;
@@ -447,220 +442,15 @@ public class App {
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(25, 25, 25));
 		panel_1.setPreferredSize(new Dimension(350, 10));
-		frame.getContentPane().add(panel_1, BorderLayout.WEST);
+		frame.getContentPane().add(panel_1, BorderLayout.EAST);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 
-		panelName = new JPanel();
-		panelName.setBackground(new Color(60, 60, 60));
-		panel_1.add(panelName, BorderLayout.NORTH);
-		panelName.setPreferredSize(new Dimension(10, 50));
-		panelName.setLayout(new BorderLayout(0, 0));
-		
-		name = new JLabel("UMUHOZA Chris Koen Michael");
-		name.setForeground(Color.WHITE);
-		name.setHorizontalAlignment(SwingConstants.CENTER);
-		name.setFont(new Font("Roboto", Font.BOLD, 16));
-		panelName.add(name, BorderLayout.NORTH);
-		
-		previous = new JButton("");
-		previous.setFocusPainted(false);
-		previous.setBorderPainted(false);
-		previous.setBackground(new Color(25, 25, 25));
-		previous.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
-		panelName.add(previous, BorderLayout.WEST);
-		
-		panel_6 = new JPanel();
-		panel_6.setBorder(null);
-		panelName.add(panel_6, BorderLayout.CENTER);
-		panel_6.setBackground(new Color(60, 60, 60));
-		
-
-		
-		num = new JLabel("15");
-		num.setForeground(Color.WHITE);
-		num.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(panelName.getHeight() == 50) {
-						panelName.setPreferredSize(new Dimension(10, 100));
-						panelName.getComponent(panelName.getComponentCount()-2).setPreferredSize(new Dimension(10, 50));
-					panelName.revalidate();
-					panelName.repaint();
-					loadnumbers(classroom_in_ay_id);
-					
-					}
-					else{
-						panelName.setPreferredSize(new Dimension(10, 50));
-						panelName.getComponent(panelName.getComponentCount()-2).setPreferredSize(new Dimension(10, 0));
-						panelName.revalidate();
-						panelName.repaint();
-					}
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				panel_6.setBackground(new Color(120, 120, 120));
-			}
-
-			public void mouseExited(MouseEvent e) {
-				panel_6.setBackground(new Color(60, 60, 60));
-			
-			}
-		});
-		panel_6.setLayout(new BorderLayout(0, 0));
-		num.setBackground(new Color(245, 245, 245));
-		panel_6.add(num);
-		num.setHorizontalAlignment(SwingConstants.CENTER);
-		num.setFont(new Font("Roboto", Font.BOLD, 16));
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setPreferredSize(new Dimension(2, 0));
-		scrollPane_1.setBorder(null);
-		panelName.add(scrollPane_1, BorderLayout.SOUTH);
-		
-		
-
-		scrollPane_1.getVerticalScrollBar().setUI(new CustomVerticalScrollBarUI());
-		scrollPane_1.getHorizontalScrollBar().setUI(new CustomVerticalScrollBarUI());
-		scrollPane_1.getVerticalScrollBar().setUnitIncrement(5);
-		
-		numbers = new JPanel();
-		numbers.setBackground(new Color(25, 25, 25));
-		scrollPane_1.setViewportView(numbers);
-
-		numbers.setLayout(new WrapLayout(WrapLayout.CENTER,3,3));
-		
-		next = new JButton("");
-		panelName.add(next, BorderLayout.EAST);
-		next.setFocusPainted(false);
-		next.setBorderPainted(false);
-		next.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
-		next.setBackground(new Color(25, 25, 25));
-		
-		
-		next.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				Component selectedCourse = null;
-
-				int opened = 0;
-				if(Cours.selectedCourses.toArray().length>0) {
-					selectedCourse = Cours.selectedCourses.get(0);
-					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
-					
-				if(LPane.tabbedPane.getSelectedIndex()==1) {
-					opened = 1;
-				}
-				LPane.tabbedPane.setSelectedIndex(0);
-
-				Test.deselect(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-				}
-				
-				if(n<students.toArray().length-1) {
-					n++;
-				}else{
-					n = 0;
-				}
-				General.loadName(students.get(n));
-				
-				loadCourses(classroom_in_ay_id, students.get(n));
-
-				loadnumbers(classroom_in_ay_id);
-				
-				if(selectedCourse != null) {
-					
-					LPane.tabbedPane.setSelectedIndex(opened);
-					LPane.panel_3.removeAll();
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-					
-				for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
-					if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
-						Cours.selectedCourses.add(App.panel_5.getComponent(i));
-				}}
-				
-				for(int j = 0; j< App.panel_5.getComponentCount(); j++) {
-					if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
-						Cours.setSelected(App.panel_5.getComponent(j));
-					}}}else{
-						General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-					}
-				App.panel_5.revalidate();
-				App.panel_5.repaint();
-			}
-		});
-		
-		
-		previous.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				Component selectedCourse = null;
-
-				int opened = 0;
-				if(Cours.selectedCourses.toArray().length>0) {
-					selectedCourse = Cours.selectedCourses.get(0);
-					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
-					
-				if(LPane.tabbedPane.getSelectedIndex()==1) {
-					opened = 1;
-				}
-				LPane.tabbedPane.setSelectedIndex(0);
-
-				Test.deselect(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-				}
-				
-				//loadStudents(classroom_id, ay_id);
-				
-				if(n>0) {
-					n--;
-				}else{
-				n = students.toArray().length-1;
-				}
-				General.loadName(students.get(n));
-
-				loadCourses(classroom_in_ay_id, students.get(n));
-
-				loadnumbers(classroom_in_ay_id);
-				if(selectedCourse != null) {
-					LPane.tabbedPane.setSelectedIndex(opened);
-					LPane.panel_3.removeAll();
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-					
-					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
-						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
-							Cours.selectedCourses.add(App.panel_5.getComponent(i));
-					}}
-					
-					for(int j = 0; j< App.panel_5.getComponentCount(); j++) {
-						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
-							Cours.setSelected(App.panel_5.getComponent(j));
-						}}}else{
-							General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-						}
-				
-				
-				App.panel_5.revalidate();
-				App.panel_5.repaint();
-
-			}
-		});
-		
-		
-		
 		
 		
 		General g = new General(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 		JPanel lp = new JPanel();
 		panel_1.add(lp, BorderLayout.CENTER);
-		
-		
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setVisible(false);
-		panel_2.setBackground(Color.ORANGE);
-		panel_2.setPreferredSize(new Dimension(350, 490));
-		frame.getContentPane().add(panel_2, BorderLayout.EAST);
 		
 		JPanel panel_3 = new JPanel();
 		frame.getContentPane().add(panel_3, BorderLayout.CENTER);
@@ -695,6 +485,13 @@ public class App {
 		panel_5.setLayout(null);
 		
 		panel_5.setLayout(new WrapLayout(WrapLayout.LEFT, 12, 12));
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setPreferredSize(new Dimension(350, 2));
+		frame.getContentPane().add(scrollPane_2, BorderLayout.WEST);
+		
+		StudentInfo panel_2 = new StudentInfo(classroom_in_ay_id);
+		scrollPane_2.setViewportView(panel_2);
 		
 
 		/*
@@ -762,90 +559,7 @@ public class App {
 	}
 	
 
-	public static void loadnumbers(String classroom_in_ay_id) { //number selected
-		numbers.removeAll();
-		Object[] lines = Home.loadActiveStudents(classroom_in_ay_id);
-					
-		for(int i = 0;i<lines.length;i++) {
-		
-		JPanel button = new JPanel();
-		button.setPreferredSize(new Dimension(30, 25));
-		button.setBackground(new Color(80, 80, 80));
-		button.setName(String.valueOf(i));
-		JLabel num = new JLabel();
-		num.setText(getStudentNumber(lines[i].toString()));
-		num.setBounds(button.getBounds());
-		button.add(num);
-		
-		num.setVerticalAlignment(SwingConstants.CENTER);
-		num.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		num.setForeground(Color.white);
-		numbers.add(button);
-
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				
-
-				Component selectedCourse = null;
-
-				int opened = 0;
-				if(Cours.selectedCourses.toArray().length>0) {
-					selectedCourse = Cours.selectedCourses.get(0);
-					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
-					
-				if(LPane.tabbedPane.getSelectedIndex()==1) {
-					opened = 1;
-				}
-				LPane.tabbedPane.setSelectedIndex(0);
-
-				Test.deselect(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-				}
-				
-
-				n= Integer.parseInt(button.getName());
-				General.loadName(students.get(n));
-
-				loadCourses(classroom_in_ay_id, students.get(n));
-				loadnumbers(classroom_in_ay_id);
-				if(selectedCourse != null) {
-					LPane.tabbedPane.setSelectedIndex(opened);
-					LPane.panel_3.removeAll();
-					LPane.loadAllTests(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-					LPane.loadAllExams(selectedCourse.getName(), students.get(n), classroom_in_ay_id);
-					
-					for(int i = 0 ; i< App.panel_5.getComponentCount(); i++) {
-						if(App.panel_5.getComponent(i).getName().equals(selectedCourse.getName())) {
-							Cours.selectedCourses.add(App.panel_5.getComponent(i));
-					}}
-					
-					for(int j = 0; j< App.panel_5.getComponentCount(); j++) {
-						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
-							Cours.setSelected(App.panel_5.getComponent(j));
-						}}}else{
-							General.totalScore(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-						}
-
-				num.setForeground(Color.white);
-			}
-			public void mouseEntered(MouseEvent e) {
-				button.setBackground(new Color(120, 120, 120));
-				num.setForeground(Color.white);
-			}public void mouseExited(MouseEvent e) {
-				button.setBackground(new Color(80, 80, 80));
-				num.setForeground(Color.white);
-				numbers.getComponent(n).setBackground(new Color(20, 148, 198));
-				((Container) numbers.getComponent(n)).getComponent(0).setForeground(Color.white);
-			}
-		});
-		}
-
-		numbers.getComponent(n).setBackground(new Color(20, 148, 198));
-		((Container) numbers.getComponent(n)).getComponent(0).setForeground(Color.white);
-		
-		
-	}
+	
 	
 	public static void createBox() {
 		
@@ -863,7 +577,7 @@ public class App {
 		App.edit.setBackground(App.panel.getBackground());
 		
 		General g = new General(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-		panel_1.remove(1);
+		panel_1.remove(0);
 		panel_1.add(g);
 		Cours.selectedCourses.clear();
 		for(int i = 0; i<panel_5.getComponentCount(); i++) {

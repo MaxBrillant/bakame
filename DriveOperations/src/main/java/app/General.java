@@ -256,7 +256,7 @@ public class General extends JPanel {
 		scrollPane_3.setViewportView(panelProgress);
 		panelPoints.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
 		panelProgress.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
-		loadName(student_in_classroom_id);
+		//loadName(student_in_classroom_id);
 		totalScore(student_in_classroom_id, classroom_in_ay_id, term_id);
 		
 
@@ -388,7 +388,7 @@ public class General extends JPanel {
 	
 	
 	
-	public static void loadName(String student_id) {
+	public static void loadName(String student_id, Container c) {
 		/*
 		 * File file = new
 		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
@@ -404,21 +404,21 @@ public class General extends JPanel {
 		 * Arrays.asList(lines[i].toString().trim().split("//")); }else{ note1 =
 		 * Arrays.asList(lines[0].toString().trim().split("//")); }
 		 */
-		App.name.setText(Home.getStudentName(student_id));
-		App.num.setText(App.getStudentNumber(student_id));
+		((JLabel) c.getParent().getParent().getParent().getComponent(0)).setText(Home.getStudentName(student_id));
+		((JLabel) ((Container) c.getParent().getParent().getParent().getComponent(2)).getComponent(0)).setText(App.getStudentNumber(student_id));
 		/*
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}*/
 		
-		if(App.numbers.getComponentCount()>0) {
-			for(int j = 0; j<App.numbers.getComponentCount(); j++) {
-				App.numbers.getComponent(j).setBackground(new Color(80, 80, 80));
-				((Container) App.numbers.getComponent(j)).getComponent(0).setForeground(Color.white);
+		if(c.getComponentCount()>0) {
+			for(int j = 0; j<c.getComponentCount(); j++) {
+				c.getComponent(j).setBackground(new Color(80, 80, 80));
+				((Container) c.getComponent(j)).getComponent(0).setForeground(Color.white);
 			}
-		App.numbers.getComponent(App.n).setBackground(new Color(20, 148, 198));
-		((Container) App.numbers.getComponent(App.n)).getComponent(0).setForeground(Color.white);
+		c.getComponent(App.n).setBackground(new Color(20, 148, 198));
+		((Container) c.getComponent(App.n)).getComponent(0).setForeground(Color.white);
 	}}
 	
 	
