@@ -1,7 +1,10 @@
 package Class;
 
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -47,6 +50,9 @@ import javax.swing.border.MatteBorder;
 
 import Application.Home;
 import Application.ResizeImages;
+import Class.OptionsMenu.CourseMenu;
+import Class.OptionsMenu.TestMenu;
+import Class.OptionsMenu.TestMenu;
 import Class.OptionsMenu.TestMenu;
 import Class.OptionsMenu.TestMenu;
 import CloudOperations.aws;
@@ -69,53 +75,61 @@ public class TestBox extends JPanel {
 	public static JPanel Box1;
 	public static JLabel lblNdashimyeMaxBrillant;
 	public static JLabel label_5;
-	public static boolean isSelected;
 	public static List<Component> selectedTests = new ArrayList();
 
 	/**
 	 * Create the panel.
 	 */
 	public TestBox() {
-		setBackground(new Color(60, 60, 60));
+		setBackground(new Color(40, 40, 40));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
 				TestMenu.deselect();
-					boolean alreadyExists = false;
+				boolean alreadyExists = false;
+				if((MouseEvent.CTRL_MASK & e.getModifiers())!=0) {
+					if(!selectedTests.contains(getComponent(0).getParent())) {
+						selectedTests.add(getComponent(0).getParent());
+					}else {
+						selectedTests.remove(getComponent(0).getParent());
+					}
+				}else {
 
-						if(selectedTests.contains(getComponent(0).getParent())) {
-						alreadyExists = true;
+					if(selectedTests.contains(getComponent(0).getParent())) {
+					alreadyExists = true;
+					}
+				deselectAll();
+				TestMenu.deselect();
+				selectedTests.add(getComponent(0).getParent());
+				}
+
+
+				if(selectedTests.toArray().length==1) {
+					Component comp = null;
+
+				for(int i = 0; i< Application.panelTests.getComponentCount(); i++) {
+						if(Application.panelTests.getComponent(i).equals(selectedTests.get(0))) {
+							comp = Application.panelTests.getComponent(i);
 						}
-					deselectAll();
-					TestMenu.deselect();
-					selectedTests.add(getComponent(0).getParent());
-					
-
-
-					if(selectedTests.toArray().length==1) {
-						Component comp = null;
-
-					for(int i = 0; i< Application.panelTests.getComponentCount(); i++) {
-							if(Application.panelTests.getComponent(i).equals(selectedTests.get(0))) {
-								comp = Application.panelTests.getComponent(i);
+					}
+				
+						if(!comp.equals(null)) {
+				}}
+				
+				for(int i = 0; i<selectedTests.toArray().length; i++) {
+					for(int j = 0; j< Application.panelTests.getComponentCount(); j++) {
+						if(Application.panelTests.getComponent(j).equals(selectedTests.get(i))) {
+							((Container) Application.panelTests.getComponent(j)).getComponent(0).setBackground(new Color(20, 148, 198, 50));
+							((Container) Application.panelTests.getComponent(j)).getComponent(1).setBackground(new Color(20, 148, 198, 50));
+							((JComponent) Application.panelTests.getComponent(j)).setBorder(new LineBorder(new Color(20, 148, 198), 2));
+							((Container) ((Container) Application.panelTests.getComponent(j)).getComponent(0)).getComponent(0).setVisible(true);
+							
+							for(int k = 0;k<((Container) Application.panelTests.getComponent(j)).getComponentCount();k++) {
+								((Container) Application.panelTests.getComponent(j)).getComponent(k).setForeground(Color.white);
 							}
-						}
-					
-							if(!comp.equals(null)) {
-					}}
-					
-					for(int i = 0; i<selectedTests.toArray().length; i++) {
-						for(int j = 0; j< Application.panelTests.getComponentCount(); j++) {
-							if(Application.panelTests.getComponent(j) instanceof TestBox) {
-							if(Application.panelTests.getComponent(j).equals(selectedTests.get(i))) {
-								Application.panelTests.getComponent(j).setBackground(new Color(20, 148, 198));
-								
-								for(int k = 0;k<((Container) Application.panelTests.getComponent(j)).getComponentCount();k++) {
-									((Container) Application.panelTests.getComponent(j)).getComponent(k).setForeground(Color.white);
-								}}
-					}}}
+				}}}
+				
+			//
 					
 				//
 					TestMenu.edit.setVisible(true);
@@ -125,75 +139,133 @@ public class TestBox extends JPanel {
 				if(selectedTests.toArray().length==0) {
 					deselectAll();
 				}
-				Application.no.setText(getName());
-			}
+				}
 			public void mouseEntered(MouseEvent e) {
 				if(!selectedTests.contains(getComponent(0).getParent())) {
-					setBackground(new Color(60, 60, 60).brighter());
-					setBorder(new LineBorder(new Color(20, 148, 198)));
+					getComponent(0).setBackground(new Color(60, 60, 60));
+					getComponent(1).setBackground(new Color(60, 60, 60));
+					//setBorder(new LineBorder(new Color(20, 148, 198)));
 				}
 			}public void mouseExited(MouseEvent e) {
 				if(!selectedTests.contains(getComponent(0).getParent())) {
-					setBackground(new Color(60, 60, 60));
+					getComponent(0).setBackground(getBackground());
+					getComponent(1).setBackground(getBackground());
 					setBorder(null);
 				}
 				
 			}
 		});
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension(screensize.width*97/100, 40));
-		setLayout(null);
+		setPreferredSize(new Dimension(1325, 67));
+		setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNo = new JLabel("No 12");
-		lblNo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNo.setForeground(new Color(211, 211, 211));
-		lblNo.setFont(new Font("Roboto", Font.PLAIN, 16));
-		lblNo.setBounds(0, 0, 82, 40);
-		add(lblNo);
 		
-		lblNdashimyeMaxBrillant = new JLabel("Comptabilite Generale");
-		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.PLAIN, 20));
-		lblNdashimyeMaxBrillant.setBounds(92, 0, 391, 40);
-		add(lblNdashimyeMaxBrillant);
+		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(35, 30));
+		panel.setBackground(new Color(40, 40, 40));
+		add(panel, BorderLayout.NORTH);
+		panel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel label_3 = new JLabel("31/12/2003");
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setForeground(new Color(211, 211, 211));
-		label_3.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_3.setBounds(514, 0, 134, 40);
-		add(label_3);
 		
-		JLabel label = new JLabel("0/0");
-		label.setForeground(new Color(211, 211, 211));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label.setBounds(720, 0, 119, 40);
-		add(label);
+		JPanel panel1 = new JPanel();
+		panel1.setPreferredSize(new Dimension(35, 40));
+		panel1.setBackground(new Color(20, 148, 198));
+		panel.add(panel1, BorderLayout.WEST);
+		panel1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel label_1 = new JLabel("0%");
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		panel1.add(lblNewLabel_1, BorderLayout.CENTER);
+		
+		JLabel lblUmuhozaChrisKoen = new JLabel();
+		lblUmuhozaChrisKoen.setAlignmentX(1.0f);
+		lblUmuhozaChrisKoen.setText("Interrogation No 2 (Maths Stats)");
+		lblUmuhozaChrisKoen.setForeground(Color.WHITE);
+		lblUmuhozaChrisKoen.setFont(new Font("Roboto", Font.BOLD, 16));
+		panel.add(lblUmuhozaChrisKoen, BorderLayout.CENTER);
+		
+		JButton stats = new JButton();
+		stats.setFocusPainted(false);
+		stats.setBorder(null);
+		stats.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		stats.setBackground(new Color(40, 40, 40));
+		panel.add(stats, BorderLayout.EAST);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(null);
+		panel_1.setPreferredSize(new Dimension(10, 37));
+		add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 1));
+		panel_1.setBackground(new Color(40, 40, 40));
+		
+		JLabel lblProgres = new JLabel("10/04/2022");
+		lblProgres.setHorizontalAlignment(SwingConstants.CENTER);
+		//lblProgres.setPreferredSize(new Dimension(80, 18));
+		lblProgres.setOpaque(true);
+		lblProgres.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblProgres.setForeground(Color.BLACK);
+		lblProgres.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblProgres.setBackground(new Color(233, 150, 122));
+		panel_1.add(lblProgres);
+		
+		JLabel lblNewLabel = new JLabel("Moyenne: 58.5/105");
+		lblNewLabel.setBackground(new Color(250, 128, 114));
+		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblNewLabel.setForeground(new Color(211, 211, 211));
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		panel_1.add(lblNewLabel);
+		
+		JLabel label_1 = new JLabel("-");
+		label_1.setVerticalAlignment(SwingConstants.TOP);
+		label_1.setHorizontalTextPosition(SwingConstants.LEADING);
 		label_1.setForeground(new Color(211, 211, 211));
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_1.setBounds(878, 0, 134, 40);
-		add(label_1);
+		label_1.setFont(new Font("Roboto", Font.BOLD, 14));
+		label_1.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_1);
 		
-		JLabel label_2 = new JLabel("0");
-		label_2.setForeground(new Color(211, 211, 211));
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_2.setBounds(1050, 0, 94, 40);
-		add(label_2);
+		JLabel lblEchecs = new JLabel("12 echecs");
+		lblEchecs.setVerticalAlignment(SwingConstants.TOP);
+		lblEchecs.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblEchecs.setForeground(new Color(211, 211, 211));
+		lblEchecs.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblEchecs.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblEchecs);
 		
-		label_5 = new JLabel("0%");
-		label_5.setForeground(new Color(211, 211, 211));
-		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Roboto", Font.PLAIN, 16));
-		label_5.setBounds(1178, 0, 147, 40);
-		add(label_5);
+		JLabel label_4 = new JLabel("-");
+		label_4.setVerticalAlignment(SwingConstants.TOP);
+		label_4.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_4.setForeground(new Color(211, 211, 211));
+		label_4.setFont(new Font("Roboto", Font.BOLD, 14));
+		label_4.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_4);
+		
+		JLabel lblElevesManquants = new JLabel("25 sur 30 eleves ont ete corriges");
+		lblElevesManquants.setVerticalAlignment(SwingConstants.TOP);
+		lblElevesManquants.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblElevesManquants.setForeground(new Color(211, 211, 211));
+		lblElevesManquants.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblElevesManquants.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblElevesManquants);
+		
+		JLabel label_3 = new JLabel("-");
+		label_3.setVerticalAlignment(SwingConstants.TOP);
+		label_3.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_3.setForeground(new Color(211, 211, 211));
+		label_3.setFont(new Font("Roboto", Font.BOLD, 14));
+		label_3.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_3);
+		
+		JLabel lblEducation = new JLabel("Reussite: 83%");
+		lblEducation.setVerticalAlignment(SwingConstants.TOP);
+		lblEducation.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblEducation.setForeground(new Color(211, 211, 211));
+		lblEducation.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblEducation.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblEducation);
 	
-	
+		
 	}
 	
 
@@ -395,9 +467,16 @@ public static String getShortName(String course_in_classroom_id) {
 					
 					while(rs.next())
 					{
+						if(i >0) {
+							JSeparator separator = new JSeparator();
+							separator.setPreferredSize(new Dimension(1000, 1));
+							separator.setForeground(new Color(211, 211, 211, 50));
+							Application.panelTests.add(separator);
+						}
 						i++;
 						TestBox tb = new TestBox();
 						tb.setName(rs.getString("test_id"));
+						((JLabel) ((Container) ((Container) tb).getComponent(0)).getComponent(1)).setText("  "+Test.getTestName(rs.getString("test_id"))+" ("+TestBox.getShortName(Test.getTestCourse(rs.getString("test_id")))+")");
 						loadTestdata(tb, rs.getString("test_id"), classroom_in_ay_id);
 						Application.panelTests.add(tb);
 					}
@@ -498,21 +577,18 @@ public static String getShortName(String course_in_classroom_id) {
 		echec++;
 		}
 		if(points1 == 0 && maxima1 == 0) {
-			participants = participants;
+			participants = participants+0;
 		}else {
 			participants++;
 		}
 		}
-		((JLabel) ((Container) c).getComponent(0)).setText("No "+Test.getTestName(test_id));
-		String name = getFullName(Test.getTestCourse(test_id));
-		((JLabel) ((Container) c).getComponent(1)).setText(name);
-		((JLabel) ((Container) c).getComponent(2)).setText(Test.getTestDate(test_id));
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(0)))).setText(" "+Test.getTestDate(test_id)+" ");
 		
-		((JLabel) ((Container) c).getComponent(3)).setText((new DecimalFormat("##.##").format(points*Double.parseDouble(Test.getTestMaxima(test_id))/maxima))+"/"+Test.getTestMaxima(test_id));
-		((JLabel) ((Container) c).getComponent(4)).setText((new DecimalFormat("##.##").format(100*points/maxima)+"%"));
-		((JLabel) ((Container) c).getComponent(5)).setText(String.valueOf(echec));
-		String reussite = new DecimalFormat("##.##").format(100-(Double.parseDouble(String.valueOf(echec))/Double.parseDouble(String.valueOf(participants))*100));
-		((JLabel) ((Container) c).getComponent(6)).setText(reussite+"%");
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(1)))).setText("Moyenne: "+(new DecimalFormat("##.##").format(points*Double.parseDouble(Test.getTestMaxima(test_id))/maxima))+"/"+Test.getTestMaxima(test_id));
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(3)))).setText(String.valueOf(echec)+" echecs");
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(5)))).setText(participants+" sur "+lines1.length+" eleves ont ete corriges");
+		String reussite = new DecimalFormat("##").format(100-(Double.parseDouble(String.valueOf(echec))/Double.parseDouble(String.valueOf(participants))*100));
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(7)))).setText("Reussite a: "+reussite+"%");
 		
 					
 		
@@ -620,19 +696,24 @@ public static String getShortName(String course_in_classroom_id) {
 	
 	public static void deselectAll() {
 		for(int i = 0; i< ((Container) Application.panelTests).getComponentCount(); i++) {
+			if(((Container) Application.panelTests).getComponent(i) instanceof TestBox) {
 			if(selectedTests.contains(((Container) Application.panelTests).getComponent(i))) {
-				((JComponent) ((Container) Application.panelTests).getComponent(i)).setBackground(new Color(60, 60, 60));
+				((JComponent) ((Container) Application.panelTests).getComponent(i)).setBackground(new Color(40, 40, 40));
+				((JComponent) ((Container) Application.panelTests).getComponent(i)).getComponent(0).setBackground(new Color(40, 40, 40));
+				((JComponent) ((Container) Application.panelTests).getComponent(i)).getComponent(1).setBackground(new Color(40, 40, 40));
 				((JComponent) ((Container) Application.panelTests).getComponent(i)).setBorder(null);
 			}
+			((Container) ((Container) Application.panelTests.getComponent(i)).getComponent(0)).getComponent(0).setVisible(false);
+			
 				Application.panelTests.revalidate();
 
 				Application.panelTests.repaint();
-		
+			}
 		}
 
 		selectedTests.clear();
 		
 		TestMenu.deselect();
-	}
+}
 	
 }

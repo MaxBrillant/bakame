@@ -784,17 +784,20 @@ public class CourseStats extends JPanel {
 								
 
 								
-								for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
+								boolean hasProgress = false;
+								if(listOfTestProgress.toArray().length>0) {
+									for(int z = 0; z< listOfTestProgress.toArray().length; z++) {
 									List f = Arrays.asList(listOfTestProgress.get(z).split("//"));
-									if(!f.get(0).equals(rs.getString("ti.test_id"))) {
-								Double testProgress = Double.parseDouble(Test.getTestCourseProgression(rs.getString("ti.test_id")));
-								progress = progress+ testProgress;
-								listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
-								break;
-								}}
-								
-								}
-							
+									if(f.get(0).equals(rs.getString("ti.test_id"))) {
+										hasProgress = true;
+									break;
+								}}}
+									if(!hasProgress) {
+									Double testProgress = Double.parseDouble(Test.getTestCourseProgression(rs.getString("ti.test_id")));
+									progress = progress+ testProgress;
+									listOfTestProgress.add(rs.getString("ti.test_id")+"//"+testProgress);
+									}
+							}
 							
 								if(tot<(tot1/2)) {
 								echec = true;
@@ -841,7 +844,7 @@ public class CourseStats extends JPanel {
 		stats.add(Tests);
 		stats.add(Echecs);
 		stats.add(missed);
-		stats.add(new DecimalFormat("##.##").format(progress/students.toArray().length).replaceAll(",", "."));
+		stats.add(new DecimalFormat("##.##").format(progress).replaceAll(",", "."));
 		stats.add(listOfTests);
 		stats.add(listOfMissedTests);
 		stats.add(listOfEchecs);

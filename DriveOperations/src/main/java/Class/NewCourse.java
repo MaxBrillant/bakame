@@ -43,6 +43,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -244,13 +245,20 @@ public class NewCourse extends JFrame {
 	public static void load(String classroom_in_ay_id) {
 		Application.panelCourses.removeAll();
 		isEmpty = false;
-		((Container) ((Container) Application.frame.getContentPane().getComponent(1)).getComponent(1)).getComponent(0).setVisible(true);
 		
 				Object[] lines = Home.loadActiveCourses(classroom_in_ay_id);
 				
 				for(int i = 0; i<lines.length;i++) {
-				Course c = new Course();
-				((JLabel) ((Container) c).getComponent(0)).setText(TestBox.getFullName(lines[i].toString()));
+					if(i >0) {
+						JSeparator separator = new JSeparator();
+						separator.setPreferredSize(new Dimension(1000, 1));
+						separator.setForeground(new Color(211, 211, 211, 50));
+						Application.panelCourses.add(separator);
+					}
+					
+				Course c = new Course(classroom_in_ay_id);
+				((JLabel) ((Container) ((Container) c).getComponent(0)).getComponent(1)).setText("  "+TestBox.getFullName(lines[i].toString()));
+
 				loadCoursedata(c, lines[i].toString(), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 				c.setName(lines[i].toString());
 				Application.panelCourses.add(c);
@@ -324,19 +332,16 @@ public class NewCourse extends JFrame {
 	
 
 	public static void loadCoursedata(Container c, String course_in_classroom_id, String classroom_in_ay_id, String term_id) {
-
-		
-		List<String> l = new ArrayList();
+		List l = new ArrayList();
 		l.add("0");
 		l.add("0/0");
-		List<String> l1 = new ArrayList();
+		List l1 = new ArrayList();
 		l1.add("0");
 		l1.add("0/0");
 		if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
 			l = CourseStats.getStudentTestsStats("All", classroom_in_ay_id
 					,course_in_classroom_id, term_id,"All", "All");
 			}
-
 		if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
 			l1 = CourseStats.getStudentExamStats("All", classroom_in_ay_id
 					,course_in_classroom_id, term_id,"All", "All");
@@ -346,26 +351,38 @@ List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
 
 Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."))+Double.parseDouble(note1.get(0).replaceAll(",", "."));
 Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", "."));
+String courseMaxima = ExamInfo.loadCourseMaxima(course_in_classroom_id);
 
 Double percentage;
 if(points1==0 && maxima==0 ) {
 	percentage = 0.00;
 }else {
 	percentage = points1*100/maxima;
-}
-						
-						((JLabel) ((((Container) c).getComponent(1)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
-							((JLabel) ((((Container) c).getComponent(2)))).setText(new DecimalFormat("##.##").format(points1)+"/"+new DecimalFormat("##.##").format(maxima));
+}			
+
+
+		if(Home.courseIsCalculated(course_in_classroom_id)) {
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(0)))).setText(" Cot\u00E9 ");
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(0)))).setBackground(new Color(51, 255, 204));
+		}else {
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(0)))).setText(" Pas cot\u00E9 ");	
+		((JLabel) ((((Container) c.getComponent(1)).getComponent(0)))).setBackground(new Color(233, 150, 122));
+		}
+		
+		
+				((JLabel) ((((Container) c.getComponent(1)).getComponent(1)))).setText("Moyenne: "+new DecimalFormat("##.##").format(points1*Double.parseDouble(courseMaxima)/maxima)+"/"+courseMaxima);
+				((JLabel) ((((Container) c.getComponent(1)).getComponent(3)))).setText(new DecimalFormat("##.##").format(percentage)+"%");
 						
 							int echecs = CourseStats.listOfEchecs(course_in_classroom_id, classroom_in_ay_id, term_id).toArray().length;
 						
 							if(l.toArray().length>2) {
-						((JLabel) ((((Container)c).getComponent(4)))).setText(l.get(2));
-						((JLabel) ((((Container) c).getComponent(5)))).setText(String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble(l.get(5))))+"%");
+						((JLabel) ((((Container) c.getComponent(1)).getComponent(5)))).setText(echecs+" echecs");
+						((JLabel) ((((Container) c.getComponent(1)).getComponent(7)))).setText(((List)l.get(6)).toArray().length+" interros");
+						((JLabel) ((((Container) c.getComponent(1)).getComponent(9)))).setText("Progres: "+String.valueOf(new DecimalFormat("##.##").format(Double.parseDouble((String) l.get(5))))+"%");
 							}
 
 						Object[] lines1 = Home.loadActiveStudents(classroom_in_ay_id);
-						((JLabel) ((((Container) c).getComponent(6)))).setText(new DecimalFormat("##.##").format(100-(echecs*100/lines1.length))+"%");
+						((JLabel) ((((Container) c.getComponent(1)).getComponent(11)))).setText("Reussite a "+new DecimalFormat("##.##").format(100-(echecs*100/lines1.length))+"%");
 	}
 	
 	

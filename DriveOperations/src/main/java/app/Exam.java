@@ -289,9 +289,6 @@ public class Exam extends JPanel {
 
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
-		LPane.supprimer.setVisible(false);
-		LPane.modifier.setVisible(false);
-		
 		
 		LPane.no.setText((l.get(2))+" series effectuees");
 		
@@ -427,10 +424,10 @@ public class Exam extends JPanel {
 		}
 	
 	public static String getExamMaxima(String exam_id) {
-		int maxima = 0;
+		Double maxima = (double) 0;
 		List<String> l = getExamSeries(exam_id);
 		for(int i = 0; i< l.toArray().length; i++) {
-			maxima = maxima+ Integer.parseInt(getSerieMaxima(l.get(i)));
+			maxima = maxima+ Double.parseDouble(getSerieMaxima(l.get(i)));
 		}
 		return String.valueOf(maxima);
 	}

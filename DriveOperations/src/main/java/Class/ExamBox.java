@@ -1,12 +1,15 @@
 package Class;
 
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -39,7 +42,9 @@ import javax.swing.border.MatteBorder;
 import Application.Home;
 import Application.ResizeImages;
 import Class.OptionsMenu.StudentMenu;
-import Class.OptionsMenu.TestMenu;
+import Class.OptionsMenu.ExamMenu;
+import Class.OptionsMenu.ExamMenu;
+import Class.OptionsMenu.ExamMenu;
 import CloudOperations.aws;
 import CloudOperations.mysql;
 import accounts.NewEstablishment;
@@ -53,12 +58,15 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.PopupMenu;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
 import net.miginfocom.swing.MigLayout;
 import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ExamBox extends JPanel {
 	public static JPanel Box1;
@@ -66,225 +74,211 @@ public class ExamBox extends JPanel {
 	public static JLabel label_5;
 	public static boolean isSelected;
 	public static JPanel series;
-	public static boolean isCollapsed;
 	private JLabel icon;
-	
+	public static List<Component> selectedExams = new ArrayList();
+
 
 	/**
 	 * Create the panel.
 	 */
 	public ExamBox() {
-		setBackground(new Color(60, 60, 60));
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				for(int i = 0; i< ((Container) getComponent(0)).getComponentCount(); i++) {
+					((Container) getComponent(0)).getComponent(i).setPreferredSize(new Dimension(getWidth(), ((Container) getComponent(0)).getComponent(i).getPreferredSize().height));
+						
+			}
+				((Container) getComponent(0)).revalidate();
+				((Container) getComponent(0)).repaint();
+			
+			}
+		});
+		setBackground(new Color(40, 40, 40));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ExamMenu.deselect();
+				if((MouseEvent.CTRL_MASK & e.getModifiers())!=0) {
+					if(!selectedExams.contains(getComponent(0).getParent())) {
+						selectedExams.add(getComponent(0).getParent());
+					}else {
+						selectedExams.remove(getComponent(0).getParent());
+					}
+				}else {
+				deselectAll();
+				selectedExams.add(getComponent(0).getParent());
+				}
 				
-				for(int i =0;i<getComponentCount();i++) {
-					for(int j = 0;j<getParent().getComponentCount();j++) {
-						if((Container) getParent().getComponent(j) instanceof ExamBox) {
-						((Container) getParent().getComponent(j)).getComponent(i).setForeground(Color.white);
-						getParent().getComponent(j).setBackground(new Color(60, 60, 60));
-						((JComponent) getParent().getComponent(j)).setBorder(null);
-						
+				for(int i = 0; i<selectedExams.toArray().length; i++) {
+					for(int j = 0; j< Application.panelExams.getComponentCount(); j++) {
+						if(Application.panelExams.getComponent(j).equals(selectedExams.get(i))) {
+							((Container) ((Container) Application.panelExams.getComponent(j))).getComponent(1).setBackground(new Color(20, 148, 198, 0));
+							((Container) ((Container) Application.panelExams.getComponent(j)).getComponent(1)).getComponent(0).setBackground(new Color(20, 148, 198, 50));
+							((Container) ((Container) Application.panelExams.getComponent(j)).getComponent(1)).getComponent(1).setBackground(new Color(20, 148, 198, 50));
+							((JComponent) Application.panelExams.getComponent(j)).setBorder(new LineBorder(new Color(20, 148, 198), 2));
+							((Container) ((Container) ((Container) Application.panelExams.getComponent(j)).getComponent(1)).getComponent(0)).getComponent(0).setVisible(true);
+							
+							for(int k = 0;k<((Container) Application.panelExams.getComponent(j)).getComponentCount();k++) {
+								((Container) Application.panelExams.getComponent(j)).getComponent(k).setForeground(Color.white);
+							}
 				}}}
 				
-				for(int i = 0; i< getParent().getComponentCount(); i++) {
-					if(getParent().getComponent(i) instanceof ExamBox) {
-					getParent().getComponent(i).setPreferredSize(new Dimension(getWidth(), 40));
+			//
 					
-					for(int i1 =4; i1<getComponentCount();i1++) {
-						if(i1!=8) {
-						((Container) getParent().getComponent(i)).getComponent(i1).setVisible(true);
-					}}
-					if(((Container) ((Container) getParent().getComponent(i)).getComponent(0)).getComponentCount()>0) {
-					((JLabel) ((Container) getParent().getComponent(i)).getComponent(8)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-					}
-					Application.panelExams.revalidate();
-					Application.panelExams.repaint();
-				}
-				}
-				isSelected = true;
-				//TestMenu.edit.setVisible(true);
-				//TestMenu.delete.setVisible(true);
-
-				//TestMenu.corrige.setVisible(true);
 				
-				if(((Container) getComponent(0)).getComponentCount()==0) {
-				setBackground(new Color(20, 148, 198));
-				for(int j = 0;j<getComponentCount();j++) {
-					getComponent(j).setForeground(Color.white);
-			}
-				if(getParent().equals(Application.panelExams)) {
-					Application.no.setText(getName());
-					isCollapsed = true;
+				if(((Container) getComponent(0)).getComponentCount()>0) {
+					if(getPreferredSize().height == 67) {
+					setPreferredSize(new Dimension(getWidth(), (((Container) getComponent(0)).getComponentCount()+1)*67));
 				}else {
-					Application.no.setText(getParent().getParent().getName()+"-"+getName());
+					setPreferredSize(new Dimension(getWidth(), 67));
 				}
-				//Application.panelExams.getComponent(Integer.parseInt(Application.no.getText())-1).setBackground(new Color(20, 148, 198));
-				
-				}else {
-					
-					Application.no.setText(getName());
-					setBackground(new Color(100, 100, 100));
-					setPreferredSize(new Dimension(getWidth(), (((Container) getComponent(0)).getComponentCount()+1)*40+6));
-					//Application.panelExams.setLayout(new WrapLayout(1, 5, 5));
-					
-					for(int i =4; i<getComponentCount();i++) {
-						if(i!=8) {
-						getComponent(i).setVisible(false);
-					}}
-					setBorder(new LineBorder(new Color(240, 240, 240), 2));
-					if(((Container) getComponent(0)).getComponentCount()>0) {
-					((JLabel) getComponent(8)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-					}Application.panelExams.revalidate();
-					Application.panelExams.repaint();
-					Application.no.setText(Application.no.getText());
-					
-					if(getHeight()>getComponent(0).getHeight()) {
-						isCollapsed = true;
-						icon.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
-						setPreferredSize(new Dimension(getWidth(), 40));
-						
-
-						for(int i =4; i<((Container) getComponent(1)).getComponentCount();i++) {
-							((Container) getComponent(1)).getComponent(i).setVisible(true);
-						}
-						
-						Application.panelExams.revalidate();
-						Application.panelExams.repaint();
-						
-
-						for(int j = 0;j<((Container) getComponent(0)).getComponentCount();j++) {
-							for(int i =4; i<((Container) getComponent(1)).getComponentCount();i++) {
-							((Container) ((Container) ((Container) getComponent(0)).getComponent(j)).getComponent(1)).getComponent(i).setForeground(Color.white);
-							((Container) getComponent(0)).getComponent(j).setBackground(new Color(60, 60, 60));
-						}
 					}
-						Application.panelExams.setLayout(new WrapLayout(1, 5, 3));
-					}else {
-						isCollapsed = false;
-						icon.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop2.png"));
-					}
+				//
+					ExamMenu.edit.setVisible(true);
+					ExamMenu.delete.setVisible(true);
+					ExamMenu.publish.setVisible(true);
+					ExamMenu.stats.setVisible(true);
+				if(selectedExams.toArray().length==0) {
+					deselectAll();
 				}
-				
-				getComponent(0).setBackground(getBackground());
-			}
+				}
 			public void mouseEntered(MouseEvent e) {
-				int exam;
-				int serie = 0;
-				
-				if(Application.no.getText().contains("-")) {
-					List note = Arrays.asList(Application.no.getText().split("-"));
-					exam = Integer.parseInt(note.get(0).toString());
-					serie = Integer.parseInt(note.get(1).toString());
-				}else {
-					exam = Integer.parseInt(Application.no.getText());
-					serie = 0;
+				if(!selectedExams.contains(getComponent(0).getParent())) {
+					((Container) getComponent(1)).getComponent(0).setBackground(new Color(60, 60, 60));
+					((Container) getComponent(1)).getComponent(1).setBackground(new Color(60, 60, 60));
+					//setBorder(new LineBorder(new Color(20, 148, 198)));
 				}
-				
-				for(int i = 0; i <getParent().getComponentCount();i++) {
-					getParent().getComponent(i).setBackground(new Color(60, 60, 60));
-				}
-				setBorder(new LineBorder(new Color(20, 148, 198), 1));
-				if(getParent().equals(Application.panelExams)){
-				setBackground(new Color(120, 120, 120));
-				}else {
-					setBorder(new LineBorder(new Color(20, 148, 198), 3));
-				}
-				for(int i = 0; i<getComponentCount(); i++) {
-
-					if(isSelected) {
-					getComponent(i).setForeground(Color.white);
-					//if(Integer.parseInt(getName()) <= getParent().getComponentCount()) {
-					//((Container) getParent().getComponent(Integer.parseInt(getName())-1)).getComponent(i).setForeground(Color.white);
-					//}
-					if(!isCollapsed && serie!=0 && ((Container) getComponent(0)).getComponentCount()==0){
-						getParent().getComponent(serie-1).setBackground(new Color(20, 148, 198));
-					}
-					if(isCollapsed) {
-					Application.panelExams.getComponent(exam-1).setBackground(new Color(20, 148, 198));
-					}else {
-						Application.panelExams.getComponent(exam-1).setBackground(new Color(100, 100, 100));
-						((JComponent) Application.panelExams.getComponent(exam-1)).setBorder(new LineBorder(new Color(240, 240, 240), 2));
-					}
-					}}
 			}public void mouseExited(MouseEvent e) {
-				setBorder(null);
-				setBackground(getBackground());
-		}
+				if(!selectedExams.contains(getComponent(0).getParent())) {
+					((Container) getComponent(1)).getComponent(0).setBackground(new Color(40, 40, 40));
+					((Container) getComponent(1)).getComponent(1).setBackground(new Color(40, 40, 40));
+					setBorder(null);
+				}
+				
+			}
 		});
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		setPreferredSize(new Dimension(1325, 40));
+		setPreferredSize(new Dimension(1325, 67));
 		setLayout(new BorderLayout(0, 0));
 		
 		series = new JPanel();
 		series.setBackground(getBackground());
 		series.setBorder(null);
-		add(series, BorderLayout.SOUTH);
+		add(series, BorderLayout.CENTER);
 		series.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 0));
 		
 		JPanel panel = new JPanel();
-		add(panel);
-		panel.setBackground(panel.getParent().getBackground());
-		panel.setLayout(new FlowLayout(FlowLayout.LEADING, 55, 0));
+		panel.setPreferredSize(new Dimension(10, 40));
+		add(panel, BorderLayout.NORTH);
+		panel.setPreferredSize(new Dimension(1325, 67));
+		panel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNo = new JLabel("2");
-		panel.add(lblNo);
-		lblNo.setIconTextGap(15);
-		lblNo.setIcon(null);
-		lblNo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		lblNo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNo.setForeground(new Color(211, 211, 211));
-		lblNo.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
-		lblNdashimyeMaxBrillant = new JLabel("Comptabilite Generale");
-		panel.add(lblNdashimyeMaxBrillant);
-		lblNdashimyeMaxBrillant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNdashimyeMaxBrillant.setForeground(new Color(255, 255, 255));
-		lblNdashimyeMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 16));
+		JPanel panel2 = new JPanel();
+		panel2.setPreferredSize(new Dimension(35, 30));
+		panel2.setBackground(new Color(40, 40, 40));
+		panel.add(panel2, BorderLayout.NORTH);
+		panel2.setLayout(new BorderLayout(0, 0));
 		
-		JLabel label_3 = new JLabel("31/12/2003");
-		panel.add(label_3);
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setForeground(new Color(211, 211, 211));
-		label_3.setFont(new Font("Roboto", Font.PLAIN, 14));
 		
-		JLabel label = new JLabel("0/0");
-		panel.add(label);
-		label.setForeground(new Color(211, 211, 211));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JPanel panel1 = new JPanel();
+		panel1.setPreferredSize(new Dimension(35, 40));
+		panel1.setBackground(new Color(20, 148, 198));
+		panel2.add(panel1, BorderLayout.WEST);
+		panel1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel label_1 = new JLabel("0%");
-		panel.add(label_1);
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		panel1.add(lblNewLabel_1, BorderLayout.CENTER);
+		
+		JLabel lblUmuhozaChrisKoen = new JLabel();
+		lblUmuhozaChrisKoen.setAlignmentX(1.0f);
+		lblUmuhozaChrisKoen.setText("Mathematiques Statistiques (2 series)");
+		lblUmuhozaChrisKoen.setForeground(Color.WHITE);
+		lblUmuhozaChrisKoen.setFont(new Font("Roboto", Font.BOLD, 16));
+		panel2.add(lblUmuhozaChrisKoen, BorderLayout.CENTER);
+		
+		JButton stats = new JButton();
+		stats.setFocusPainted(false);
+		stats.setBorder(null);
+		stats.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		stats.setBackground(new Color(40, 40, 40));
+		panel2.add(stats, BorderLayout.EAST);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(null);
+		panel_1.setPreferredSize(new Dimension(10, 37));
+		panel.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 1));
+		panel_1.setBackground(new Color(40, 40, 40));
+		
+		JLabel lblProgres = new JLabel("10/04/2022");
+		lblProgres.setHorizontalAlignment(SwingConstants.CENTER);
+		//lblProgres.setPreferredSize(new Dimension(80, 18));
+		lblProgres.setOpaque(true);
+		lblProgres.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblProgres.setForeground(Color.BLACK);
+		lblProgres.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblProgres.setBackground(new Color(233, 150, 122));
+		panel_1.add(lblProgres);
+		
+		JLabel lblNewLabel = new JLabel("Moyenne: 58.5/105");
+		lblNewLabel.setBackground(new Color(250, 128, 114));
+		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblNewLabel.setForeground(new Color(211, 211, 211));
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		panel_1.add(lblNewLabel);
+		
+		JLabel label_1 = new JLabel("-");
+		label_1.setVerticalAlignment(SwingConstants.TOP);
+		label_1.setHorizontalTextPosition(SwingConstants.LEADING);
 		label_1.setForeground(new Color(211, 211, 211));
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Roboto", Font.PLAIN, 14));
+		label_1.setFont(new Font("Roboto", Font.BOLD, 14));
+		label_1.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_1);
 		
-		JLabel label_2 = new JLabel("0");
-		panel.add(label_2);
-		label_2.setForeground(new Color(211, 211, 211));
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JLabel lblEchecs = new JLabel("12 echecs");
+		lblEchecs.setVerticalAlignment(SwingConstants.TOP);
+		lblEchecs.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblEchecs.setForeground(new Color(211, 211, 211));
+		lblEchecs.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblEchecs.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblEchecs);
 		
-		label_5 = new JLabel("0%");
-		panel.add(label_5);
-		label_5.setForeground(new Color(211, 211, 211));
-		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JLabel label_4 = new JLabel("-");
+		label_4.setVerticalAlignment(SwingConstants.TOP);
+		label_4.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_4.setForeground(new Color(211, 211, 211));
+		label_4.setFont(new Font("Roboto", Font.BOLD, 14));
+		label_4.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_4);
 		
-		icon = new JLabel("");
-		panel.add(icon);
-		icon.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop2.png"));
-		icon.setIconTextGap(15);
-		icon.setHorizontalAlignment(SwingConstants.CENTER);
-		icon.setForeground(Color.WHITE);
-		icon.setFont(new Font("Roboto", Font.PLAIN, 23));
-	
+		JLabel lblElevesManquants = new JLabel("25 sur 30 eleves ont ete corriges");
+		lblElevesManquants.setVerticalAlignment(SwingConstants.TOP);
+		lblElevesManquants.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblElevesManquants.setForeground(new Color(211, 211, 211));
+		lblElevesManquants.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblElevesManquants.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblElevesManquants);
+		
+		JLabel label_3 = new JLabel("-");
+		label_3.setVerticalAlignment(SwingConstants.TOP);
+		label_3.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_3.setForeground(new Color(211, 211, 211));
+		label_3.setFont(new Font("Roboto", Font.BOLD, 14));
+		label_3.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_3);
+		
+		JLabel lblEducation = new JLabel("Reussite: 83%");
+		lblEducation.setVerticalAlignment(SwingConstants.TOP);
+		lblEducation.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblEducation.setForeground(new Color(211, 211, 211));
+		lblEducation.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblEducation.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblEducation);
 	
 	}
 	
@@ -316,35 +310,44 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 		
 		while(rs.next())
 		{
+
+			if(i >0) {
+				JSeparator separator = new JSeparator();
+				separator.setPreferredSize(new Dimension(1000, 1));
+				separator.setForeground(new Color(211, 211, 211, 50));
+				Application.panelExams.add(separator);
+			}
 			i++;
 						ExamBox eb = new ExamBox();
 						Application.panelExams.add(eb);
 						
 						eb.setName(rs.getString("exam_id"));
 						List<String> listOfSeries = Exam.getExamSeries(rs.getString("exam_id"));
-						((JLabel) ((Container) (eb).getComponent(1)).getComponent(1)).setText(String.valueOf(listOfSeries.toArray().length));
 						String name = TestBox.getFullName(Exam.getExamCourse(rs.getString("exam_id")));
-						((JLabel) ((Container) (eb).getComponent(1)).getComponent(2)).setText(name);
-						((JLabel) ((Container) (eb).getComponent(1)).getComponent(3)).setText(Exam.getExamDate(rs.getString("exam_id")));
-						JPanel jp = (JPanel) (eb).getComponent(0);
-							int k = 0;
-							for(int j = 0; j<listOfSeries.toArray().length;j++) {
-								k++;
+		
+						if(listOfSeries.toArray().length>1) {
+			((((JLabel) ((Container) (((Container) eb.getComponent(1)).getComponent(0))).getComponent(1)))).setText("  "+name+" ("+listOfSeries.toArray().length+" series)");
+		}else {
+			((((JLabel) ((Container) (((Container) eb.getComponent(1)).getComponent(0))).getComponent(1)))).setText("  "+name);
+			}
+						((((JLabel) ((Container) ((((Container) (((Container) eb).getComponent(1))).getComponent(1)))).getComponent(0)))).setText(" "+Exam.getExamDate(rs.getString("exam_id"))+" ");
+							for(int j = 0; j<listOfSeries.toArray().length; j++) {
 								ExamBox eb1 = new ExamBox();
 								eb1.setName(listOfSeries.get(j).toString());
-								jp.add(eb1);
+								((JPanel)eb.getComponent(0)).add(eb1);
 								
-								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(1)).setText(String.valueOf(k));
-								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(2)).setText(Exam.getSerieName(listOfSeries.get(j)));
-								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(3)).setText("");
+								((((JLabel) ((Container) (((Container) eb1.getComponent(1)).getComponent(0))).getComponent(1)))).setText("  "+Exam.getSerieName(listOfSeries.get(j)));
+								((((JLabel) ((Container) ((((Container) (((Container) eb1).getComponent(1))).getComponent(1)))).getComponent(0)))).setVisible(false);;
+								((Container) ((Container) (eb1).getComponent(1)).getComponent(0)).getComponent(0).setVisible(false);
 								
-								eb1.setPreferredSize(new Dimension(1325*99/100,40*99/100));
-								((JLabel) ((Container) (eb1).getComponent(1)).getComponent(8)).setIcon(null);
-							}
+								((((AbstractButton) ((Container) (((Container) eb1.getComponent(1)).getComponent(0))).getComponent(2)))).setIcon(null);
+								((JPanel)eb.getComponent(0)).revalidate();
+								((JPanel)eb.getComponent(0)).repaint();
+								}
 							if(((Container) eb.getComponent(0)).getComponentCount()>0) {
-						((JLabel) (eb).getComponent(8)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+						((((AbstractButton) ((Container) (((Container) eb.getComponent(1)).getComponent(0))).getComponent(2)))).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
 					}else{
-						((JLabel) (eb).getComponent(8)).setIcon(null);
+						((((AbstractButton) ((Container) (((Container) eb.getComponent(1)).getComponent(0))).getComponent(2)))).setIcon(null);
 					}
 
 						loadExamData(eb, listOfSeries, eb.getName(), classroom_in_ay_id);
@@ -420,8 +423,7 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 
 
 public static void loadExamData(Component c, List<String> listOfSeries, String exam_id, String classroom_in_ay_id) {
-	if(Application.panelExams.getComponentCount()>0) {
-					
+		
 					Double sum = (double) 0;
 					Double sum1 = (double) 0;
 					int participants = 0;
@@ -442,8 +444,6 @@ public static void loadExamData(Component c, List<String> listOfSeries, String e
 						Double sum2 = (double) 0;
 						Double sum3 = (double) 0;
 					for(int j = 0; j<lines1.length; j++) {
-						Double sum21 = (double) 0;
-						Double sum31 = (double) 0;
 						
 						List note2 = Arrays.asList(LPane.loadStudentSerieNote(listOfSeries.get(k), lines1[j].toString()).split("/"));
 						
@@ -451,7 +451,7 @@ public static void loadExamData(Component c, List<String> listOfSeries, String e
 						Double e = Double.parseDouble(note2.get(1).toString());
 						
 						
-						if(e==0 && d==0) {
+						if(e == 0 && d == 0) {
 							participants1 = participants1+0;
 						}else{
 							participants1 = participants1+1;
@@ -472,68 +472,62 @@ public static void loadExamData(Component c, List<String> listOfSeries, String e
 						else{
 							echecs1++;
 						}
-						
-						for(int l = 0; l<series;l++) {
-
-							List note21 = Arrays.asList(LPane.loadStudentSerieNote(listOfSeries.get(l), lines1[j].toString()).split("/"));
-							
-							Double d1 = Double.parseDouble(note21.get(0).toString());
-							Double e1 = Double.parseDouble(note21.get(1).toString());
-							sum21 = sum21+d1;
-							sum31 = sum31+e1;
-
-							
-							if((sum31/2)<=sum21 || k < series-1) {
-								echec = false;
-							}else{
-								echec = true;
-							}
-							
-						}
-
-						if(sum31!=0 && sum21!=0 &&k == series-1) {
-							participants = participants+1;
-						}else{
-							participants = participants+0;
-						}
-						if(echec) {
-							echecs++;
-						}else {
-							echecs = echecs+0;
-						}
 					
 				}
 
 					if(((Container) ((Container) (c)).getComponent(0)).getComponentCount()>0) {
 					double max = Double.parseDouble(Exam.getSerieMaxima(listOfSeries.get(k)));
-					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(4)).setText((new DecimalFormat("##.##").format(sum2/participants1))+"/"+max);
-					System.out.println(participants1);
-					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum2/participants1)/max)+"%"));
-					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(6)).setText(String.valueOf(echecs1));
+					((((JLabel) ((Container) ((((((Container) (((((Container) ((((Container) (((Container) c).getComponent(0))).getComponent(k)))).getComponent(1))))).getComponent(1)))))).getComponent(1)))).setText("Moyenne: "+(new DecimalFormat("##.##").format(sum2/sum3*max))+"/"+max);
+					((((JLabel) ((Container) ((((((Container) (((((Container) ((((Container) (((Container) c).getComponent(0))).getComponent(k)))).getComponent(1))))).getComponent(1)))))).getComponent(3)))).setText(String.valueOf(echecs1)+" echecs");
+					((((JLabel) ((Container) ((((((Container) (((((Container) ((((Container) (((Container) c).getComponent(0))).getComponent(k)))).getComponent(1))))).getComponent(1)))))).getComponent(5)))).setText(participants1+" sur "+lines1.length+" eleves ont ete corriges");
+					
 					String reussite = new DecimalFormat("##.##").format(100-(Double.parseDouble(String.valueOf(echecs1))/Double.parseDouble(String.valueOf(participants1))*100));
-					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(7)).setText(reussite+"%");
+					((((JLabel) ((Container) ((((((Container) (((((Container) ((((Container) (((Container) c).getComponent(0))).getComponent(k)))).getComponent(1))))).getComponent(1)))))).getComponent(7)))).setText("Reussite a: "+reussite+"%");
 
 
-					((JLabel) ((Container) ((Container) ((Container) c).getComponent(0)).getComponent(k)).getComponent(3)).setText(participants1+" eleves");
+					}
+					if(participants1> participants) {
+						participants = participants1;
 					}
 					}
-					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(4)).setText((new DecimalFormat("##.##").format(sum/participants))+"/"+Exam.getExamMaxima(exam_id));
-					System.out.println(participants);
-					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(5)).setText((new DecimalFormat("##.##").format(100*(sum/participants)/Integer.parseInt(Exam.getExamMaxima(exam_id)))+"%"));
-					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(6)).setText(String.valueOf(echecs));
+					if(((sum1/2)<=sum)) {
+						echecs = echecs+0;
+					}
+					else{
+						echecs++;
+					}
+					Double max  = Double.parseDouble(Exam.getExamMaxima(exam_id));
+					((((JLabel) ((Container) ((((Container) (((Container) c).getComponent(1))).getComponent(1)))).getComponent(1)))).setText("Moyenne: "+(new DecimalFormat("##.##").format(sum/sum1*max))+"/"+max);
+					((((JLabel) ((Container) ((((Container) (((Container) c).getComponent(1))).getComponent(1)))).getComponent(3)))).setText(String.valueOf(echecs)+" echecs");
+					((((JLabel) ((Container) ((((Container) (((Container) c).getComponent(1))).getComponent(1)))).getComponent(5)))).setText(participants+" sur "+lines1.length+" eleves ont ete corriges");
+					
 					String reussite = new DecimalFormat("##.##").format(100-(Double.parseDouble(String.valueOf(echecs))/Double.parseDouble(String.valueOf(participants))*100));
-					((JLabel) ((Container) (Container) ((Container) c).getComponent(1)).getComponent(7)).setText(reussite+"%");
+					((((JLabel) ((Container) ((((Container) (((Container) c).getComponent(1))).getComponent(1)))).getComponent(7)))).setText("Reussite a: "+reussite+"%");
 					
 					c.revalidate();
 					c.repaint();
-					c.getParent().revalidate();
-					c.repaint();
 				
-	}
-	
 }
 
 public static void deselectAll() {
+	for(int i = 0; i< ((Container) Application.panelExams).getComponentCount(); i++) {
+		if(((Container) Application.panelExams).getComponent(i) instanceof ExamBox) {
+		if(selectedExams.contains(((Container) Application.panelExams).getComponent(i))) {
+			((JComponent) ((Container) Application.panelExams).getComponent(i)).setBackground(new Color(40, 40, 40));
+			((Container) ((JComponent) ((Container) Application.panelExams).getComponent(i)).getComponent(1)).getComponent(0).setBackground(new Color(40, 40, 40));
+			((Container) ((JComponent) ((Container) Application.panelExams).getComponent(i)).getComponent(1)).getComponent(1).setBackground(new Color(40, 40, 40));
+			((JComponent) ((Container) Application.panelExams).getComponent(i)).setBorder(null);
+			//((Container) Application.panelExams.getComponent(i)).setPreferredSize(new Dimension(((Container) Application.panelExams.getComponent(i)).getWidth(), 67));
+			}
+		((Container) ((Container) ((Container) Application.panelExams.getComponent(i)).getComponent(1)).getComponent(0)).getComponent(0).setVisible(false);
+			Application.panelExams.revalidate();
+
+			Application.panelExams.repaint();
+		}
+	}
+
+	selectedExams.clear();
 	
+	ExamMenu.deselect();
 }
 }

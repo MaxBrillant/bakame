@@ -622,9 +622,15 @@ isEmpty = false;
 			Object[] lines = Home.loadActiveStudents(classroom_in_ay_id);
 			
 			for(int i = 0; i<lines.length;i++) {
+				if(i >0) {
+					JSeparator separator = new JSeparator();
+					separator.setPreferredSize(new Dimension(1000, 1));
+					separator.setForeground(new Color(211, 211, 211, 50));
+					Application.panelStudents.add(separator);
+				}
 			Student c = new Student(classroom_in_ay_id);
 			c.setName(lines[i].toString());
-			((JLabel) ((Container)((Container) c.getComponent(0)).getComponent(0)).getComponent(0)).setText(App.getStudentNumber(lines[i].toString()));
+			((JLabel) ((Container) (((Container) ((Container) c.getComponent(0)).getComponent(0)).getComponent(1))).getComponent(0)).setText(App.getStudentNumber(lines[i].toString()));
 			((JLabel) ((Container) c.getComponent(0)).getComponent(1)).setText("  "+Home.getStudentName(lines[i].toString()));
 			
 				loadStudentdata(c, lines[i].toString(), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));

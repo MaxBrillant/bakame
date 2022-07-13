@@ -101,6 +101,7 @@ import java.awt.event.WindowStateListener;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JSeparator;
 
 public class Application {
 
@@ -158,14 +159,14 @@ public class Application {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Home.getClassColors(classroom_in_ay_id).get(0));
-		panel_1.setPreferredSize(new Dimension(10, frame.getHeight()*20/100*30/100));
+		panel_1.setPreferredSize(new Dimension(10, 45));
 		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		classe = new JLabel(Home.getClassName(classroom_in_ay_id));
+		classe = new JLabel(ScholarYears.getAcademicYearName(Login.selectedAcademicYearID)+" - "+Home.getClassName(classroom_in_ay_id));
 		classe.setHorizontalAlignment(SwingConstants.CENTER);
 		classe.setForeground(new Color(255, 255, 255));
-		classe.setFont(new Font("Futura Hv BT", Font.BOLD, 30));
+		classe.setFont(new Font("Roboto", Font.BOLD, 16));
 		panel_1.add(classe, BorderLayout.CENTER);
 		
 		no = new JLabel("0");
@@ -176,7 +177,7 @@ public class Application {
 		no.setPreferredSize(new Dimension(160, 14));
 		panel_1.add(no, BorderLayout.EAST);
 		
-		JButton label = new JButton(ScholarYears.getAcademicYearName(Login.selectedAcademicYearID));
+		JButton label = new JButton("Classes");
 		label.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Home window = new Home(Login.selectedSchoolID, Login.selectedUserID, Login.selectedAcademicYearID);
@@ -197,9 +198,8 @@ public class Application {
 			}
 		});
 		label.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
-		label.setPreferredSize(new Dimension(240, 14));
 		label.setForeground(Color.WHITE);
-		label.setFont(new Font("Futura Hv BT", Font.BOLD, 30));
+		label.setFont(new Font("Roboto", Font.BOLD, 16));
 		panel_1.add(label, BorderLayout.WEST);
 		
 		
@@ -435,7 +435,12 @@ public class Application {
 		lblerTrimestre.setForeground(Color.WHITE);
 		lblerTrimestre.setFont(new Font("Roboto", Font.BOLD, 17));
 		panel_41.add(lblerTrimestre, BorderLayout.CENTER);
-		lblerTrimestre.setText(Home.getTermName(Home.termsText.get(Home.selectedTermIndex)));
+		
+		if(Home.selectedTermIndex< Home.termsText.toArray().length-1) {
+			lblerTrimestre.setText(Home.getTermName(Home.termsText.get(Home.selectedTermIndex)));
+			}else {
+				lblerTrimestre.setText("Toute l'annee");
+				}
 		
 		JButton button_2 = new JButton("");
 		button_2.addActionListener(new ActionListener() {
@@ -530,20 +535,7 @@ public class Application {
 		scrollPane.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				for(int i = 0; i< ((Container) scrollPane.getViewport().getComponent(0)).getComponentCount(); i++) {
-					((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).setPreferredSize(new Dimension(scrollPane.getWidth()-20, ((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).getPreferredSize().height));
-					
-					if(scrollPane.getWidth()<700) {
-						((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).setPreferredSize(new Dimension(scrollPane.getWidth()-20, 85));
-						((Container) ((Container) scrollPane.getViewport().getComponent(0)).getComponent(i)).getComponent(1).setPreferredSize(new Dimension(scrollPane.getWidth()-20, 55));
-					}else {
-						((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).setPreferredSize(new Dimension(scrollPane.getWidth()-20, 67));
-						((Container) ((Container) scrollPane.getViewport().getComponent(0)).getComponent(i)).getComponent(1).setPreferredSize(new Dimension(scrollPane.getWidth()-20, 37));
-						}
-			}
-				((Container) scrollPane.getViewport().getComponent(0)).revalidate();
-				((Container) scrollPane.getViewport().getComponent(0)).repaint();
-			
+			resizeLists();
 			}
 		});
 		p1.add(scrollPane, BorderLayout.CENTER);
@@ -564,7 +556,7 @@ public class Application {
 		panelStudents.setBackground(new Color(40, 40, 40));
 		panelStudents.setForeground(new Color(0, 128, 128));
 		scrollPane.setViewportView(panelStudents);
-		panelStudents.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 3));
+		panelStudents.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 0));
 		
 		
 		
@@ -578,7 +570,7 @@ public class Application {
 		});
 		panelCourses.setBackground(new Color(40, 40, 40));
 		//scrollPane_1.setViewportView(panel2);
-		panelCourses.setLayout(new WrapLayout(WrapLayout.CENTER, 5, 3));
+		panelCourses.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 0));
 		
 
 		panelTests = new JPanel();
@@ -589,7 +581,7 @@ public class Application {
 			}
 		});
 		panelTests.setBackground(new Color(40, 40, 40));
-		panelTests.setLayout(new WrapLayout(WrapLayout.CENTER, 5, 3));
+		panelTests.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 0));
 		
 		
 		panelExams = new JPanel();
@@ -600,7 +592,7 @@ public class Application {
 			}
 		});
 		panelExams.setBackground(new Color(40, 40, 40));
-		panelExams.setLayout(new WrapLayout(1, 5, 3));
+		panelExams.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 0));
 		
 		JScrollPane scrollPane_5 = new JScrollPane();
 		scrollPane_5.setBorder(new LineBorder(new Color(211, 211, 211)));
@@ -634,6 +626,7 @@ public class Application {
 		
 		scrollPane.setViewportView(panelStudents);
 		
+		
 		for(int i = 1; i< panel_5.getComponentCount(); i++) {
 			panel_5.getComponent(i).setPreferredSize(new Dimension(100, 50));
 			panel_5.getComponent(i).setBackground(new Color(40, 40, 40));
@@ -646,7 +639,6 @@ public class Application {
 		btnStudents.setBackground(new Color(60, 60, 60));
 		btnStudents.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
 		btnStudents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
-		
 		
 		btnStudents.addActionListener(new ActionListener() {
 			boolean areLoaded = true;
@@ -685,12 +677,15 @@ public class Application {
 				 new SwingWorker<Void, Void>() {
 			            public Void doInBackground() throws Exception{
 			            	NewStudent.load(classroom_in_ay_id);
+			            	resizeLists();
+							
 						return null;
 			            }
 			        }.execute();
 				}
 				Student.deselectAll();
-				}
+				resizeLists();
+        		}
 		});
 		
 		
@@ -731,12 +726,14 @@ public class Application {
 				 new SwingWorker<Void, Void>() {
 			            public Void doInBackground() throws Exception{
 			            	NewCourse.load(classroom_in_ay_id);
+			            	resizeLists();
 			            	return null;
 			            }
 			        }.execute();
 				}
 				Course.deselectAll();
-				}
+				resizeLists();
+        		}
 		});
 		
 		
@@ -777,12 +774,14 @@ public class Application {
 				 new SwingWorker<Void, Void>() {
 			            public Void doInBackground() throws Exception{
 			            	TestBox.loadAllTests(classroom_in_ay_id);
-			            	 return null;
+			            	resizeLists();
+							return null;
 			            }
 			        }.execute();
 				}
 				TestBox.deselectAll();
-				}
+				resizeLists();
+        		}
 		});
 		
 		
@@ -823,12 +822,14 @@ public class Application {
 				 new SwingWorker<Void, Void>() {
 			            public Void doInBackground() throws Exception{
 			            	ExamBox.loadAllExams(classroom_in_ay_id);
-			            	 return null;
+			            	resizeLists();
+							 return null;
 			            }
 			        }.execute();
 				}
 				ExamBox.deselectAll();
-				}
+				resizeLists();
+        		}
 		});
 		
 		
@@ -837,7 +838,8 @@ public class Application {
 
         		NewStudent.load(classroom_in_ay_id);
         		//Application.merite();
-            	 return null;
+        		resizeLists();
+        		return null;
             }
         }.execute();
         
@@ -866,6 +868,16 @@ public class Application {
 }
 	
 	
+	protected void resizeLists() {
+		for(int i = 0; i< ((Container) scrollPane.getViewport().getComponent(0)).getComponentCount(); i++) {
+			((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).setPreferredSize(new Dimension(scrollPane.getWidth()-20, ((Container) scrollPane.getViewport().getComponent(0)).getComponent(i).getPreferredSize().height));
+				
+	}
+		((Container) scrollPane.getViewport().getComponent(0)).revalidate();
+		((Container) scrollPane.getViewport().getComponent(0)).repaint();
+	
+	}
+
 	public static void deselect() {
 		if(selectedTab==0) {
 			Student.deselectAll();

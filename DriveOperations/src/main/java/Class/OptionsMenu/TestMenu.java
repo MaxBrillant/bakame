@@ -218,22 +218,8 @@ public class TestMenu extends JPanel {
 	
 	
 	public static void deselect() {
-		TestBox.isSelected = false;
-		
-		if(edit != null) {
 		edit.setVisible(false);
 		delete.setVisible(false);
 		//corrige.setVisible(false);
-		}
-		for(int k = 0;k<Application.panelTests.getComponentCount(); k++) {
-			if(Application.panelTests.getComponent(k) instanceof TestBox) {
-		for(int i =0;i<((Container) Application.panelTests.getComponent(k)).getComponentCount();i++) {
-			for(int j = 0;j<Application.panelTests.getComponentCount();j++) {
-				if(Application.panelTests.getComponent(j) instanceof TestBox) {
-				//((Container) Application.panelTests.getComponent(j)).getComponent(i).setForeground(Color.white);
-			Application.panelTests.getComponent(j).setBackground(new Color(60, 60, 60));
-		}}}
-		}
-}
 		}
 }

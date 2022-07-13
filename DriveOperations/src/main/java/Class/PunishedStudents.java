@@ -84,8 +84,6 @@ public class PunishedStudents extends JFrame {
 	private JLabel lblajoutezLesClasses;
 	public static JPanel panel;
 	public static int selectedClass;
-	//public static boolean isSelectable =false;
-	private JLabel text;
 	private JLabel lblNewLabel_2;
 	public static JTabbedPane tabbedPane;
 
@@ -112,7 +110,7 @@ public class PunishedStudents extends JFrame {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
-	setBounds(100, 100, 550, 600);
+	setBounds(100, 100, 450, 600);
 	contentPane = new JPanel();
 	contentPane.setBackground(new Color(60, 60, 60));
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -143,24 +141,24 @@ public class PunishedStudents extends JFrame {
 	btnFermer.setFocusPainted(false);
 	btnFermer.setBorderPainted(false);
 	btnFermer.setBackground(new Color(171, 0, 0));
-	btnFermer.setBounds(395, 520, 129, 31);
+	btnFermer.setBounds(295, 519, 129, 31);
 	contentPane.add(btnFermer);
 	
 	lblajoutezLesClasses = new JLabel(Punish.getPunishmentName(Punish.getPunishmentOriginalId(pi_id)));
 	lblajoutezLesClasses.setHorizontalAlignment(SwingConstants.CENTER);
 	lblajoutezLesClasses.setForeground(Color.WHITE);
-	lblajoutezLesClasses.setFont(new Font("Roboto", Font.BOLD, 25));
-	lblajoutezLesClasses.setBounds(10, 0, 514, 31);
+	lblajoutezLesClasses.setFont(new Font("Roboto", Font.BOLD, 16));
+	lblajoutezLesClasses.setBounds(10, 0, 414, 33);
 	contentPane.add(lblajoutezLesClasses);
 	
 	JSeparator separator = new JSeparator();
 	separator.setForeground(Color.WHITE);
-	separator.setBounds(0, 32, 534, 12);
+	separator.setBounds(0, 33, 434, 1);
 	contentPane.add(separator);
 	
 	tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	tabbedPane.setFont(new Font("Roboto", Font.PLAIN, 17));
-	tabbedPane.setBounds(10, 97, 514, 411);
+	tabbedPane.setBounds(10, 74, 414, 434);
 	contentPane.add(tabbedPane);
 	
 	JScrollPane scrollPane = new JScrollPane();
@@ -171,28 +169,36 @@ public class PunishedStudents extends JFrame {
 	panel.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
+
 			for(int i = 0; i<panel.getComponentCount(); i++) {
-				panel.getComponent(i).setBackground(new Color(80, 80, 80));
-				((Container) panel.getComponent(i)).getComponent(2).setVisible(false);
-			}
+				if(!(panel.getComponent(i) instanceof JLabel)) {
+				panel.getComponent(i).setBackground(new Color(60, 60, 60));
+				((Container) panel.getComponent(i)).getComponent(1).setVisible(false);
+				((Container) panel.getComponent(i)).getComponent(0).setBackground(panel.getComponent(i).getBackground());
+				((Container) panel.getComponent(i)).getComponent(1).setBackground(panel.getComponent(i).getBackground());
+			}}
 		}
 	});
 	panel.setBackground(new Color(40, 40, 40));
 	scrollPane.setViewportView(panel);
-	panel.setLayout(new WrapLayout(WrapLayout.CENTER, 3, 3));
-	
-	text = new JLabel("<html><div style='text-align: center;'>Cliquez sur les eleves que vous voulez pardonner.</div></html>");
-	text.setForeground(Color.WHITE);
-	text.setFont(new Font("Roboto", Font.PLAIN, 15));
-	text.setBounds(10, 62, 514, 31);
-	contentPane.add(text);
+	panel.setLayout(new WrapLayout(WrapLayout.LEFT, 3, 3));
 	
 	JLabel lblLe = new JLabel("Le "+Punish.getPunishmentDate(pi_id));
 	lblLe.setHorizontalAlignment(SwingConstants.CENTER);
 	lblLe.setForeground(Color.WHITE);
-	lblLe.setFont(new Font("Roboto", Font.BOLD, 20));
-	lblLe.setBounds(10, 32, 514, 31);
+	lblLe.setFont(new Font("Roboto", Font.BOLD, 16));
+	lblLe.setBounds(137, 42, 160, 31);
 	contentPane.add(lblLe);
+	
+	JLabel lblEleves = new JLabel(students.toArray().length+" eleves");
+	if(students.toArray().length==1) {
+		lblEleves.setText(students.toArray().length+" eleve");
+	}
+	lblEleves.setHorizontalAlignment(SwingConstants.CENTER);
+	lblEleves.setForeground(Color.WHITE);
+	lblEleves.setFont(new Font("Roboto", Font.PLAIN, 16));
+	lblEleves.setBounds(331, 42, 93, 31);
+	contentPane.add(lblEleves);
 	setLocationRelativeTo(null);
 	loadPunishedStudents(pi_id, classroom_in_ay_id, students);
 	}
@@ -207,83 +213,111 @@ public class PunishedStudents extends JFrame {
 		for(int i = 0; i< students.toArray().length; i++) {
 			
 			JPanel panel_3 = new JPanel();
-			panel_3.setLayout(null);
-			panel_3.setPreferredSize(new Dimension(500, 25));
-			panel_3.setBackground(new Color(80, 80, 80));
-			panel.add(panel_3);
-			panel_3.setName(pi_id);
+			panel_3.setName(Punish.getStudentPunishment(pi_id, students.get(i).toString()));
+			panel_3.setPreferredSize(new Dimension(390, 25));
+			panel_3.setBackground(new Color(60, 60, 60));;
+			
+					panel.add(panel_3);
+					panel_3.setLayout(new BorderLayout(0, 0));
+			
+			JPanel panel2 = new JPanel();
+			panel_3.add(panel2);
+			panel2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 3));
+			panel2.setBackground(panel2.getParent().getBackground());
 			
 			JLabel label = new JLabel(Home.getStudentName(students.get(i).toString()));
 			label.setForeground(Color.WHITE);
-			label.setFont(new Font("Roboto", Font.PLAIN, 15));
+			label.setFont(new Font("Roboto", Font.PLAIN, 14));
 			label.setBounds(10, 2, 207, 20);
-			panel_3.add(label);
+			panel2.add(label);
+			
+			
+			JLabel label1 = new JLabel("-");
+			label1.setHorizontalAlignment(SwingConstants.CENTER);
+			label1.setForeground(Color.WHITE);
+			label1.setFont(new Font("Roboto", Font.PLAIN, 14));
+			panel2.add(label1);
+			
 			
 			JLabel label_2 = new JLabel(points+" points");
 			label_2.setHorizontalAlignment(SwingConstants.CENTER);
 			label_2.setForeground(Color.WHITE);
-			label_2.setFont(new Font("Roboto", Font.PLAIN, 15));
+			label_2.setFont(new Font("Roboto", Font.PLAIN, 14));
 			label_2.setBounds(219, 2, 162, 20);
-			panel_3.add(label_2);
+			panel2.add(label_2);
 			
 
-			JButton btnToutPardonner = new JButton("Pardonner");
-			btnToutPardonner.setVerticalTextPosition(SwingConstants.BOTTOM);
-			btnToutPardonner.setIconTextGap(0);
-			btnToutPardonner.setHorizontalTextPosition(SwingConstants.CENTER);
-			btnToutPardonner.setForeground(Color.WHITE);
-			btnToutPardonner.setFont(new Font("Roboto", Font.PLAIN, 17));
-			btnToutPardonner.setFocusPainted(false);
-			btnToutPardonner.setBorder(new LineBorder(new Color(255, 255, 255)));
-			btnToutPardonner.setBackground(new Color(80, 80, 80));
-			btnToutPardonner.setBounds(391, 0, 109, 25);
-			panel_3.add(btnToutPardonner);
-			btnToutPardonner.setVisible(false);
+			
+			JPanel panel_4 = new JPanel();
+			panel_3.add(panel_4, BorderLayout.EAST);
+			panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+			panel_4.setVisible(false);
+
+			panel_4.setBackground(panel_4.getParent().getBackground());
 			
 			
-			btnToutPardonner.addMouseListener(new MouseAdapter() {
+			JButton btnRetirer = new JButton("Pardonner");
+			btnRetirer.setVerticalTextPosition(SwingConstants.BOTTOM);
+			btnRetirer.setHorizontalTextPosition(SwingConstants.CENTER);
+			btnRetirer.setForeground(Color.WHITE);
+			btnRetirer.setFont(new Font("Roboto", Font.PLAIN, 14));
+			btnRetirer.setFocusPainted(false);
+			btnRetirer.setBorder(new LineBorder(new Color(255, 255, 255)));
+			btnRetirer.setPreferredSize(new Dimension(80, 25));
+			panel_4.add(btnRetirer);
+			btnRetirer.setBackground(btnRetirer.getParent().getBackground());
+			
+			
+			btnRetirer.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					btnToutPardonner.setBackground(new Color(20, 142, 192));
+					btnRetirer.setBackground(new Color(20, 142, 192));
 				}
 				@Override
 				public void mouseExited(MouseEvent e) {
 
-					btnToutPardonner.setBackground(new Color(80, 80, 80));
+					btnRetirer.setBackground(new Color(80, 80, 80));
 				}
 			});
 			
 
-			int k = i;
-			btnToutPardonner.addActionListener(new ActionListener() {
+			btnRetirer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Punish.forgive(students.get(k).toString(), btnToutPardonner.getParent().getName());
-					loadPunishedStudents(pi_id, classroom_in_ay_id, students);
-
-		        	Punish.panel_2.removeAll();
-		        	for(int j = 0; j< Home.terms.toArray().length; j++) {
-		        		Punish.loadClassPunishments(classroom_in_ay_id, Home.terms.get(j));
-		    		}
-			
-				}
-			});
-			
-			
-			panel_3.addMouseListener(new MouseAdapter() {@Override
-				public void mouseClicked(MouseEvent e) {
-				for(int i = 0; i< panel_3.getParent().getComponentCount(); i++) {
-					panel_3.getParent().getComponent(i).setBackground(new Color(80, 80, 80));
-					((Container) panel_3.getParent().getComponent(i)).getComponent(2).setVisible(false);
-				}
-				panel_3.setBackground(new Color(20, 142, 192));
-				panel_3.getComponent(2).setVisible(true);
-				
-				if(e.getClickCount()==2) {
+					
+					//forgive(student_in_classroom_id, btnRetirer.getParent().getName());
+					//loadIndividualPunishments(student_in_classroom_id, term_id);
 					
 				}
+			});
+			
+			
+
+			panel2.addMouseListener(new MouseAdapter() {@Override
+				public void mouseClicked(MouseEvent e) {
+				for(int i = 0; i< panel_3.getParent().getComponentCount(); i++) {
+					panel_3.getParent().getComponent(i).setBackground(new Color(60, 60, 60));
+					((Container) panel_3.getParent().getComponent(i)).getComponent(0).setBackground(new Color(60, 60, 60));
+					((Container) panel_3.getParent().getComponent(i)).getComponent(0).setBackground(new Color(60, 60, 60));
+				}
+				
+				panel_3.setBackground(new Color(20, 142, 192));
+				panel_3.getComponent(0).setBackground(panel_3.getBackground());
 			}
 				@Override
 				public void mouseEntered(MouseEvent e) {
+					
+					panel_3.getComponent(1).setVisible(true);
+					
+					for(int i = 0; i< (panel_3.getParent()).getComponentCount(); i++) {
+						if(!(panel_3.getParent()).getComponent(i).equals(panel_3.getComponent(0).getParent())) {
+					((Container) ((Container) panel_3.getParent().getComponent(i))).getComponent(1).setVisible(false);
+						
+					panel_3.getParent().revalidate();
+
+					panel_3.getParent().repaint();
+						}
+					}
+					
 					panel_3.setBorder(new LineBorder(Color.white, 1));
 				}
 				@Override
@@ -296,10 +330,12 @@ public class PunishedStudents extends JFrame {
 		panel.repaint();
 		if(panel.getComponentCount() == 0) {
 
-			JLabel lblNewLabel_2 = new JLabel("Cette classe n'a pas ete encore punie.");
-			lblNewLabel_2.setForeground(Color.WHITE);
-			lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel.add(lblNewLabel_2);
+			
+			JLabel lblNewLabel = new JLabel("<html><div style='text-align: left;'>Cette classe n'a pas ete encore punie.</div></html>");
+			lblNewLabel.setPreferredSize(new Dimension(370, 50));
+			lblNewLabel.setForeground(Color.WHITE);
+			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+			panel.add(lblNewLabel, 0);
 		}
 	}
 }

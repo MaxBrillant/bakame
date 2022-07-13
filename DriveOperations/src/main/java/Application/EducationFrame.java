@@ -76,7 +76,6 @@ public class EducationFrame extends JFrame {
 	private JLabel lblajoutezLesClasses;
 	public static JPanel panel;
 	public static int selectedClass;
-	public static boolean isSelectable =false;
 	private JLabel lblajouterModifierouSupprimer;
 	private JLabel lblNewLabel_2;
 
@@ -101,27 +100,15 @@ public class EducationFrame extends JFrame {
 	 */
 	public EducationFrame(String ay_id) {
 		setResizable(false);
-		setPreferredSize(new Dimension(400, 400));
+		setPreferredSize(new Dimension(400, 300));
 	setTitle("");
-	setBounds(100, 100, 440, 600);
+	setBounds(100, 100, 450, 600);
 	contentPane = new JPanel();
 	contentPane.setBackground(new Color(60, 60, 60));
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	setContentPane(contentPane);
 	contentPane.setLayout(null);
 	setLocationRelativeTo(null);
-	
-	actualiser = new JButton("Actualiser");
-	actualiser.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-	});
-	actualiser.setFocusPainted(false);
-	actualiser.setForeground(Color.WHITE);
-	actualiser.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-	actualiser.setBackground(new Color(171, 145, 0));
-	contentPane.add(actualiser);
 	
 	btnFermer = new JButton("Fermer");
 	btnFermer.addActionListener(new ActionListener() {
@@ -134,51 +121,53 @@ public class EducationFrame extends JFrame {
 	btnFermer.setFocusPainted(false);
 	btnFermer.setBorderPainted(false);
 	btnFermer.setBackground(new Color(171, 0, 0));
-	btnFermer.setBounds(272, 520, 129, 31);
+	btnFermer.setBounds(285, 519, 129, 31);
 	contentPane.add(btnFermer);
 	
 	lblajoutezLesClasses = new JLabel("<html><div style='text-align: center;'>Education et punitions</html>");
 	lblajoutezLesClasses.setHorizontalAlignment(SwingConstants.CENTER);
 	lblajoutezLesClasses.setForeground(Color.WHITE);
-	lblajoutezLesClasses.setFont(new Font("Roboto", Font.BOLD, 25));
-	lblajoutezLesClasses.setBounds(10, 0, 404, 31);
+	lblajoutezLesClasses.setFont(new Font("Roboto", Font.BOLD, 16));
+	lblajoutezLesClasses.setBounds(10, 0, 414, 33);
 	contentPane.add(lblajoutezLesClasses);
 	
 	JSeparator separator = new JSeparator();
 	separator.setForeground(Color.WHITE);
-	separator.setBounds(0, 32, 424, 12);
+	separator.setBounds(0, 33, 434, 1);
 	contentPane.add(separator);
 	
 	JScrollPane scrollPane = new JScrollPane();
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	scrollPane.setBounds(10, 146, 404, 362);
+	scrollPane.setBounds(10, 128, 414, 380);
 	contentPane.add(scrollPane);
 	
 	panel = new JPanel();
 	panel.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			isSelectable =false;
 			for(int i = 0; i<panel.getComponentCount(); i++) {
-				panel.getComponent(i).setBackground(new Color(80, 80, 80));
-				((Container) panel.getComponent(i)).getComponent(2).setVisible(false);
-			}
+				if(!(panel.getComponent(i) instanceof JLabel)) {
+				panel.getComponent(i).setBackground(new Color(60, 60, 60));
+				((Container) panel.getComponent(i)).getComponent(1).setVisible(false);
+				((Container) panel.getComponent(i)).getComponent(0).setBackground(panel.getComponent(i).getBackground());
+				((Container) panel.getComponent(i)).getComponent(1).setBackground(panel.getComponent(i).getBackground());
+			}}
 		}
 	});
 	panel.setBackground(new Color(40, 40, 40));
 	scrollPane.setViewportView(panel);
-	panel.setLayout(new WrapLayout(WrapLayout.CENTER, 3, 3));
+	panel.setLayout(new WrapLayout(WrapLayout.LEFT, 3, 3));
 	
-	JLabel lblNewLabel_1 = new JLabel("Punitions");
-	lblNewLabel_1.setForeground(Color.LIGHT_GRAY);
-	lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 18));
+	JLabel lblNewLabel_1 = new JLabel("Toutes les Punitions");
+	lblNewLabel_1.setForeground(new Color(255, 255, 255));
+	lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 14));
 	lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblNewLabel_1.setBounds(10, 121, 209, 23);
+	lblNewLabel_1.setBounds(10, 102, 293, 23);
 	contentPane.add(lblNewLabel_1);
 	
 	lblajouterModifierouSupprimer = new JLabel("<html><div style='text-align: center;'>Ajoutez, modifiez ou supprimez les punitions appliquees par cet etablissement.</div></html>");
-	lblajouterModifierouSupprimer.setForeground(Color.WHITE);
-	lblajouterModifierouSupprimer.setFont(new Font("Roboto", Font.PLAIN, 15));
+	lblajouterModifierouSupprimer.setForeground(new Color(211, 211, 211));
+	lblajouterModifierouSupprimer.setFont(new Font("Roboto", Font.PLAIN, 14));
 	lblajouterModifierouSupprimer.setBounds(10, 34, 404, 51);
 	contentPane.add(lblajouterModifierouSupprimer);
 	
@@ -192,21 +181,96 @@ public class EducationFrame extends JFrame {
 		}
 	});
 	btnAjouter.setForeground(Color.WHITE);
-	btnAjouter.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+	btnAjouter.setFont(new Font("Roboto", Font.BOLD, 14));
 	btnAjouter.setFocusPainted(false);
 	btnAjouter.setBorderPainted(false);
 	btnAjouter.setBackground(new Color(0, 171, 89));
-	btnAjouter.setBounds(281, 110, 120, 31);
+	btnAjouter.setBounds(323, 98, 101, 31);
 	contentPane.add(btnAjouter);
 	
 	setLocationRelativeTo(null);
-	loadPunishments(ay_id);
+	
+	
+	JPanel panel_1 = new JPanel();
+	panel_1.setPreferredSize(new Dimension(390, 25));
+	panel_1.setBackground(new Color(60, 60, 60));;
+	
+			panel.add(panel_1);
+			panel_1.setLayout(new BorderLayout(0, 0));
+			
+			JPanel panel_2 = new JPanel();
+			panel_1.add(panel_2);
+			panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 3));
+			panel_2.setBackground(panel_2.getParent().getBackground());
+			
+			JLabel lblNewLabel = new JLabel("Derangement exagere en classe");
+			panel_2.add(lblNewLabel);
+			lblNewLabel.setMaximumSize(new Dimension(300, 14));
+			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+			lblNewLabel.setForeground(Color.white);
+			
+			JLabel label = new JLabel("-");
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			label.setForeground(Color.WHITE);
+			label.setFont(new Font("Roboto", Font.PLAIN, 14));
+			panel_2.add(label);
+			
+			JLabel lblCours = new JLabel("12 points");
+			panel_2.add(lblCours);
+			lblCours.setHorizontalAlignment(SwingConstants.CENTER);
+			lblCours.setFont(new Font("Roboto", Font.PLAIN, 14));
+			lblCours.setForeground(Color.white);
+		
+		JPanel panel_3 = new JPanel();
+		panel_1.add(panel_3, BorderLayout.EAST);
+		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+		panel_3.setBackground(panel_3.getParent().getBackground());
+		
+		
+		
+		JButton button = new JButton("");
+		panel_3.add(button);
+		button.setPreferredSize(new Dimension(40, 25));
+		button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		button.setVerticalTextPosition(SwingConstants.BOTTOM);
+		button.setIconTextGap(0);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		button.setFocusPainted(false);
+		button.setBorder(null);
+		button.setBackground(button.getParent().getBackground());
+		Home.addToolTip(button, "Modifier");
+		
+		
+		JButton button1 = new JButton("");
+		panel_3.add(button1);
+		button1.setPreferredSize(new Dimension(40, 25));
+		button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+		button1.setVerticalTextPosition(SwingConstants.BOTTOM);
+		button1.setIconTextGap(0);
+		button1.setHorizontalTextPosition(SwingConstants.CENTER);
+		button1.setForeground(Color.WHITE);
+		button1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		button1.setFocusPainted(false);
+		button1.setBorder(null);
+		button1.setBackground(button1.getParent().getBackground());
+		Home.addToolTip(button1, "Supprimer");
+		
+		
+		
+
+		loadPunishments(ay_id);
+		
+		
 	}
 	
 	
 	
 
 	public static void loadPunishments(String ay_id) {
+		
 		panel.removeAll();
 		
 		
@@ -218,78 +282,151 @@ public class EducationFrame extends JFrame {
 					+ "WHERE p.is_active = 1 AND pia.is_active = 1 AND pia.ay_id = '"+ay_id+"' AND pia.punishment_id = p.punishment_id");
 			while(rs.next())
 			{
-			JPanel panel_1 = new JPanel();
-			panel_1.setPreferredSize(new Dimension(390, 25));
-			panel_1.setLayout(null);
-			panel_1.setBackground(new Color(80, 80, 80));;
-			
-			JLabel lblNewLabel = new JLabel(rs.getString("p.punishment_name"));
-			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 15));
-			lblNewLabel.setBounds(10, 2, 252, 20);
-			lblNewLabel.setForeground(Color.white);
-			
-			JLabel lblCours = new JLabel(rs.getString("pia.points")+" points");
-			lblCours.setHorizontalAlignment(SwingConstants.CENTER);
-			lblCours.setFont(new Font("Roboto", Font.PLAIN, 15));
-			lblCours.setForeground(Color.white);
-			lblCours.setBounds(259, 2, 88, 20);
-			
-					panel.add(panel_1);
-					panel_1.add(lblNewLabel);
-					panel_1.add(lblCours);
+				
+				
+				
+				JPanel panel_1 = new JPanel();
+				panel_1.setName(rs.getString("p.punishment_id"));
+				panel_1.setPreferredSize(new Dimension(390, 25));
+				panel_1.setBackground(new Color(60, 60, 60));;
+				
+						panel.add(panel_1);
+						panel_1.setLayout(new BorderLayout(0, 0));
+						
+						JPanel panel_2 = new JPanel();
+						panel_1.add(panel_2);
+						panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 3));
+						panel_2.setBackground(panel_2.getParent().getBackground());
+						
+						JLabel lblNewLabel = new JLabel(rs.getString("p.punishment_name"));
+						panel_2.add(lblNewLabel);
+						lblNewLabel.setMaximumSize(new Dimension(300, 14));
+						lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+						lblNewLabel.setForeground(Color.white);
+						
+						JLabel label = new JLabel("-");
+						label.setHorizontalAlignment(SwingConstants.CENTER);
+						label.setForeground(Color.WHITE);
+						label.setFont(new Font("Roboto", Font.PLAIN, 14));
+						panel_2.add(label);
+						
+						JLabel lblCours = new JLabel(rs.getString("pia.points")+" points");
+						panel_2.add(lblCours);
+						lblCours.setHorizontalAlignment(SwingConstants.CENTER);
+						lblCours.setFont(new Font("Roboto", Font.PLAIN, 14));
+						lblCours.setForeground(Color.white);
+					
+					JPanel panel_3 = new JPanel();
+					panel_1.add(panel_3, BorderLayout.EAST);
+					panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+					panel_3.setVisible(false);
+
+					panel_3.setBackground(panel_3.getParent().getBackground());
+					
+					
 					
 					JButton button = new JButton("");
-					button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+					panel_3.add(button);
+					button.setPreferredSize(new Dimension(40, 25));
+					button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
 					button.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button.setIconTextGap(0);
 					button.setHorizontalTextPosition(SwingConstants.CENTER);
 					button.setForeground(Color.WHITE);
 					button.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					button.setFocusPainted(false);
-					button.setBorder(new LineBorder(new Color(255, 255, 255)));
-					button.setBounds(354, 0, 36, 25);
-					panel_1.add(button);
+					button.setBorder(null);
 					button.setBackground(button.getParent().getBackground());
-					button.setVisible(false);
+					Home.addToolTip(button, "Modifier");
+					
+					
+					JButton button1 = new JButton("");
+					panel_3.add(button1);
+					button1.setPreferredSize(new Dimension(40, 25));
+					button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+					button1.setVerticalTextPosition(SwingConstants.BOTTOM);
+					button1.setIconTextGap(0);
+					button1.setHorizontalTextPosition(SwingConstants.CENTER);
+					button1.setForeground(Color.WHITE);
+					button1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					button1.setFocusPainted(false);
+					button1.setBorder(null);
+					button1.setBackground(button1.getParent().getBackground());
+					Home.addToolTip(button1, "Supprimer");
 					
 
-					button.addMouseListener(new MouseAdapter() {
+					button1.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseEntered(MouseEvent e) {
-							button.setBackground(new Color(255, 102, 102));
+							button1.setBackground(new Color(255, 102, 102));
 						}
 						@Override
 						public void mouseExited(MouseEvent e) {
 
-							button.setBackground(new Color(80, 80, 80));
+							button1.setBackground(button1.getParent().getBackground());
+						}
+					});
+					
+					button.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							button.setBackground(new Color(20, 148, 198));
+						}
+						@Override
+						public void mouseExited(MouseEvent e) {
+
+							button.setBackground(button.getParent().getBackground());
 						}
 					});
 					
 
+					
 					button.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							NewPunishment.deletePunishment(((JLabel) button.getParent().getComponent(0)).getText());
-							EducationFrame.loadPunishments(ay_id);
-						}
-					});
-					panel_1.addMouseListener(new MouseAdapter() {@Override
-						public void mouseClicked(MouseEvent e) {
-						for(int i = 0; i< panel_1.getParent().getComponentCount(); i++) {
-							panel_1.getParent().getComponent(i).setBackground(new Color(80, 80, 80));
-							((Container) panel_1.getParent().getComponent(i)).getComponent(2).setVisible(false);
-						}
-						panel_1.setBackground(new Color(20, 142, 192));
-						panel_1.getComponent(2).setVisible(true);
-						
-						if(e.getClickCount()==2) {
 							NewPunishment nc = new NewPunishment(((JLabel) panel_1.getComponent(0)).getText(), ((JLabel) panel_1.getComponent(1)).getText().replaceAll("[^0-9]", ""));
 							nc.setVisible(true);
 							nc.create.setVisible(false);
 							nc.actualiser.setVisible(true);
 						}
+					});
+					
+					
+					button1.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							//NewPunishment.deletePunishment(((JLabel) button1.getParent().getComponent(0)).getText());
+							EducationFrame.loadPunishments(ay_id);
+						}
+					});
+					
+					
+					panel_2.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+						for(int i = 0; i< panel_1.getParent().getComponentCount(); i++) {
+							panel_1.getParent().getComponent(i).setBackground(new Color(60, 60, 60));
+							((Container) panel_1.getParent().getComponent(i)).getComponent(0).setBackground(new Color(60, 60, 60));
+							((Container) panel_1.getParent().getComponent(i)).getComponent(0).setBackground(new Color(60, 60, 60));
+						}
+						
+						panel_1.setBackground(new Color(20, 142, 192));
+						panel_1.getComponent(0).setBackground(panel_1.getBackground());
+						
 					}
 						@Override
 						public void mouseEntered(MouseEvent e) {
+							
+							panel_1.getComponent(1).setVisible(true);
+							
+							for(int i = 0; i< (panel_1.getParent()).getComponentCount(); i++) {
+								if(!(panel_1.getParent()).getComponent(i).equals(panel_1.getComponent(0).getParent())) {
+							((Container) ((Container) panel_1.getParent().getComponent(i))).getComponent(1).setVisible(false);
+								
+							panel_1.getParent().revalidate();
+
+							panel_1.getParent().repaint();
+								}
+							}
+							
 							panel_1.setBorder(new LineBorder(Color.white, 1));
 						}
 						@Override
@@ -307,10 +444,11 @@ public class EducationFrame extends JFrame {
 		}
 		if(panel.getComponentCount() == 0) {
 
-			JLabel lblNewLabel_2 = new JLabel("Il n'ya actuellement aucune punition dans cet etablissement");
-			lblNewLabel_2.setForeground(Color.WHITE);
-			lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel.add(lblNewLabel_2);
+			JLabel lblNewLabel = new JLabel("<html><div style='text-align: left;'>Il n'ya actuellement aucune punition dans cet etablissement</div></html>");
+			lblNewLabel.setPreferredSize(new Dimension(370, 50));
+			lblNewLabel.setForeground(Color.WHITE);
+			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+			panel.add(lblNewLabel, 0);
 		}
 	}
 }

@@ -180,33 +180,34 @@ public class StudentInfo extends JPanel {
 				
 				Component selectedCourse = null;
 
-				int opened = 0;
 				if(Cours.selectedCourses.toArray().length>0) {
 					selectedCourse = Cours.selectedCourses.get(0);
 					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
 					
-				if(LPane.tabbedPane.getSelectedIndex()==1) {
-					opened = 1;
-				}
-				LPane.tabbedPane.setSelectedIndex(0);
 
-				Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					if(LPane.selectedTab==0) {
+						LPane.setToTestView(selectedCourse.getName(), classroom_in_ay_id);
+					}else {
+						LPane.setToExamView(selectedCourse.getName(), classroom_in_ay_id);
+						}
 				}
-				
 				if(App.n<App.students.toArray().length-1) {
 					App.n++;
 				}else{
 					App.n = 0;
 				}
-				General.loadName(App.students.get(App.n), numbers);
+				App.loadName(classroom_in_ay_id, App.students.get(App.n), numbers);
 				
 				App.loadCourses(classroom_in_ay_id, App.students.get(App.n));
 
 				loadnumbers(classroom_in_ay_id, numbers);
 				
+
+				//Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+				
+				
 				if(selectedCourse != null) {
 					
-					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
 					LPane.loadAllTests(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
 					LPane.loadAllExams(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
@@ -220,7 +221,7 @@ public class StudentInfo extends JPanel {
 					if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 						Cours.setSelected(App.panel_5.getComponent(j));
 					}}}else{
-						General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
+						//General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}
 				panelName.revalidate();
 				panelName.repaint();
@@ -234,17 +235,16 @@ public class StudentInfo extends JPanel {
 				
 				Component selectedCourse = null;
 
-				int opened = 0;
 				if(Cours.selectedCourses.toArray().length>0) {
 					selectedCourse = Cours.selectedCourses.get(0);
 					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
 					
-				if(LPane.tabbedPane.getSelectedIndex()==1) {
-					opened = 1;
-				}
-				LPane.tabbedPane.setSelectedIndex(0);
-
-				Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+					if(LPane.selectedTab==0) {
+						LPane.setToTestView(selectedCourse.getName(), classroom_in_ay_id);
+					}else {
+						LPane.setToExamView(selectedCourse.getName(), classroom_in_ay_id);
+						}
+				//Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
 				}
 				
 				//loadStudents(classroom_id, ay_id);
@@ -254,13 +254,12 @@ public class StudentInfo extends JPanel {
 				}else{
 					App.n = App.students.toArray().length-1;
 				}
-				General.loadName(App.students.get(App.n), numbers);
+				App.loadName(classroom_in_ay_id, App.students.get(App.n), numbers);
 
 				App.loadCourses(classroom_in_ay_id, App.students.get(App.n));
 
 				loadnumbers(classroom_in_ay_id, numbers);
 				if(selectedCourse != null) {
-					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
 					LPane.loadAllTests(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
 					LPane.loadAllExams(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
@@ -274,7 +273,7 @@ public class StudentInfo extends JPanel {
 						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 							Cours.setSelected(App.panel_5.getComponent(j));
 						}}}else{
-							General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
+							//General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 						}
 				
 				
@@ -286,7 +285,7 @@ public class StudentInfo extends JPanel {
 		
 		
 		
-		General.loadName(App.students.get(App.n), numbers);
+		App.loadName(classroom_in_ay_id, App.students.get(App.n), numbers);
 		
 		
 		
@@ -309,7 +308,7 @@ public class StudentInfo extends JPanel {
 		
 		
 		separator = new JSeparator();
-		separator.setForeground(new Color(255, 255, 255));
+		separator.setForeground(new Color(211, 211, 211));
 		separator.setPreferredSize(new Dimension(320, 1));
 		add(separator);
 		
@@ -325,6 +324,13 @@ public class StudentInfo extends JPanel {
 				frame.setVisible(true);
 				}
 		});
+		
+		JLabel lblRolestitres = new JLabel("Roles/titres");
+		lblRolestitres.setPreferredSize(new Dimension(320, 25));
+		lblRolestitres.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRolestitres.setForeground(Color.WHITE);
+		lblRolestitres.setFont(new Font("Roboto", Font.PLAIN, 14));
+		add(lblRolestitres);
 		
 		CustomButton btnNewButton_1 = new CustomButton();
 		btnNewButton_1.setRadius(15);
@@ -352,8 +358,39 @@ public class StudentInfo extends JPanel {
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setPreferredSize(new Dimension(320, 1));
-		separator_1.setForeground(Color.WHITE);
+		separator_1.setForeground(new Color(211, 211, 211));
 		add(separator_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Parents/Tuteurs");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setPreferredSize(new Dimension(320, 25));
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 14));
+		add(lblNewLabel_2);
+		
+		CustomButton btnNewButton_2 = new CustomButton();
+		btnNewButton_2.setRadius(15);
+		btnNewButton_2.setText("Kazezwa Ancilla");
+		btnNewButton_2.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnNewButton_2.setBackground(new Color(20, 148, 198));
+		btnNewButton_2.setBorderColor(Color.black);
+		add(btnNewButton_2);
+		
+		CustomButton btnNewButton_21 = new CustomButton();
+		btnNewButton_21.setRadius(15);
+		btnNewButton_21.setText("Nzosaba Avit Viateur");
+		btnNewButton_21.setFont(new Font("Roboto", Font.PLAIN, 14));
+		btnNewButton_21.setBackground(new Color(20, 148, 198));
+		btnNewButton_21.setBorderColor(Color.black);
+		add(btnNewButton_21);
+		
+		
+		JSeparator separator2 = new JSeparator();
+		separator2.setForeground(new Color(211, 211, 211));
+		separator2.setPreferredSize(new Dimension(320, 1));
+		add(separator2);
+		
+		
 		btnstatistiquesAvances.setIconTextGap(10);
 		btnstatistiquesAvances.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		btnstatistiquesAvances.setForeground(Color.WHITE);
@@ -377,7 +414,7 @@ public class StudentInfo extends JPanel {
 		btnhoraireDeClasse.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		add(btnhoraireDeClasse);
 		
-		CustomButton btnstructuresDeLhoraire = new CustomButton("<html><div style='text-align: leading;'>Historique des messages</div></html>");
+		CustomButton btnstructuresDeLhoraire = new CustomButton("<html><div style='text-align: leading;'>Modifier les infos personnelles</div></html>");
 		btnstructuresDeLhoraire.setRadius(15);
 		btnstructuresDeLhoraire.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnstructuresDeLhoraire.setMargin(new Insets(2, 10, 2, 14));
@@ -470,22 +507,23 @@ public class StudentInfo extends JPanel {
 					selectedCourse = Cours.selectedCourses.get(0);
 					selectedCourse.setName(Cours.selectedCourses.get(0).getName());
 					
-				if(LPane.tabbedPane.getSelectedIndex()==1) {
-					opened = 1;
-				}
-				LPane.tabbedPane.setSelectedIndex(0);
-
-				Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
-				}
 				
 
+				Test.deselect(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
+				
+				if(LPane.selectedTab==0) {
+					LPane.setToTestView(selectedCourse.getName(), classroom_in_ay_id);
+				}else {
+					LPane.setToExamView(selectedCourse.getName(), classroom_in_ay_id);
+					}
+				}
+				
 				App.n= Integer.parseInt(button.getName());
-				General.loadName(App.students.get(App.n), c);
+				App.loadName(classroom_in_ay_id, App.students.get(App.n), c);
 
 				App.loadCourses(classroom_in_ay_id, App.students.get(App.n));
 				loadnumbers(classroom_in_ay_id, c);
 				if(selectedCourse != null) {
-					LPane.tabbedPane.setSelectedIndex(opened);
 					LPane.panel_3.removeAll();
 					LPane.loadAllTests(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
 					LPane.loadAllExams(selectedCourse.getName(), App.students.get(App.n), classroom_in_ay_id);
@@ -498,9 +536,7 @@ public class StudentInfo extends JPanel {
 					for(int j = 0; j< App.panel_5.getComponentCount(); j++) {
 						if(App.panel_5.getComponent(j).getName().equals(Cours.selectedCourses.get(0).getName())) {
 							Cours.setSelected(App.panel_5.getComponent(j));
-						}}}else{
-							General.totalScore(App.students.get(App.n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
-						}
+						}}}
 
 				num.setForeground(Color.white);
 				c.revalidate();
@@ -528,7 +564,6 @@ public class StudentInfo extends JPanel {
 	
 	public static void loadStudentInfo(String student_id, String classroom_id, String ay_id, String start, String end) {
 		name.setText(Home.getStudentName(student_id));
-		number.setText("No "+StudentStats.loadStudentNumber(student_id, classroom_id, ay_id));
 		
 		List<String> l = new ArrayList();
 		l.add("0");

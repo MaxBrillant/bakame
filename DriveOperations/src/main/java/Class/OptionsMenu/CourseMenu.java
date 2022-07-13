@@ -298,21 +298,6 @@ public class CourseMenu extends JPanel {
 		delete.setVisible(false);
 		goForward.setVisible(false);
 		goBackward.setVisible(false);
-		
-		if(!NewCourse.isEmpty) {
-		for(int k = 0;k<Application.panelCourses.getComponentCount(); k++) {
-		for(int i =0;i<((Container) Application.panelCourses.getComponent(k)).getComponentCount();i++) {
-			for(int j = 0;j<Application.panelCourses.getComponentCount();j++) {
-				//((Container) Application.panelCourses.getComponent(j)).getComponent(i).setForeground(Color.white);
-			Application.panelCourses.getComponent(j).setBackground(new Color(60, 60, 60));
-		}
-		}
-}
-		Application.no.setText(String.valueOf(Application.panelCourses.getComponentCount()));
-		}else {
-
-	Application.no.setText("0");
-}
 		CourseMenu.stats.setVisible(true);
 		}
 	

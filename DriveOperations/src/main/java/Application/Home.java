@@ -74,7 +74,6 @@ import accounts.Login;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
 import accounts.UserPanel;
-import accounts.Users;
 
 
 import java.sql.*; 
@@ -245,32 +244,32 @@ public class Home {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(20, 148, 198));
-		panel_1.setPreferredSize(new Dimension(10, frame.getHeight()*20/100*30/100));
+		panel_1.setPreferredSize(new Dimension(10, 45));
 		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		classe = new JLabel(UserPanel.getSchoolFullName(SchoolID));
+		classe = new JLabel(UserPanel.getSchoolFullName(SchoolID)+" - "+ScholarYears.getAcademicYearName(Login.selectedAcademicYearID));
 		classe.setHorizontalAlignment(SwingConstants.CENTER);
 		classe.setForeground(new Color(255, 255, 255));
-		classe.setFont(new Font("Roboto", Font.BOLD, 20));
+		classe.setFont(new Font("Roboto", Font.BOLD, 16));
 		panel_1.add(classe, BorderLayout.CENTER);
 		
-		JButton button_2 = new JButton(ScholarYears.getAcademicYearName(ay_id));
-		button_2.addActionListener(new ActionListener() {
+		JButton btnAs = new JButton("A/S");
+		btnAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
 				ScholarYears s = new ScholarYears(UserID, SchoolID, UserPanel.selectedRole);
-				s.frame.setVisible(true);
+				s.setVisible(true);
 			}
 		});
-		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnAs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
 		//button_2.setPreferredSize(new Dimension(150, 14));
-		button_2.setForeground(Color.WHITE);
-		button_2.setFont(new Font("Roboto", Font.BOLD, 20));
-		button_2.setFocusPainted(false);
-		button_2.setBorderPainted(false);
-		button_2.setBackground(new Color(20, 148, 198));
-		panel_1.add(button_2, BorderLayout.WEST);
+		btnAs.setForeground(Color.WHITE);
+		btnAs.setFont(new Font("Roboto", Font.BOLD, 16));
+		btnAs.setFocusPainted(false);
+		btnAs.setBorderPainted(false);
+		btnAs.setBackground(new Color(20, 148, 198));
+		panel_1.add(btnAs, BorderLayout.WEST);
 		
 		
 		JPanel p = new JPanel();
@@ -520,7 +519,11 @@ public class Home {
 		lblerTrimestre.setForeground(Color.WHITE);
 		lblerTrimestre.setFont(new Font("Roboto", Font.BOLD, 17));
 		panel_41.add(lblerTrimestre, BorderLayout.CENTER);
-		lblerTrimestre.setText(Home.getTermName(Home.termsText.get(Home.selectedTermIndex)));
+		if(Home.selectedTermIndex< Home.termsText.toArray().length-1) {
+			lblerTrimestre.setText(Home.getTermName(Home.termsText.get(Home.selectedTermIndex)));
+			}else {
+				lblerTrimestre.setText("Toute l'annee");
+				}
 		
 		JButton button_21 = new JButton("");
 		button_21.addActionListener(new ActionListener() {
@@ -1107,20 +1110,11 @@ public static String getTermYear(String term_id) {
 		termsText.clear();
 		
 		
-		try {
-			Statement stmt= mysql.con.createStatement();
-
-			ResultSet rs=stmt.executeQuery("select * from terms "
-					+ "WHERE ay_id = '"+ay_id+"' AND is_active = 1");
-			while(rs.next())
-			{
-				termsText.add(rs.getString("term_id"));
+		Object [] terms = Home.loadActiveTerms(ay_id);
+		for(int i = 0 ; i< terms.length; i++) {
+				termsText.add(terms[i].toString());
 			}
 
-		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 		termsText.add("Toute l'annee");
 
 		periodText.clear();
@@ -1175,7 +1169,7 @@ public static Object[] loadActiveTerms(String ay_id) {
 
 		ResultSet rs=stmt.executeQuery("SELECT * from terms AS t "
 				+ "JOIN academic_year AS ay "
-				+ "WHERE t.ay_id = '"+ay_id+"' AND t.ay_id = ay.ay_id AND t.is_active = 1");
+				+ "WHERE t.ay_id = '"+ay_id+"' AND t.ay_id = ay.ay_id AND t.is_active = 1 AND t.type = 'regular'");
 		while(rs.next())
 		{
 			s.add(rs.getString("t.term_id"));
@@ -1351,6 +1345,30 @@ public static Object[] loadActiveCourses(String classroom_in_ay_id) {
 	
 }
 
+
+public static String getClassroomOfCourse(String course_in_classroom_id) {
+	
+	String id = null;
+	
+	try {
+		Statement stmt= mysql.con.createStatement();
+
+		ResultSet rs=stmt.executeQuery("select * FROM courses_in_classroom "
+				+ "WHERE courses_in_classroom_id = '"+course_in_classroom_id+"' LIMIT 1");
+		while(rs.next())
+		{
+			id = rs.getString("cia_id");
+		}
+
+	} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+} 
+	return id;
+	
+}
+
+
 public static void addToolTip(Component c, String toolTip) {
 	
 	JLabel j = new JLabel(toolTip);
@@ -1361,7 +1379,7 @@ public static void addToolTip(Component c, String toolTip) {
 	JPopupMenu popupMenu = new JPopupMenu();
 	popupMenu.setBorderPainted(false);
 	popupMenu.setBackground(new Color(0, 0, 0));
-	popupMenu.setPreferredSize(new Dimension(70, 25));
+	popupMenu.setPreferredSize(new Dimension(6*toolTip.length()+13, 25));
 	popupMenu.setLayout(new BorderLayout(0, 0));
 	popupMenu.add(j);
 	

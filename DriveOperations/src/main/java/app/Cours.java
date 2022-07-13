@@ -157,7 +157,8 @@ public class Cours extends JPanel {
 								setSelected(App.panel_5.getComponent(j));
 							}}
 						
-						App.panel_1.remove(0);
+						App.panel_1.setVisible(true);
+						App.panel_1.removeAll();
 						LPane tp = new LPane(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 						App.panel_1.add(tp);
 						App.panel_1.revalidate();
@@ -223,8 +224,7 @@ c.setBackground(new Color(120, 120, 120));
 	  }
 	 
 	public static void loaddata(Container c, String course_in_classroom_id, String classroom_in_ay_id, String student_in_classroom_id) {
-		new SwingWorker<Void, Void>() {
-            public Void doInBackground() throws Exception{
+		
 		Double sum = (double) 0;
 		Double sum1 = (double) 0;
 		Double tot = (double) 0;
@@ -270,9 +270,7 @@ c.setBackground(new Color(120, 120, 120));
 			if(points1 == 0 && maxima1 == 0) {
 				c.getComponent(0).setBackground(new Color(200, 200, 200));
 				}
-			return null;
-            }
-        }.execute();
+			
 	}
 	
 }

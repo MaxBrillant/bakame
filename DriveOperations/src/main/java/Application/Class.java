@@ -110,7 +110,7 @@ public class Class extends JPanel {
 	add(courseBox, BorderLayout.CENTER);
 	courseBox.setLayout(new BorderLayout(0, 0));
 	
-	className = new JLabel("<html><div style='text-align: center;'>3eme PF Bio-Chimie</div></html>");
+	className = new JLabel("<html><div style='text-align: center;'>3eme PF Bio-ChimieassAn");
 	className.setBorder(null);
 	className.setForeground(Color.WHITE);
 	className.setBackground(Color.GREEN);

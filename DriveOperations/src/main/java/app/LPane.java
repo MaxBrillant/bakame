@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -70,51 +72,54 @@ import java.awt.FlowLayout;
 
 public class LPane extends JPanel {
 	public static JLabel Name;
-	public static JButton add;
-	public static JScrollPane scrollPane;
-	public static JScrollPane scrollPane2;
 	public static JPanel panel_3;
-	public static JButton supprimer;
 	public static JLabel no;
-	public static JButton modifier;
 	public static JLabel points;
 	public static List note;
-	public static JPanel panel;
 	public static JLabel pourcent;
 	public static JLabel prog;
 	public static JLabel average;
 	public static JLabel mention;
 	public static JLabel echec;
 	public static JComboBox comboBox;
-	private JPanel panel_1;
 	public static JPanel panel_2;
-	public static JTabbedPane tabbedPane;
 	private JPanel panel_4;
 	private JPanel panel_5;
 	private JPanel panel_6;
-
+	public static int selectedTab;
+	private static JScrollPane scrollPane;
+	private static JScrollPane scrollPane2;
+	private static JPanel panel_1;
+	private static JPanel panel;
+	
 	/**
 	 * Create the panel.
 	 */
 	public LPane(String course_in_classroom_id, String student_in_classroom_id, String classroom_in_ay_id) {
-		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(350, 629));
 		setLayout(new BorderLayout(0, 0));
 		
 		panel = new JPanel();
-		panel.addMouseListener(new MouseAdapter() {
+		panel.setBackground(new Color(40, 40, 40).darker());
+		//panel.setPreferredSize(new Dimension(10, (int) (screensize.getHeight()*82/100*20/100) ));
+		add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel2;
+		panel2 = new JPanel();
+		panel2.setPreferredSize(new Dimension(10, 130));
+		panel2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Test.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
 			}
 		});
-		panel.setBackground(new Color(25, 25, 25));
-		panel.setPreferredSize(new Dimension(10, (int) (screensize.getHeight()*82/100*20/100) ));
-		add(panel, BorderLayout.NORTH);
-		panel.setLayout(new BorderLayout(0, 0));
+		panel2.setBackground(panel.getBackground());
+		panel.add(panel2, BorderLayout.NORTH);
+		panel2.setLayout(new BorderLayout(0, 0));
 		
 		panel_6 = new JPanel();
-		panel.add(panel_6);
+		panel2.add(panel_6);
 		panel_6.setBackground(panel_6.getParent().getBackground());
 		panel_6.setLayout(null);
 		
@@ -184,55 +189,12 @@ public class LPane extends JPanel {
 		Name.setPreferredSize(new Dimension(55, 20));
 		Name.setForeground(Color.WHITE);
 		Name.setFont(new Font("Roboto", Font.BOLD, 16));
-		panel.add(Name, BorderLayout.NORTH);
+		panel2.add(Name, BorderLayout.NORTH);
 		
-		add = new JButton("Ajouter");
-		add.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				add.setBackground(new Color(64, 201, 135));
-			}public void mouseExited(MouseEvent e) {
-				add.setBackground(new Color(0, 171, 89));
-			}
-		});
-		add.setBorder(null);
-		add.setFocusPainted(false);
-		add.setBackground(new Color(0, 171, 89));
-		add.setForeground(new Color(255, 255, 255));
-		add.setBounds(130, 3, 89, 30);
-		//panel_1.add(add);
-		add.setFont(new Font("Arial", Font.BOLD, 17));
-		
-		supprimer = new JButton("Supprimer");
-		supprimer.setVisible(false);
-		supprimer.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				supprimer.setBackground(new Color(201, 64, 64));
-			}public void mouseExited(MouseEvent e) {
-				supprimer.setBackground(new Color(171, 0, 0));
-			}
-		});
-		supprimer.setBorder(null);
-		supprimer.setFocusPainted(false);
-		supprimer.setBackground(new Color(171, 0, 0));
-		supprimer.setForeground(new Color(255, 255, 255));
-		supprimer.setBounds(229, 3, 108, 30);
-		//panel_1.add(supprimer);
-		supprimer.setFont(new Font("Arial", Font.BOLD, 17));
-		
-		modifier = new JButton("Modifier");
-		modifier.setVisible(false);
-		modifier.setBorder(null);
-		modifier.setFocusPainted(false);
-		modifier.setBackground(new Color(171, 145, 0));
-		modifier.setForeground(new Color(255, 255, 255));
-		modifier.setFont(new Font("Arial", Font.BOLD, 17));
-		modifier.setBounds(347, 3, 100, 30);
 		
 		panel_5 = new JPanel();
 		panel_5.setPreferredSize(new Dimension(170, 10));
-		panel.add(panel_5, BorderLayout.EAST);
+		panel2.add(panel_5, BorderLayout.EAST);
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
 		//panel_1.add(modifier);
 		panel_5.setBackground(panel_5.getParent().getBackground());
@@ -249,21 +211,17 @@ public class LPane extends JPanel {
 		mention.setForeground(new Color(255, 33, 94));
 		mention.setFont(new Font("Roboto", Font.PLAIN, 14));
 
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setFont(new Font("Roboto", Font.BOLD, 14));
-		add(tabbedPane, BorderLayout.CENTER);
-		
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-		tabbedPane.addTab("Interrogations", null, scrollPane, null);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 		
 
 		scrollPane.getVerticalScrollBar().setUI(new CustomVerticalScrollBarUI());
 		scrollPane.getHorizontalScrollBar().setUI(new CustomVerticalScrollBarUI());
+		panel.add(scrollPane, BorderLayout.CENTER);
 		
 		panel_3 = new JPanel();
 		panel_3.setBorder(null);
@@ -273,14 +231,14 @@ public class LPane extends JPanel {
 				Test.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
 			}
 		});
-		panel_3.setBackground(new Color(25, 25, 25));
+		panel_3.setBackground(new Color(40, 40, 40));
 		scrollPane.setViewportView(panel_3);
 		panel_3.setLayout(new WrapLayout(WrapLayout.CENTER,3,3));
+		
 		
 		scrollPane2 = new JScrollPane();
 		scrollPane2.setBorder(null);
 		scrollPane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		tabbedPane.addTab("Examens", null, scrollPane2, null);
 		
 		panel_2 = new JPanel();
 		panel_2.addMouseListener(new MouseAdapter() {
@@ -290,22 +248,143 @@ public class LPane extends JPanel {
 			}
 		});
 		panel_2.setBorder(null);
-		panel_2.setBackground(new Color(25, 25, 25));
+		panel_2.setBackground(new Color(40, 40, 40));
 		scrollPane2.setViewportView(panel_2);
 		panel_2.setLayout(new WrapLayout(1, 10, 3));
 		
-		tabbedPane.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				if(tabbedPane.getSelectedIndex() == 0) {
-				Test.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
-			}else{
-				Exam.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
-				}}
+		
+		panel_1 = new JPanel();
+		panel_1.setPreferredSize(new Dimension(10, 37));
+		panel_1.setBackground(new Color(40, 40, 40));
+		add(panel_1, BorderLayout.NORTH);
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+		
+		
+		JButton btnNewButton1 = new JButton("Interrogations");
+		btnNewButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setToTestView(Cours.selectedCourses.get(0).getName(), classroom_in_ay_id);
+			}
 		});
+		btnNewButton1.setMultiClickThreshhold(1000L);
+		btnNewButton1.setFocusPainted(false);
+		btnNewButton1.setPreferredSize(new Dimension(130, 37));
+		btnNewButton1.setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(20, 148, 198)));
+		btnNewButton1.setIconTextGap(10);
+		btnNewButton1.setVerticalTextPosition(SwingConstants.CENTER);
+		btnNewButton1.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnNewButton1.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnNewButton1.setBackground(new Color(60, 60, 60));
+		btnNewButton1.setForeground(new Color(255, 255, 255));
+		panel_1.add(btnNewButton1);
+
+		
+		JButton btnExamens = new JButton("Examens");
+		btnExamens.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				setToExamView(Cours.selectedCourses.get(0).getName(), classroom_in_ay_id);
+			}
+		});
+		btnExamens.setMultiClickThreshhold(1000L);
+		btnExamens.setPreferredSize(new Dimension(130, 37));
+		btnExamens.setBorder(null);
+		//button.setBorderPainted(true);
+		btnExamens.setIconTextGap(10);
+		btnExamens.setVerticalTextPosition(SwingConstants.CENTER);
+		btnExamens.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnExamens.setForeground(Color.LIGHT_GRAY);
+		btnExamens.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnExamens.setFocusPainted(false);
+		btnExamens.setBackground(new Color(40, 40, 40));
+		panel_1.add(btnExamens);
+		
+		for(int i = 0; i< (panel_1).getComponentCount();i++) {
+			int k = i;
+			Color c = (panel_1).getComponent(k).getBackground();
+			(panel_1).getComponent(i).addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				if(k != selectedTab) {
+					(panel_1).getComponent(k).setBackground(new Color(60, 60, 60));
+			}}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(k != selectedTab) {
+					(panel_1).getComponent(k).setBackground((panel_1).getComponent(k).getParent().getBackground());
+			}}
+			});
+		}
+		
+		
+		
+		for(int i = 0; i< panel_1.getComponentCount(); i++) {
+			//panel_1.getComponent(i).setPreferredSize(new Dimension(100, 50));
+			panel_1.getComponent(i).setBackground(new Color(40, 40, 40));
+			panel_1.getComponent(i).setForeground(Color.LIGHT_GRAY);
+			((JComponent) panel_1.getComponent(i)).setBorder(null);
+			((AbstractButton) panel_1.getComponent(i)).setIcon(null);
+		}
+		//btnNewButton1.setPreferredSize(new Dimension(150, 50));
+		btnNewButton1.setForeground(Color.white);
+		btnNewButton1.setBackground(new Color(60, 60, 60));
+		btnNewButton1.setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(20, 148, 198)));
+		
 		loadAllTests(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
 		loadAllExams(course_in_classroom_id, student_in_classroom_id, classroom_in_ay_id);
+		
+
+		if(LPane.selectedTab==0) {
+			LPane.setToTestView(course_in_classroom_id, classroom_in_ay_id);
+		}else {
+			LPane.setToExamView(course_in_classroom_id, classroom_in_ay_id);
+			}
 	}
 	
+	public static void setToTestView(String course_in_classroom_id, String classroom_in_ay_id) {
+	
+	selectedTab = 0;
+	panel.remove(1);
+	panel.add(scrollPane, BorderLayout.CENTER);
+	for(int i = 0; i< panel_1.getComponentCount(); i++) {
+		//panel_1.getComponent(i).setPreferredSize(new Dimension(100, 50));
+		panel_1.getComponent(i).setBackground(new Color(40, 40, 40));
+		panel_1.getComponent(i).setForeground(Color.LIGHT_GRAY);
+		((JComponent) panel_1.getComponent(i)).setBorder(null);
+		((AbstractButton) panel_1.getComponent(i)).setIcon(null);
+	}
+//	btnNewButton1.setPreferredSize(new Dimension(150, 50));
+	panel_1.getComponent(0).setForeground(Color.white);
+	panel_1.getComponent(0).setBackground(new Color(60, 60, 60));
+	((JComponent) panel_1.getComponent(0)).setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(20, 148, 198)));
+	Test.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
+	panel.revalidate();
+	panel.repaint();
+	
+	}
+	
+	public static void setToExamView(String course_in_classroom_id, String classroom_in_ay_id) {
+		
+		selectedTab = 1;
+		panel.remove(1);
+		panel.add(scrollPane2, BorderLayout.CENTER);
+		for(int i = 0; i< panel_1.getComponentCount(); i++) {
+			//panel_1.getComponent(i).setPreferredSize(new Dimension(100, 50));
+			panel_1.getComponent(i).setBackground(new Color(40, 40, 40));
+			panel_1.getComponent(i).setForeground(Color.LIGHT_GRAY);
+			((JComponent) panel_1.getComponent(i)).setBorder(null);
+			((AbstractButton) panel_1.getComponent(i)).setIcon(null);
+		}
+//		btnNewButton1.setPreferredSize(new Dimension(150, 50));
+		panel_1.getComponent(1).setForeground(Color.white);
+		panel_1.getComponent(1).setBackground(new Color(60, 60, 60));
+		((JComponent) panel_1.getComponent(1)).setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(20, 148, 198)));
+		Exam.deselect(course_in_classroom_id, App.students.get(App.n), classroom_in_ay_id);
+		panel.revalidate();
+		panel.repaint();
+		
+		}
+
 	public static void loadAllTests(String course_in_classroom_id, String student_in_classroom_id, String classroom_in_ay_id) {
 		LPane.panel_3.removeAll();
 		for(int i = 0; i< Home.terms.toArray().length; i++) {

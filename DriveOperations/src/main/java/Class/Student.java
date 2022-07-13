@@ -65,7 +65,6 @@ public class Student extends JPanel {
 	 * Create the panel.
 	 */
 	public Student(String classroom_in_ay_id) {
-		setBorder(null);
 		setBackground(new Color(40, 40, 40));
 		addMouseListener(new MouseAdapter() {
 			
@@ -105,12 +104,10 @@ public class Student extends JPanel {
 					for(int i = 0; i<selectedStudents.toArray().length; i++) {
 						for(int j = 0; j< Application.panelStudents.getComponentCount(); j++) {
 							if(Application.panelStudents.getComponent(j).equals(selectedStudents.get(i))) {
-								((Container) Application.panelStudents.getComponent(j)).getComponent(0).setBackground(new Color(20, 148, 198));
-								((Container) Application.panelStudents.getComponent(j)).getComponent(1).setBackground(new Color(20, 148, 198));
-								
-								for(int k = 0;k<((Container) Application.panelStudents.getComponent(j)).getComponentCount();k++) {
-									((Container) Application.panelStudents.getComponent(j)).getComponent(k).setForeground(Color.white);
-								}
+								((Container) Application.panelStudents.getComponent(j)).getComponent(0).setBackground(new Color(20, 148, 198, 50));
+								((Container) Application.panelStudents.getComponent(j)).getComponent(1).setBackground(new Color(20, 148, 198, 50));
+								((JComponent) Application.panelStudents.getComponent(j)).setBorder(new LineBorder(new Color(20, 148, 198), 2));
+								((Container) ((Container) ((Container) Application.panelStudents.getComponent(j)).getComponent(0)).getComponent(0)).getComponent(1).setVisible(false);
 					}}}
 					
 				//
@@ -145,8 +142,8 @@ public class Student extends JPanel {
 				}
 			}public void mouseExited(MouseEvent e) {
 				if(!selectedStudents.contains(getComponent(0).getParent())) {
-					getComponent(0).setBackground(new Color(40, 40, 40));
-					getComponent(1).setBackground(new Color(40, 40, 40));
+					getComponent(0).setBackground(getBackground());
+					getComponent(1).setBackground(getBackground());
 					setBorder(null);
 				}
 				
@@ -159,16 +156,36 @@ public class Student extends JPanel {
 		
 		
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(35, 40));
+		panel.setPreferredSize(new Dimension(35, 30));
 		panel.setBackground(new Color(40, 40, 40));
-		add(panel, BorderLayout.CENTER);
+		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(0, 0));
+		
+		
+		JPanel panel11 = new JPanel();
+		panel11.setPreferredSize(new Dimension(35, 40));
+		panel11.setBackground(new Color(51, 255, 204));
+		panel.add(panel11, BorderLayout.WEST);
+		panel11.setLayout(new BorderLayout(0, 0));
+		
+		
+		
+		JPanel panel12 = new JPanel();
+		panel12.setPreferredSize(new Dimension(35, 40));
+		panel12.setBackground(new Color(20, 148, 198));
+		panel11.add(panel12, BorderLayout.CENTER);
+		panel12.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_11 = new JLabel("");
+		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_11.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		panel12.add(lblNewLabel_11, BorderLayout.CENTER);
 		
 		
 		JPanel panel1 = new JPanel();
 		panel1.setPreferredSize(new Dimension(35, 40));
 		panel1.setBackground(new Color(51, 255, 204));
-		panel.add(panel1, BorderLayout.WEST);
+		panel11.add(panel1, BorderLayout.EAST);
 		panel1.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("203");
@@ -194,7 +211,7 @@ public class Student extends JPanel {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(null);
 		panel_1.setPreferredSize(new Dimension(10, 37));
-		add(panel_1, BorderLayout.SOUTH);
+		add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 1));
 		panel_1.setBackground(new Color(40, 40, 40));
 		
@@ -218,7 +235,7 @@ public class Student extends JPanel {
 		lblPoints.setVerticalAlignment(SwingConstants.TOP);
 		lblPoints.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblPoints.setForeground(new Color(211, 211, 211));
-		lblPoints.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblPoints.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblPoints.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblPoints);
 		
@@ -234,7 +251,7 @@ public class Student extends JPanel {
 		lblPlace.setVerticalAlignment(SwingConstants.TOP);
 		lblPlace.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblPlace.setForeground(new Color(211, 211, 211));
-		lblPlace.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblPlace.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblPlace.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblPlace);
 		
@@ -250,7 +267,7 @@ public class Student extends JPanel {
 		lblEchecs.setVerticalAlignment(SwingConstants.TOP);
 		lblEchecs.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblEchecs.setForeground(new Color(211, 211, 211));
-		lblEchecs.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblEchecs.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblEchecs.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblEchecs);
 		
@@ -266,7 +283,7 @@ public class Student extends JPanel {
 		lblInterros.setVerticalAlignment(SwingConstants.TOP);
 		lblInterros.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblInterros.setForeground(new Color(211, 211, 211));
-		lblInterros.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblInterros.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblInterros.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblInterros);
 		
@@ -282,7 +299,7 @@ public class Student extends JPanel {
 		lblEducation.setVerticalAlignment(SwingConstants.TOP);
 		lblEducation.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblEducation.setForeground(new Color(211, 211, 211));
-		lblEducation.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblEducation.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblEducation.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblEducation);
 		
@@ -298,7 +315,7 @@ public class Student extends JPanel {
 		lblProgres.setVerticalAlignment(SwingConstants.TOP);
 		lblProgres.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblProgres.setForeground(new Color(211, 211, 211));
-		lblProgres.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblProgres.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblProgres.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblProgres);
 	
@@ -326,6 +343,7 @@ public class Student extends JPanel {
 public static void deselectAll() {
 	for(int i = 0; i< ((Container) Application.panelStudents).getComponentCount(); i++) {
 		if(selectedStudents.contains(((Container) Application.panelStudents).getComponent(i))) {
+			((Container) ((Container) ((Container) Application.panelStudents.getComponent(i)).getComponent(0)).getComponent(0)).getComponent(1).setVisible(true);
 			((JComponent) ((Container) Application.panelStudents).getComponent(i)).setBackground(new Color(40, 40, 40));
 			((JComponent) ((Container) Application.panelStudents).getComponent(i)).getComponent(0).setBackground(new Color(40, 40, 40));
 			((JComponent) ((Container) Application.panelStudents).getComponent(i)).getComponent(1).setBackground(new Color(40, 40, 40));

@@ -283,20 +283,6 @@ public class StudentMenu extends JPanel {
 		delete.setVisible(false);
 		settings2.setVisible(false);
 		
-		if(!NewStudent.isEmpty) {
-		for(int k = 0;k<Application.panelStudents.getComponentCount(); k++) {
-		for(int i = 0;i<((Container) Application.panelStudents.getComponent(k)).getComponentCount();i++) {
-			for(int j = 0;j<Application.panelStudents.getComponentCount();j++) {
-				//((Container) Application.panelStudents.getComponent(j)).getComponent(i).setForeground(Color.white);
-			//Application.panelStudents.getComponent(j).setBackground(new Color(60, 60, 60));
-			((Container) Application.panelStudents.getComponent(j)).getComponent(0).setForeground(Color.black);
-		}
-		}
-}
-		Application.no.setText(String.valueOf(Application.panelStudents.getComponentCount()));
-		}else {
-			Application.no.setText("0");
-}
 		}
 	
 	

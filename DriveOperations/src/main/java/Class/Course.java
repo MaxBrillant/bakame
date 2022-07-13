@@ -52,72 +52,8 @@ public class Course extends JPanel {
 	 * Create the panel.
 	 */
 	public Course(String classroom_in_ay_id) {
-		setBackground(new Color(60, 60, 60));
-		/*
-		 * addMouseListener(new MouseAdapter() {
-		 * 
-		 * @Override public void mouseClicked(MouseEvent e) {
-		 * 
-		 * 
-		 * CourseMenu.deselect(); boolean alreadyExists = false;
-		 * if((MouseEvent.CTRL_MASK & e.getModifiers())!=0) {
-		 * if(!selectedCourses.contains(getComponent(0).getParent())) {
-		 * selectedCourses.add(getComponent(0).getParent()); }else {
-		 * selectedCourses.remove(getComponent(0).getParent()); } }else {
-		 * 
-		 * if(selectedCourses.contains(getComponent(0).getParent())) { alreadyExists =
-		 * true; } deselectAll(); CourseMenu.deselect();
-		 * selectedCourses.add(getComponent(0).getParent()); }
-		 * 
-		 * 
-		 * for(int i = 0; i<selectedCourses.toArray().length; i++) { for(int j = 0; j<
-		 * Application.panelCourses.getComponentCount(); j++) {
-		 * if(Application.panelCourses.getComponent(j).equals(selectedCourses.get(i))) {
-		 * Application.panelCourses.getComponent(j).setBackground(new Color(20, 148,
-		 * 198));
-		 * 
-		 * for(int k = 0;k<((Container)
-		 * Application.panelCourses.getComponent(j)).getComponentCount();k++) {
-		 * ((Container)
-		 * Application.panelCourses.getComponent(j)).getComponent(k).setForeground(Color
-		 * .white); } }}}
-		 * 
-		 * // CourseMenu.edit.setVisible(true); CourseMenu.delete.setVisible(true);
-		 * CourseMenu.goBackward.setVisible(true);
-		 * CourseMenu.goForward.setVisible(true); CourseMenu.publish.setVisible(true);
-		 * CourseMenu.stats.setVisible(true); if(selectedCourses.toArray().length>1) {
-		 * CourseMenu.edit.setVisible(false); CourseMenu.stats.setVisible(false);
-		 * CourseMenu.goForward.setVisible(false);
-		 * CourseMenu.goBackward.setVisible(false); }
-		 * 
-		 * if(selectedCourses.toArray().length==1) { Component comp = null;
-		 * 
-		 * for(int i = 0; i< Application.panelCourses.getComponentCount(); i++) {
-		 * if(Application.panelCourses.getComponent(i).equals(selectedCourses.get(0))) {
-		 * comp = Application.panelCourses.getComponent(i); } }
-		 * 
-		 * if(!comp.equals(null)) {
-		 * if(Application.panelCourses.getComponent(Application.panelCourses.
-		 * getComponentCount()-1).equals(comp)) {
-		 * CourseMenu.goBackward.setVisible(false);
-		 * }if(Application.panelCourses.getComponent(0).equals(comp)) {
-		 * CourseMenu.goForward.setVisible(false); } }}
-		 * 
-		 * if(selectedCourses.toArray().length==0) { deselectAll(); }
-		 * Application.no.setText(getName());
-		 * 
-		 * } public void mouseEntered(MouseEvent e) {
-		 * if(!selectedCourses.contains(getComponent(0).getParent())) {
-		 * setBackground(new Color(60, 60, 60).brighter()); setBorder(new LineBorder(new
-		 * Color(20, 148, 198))); } }public void mouseExited(MouseEvent e) {
-		 * if(!selectedCourses.contains(getComponent(0).getParent())) {
-		 * setBackground(new Color(60, 60, 60)); setBorder(null); }
-		 * 
-		 * } });
-		 */
 		
 		
-
 		setBorder(null);
 		setBackground(new Color(40, 40, 40));
 		addMouseListener(new MouseAdapter() {
@@ -146,23 +82,24 @@ public class Course extends JPanel {
 					if(selectedCourses.toArray().length==1) {
 						Component comp = null;
 
-					for(int i = 0; i< Application.panelStudents.getComponentCount(); i++) {
-							if(Application.panelStudents.getComponent(i).equals(selectedCourses.get(0))) {
-								comp = Application.panelStudents.getComponent(i);
+					for(int i = 0; i< Application.panelCourses.getComponentCount(); i++) {
+							if(Application.panelCourses.getComponent(i).equals(selectedCourses.get(0))) {
+								comp = Application.panelCourses.getComponent(i);
 							}
 						}
 					
-							if(!comp.equals(null)) {
-					}}
+						}
 					
 					for(int i = 0; i<selectedCourses.toArray().length; i++) {
-						for(int j = 0; j< Application.panelStudents.getComponentCount(); j++) {
-							if(Application.panelStudents.getComponent(j).equals(selectedCourses.get(i))) {
-								((Container) Application.panelStudents.getComponent(j)).getComponent(0).setBackground(new Color(20, 148, 198));
-								((Container) Application.panelStudents.getComponent(j)).getComponent(1).setBackground(new Color(20, 148, 198));
+						for(int j = 0; j< Application.panelCourses.getComponentCount(); j++) {
+							if(Application.panelCourses.getComponent(j).equals(selectedCourses.get(i))) {
+								((Container) Application.panelCourses.getComponent(j)).getComponent(0).setBackground(new Color(20, 148, 198, 50));
+								((Container) Application.panelCourses.getComponent(j)).getComponent(1).setBackground(new Color(20, 148, 198, 50));
+								((JComponent) Application.panelCourses.getComponent(j)).setBorder(new LineBorder(new Color(20, 148, 198), 2));
+								((Container) ((Container) Application.panelCourses.getComponent(j)).getComponent(0)).getComponent(0).setVisible(true);
 								
-								for(int k = 0;k<((Container) Application.panelStudents.getComponent(j)).getComponentCount();k++) {
-									((Container) Application.panelStudents.getComponent(j)).getComponent(k).setForeground(Color.white);
+								for(int k = 0;k<((Container) Application.panelCourses.getComponent(j)).getComponentCount();k++) {
+									((Container) Application.panelCourses.getComponent(j)).getComponent(k).setForeground(Color.white);
 								}
 					}}}
 					
@@ -207,12 +144,11 @@ public class Course extends JPanel {
 				if(!selectedCourses.contains(getComponent(0).getParent())) {
 					getComponent(0).setBackground(new Color(60, 60, 60));
 					getComponent(1).setBackground(new Color(60, 60, 60));
-					//setBorder(new LineBorder(new Color(20, 148, 198)));
-				}
+					}
 			}public void mouseExited(MouseEvent e) {
 				if(!selectedCourses.contains(getComponent(0).getParent())) {
-					getComponent(0).setBackground(new Color(40, 40, 40));
-					getComponent(1).setBackground(new Color(40, 40, 40));
+					getComponent(0).setBackground(getBackground());
+					getComponent(1).setBackground(getBackground());
 					setBorder(null);
 				}
 				
@@ -225,9 +161,9 @@ public class Course extends JPanel {
 		
 		
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(35, 40));
+		panel.setPreferredSize(new Dimension(35, 30));
 		panel.setBackground(new Color(40, 40, 40));
-		add(panel, BorderLayout.CENTER);
+		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		
@@ -237,9 +173,14 @@ public class Course extends JPanel {
 		panel.add(panel1, BorderLayout.WEST);
 		panel1.setLayout(new BorderLayout(0, 0));
 		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		panel1.add(lblNewLabel_1, BorderLayout.CENTER);
+		
 		JLabel lblUmuhozaChrisKoen = new JLabel();
 		lblUmuhozaChrisKoen.setAlignmentX(1.0f);
-		lblUmuhozaChrisKoen.setText("Umuhoza Chris Koen Michael");
+		lblUmuhozaChrisKoen.setText("Mathematiques Statistiques");
 		lblUmuhozaChrisKoen.setForeground(Color.WHITE);
 		lblUmuhozaChrisKoen.setFont(new Font("Roboto", Font.BOLD, 16));
 		panel.add(lblUmuhozaChrisKoen, BorderLayout.CENTER);
@@ -254,14 +195,26 @@ public class Course extends JPanel {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(null);
 		panel_1.setPreferredSize(new Dimension(10, 37));
-		add(panel_1, BorderLayout.SOUTH);
+		add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 1));
 		panel_1.setBackground(new Color(40, 40, 40));
 		
-		JLabel lblNewLabel = new JLabel("49.75%");
+		
+		JLabel lblProgres = new JLabel(" pas cot\u00E9 ");
+		lblProgres.setHorizontalAlignment(SwingConstants.CENTER);
+		//lblProgres.setPreferredSize(new Dimension(70, 18));
+		lblProgres.setOpaque(true);
+		lblProgres.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblProgres.setForeground(Color.BLACK);
+		lblProgres.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblProgres.setBackground(new Color(233, 150, 122));
+		panel_1.add(lblProgres);
+		
+		
+		JLabel lblNewLabel = new JLabel("Moyenne: 58.5/105");
 		lblNewLabel.setBackground(new Color(250, 128, 114));
-		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 14));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblNewLabel.setForeground(new Color(211, 211, 211));
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		panel_1.add(lblNewLabel);
@@ -269,15 +222,15 @@ public class Course extends JPanel {
 		JLabel label = new JLabel("-");
 		label.setVerticalAlignment(SwingConstants.TOP);
 		label.setHorizontalTextPosition(SwingConstants.LEADING);
-		label.setForeground(new Color(211, 211, 211));
+		label.setForeground(new Color(255, 255, 255));
 		label.setFont(new Font("Roboto", Font.PLAIN, 14));
 		label.setBackground(new Color(250, 128, 114));
 		panel_1.add(label);
 		
-		JLabel lblPoints = new JLabel("Points: 1902.39/2888");
+		JLabel lblPoints = new JLabel("65.74%");
 		lblPoints.setVerticalAlignment(SwingConstants.TOP);
 		lblPoints.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblPoints.setForeground(new Color(211, 211, 211));
+		lblPoints.setForeground(Color.WHITE);
 		lblPoints.setFont(new Font("Roboto", Font.BOLD, 14));
 		lblPoints.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblPoints);
@@ -290,27 +243,11 @@ public class Course extends JPanel {
 		label_1.setBackground(new Color(250, 128, 114));
 		panel_1.add(label_1);
 		
-		JLabel lblPlace = new JLabel("234 eme");
-		lblPlace.setVerticalAlignment(SwingConstants.TOP);
-		lblPlace.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblPlace.setForeground(new Color(211, 211, 211));
-		lblPlace.setFont(new Font("Roboto", Font.BOLD, 14));
-		lblPlace.setBackground(new Color(250, 128, 114));
-		panel_1.add(lblPlace);
-		
-		JLabel label_5 = new JLabel("-");
-		label_5.setVerticalAlignment(SwingConstants.TOP);
-		label_5.setHorizontalTextPosition(SwingConstants.LEADING);
-		label_5.setForeground(new Color(211, 211, 211));
-		label_5.setFont(new Font("Roboto", Font.BOLD, 14));
-		label_5.setBackground(new Color(250, 128, 114));
-		panel_1.add(label_5);
-		
 		JLabel lblEchecs = new JLabel("12 echecs");
 		lblEchecs.setVerticalAlignment(SwingConstants.TOP);
 		lblEchecs.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblEchecs.setForeground(new Color(211, 211, 211));
-		lblEchecs.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblEchecs.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblEchecs.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblEchecs);
 		
@@ -326,25 +263,9 @@ public class Course extends JPanel {
 		lblInterros.setVerticalAlignment(SwingConstants.TOP);
 		lblInterros.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblInterros.setForeground(new Color(211, 211, 211));
-		lblInterros.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblInterros.setFont(new Font("Roboto", Font.PLAIN, 14));
 		lblInterros.setBackground(new Color(250, 128, 114));
 		panel_1.add(lblInterros);
-		
-		JLabel label_3 = new JLabel("-");
-		label_3.setVerticalAlignment(SwingConstants.TOP);
-		label_3.setHorizontalTextPosition(SwingConstants.LEADING);
-		label_3.setForeground(new Color(211, 211, 211));
-		label_3.setFont(new Font("Roboto", Font.BOLD, 14));
-		label_3.setBackground(new Color(250, 128, 114));
-		panel_1.add(label_3);
-		
-		JLabel lblEducation = new JLabel("Education: 82/180");
-		lblEducation.setVerticalAlignment(SwingConstants.TOP);
-		lblEducation.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblEducation.setForeground(new Color(211, 211, 211));
-		lblEducation.setFont(new Font("Roboto", Font.BOLD, 14));
-		lblEducation.setBackground(new Color(250, 128, 114));
-		panel_1.add(lblEducation);
 		
 		JLabel label_4 = new JLabel("-");
 		label_4.setVerticalAlignment(SwingConstants.TOP);
@@ -354,31 +275,53 @@ public class Course extends JPanel {
 		label_4.setBackground(new Color(250, 128, 114));
 		panel_1.add(label_4);
 		
-		JLabel lblProgres = new JLabel("Progres: 120.75%");
-		lblProgres.setVerticalAlignment(SwingConstants.TOP);
-		lblProgres.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblProgres.setForeground(new Color(211, 211, 211));
-		lblProgres.setFont(new Font("Roboto", Font.BOLD, 14));
-		lblProgres.setBackground(new Color(250, 128, 114));
-		panel_1.add(lblProgres);
+		JLabel lblProgres1 = new JLabel("Progres: 120.75%");
+		lblProgres1.setVerticalAlignment(SwingConstants.TOP);
+		lblProgres1.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblProgres1.setForeground(new Color(211, 211, 211));
+		lblProgres1.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblProgres1.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblProgres1);
+		
+		JLabel label_3 = new JLabel("-");
+		label_3.setVerticalAlignment(SwingConstants.TOP);
+		label_3.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_3.setForeground(new Color(211, 211, 211));
+		label_3.setFont(new Font("Roboto", Font.BOLD, 14));
+		label_3.setBackground(new Color(250, 128, 114));
+		panel_1.add(label_3);
+		
+		JLabel lblEducation = new JLabel("Reussite: 83%");
+		lblEducation.setVerticalAlignment(SwingConstants.TOP);
+		lblEducation.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblEducation.setForeground(new Color(211, 211, 211));
+		lblEducation.setFont(new Font("Roboto", Font.PLAIN, 14));
+		lblEducation.setBackground(new Color(250, 128, 114));
+		panel_1.add(lblEducation);
 	
 		
 	}
 	
 	public static void deselectAll() {
 		for(int i = 0; i< ((Container) Application.panelCourses).getComponentCount(); i++) {
+			if(((Container) Application.panelCourses).getComponent(i) instanceof Course) {
 			if(selectedCourses.contains(((Container) Application.panelCourses).getComponent(i))) {
-				((JComponent) ((Container) Application.panelCourses).getComponent(i)).setBackground(new Color(60, 60, 60));
+				((JComponent) ((Container) Application.panelCourses).getComponent(i)).setBackground(new Color(40, 40, 40));
+				((JComponent) ((Container) Application.panelCourses).getComponent(i)).getComponent(0).setBackground(new Color(40, 40, 40));
+				((JComponent) ((Container) Application.panelCourses).getComponent(i)).getComponent(1).setBackground(new Color(40, 40, 40));
+				((Container) ((Container) Application.panelCourses.getComponent(i)).getComponent(0)).getComponent(0).setVisible(false);
 				((JComponent) ((Container) Application.panelCourses).getComponent(i)).setBorder(null);
 			}
+			((Container) ((Container) Application.panelCourses.getComponent(i)).getComponent(0)).getComponent(0).setVisible(false);
+			
 				Application.panelCourses.revalidate();
 
 				Application.panelCourses.repaint();
-		
+			}
 		}
 
 		selectedCourses.clear();
 		
 		CourseMenu.deselect();
-	}
+}
 }

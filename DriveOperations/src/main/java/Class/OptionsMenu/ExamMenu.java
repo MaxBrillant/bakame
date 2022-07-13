@@ -208,23 +208,9 @@ public class ExamMenu extends JPanel {
 	
 	
 	public static void deselect() {
-		TestBox.isSelected = false;
-		
 		edit.setVisible(false);
 		delete.setVisible(false);
 		//corrige.setVisible(false);
-		
-		for(int k = 0;k<Application.panelExams.getComponentCount(); k++) {
-			if(Application.panelExams.getComponent(k) instanceof ExamBox) {
-		for(int i =0;i<((Container) Application.panelExams.getComponent(k)).getComponentCount();i++) {
-			for(int j = 0;j<Application.panelExams.getComponentCount();j++) {
-				if(Application.panelExams.getComponent(j) instanceof ExamBox) {
-				//((Container) Application.panelTests.getComponent(j)).getComponent(i).setForeground(Color.white);
-			Application.panelExams.getComponent(j).setBackground(new Color(60, 60, 60));
-		}}}
-		}
-}
-		Application.no.setText(String.valueOf(Application.panelExams.getComponentCount()));
 		}
 	
 	

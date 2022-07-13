@@ -247,18 +247,23 @@ public class Test extends JPanel {
 		if(hasPreviousTests(test_id, getTestCourse(test_id), getTestClassroom(test_id), getTestTerm(test_id))) {
 			String previousNote = LPane.loadStudentNote(getPreviousTest(test_id, getTestCourse(test_id), getTestClassroom(test_id), getTestTerm(test_id)), student_in_classroom_id);
 			String note = LPane.loadStudentNote(test_id, student_in_classroom_id);
-			if(!previousNote.equals("0/0") || !note.equals("0/0")) {
 			
 			List l = Arrays.asList(previousNote.split("/"));
 			List l1 = Arrays.asList(note.split("/"));
 			
-			Double percent1 = (100*Double.parseDouble(l1.get(0).toString()))/Double.parseDouble(l1.get(1).toString());
-			Double percent2 = (100*Double.parseDouble(l.get(0).toString()))/Double.parseDouble(l.get(1).toString());
-			
+			Double percent1 = (double) 0;
+			Double percent2 = (double) 0;
+			if(!note.equals("0/0") && !previousNote.equals("0/0")) {
+			if(!note.equals("0/0")) {
+			percent1 = (100*Double.parseDouble(l1.get(0).toString()))/Double.parseDouble(l1.get(1).toString());
+			}
+			if(!previousNote.equals("0/0")) {
+			percent2 = (100*Double.parseDouble(l.get(0).toString()))/Double.parseDouble(l.get(1).toString());
+			}
 			progress = new DecimalFormat("##.##").format((percent1-percent2));
 			}else {
 				progress = "0";
-			}
+				}
 		}else {
 			progress = "0";
 		}
@@ -267,14 +272,16 @@ public class Test extends JPanel {
 	
 	
 	public static String getTestCourseProgression(String test_id) {
-		double progress = 0;
+		double progress = ((double)0);
 		String classroom_id = Test.getTestClassroom(test_id);
 		Object[] lines = Home.loadActiveStudents(classroom_id);
 		for(int i = 0; i< lines.length; i++) {
 			double studentProgress = Double.parseDouble(Test.getTestProgression(test_id, lines[i].toString()));
 			progress = progress+ studentProgress;
-		}
-		return new DecimalFormat("##.##").format(progress);
+			}
+		int n = getNumberOfTestParticipants(test_id);
+		if(progress!=0) {
+		}return new DecimalFormat("##.##").format(progress/n).replaceAll(",", ".");
 	}
 	
 	
@@ -357,6 +364,22 @@ public class Test extends JPanel {
 }
 	
 
+	public static int getNumberOfTestParticipants(String test_id) {
+		 
+		int number = 0;
+		
+		String classroom_id = Test.getTestClassroom(test_id);
+		Object[] lines = Home.loadActiveStudents(classroom_id);
+		for(int i = 0; i< lines.length; i++) {
+			String s = LPane.loadStudentNote(test_id, lines[i].toString());
+			if(!s.equals("0/0")) {
+				number++;
+			}
+		}
+		return number;
+	}
+	
+	
 	public static String getTestMaxima(String test_id) {
 		 
 			String maxima = null;
@@ -541,8 +564,6 @@ public static String getTestTerm(String test_id) {
 
 		LPane.average.setVisible(true);
 		LPane.comboBox.setVisible(true);
-		LPane.supprimer.setVisible(false);
-		LPane.modifier.setVisible(false);
 		
 		
 		LPane.no.setText(((List) l.get(6)).toArray().length+" interros effectuees");

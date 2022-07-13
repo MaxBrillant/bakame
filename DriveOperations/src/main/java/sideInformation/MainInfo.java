@@ -16,7 +16,12 @@ import javax.swing.border.LineBorder;
 import Application.EducationFrame;
 import Application.Home;
 import Application.ResizeImages;
+import Application.UserHistory;
+import Application.Users;
 import Class.CustomVerticalScrollBarUI;
+import Class.RolesAndPrizes;
+import Class.StudentRoles;
+import Class.Terms;
 import Stats.CourseStats;
 import Stats.StatsPane;
 import Stats.StudentStats;
@@ -51,7 +56,7 @@ public class MainInfo extends JPanel {
 	public MainInfo(String ay_id) {
 		setBorder(null);
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(350, 750));
+		setPreferredSize(new Dimension(320, 750));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
@@ -62,7 +67,7 @@ public class MainInfo extends JPanel {
 		
 		
 		JLabel label = new JLabel(ScholarYears.getAcademicYearName(ay_id));
-		label.setPreferredSize(new Dimension(360, 20));
+		label.setPreferredSize(new Dimension(300, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(Color.WHITE);
 		label.setFont(new Font("Roboto", Font.BOLD, 16));
@@ -166,37 +171,25 @@ public class MainInfo extends JPanel {
 		panel_2.add(numberOfTeachers, BorderLayout.CENTER);
 		
 		JSeparator separator = new JSeparator();
-		separator.setPreferredSize(new Dimension(320, 1));
+		separator.setPreferredSize(new Dimension(300, 1));
 		separator.setForeground(Color.WHITE);
 		add(separator);
 		
 		
-
-		CustomButton communication = new CustomButton("<html><div style='text-align: leading;'>Historique de communication</div></html>");
-		communication.setRadius(15);
-		communication.setAlignmentX(Component.CENTER_ALIGNMENT);
-		communication.setMultiClickThreshhold(2000L);
-		communication.setMargin(new Insets(2, 10, 2, 14));
-		communication.setHorizontalAlignment(SwingConstants.LEADING);
-		communication.setPreferredSize(new Dimension(320, 40));
-		communication.setIconTextGap(10);
-		communication.setForeground(Color.WHITE);
-		communication.setFont(new Font("Roboto", Font.BOLD, 14));
-		communication.setFocusPainted(false);
-		communication.setBorderColor(new Color(255, 255, 255));
-		communication.setBackground(new Color(40, 40, 40));
-		communication.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(communication);
-		
-		
 		
 		CustomButton trimestres = new CustomButton("<html><div style='text-align: leading;'>Trimestres</div></html>");
+		trimestres.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Terms t = new Terms(ay_id);
+				t.setVisible(true);
+			}
+		});
 		trimestres.setRadius(15);
 		trimestres.setAlignmentX(Component.CENTER_ALIGNMENT);
 		trimestres.setMultiClickThreshhold(2000L);
 		trimestres.setMargin(new Insets(2, 10, 2, 14));
 		trimestres.setHorizontalAlignment(SwingConstants.LEADING);
-		trimestres.setPreferredSize(new Dimension(320, 40));
+		trimestres.setPreferredSize(new Dimension(300, 40));
 		trimestres.setIconTextGap(10);
 		trimestres.setForeground(Color.WHITE);
 		trimestres.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -208,12 +201,18 @@ public class MainInfo extends JPanel {
 		
 		
 		CustomButton punitions = new CustomButton("<html><div style='text-align: leading;'>Liste des punitions</div></html>");
+		punitions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EducationFrame ef = new EducationFrame(ay_id);
+				ef.setVisible(true);
+			}
+		});
 		punitions.setRadius(15);
 		punitions.setAlignmentX(Component.CENTER_ALIGNMENT);
 		punitions.setMultiClickThreshhold(2000L);
 		punitions.setMargin(new Insets(2, 10, 2, 14));
 		punitions.setHorizontalAlignment(SwingConstants.LEADING);
-		punitions.setPreferredSize(new Dimension(320, 40));
+		punitions.setPreferredSize(new Dimension(300, 40));
 		punitions.setIconTextGap(10);
 		punitions.setForeground(Color.WHITE);
 		punitions.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -225,13 +224,19 @@ public class MainInfo extends JPanel {
 		
 		
 		
-		CustomButton utilisateurs = new CustomButton("<html><div style='text-align: leading;'>Utilisateurs</div></html>");
+		CustomButton utilisateurs = new CustomButton("<html><div style='text-align: leading;'>Utilisateurs et responsabilites</div></html>");
+		utilisateurs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Users u = new Users(ay_id);
+				u.setVisible(true);
+			}
+		});
 		utilisateurs.setRadius(15);
 		utilisateurs.setAlignmentX(Component.CENTER_ALIGNMENT);
 		utilisateurs.setMultiClickThreshhold(2000L);
 		utilisateurs.setMargin(new Insets(2, 10, 2, 14));
 		utilisateurs.setHorizontalAlignment(SwingConstants.LEADING);
-		utilisateurs.setPreferredSize(new Dimension(320, 40));
+		utilisateurs.setPreferredSize(new Dimension(300, 40));
 		utilisateurs.setIconTextGap(10);
 		utilisateurs.setForeground(Color.WHITE);
 		utilisateurs.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -244,12 +249,18 @@ public class MainInfo extends JPanel {
 		
 
 		CustomButton historique = new CustomButton("<html><div style='text-align: leading;'>Historique des utilisateurs</div></html>");
+		historique.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserHistory u = new UserHistory();
+				u.setVisible(true);
+			}
+		});
 		historique.setRadius(15);
 		historique.setAlignmentX(Component.CENTER_ALIGNMENT);
 		historique.setMultiClickThreshhold(2000L);
 		historique.setMargin(new Insets(2, 10, 2, 14));
 		historique.setHorizontalAlignment(SwingConstants.LEADING);
-		historique.setPreferredSize(new Dimension(320, 40));
+		historique.setPreferredSize(new Dimension(300, 40));
 		historique.setIconTextGap(10);
 		historique.setForeground(Color.WHITE);
 		historique.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -261,13 +272,19 @@ public class MainInfo extends JPanel {
 		
 		
 		
-		CustomButton studentRoles = new CustomButton("<html><div style='text-align: leading;'>Responsabilites et titres des eleves</div></html>");
+		CustomButton studentRoles = new CustomButton("<html><div style='text-align: leading;'>Roles et titres des eleves</div></html>");
+		studentRoles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RolesAndPrizes s = new RolesAndPrizes(ay_id);
+				s.setVisible(true);
+			}
+		});
 		studentRoles.setRadius(15);
 		studentRoles.setAlignmentX(Component.CENTER_ALIGNMENT);
 		studentRoles.setMultiClickThreshhold(2000L);
 		studentRoles.setMargin(new Insets(2, 10, 2, 14));
 		studentRoles.setHorizontalAlignment(SwingConstants.LEADING);
-		studentRoles.setPreferredSize(new Dimension(320, 40));
+		studentRoles.setPreferredSize(new Dimension(300, 40));
 		studentRoles.setIconTextGap(10);
 		studentRoles.setForeground(Color.WHITE);
 		studentRoles.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -282,7 +299,7 @@ public class MainInfo extends JPanel {
 		Accounting.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Accounting.setMargin(new Insets(2, 10, 2, 14));
 		Accounting.setHorizontalAlignment(SwingConstants.LEADING);
-		Accounting.setPreferredSize(new Dimension(320, 40));
+		Accounting.setPreferredSize(new Dimension(300, 40));
 		Accounting.setIconTextGap(10);
 		Accounting.setForeground(Color.WHITE);
 		Accounting.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -293,12 +310,30 @@ public class MainInfo extends JPanel {
 		add(Accounting);
 		
 		
+
+		CustomButton communication = new CustomButton("<html><div style='text-align: leading;'>Historique de communication</div></html>");
+		communication.setRadius(15);
+		communication.setAlignmentX(Component.CENTER_ALIGNMENT);
+		communication.setMultiClickThreshhold(2000L);
+		communication.setMargin(new Insets(2, 10, 2, 14));
+		communication.setHorizontalAlignment(SwingConstants.LEADING);
+		communication.setPreferredSize(new Dimension(300, 40));
+		communication.setIconTextGap(10);
+		communication.setForeground(Color.WHITE);
+		communication.setFont(new Font("Roboto", Font.BOLD, 14));
+		communication.setFocusPainted(false);
+		communication.setBorderColor(new Color(255, 255, 255));
+		communication.setBackground(new Color(40, 40, 40));
+		communication.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(communication);
+		
+		
 		CustomButton deletedClasses = new CustomButton("<html><div style='text-align: leading;'>Classes supprimees</div></html>");
 		deletedClasses.setRadius(15);
 		deletedClasses.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deletedClasses.setMargin(new Insets(2, 10, 2, 14));
 		deletedClasses.setHorizontalAlignment(SwingConstants.LEADING);
-		deletedClasses.setPreferredSize(new Dimension(320, 40));
+		deletedClasses.setPreferredSize(new Dimension(300, 40));
 		deletedClasses.setIconTextGap(10);
 		deletedClasses.setForeground(Color.WHITE);
 		deletedClasses.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -314,7 +349,7 @@ public class MainInfo extends JPanel {
 		deletedStudents.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deletedStudents.setMargin(new Insets(2, 10, 2, 14));
 		deletedStudents.setHorizontalAlignment(SwingConstants.LEADING);
-		deletedStudents.setPreferredSize(new Dimension(320, 40));
+		deletedStudents.setPreferredSize(new Dimension(300, 40));
 		deletedStudents.setIconTextGap(10);
 		deletedStudents.setForeground(Color.WHITE);
 		deletedStudents.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -330,7 +365,7 @@ public class MainInfo extends JPanel {
 		deletedTeachers.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deletedTeachers.setMargin(new Insets(2, 10, 2, 14));
 		deletedTeachers.setHorizontalAlignment(SwingConstants.LEADING);
-		deletedTeachers.setPreferredSize(new Dimension(320, 40));
+		deletedTeachers.setPreferredSize(new Dimension(300, 40));
 		deletedTeachers.setIconTextGap(10);
 		deletedTeachers.setForeground(Color.WHITE);
 		deletedTeachers.setFont(new Font("Roboto", Font.BOLD, 14));

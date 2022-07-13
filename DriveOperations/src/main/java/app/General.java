@@ -257,7 +257,7 @@ public class General extends JPanel {
 		panelPoints.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
 		panelProgress.setLayout(new WrapLayout(WrapLayout.CENTER,10,6));
 		//loadName(student_in_classroom_id);
-		totalScore(student_in_classroom_id, classroom_in_ay_id, term_id);
+		//totalScore(student_in_classroom_id, classroom_in_ay_id, term_id);
 		
 
 		for(int i = 0;i<panel_2.getComponentCount(); i++) {
@@ -387,44 +387,7 @@ public class General extends JPanel {
 	}
 	
 	
-	
-	public static void loadName(String student_id, Container c) {
-		/*
-		 * File file = new
-		 * File("Data/Establishments/"+NewEstablishment.getSchoolID(UserPanel.
-		 * selectedSchool)+"/"+ScholarYears.selectedScholarYear+"/"+Home.className+
-		 * "/Students.txt"); aws.downloadContent(file.getPath()); FileReader fr; try {
-		 * fr = new FileReader(file);
-		 * 
-		 * 
-		 * BufferedReader br = new BufferedReader(fr); Object[] lines =
-		 * Home.loadActiveStudents(file.getPath()); List note1;
-		 * 
-		 * if(App.n<lines.length) { note1 =
-		 * Arrays.asList(lines[i].toString().trim().split("//")); }else{ note1 =
-		 * Arrays.asList(lines[0].toString().trim().split("//")); }
-		 */
-		((JLabel) c.getParent().getParent().getParent().getComponent(0)).setText(Home.getStudentName(student_id));
-		((JLabel) ((Container) c.getParent().getParent().getParent().getComponent(2)).getComponent(0)).setText(App.getStudentNumber(student_id));
-		/*
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-		
-		if(c.getComponentCount()>0) {
-			for(int j = 0; j<c.getComponentCount(); j++) {
-				c.getComponent(j).setBackground(new Color(80, 80, 80));
-				((Container) c.getComponent(j)).getComponent(0).setForeground(Color.white);
-			}
-		c.getComponent(App.n).setBackground(new Color(20, 148, 198));
-		((Container) c.getComponent(App.n)).getComponent(0).setForeground(Color.white);
-	}}
-	
-	
-
-	
-	public static void totalScore(String student_in_classroom_id, String classroom_in_ay_id, String term_id) {
+	public static void totalSdcore(String student_in_classroom_id, String classroom_in_ay_id, String term_id) {
 	panelPoints.removeAll();
 	panelPercent.removeAll();
 	panelTests.removeAll();
