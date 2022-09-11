@@ -157,10 +157,19 @@ public class Application {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		
+		
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 128, 128));
+		panel.setBackground(new Color(40, 40, 40));
+		panel.setLayout(new BorderLayout(0, 0));
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		
+		
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Home.getClassColors(classroom_in_ay_id).get(0));
 		panel_1.setPreferredSize(new Dimension(10, 45));
-		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
+		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		classe = new JLabel(ScholarYears.getAcademicYearName(Login.selectedAcademicYearID)+" - "+Home.getClassName(classroom_in_ay_id));
@@ -203,11 +212,13 @@ public class Application {
 		panel_1.add(label, BorderLayout.WEST);
 		
 		
+		
+		
 		JPanel p = new JPanel();
 		//panel_3.setBorder(null);
 		//panel_3.setBackground();
 		p.setLayout(new BorderLayout(0, 0));
-		frame.getContentPane().add(p, BorderLayout.CENTER);
+		panel.add(p, BorderLayout.CENTER);
 		
 		
 		JPanel panel_5 = new JPanel();
@@ -216,15 +227,15 @@ public class Application {
 		panel_5.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 		
 		
-		JButton logo = new JButton("");
-		logo.setMultiClickThreshhold(1000L);
-		logo.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
-		logo.setPreferredSize(new Dimension(70, 50));
-		logo.setFont(new Font("Arial", Font.PLAIN, 27));
-		logo.setFocusPainted(false);
-		logo.setBorder(null);
-		logo.setBackground(new Color(40, 40, 40));
-		panel_5.add(logo);
+		JButton menu = new JButton("");
+		menu.setMultiClickThreshhold(1000L);
+		menu.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		menu.setPreferredSize(new Dimension(70, 50));
+		menu.setFont(new Font("Arial", Font.PLAIN, 27));
+		menu.setFocusPainted(false);
+		menu.setBorder(null);
+		menu.setBackground(new Color(40, 40, 40));
+		panel_5.add(menu);
 		
 		
 		JButton btnStudents = new JButton("El\u00E8ves");
@@ -317,7 +328,7 @@ public class Application {
 					Component c2 = panel_10.getComponent(1);
 					panel_10.removeAll();
 					panel_10.add(c1, BorderLayout.CENTER);
-					panel_10.add(c2, BorderLayout.SOUTH);
+					panel_10.add(c2, BorderLayout.NORTH);
 				}else {
 					Component c1 = panel_10.getComponent(0);
 					Component c2 = panel_10.getComponent(1);
@@ -594,11 +605,34 @@ public class Application {
 		panelExams.setBackground(new Color(40, 40, 40));
 		panelExams.setLayout(new WrapLayout(WrapLayout.CENTER, 10, 0));
 		
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setPreferredSize(new Dimension(350, 80));
+		frame.getContentPane().add(panel_4, BorderLayout.WEST);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		
+		JPanel logo_panel = new JPanel();
+		logo_panel.setPreferredSize(new Dimension(350, 80));
+		logo_panel.setBackground(new Color(40, 40, 40));
+		panel_4.add(logo_panel, BorderLayout.NORTH);
+		logo_panel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
+		
+		JButton logo = new JButton("");
+		logo.setFocusPainted(false);
+		logo.setBackground(new Color(40, 40, 40));
+		logo.setBorder(null);
+		logo_panel.add(logo);
+		logo.setHorizontalAlignment(SwingConstants.CENTER);
+		logo.setHorizontalTextPosition(SwingConstants.CENTER);
+		logo.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Pictures\\photoshop max\\CG Projects\\Open-ed.png"));
+		logo.setPreferredSize(new Dimension(220, 70));
+		
+		
 		JScrollPane scrollPane_5 = new JScrollPane();
 		scrollPane_5.setBorder(new LineBorder(new Color(211, 211, 211)));
 		scrollPane_5.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane_5.setPreferredSize(new Dimension(350, 2));
-		frame.getContentPane().add(scrollPane_5, BorderLayout.WEST);
+		panel_4.add(scrollPane_5, BorderLayout.CENTER);
 		
 		
 

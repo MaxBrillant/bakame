@@ -256,4 +256,27 @@ public static void loadStudents (String prize_id) {
 		}
 	}
 
+
+
+public static int loadNumberOfStudents (String prize_id) {
+	
+	int count = 0;
+	try {
+		Statement stmt= mysql.con.createStatement();
+
+		ResultSet rs=stmt.executeQuery("select COUNT(*) from student_prizes AS sr "
+				+ "JOIN students AS s "
+				+ "JOIN students_in_classrooms AS sic "
+				+ "WHERE sr.prize_id = '"+prize_id+"' AND sr.sic_id = sic.sic_id AND s.student_id = sic.student_id AND s.is_active = 1 AND sic.is_active = 1");
+		
+		rs.next();
+		count = rs.getInt(1);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	return count;
+
+}
+
 }

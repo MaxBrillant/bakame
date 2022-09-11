@@ -44,6 +44,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import app.App;
 import app.General;
@@ -162,6 +163,11 @@ public class Home {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					try {
+				    UIManager.setLookAndFeel( new FlatLightLaf() );
+				} catch( Exception ex ) {
+				    System.err.println( "Failed to initialize LaF" );
+				}
 					mysql.connectToDB();
 					Home window = new Home("1", "1", "2");
 					window.frame.setVisible(true);
@@ -211,7 +217,7 @@ public class Home {
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(40, 40, 40));
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Bakame.png"));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Pictures\\ILLUSTRATOR\\Open-ed_color.png"));
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(0,0,screensize.width,screensize.height);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -242,10 +248,26 @@ public class Home {
 			}
 		});
 		
+		
+		
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 128, 128));
+		panel.setBackground(new Color(40, 40, 40));
+		panel.setLayout(new BorderLayout(0, 0));
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		
+		
+		JPanel p = new JPanel();
+		p.setForeground(new Color(0, 128, 128));
+		p.setBackground(new Color(40, 40, 40));
+		p.setLayout(new BorderLayout(0, 0));
+		panel.add(p, BorderLayout.CENTER);
+		
+		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(20, 148, 198));
+		panel_1.setBackground(new Color(40, 40, 40));
 		panel_1.setPreferredSize(new Dimension(10, 45));
-		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
+		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		classe = new JLabel(UserPanel.getSchoolFullName(SchoolID)+" - "+ScholarYears.getAcademicYearName(Login.selectedAcademicYearID));
@@ -268,15 +290,11 @@ public class Home {
 		btnAs.setFont(new Font("Roboto", Font.BOLD, 16));
 		btnAs.setFocusPainted(false);
 		btnAs.setBorderPainted(false);
-		btnAs.setBackground(new Color(20, 148, 198));
+		btnAs.setBackground(new Color(40, 40, 40));
 		panel_1.add(btnAs, BorderLayout.WEST);
 		
 		
-		JPanel p = new JPanel();
-		p.setForeground(new Color(0, 128, 128));
-		p.setBackground(new Color(40, 40, 40));
-		p.setLayout(new BorderLayout(0, 0));
-		frame.getContentPane().add(p, BorderLayout.CENTER);
+		
 		
 		
 		JPanel p2 = new JPanel();
@@ -303,7 +321,7 @@ public class Home {
 					Component c2 = panel_2.getComponent(1);
 					panel_2.removeAll();
 					panel_2.add(c1, BorderLayout.CENTER);
-					panel_2.add(c2, BorderLayout.SOUTH);
+					panel_2.add(c2, BorderLayout.NORTH);
 				}else {
 					Component c1 = panel_2.getComponent(0);
 					Component c2 = panel_2.getComponent(1);
@@ -362,7 +380,7 @@ public class Home {
 		panelStudents.setForeground(new Color(0, 128, 128));
 		panelStudents.setBackground(new Color(40, 40, 40));
 		//scrollPane.setViewportView(panelClasses);
-		panelStudents.setLayout(new WrapLayout(0, 5, 5));
+		panelStudents.setLayout(new WrapLayout(WrapLayout.LEADING, 10, 0));
 
 		panelStudents.addMouseListener(new MouseAdapter() {
 			@Override
@@ -375,7 +393,7 @@ public class Home {
 		panelProf.setForeground(new Color(0, 128, 128));
 		panelProf.setBackground(new Color(40, 40, 40));
 		//scrollPane.setViewportView(panelClasses);
-		panelProf.setLayout(new WrapLayout(0, 5, 5));
+		panelProf.setLayout(new WrapLayout(WrapLayout.LEADING, 10, 0));
 		
 		panelProf.addMouseListener(new MouseAdapter() {
 			@Override
@@ -419,7 +437,7 @@ public class Home {
 		//panel_6.setPreferredSize(new Dimension(600, 10));
 		panel_6.setBackground(new Color(40, 40, 40).darker());
 		scrollPane_1.setViewportView(panel_6);
-		panel_6.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 10));
+		panel_6.setLayout(new FlowLayout(FlowLayout.TRAILING, 5, 10));
 		
 		
 		JTextField textField_1 = new JTextField();
@@ -460,11 +478,11 @@ public class Home {
 				if(selectedTab == 2) {
 					for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
 					if(Home.panelProf.getComponent(i).getPreferredSize().height> 50) {
-				Teacher.loadData(((Container) Home.panelProf.getComponent(i)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
+				Teacher.loadTeachers(ay_id);
 				}}
 				Teacher.deselectAll(ay_id);
 			}else if(selectedTab == 1) {
-				HomeMenu2.refreshStudents(ay_id);
+				//HomeMenu2.refreshStudents(ay_id);
 			}
 				}
 		});
@@ -490,11 +508,10 @@ public class Home {
 				if(selectedTab == 2) {
 					for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
 					if(Home.panelProf.getComponent(i).getPreferredSize().height> 50) {
-				Teacher.loadData(((Container) Home.panelProf.getComponent(i)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
-				}}
+						Teacher.loadTeachers(ay_id);}}
 				Teacher.deselectAll(ay_id);
 			}else if(selectedTab == 1) {
-				HomeMenu2.refreshStudents(ay_id);
+				//HomeMenu2.refreshStudents(ay_id);
 			}
 				
 			}
@@ -561,8 +578,7 @@ public class Home {
 					}else if(selectedTab == 2) {
 						for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
 						if(Home.panelProf.getComponent(i).getPreferredSize().height> 50) {
-					Teacher.loadData(((Container) Home.panelProf.getComponent(i)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
-					}}
+							Teacher.loadTeachers(ay_id);}}
 					Teacher.deselectAll(ay_id);
 				}
 				}
@@ -612,8 +628,7 @@ public class Home {
 				}else if(selectedTab == 2) {
 					for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
 					if(Home.panelProf.getComponent(i).getPreferredSize().height> 50) {
-				Teacher.loadData(((Container) Home.panelProf.getComponent(i)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
-				}}
+						Teacher.loadTeachers(ay_id);}}
 				Teacher.deselectAll(ay_id);
 			}
 				}
@@ -635,44 +650,56 @@ public class Home {
 					 Date d1 = null;
 					 Date d2 = null;
 						try {
-							List time = Arrays.asList(getInternetDateAndTime.onlineTime.split("::"));
-							d2 = df.parse(time.get(0).toString());
+							d2 = df.parse(getInternetDateAndTime.getDate());
 							d1 = new DateTime(d2).minusDays(7).toDate();
 						} catch (ParseException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						HomeMenu2.dateChooser.setDate(d1);
+						
+						HomeMenu2.dateChooser.setSelectedDay(d1.getDate());
+						HomeMenu2.dateChooser.setSelectedMonth(d1.getMonth());
+						HomeMenu2.dateChooser.setSelectedMonth(d1.getYear()+1900);
 
-						HomeMenu2.dateChooser_1.setDate(d2);
+
+						HomeMenu2.dateChooser_1.setSelectedDay(d2.getDate());
+						HomeMenu2.dateChooser_1.setSelectedMonth(d2.getMonth());
+						HomeMenu2.dateChooser_1.setSelectedMonth(d2.getYear()+1900);
 				}
 				if(comboBox.getSelectedIndex()==1) {
 					 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 					 Date d1 = null;
 					 Date d2 = null;
 						try {
-							List time = Arrays.asList(getInternetDateAndTime.onlineTime.split("::"));
-							d2 = df.parse(time.get(0).toString());
+							d2 = df.parse(getInternetDateAndTime.getDate());
 							d1 = new DateTime(d2).minusDays(30).toDate();
 						} catch (ParseException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						HomeMenu2.dateChooser.setDate(d1);
 
-						HomeMenu2.dateChooser_1.setDate(d2);
+						HomeMenu2.dateChooser.setSelectedDay(d1.getDate());
+						HomeMenu2.dateChooser.setSelectedMonth(d1.getMonth());
+						HomeMenu2.dateChooser.setSelectedMonth(d1.getYear()+1900);
+
+
+						HomeMenu2.dateChooser_1.setSelectedDay(d2.getDate());
+						HomeMenu2.dateChooser_1.setSelectedMonth(d2.getMonth());
+						HomeMenu2.dateChooser_1.setSelectedMonth(d2.getYear()+1900);
 				}
 
-        		String start = (HomeMenu2.dateChooser.getDate().getYear()+1900)+"-"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"-"+HomeMenu2.dateChooser.getDate().getDate();
-        		String end = (HomeMenu2.dateChooser_1.getDate().getYear()+1900)+"-"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"-"+HomeMenu2.dateChooser_1.getDate().getDate();
+				String start = (HomeMenu2.dateChooser.getSelectedYear()+"-"+(HomeMenu2.dateChooser.getSelectedMonth()+1)+"-"+HomeMenu2.dateChooser.getSelectedDay());
+        		String end = (HomeMenu2.dateChooser_1.getSelectedYear())+"-"+(HomeMenu2.dateChooser_1.getSelectedMonth()+1)+"-"+HomeMenu2.dateChooser_1.getSelectedDay();
+				
         		for(int i = 0; i< Home.panelStudents.getComponentCount(); i++) {
+        			if(Home.panelStudents.getComponent(i) instanceof JPanel) {
         			if(Home.panelStudents.getComponent(i).getPreferredSize().height > 50) {
-        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ClassStudents.courses.get(ClassStudents.selectedCourse), Home.panelStudents.getComponent(i).getName(), ay_id, start, end);
+        			ClassStudents.loadData(Home.panelStudents.getComponent(i), ((ClassStudents) Home.panelStudents.getComponent(i)).getCourses().get(ClassStudents.selectedCourse), Home.panelStudents.getComponent(i).getName(), ay_id, start, end);
         			if(((AbstractButton) ((Container) (((Container) Home.panelStudents.getComponent(i)).getComponent(2))).getComponent(1)).getText().equals("Decroissant")){
-        				ClassStudents.rankFromLastToFirst((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(i))).getComponent(1))));
+        				ClassStudents.rankFromLastToFirst((JPanel) ((Container) Home.panelStudents.getComponent(i)));
         				}else{
-            				ClassStudents.rankFromFirstToLast((((JPanel)((JPanel) ((Container) Home.panelStudents.getComponent(i))).getComponent(1))));
-            				}}}
+            				ClassStudents.rankFromFirstToLast((JPanel) ((Container) Home.panelStudents.getComponent(i)));
+            				}}}}
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Les 7 derniers jours", "Les 30 derniers jours", "Autre periode"}));
@@ -687,15 +714,15 @@ public class Home {
 		panel_5.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 		
 		
-		JButton logo = new JButton("");
-		logo.setMultiClickThreshhold(1000L);
-		logo.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
-		logo.setPreferredSize(new Dimension(70, 50));
-		logo.setFont(new Font("Arial", Font.PLAIN, 27));
-		logo.setFocusPainted(false);
-		logo.setBorder(null);
-		logo.setBackground(panel_2.getBackground());
-		panel_5.add(logo);
+		JButton menu = new JButton("");
+		menu.setMultiClickThreshhold(1000L);
+		menu.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		menu.setPreferredSize(new Dimension(70, 50));
+		menu.setFont(new Font("Arial", Font.PLAIN, 27));
+		menu.setFocusPainted(false);
+		menu.setBorder(null);
+		menu.setBackground(panel_2.getBackground());
+		panel_5.add(menu);
 		
 		
 		JButton btnNewButton1 = new JButton("Classes");
@@ -749,12 +776,32 @@ public class Home {
 		panel_3.add(scrollPane_2, BorderLayout.EAST);
 		
 		
+		JPanel panel_4 = new JPanel();
+		panel_4.setPreferredSize(new Dimension(350, 80));
+		frame.getContentPane().add(panel_4, BorderLayout.WEST);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		
+		JPanel logo_panel = new JPanel();
+		logo_panel.setPreferredSize(new Dimension(350, 80));
+		logo_panel.setBackground(new Color(40, 40, 40));
+		panel_4.add(logo_panel, BorderLayout.NORTH);
+		logo_panel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
+		
+		JButton logo = new JButton("");
+		logo.setFocusPainted(false);
+		logo.setBackground(new Color(40, 40, 40));
+		logo.setBorder(null);
+		logo_panel.add(logo);
+		logo.setHorizontalAlignment(SwingConstants.CENTER);
+		logo.setHorizontalTextPosition(SwingConstants.CENTER);
+		logo.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Pictures\\photoshop max\\CG Projects\\Open-ed.png"));
+		logo.setPreferredSize(new Dimension(220, 70));
 		
 		scrollPane_3 = new JScrollPane();
 		scrollPane_3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_3.setBorder(new LineBorder(new Color(211, 211, 211)));
+		scrollPane_3.setBorder(null);
 		scrollPane_3.setPreferredSize(new Dimension(350, 300));
-		frame.getContentPane().add(scrollPane_3, BorderLayout.WEST);
+		panel_4.add(scrollPane_3, BorderLayout.CENTER);
 
 		scrollPane_3.getVerticalScrollBar().setUI(new CustomVerticalScrollBarUI());
 		scrollPane_3.getHorizontalScrollBar().setUI(new CustomVerticalScrollBarUI());
@@ -833,7 +880,7 @@ public class Home {
 				selectedTab = 1;
 				panel_6.getComponent(2).setVisible(false);
 				panel_6.getComponent(3).setVisible(true);
-				panel_6.getComponent(1).setVisible(true);
+				panel_6.getComponent(1).setVisible(false);
 				
 				scrollPane.setViewportView(panelStudents);
 
@@ -864,8 +911,8 @@ public class Home {
 					studentsAreLoaded = true;
 				new SwingWorker<Void, Void>() {
 		            public Void doInBackground() throws Exception{
-		        		String start = HomeMenu2.dateChooser.getDate().getDate()+"/"+(HomeMenu2.dateChooser.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser.getDate().getYear()+1900);
-		        		String end = HomeMenu2.dateChooser_1.getDate().getDate()+"/"+(HomeMenu2.dateChooser_1.getDate().getMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getDate().getYear()+1900);
+		        		String start = HomeMenu2.dateChooser.getSelectedDay()+"/"+(HomeMenu2.dateChooser.getSelectedMonth()+1)+"/"+(HomeMenu2.dateChooser.getSelectedYear());
+		        		String end = HomeMenu2.dateChooser_1.getSelectedDay()+"/"+(HomeMenu2.dateChooser_1.getSelectedMonth()+1)+"/"+(HomeMenu2.dateChooser_1.getSelectedYear());
 		        		ClassStudents.loadStudents(start, end, ay_id);
 		            	 return null;
 		            }
@@ -1221,7 +1268,7 @@ public static Object[] loadActiveProfs(String ay_id) {
 				+ "JOIN courses_in_classroom AS cic "
 				+ "JOIN classrooms_in_ay AS cia "
 				+ "JOIN teachers_in_classrooms AS tic "
-				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND cic.cia_id = cia.cia_id AND cia.ay_id = '"+ay_id+"' AND t.teacher_id = tic.teacher_id AND tic.is_active = 1 AND t.is_active = 1 AND cic.is_active = 1");
+				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND cic.cia_id = cia.cia_id AND cia.ay_id = '"+ay_id+"' AND t.teacher_id = tic.teacher_id AND cia.is_active = 1 AND tic.is_active = 1 AND t.is_active = 1 AND cic.is_active = 1");
 		while(rs.next())
 		{
 			if(!s.contains(rs.getString("tic.teacher_id"))) {

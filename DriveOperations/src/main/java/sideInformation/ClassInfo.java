@@ -3,6 +3,8 @@ package sideInformation;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,16 +18,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
 
 import Application.Home;
 import Application.ResizeImages;
+import Application.Schedule;
+import Application.ScheduleStructure;
 import Application.Teacher;
+import Class.Attendance;
+import Class.ClassDiary;
+import Class.ClassSchedule;
+import Class.ClassStudentFees;
+import Class.ListOfMessages;
 import Class.Student;
 import Class.TestBox;
 import CloudOperations.aws;
@@ -62,7 +74,7 @@ public class ClassInfo extends JPanel {
 	public ClassInfo(String classroom_in_ay_id) {
 		setBorder(null);
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(350, 750));
+		setPreferredSize(new Dimension(320, 700));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		RoundLabel btnNewButton = new RoundLabel(100, 100, "C:\\Users\\User\\Pictures\\photoshop max\\CG Projects\\Bakame_logo.jpg");
@@ -73,13 +85,13 @@ public class ClassInfo extends JPanel {
 		
 		name = new JLabel(Home.getClassName(classroom_in_ay_id));
 		name.setHorizontalAlignment(SwingConstants.CENTER);
-		name.setPreferredSize(new Dimension(360, 20));
+		name.setPreferredSize(new Dimension(300, 20));
 		name.setForeground(new Color(255, 255, 255));
 		name.setFont(new Font("Roboto", Font.BOLD, 16));
 		add(name);
 		
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(320, 25));
+		panel.setPreferredSize(new Dimension(300, 25));
 		add(panel);
 		panel.setBackground(getBackground());
 		
@@ -118,15 +130,21 @@ public class ClassInfo extends JPanel {
 		
 		separator = new JSeparator();
 		separator.setForeground(new Color(255, 255, 255));
-		separator.setPreferredSize(new Dimension(320, 1));
+		separator.setPreferredSize(new Dimension(300, 1));
 		add(separator);
 		
 		CustomButton btnstructuresDeLhoraire = new CustomButton("<html><div style='text-align: leading;'>Structure de l'horaire</div></html>");
+		btnstructuresDeLhoraire.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScheduleStructure s = new ScheduleStructure(classroom_in_ay_id);
+				s.setVisible(true);
+			}
+		});
 		btnstructuresDeLhoraire.setRadius(15);
 		btnstructuresDeLhoraire.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnstructuresDeLhoraire.setMargin(new Insets(2, 10, 2, 14));
 		btnstructuresDeLhoraire.setHorizontalAlignment(SwingConstants.LEADING);
-		btnstructuresDeLhoraire.setPreferredSize(new Dimension(320, 40));
+		btnstructuresDeLhoraire.setPreferredSize(new Dimension(300, 40));
 		btnstructuresDeLhoraire.setIconTextGap(10);
 		btnstructuresDeLhoraire.setForeground(Color.WHITE);
 		btnstructuresDeLhoraire.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -137,10 +155,16 @@ public class ClassInfo extends JPanel {
 		add(btnstructuresDeLhoraire);
 		
 		CustomButton btnhoraireDeClasse = new CustomButton("<html><div style='text-align: leading;'>Horaire de classe</div></html>");
+		btnhoraireDeClasse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClassSchedule s = new ClassSchedule(classroom_in_ay_id);
+				s.setVisible(true);
+			}
+		});
 		btnhoraireDeClasse.setRadius(15);
 		btnhoraireDeClasse.setMargin(new Insets(2, 10, 2, 14));
 		btnhoraireDeClasse.setHorizontalAlignment(SwingConstants.LEADING);
-		btnhoraireDeClasse.setPreferredSize(new Dimension(320, 40));
+		btnhoraireDeClasse.setPreferredSize(new Dimension(300, 40));
 		btnhoraireDeClasse.setIconTextGap(10);
 		btnhoraireDeClasse.setForeground(Color.WHITE);
 		btnhoraireDeClasse.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -155,7 +179,7 @@ public class ClassInfo extends JPanel {
 		btnstatistiquesAvances.setRadius(15);
 		btnstatistiquesAvances.setMargin(new Insets(0, 10, 0, 0));
 		btnstatistiquesAvances.setHorizontalAlignment(SwingConstants.LEADING);
-		btnstatistiquesAvances.setPreferredSize(new Dimension(320, 40));
+		btnstatistiquesAvances.setPreferredSize(new Dimension(300, 40));
 		btnstatistiquesAvances.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StatsPane frame = new StatsPane("All", "All", classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
@@ -172,10 +196,16 @@ public class ClassInfo extends JPanel {
 		add(btnstatistiquesAvances);
 		
 		CustomButton btnlisteDesPresences = new CustomButton("<html><div style='text-align: leading;'>Liste des presences</div></html>");
+		btnlisteDesPresences.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Attendance a = new Attendance(classroom_in_ay_id);
+				a.setVisible(true);
+			}
+		});
 		btnlisteDesPresences.setRadius(15);
 		btnlisteDesPresences.setMargin(new Insets(2, 10, 2, 14));
 		btnlisteDesPresences.setHorizontalAlignment(SwingConstants.LEADING);
-		btnlisteDesPresences.setPreferredSize(new Dimension(320, 40));
+		btnlisteDesPresences.setPreferredSize(new Dimension(300, 40));
 		btnlisteDesPresences.setIconTextGap(10);
 		btnlisteDesPresences.setForeground(Color.WHITE);
 		btnlisteDesPresences.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -187,10 +217,16 @@ public class ClassInfo extends JPanel {
 		
 		
 		CustomButton classDiary = new CustomButton("<html><div style='text-align: leading;'>Journal de classe</div></html>");
+		classDiary.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			ClassDiary cd = new ClassDiary(classroom_in_ay_id);
+			cd.setVisible(true);
+			}
+		});
 		classDiary.setRadius(15);
 		classDiary.setMargin(new Insets(2, 10, 2, 14));
 		classDiary.setHorizontalAlignment(SwingConstants.LEADING);
-		classDiary.setPreferredSize(new Dimension(320, 40));
+		classDiary.setPreferredSize(new Dimension(300, 40));
 		classDiary.setIconTextGap(10);
 		classDiary.setForeground(Color.WHITE);
 		classDiary.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -201,10 +237,16 @@ public class ClassInfo extends JPanel {
 		add(classDiary);
 		
 		CustomButton btnpaiementDuMinerval = new CustomButton("<html><div style='text-align: leading;'>Paiement du minerval</div></html>");
+		btnpaiementDuMinerval.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClassStudentFees csd = new ClassStudentFees(classroom_in_ay_id);
+				csd.setVisible(true);
+			}
+		});
 		btnpaiementDuMinerval.setRadius(15);
 		btnpaiementDuMinerval.setMargin(new Insets(2, 10, 2, 14));
 		btnpaiementDuMinerval.setHorizontalAlignment(SwingConstants.LEADING);
-		btnpaiementDuMinerval.setPreferredSize(new Dimension(320, 40));
+		btnpaiementDuMinerval.setPreferredSize(new Dimension(300, 40));
 		btnpaiementDuMinerval.setIconTextGap(10);
 		btnpaiementDuMinerval.setForeground(Color.WHITE);
 		btnpaiementDuMinerval.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -218,7 +260,7 @@ public class ClassInfo extends JPanel {
 		btnhistoriqueDeConduite.setRadius(15);
 		btnhistoriqueDeConduite.setMargin(new Insets(2, 10, 2, 14));
 		btnhistoriqueDeConduite.setHorizontalAlignment(SwingConstants.LEADING);
-		btnhistoriqueDeConduite.setPreferredSize(new Dimension(320, 40));
+		btnhistoriqueDeConduite.setPreferredSize(new Dimension(300, 40));
 		btnhistoriqueDeConduite.setIconTextGap(10);
 		btnhistoriqueDeConduite.setForeground(Color.WHITE);
 		btnhistoriqueDeConduite.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -232,7 +274,7 @@ public class ClassInfo extends JPanel {
 		btnbulletinScolaire.setRadius(15);
 		btnbulletinScolaire.setMargin(new Insets(2, 10, 2, 14));
 		btnbulletinScolaire.setHorizontalAlignment(SwingConstants.LEADING);
-		btnbulletinScolaire.setPreferredSize(new Dimension(320, 40));
+		btnbulletinScolaire.setPreferredSize(new Dimension(300, 40));
 		btnbulletinScolaire.setIconTextGap(10);
 		btnbulletinScolaire.setForeground(Color.WHITE);
 		btnbulletinScolaire.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -242,11 +284,35 @@ public class ClassInfo extends JPanel {
 		btnbulletinScolaire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		add(btnbulletinScolaire);
 		
+		
+
+		CustomButton btnconditionsDeReussite1 = new CustomButton("<html><div style='text-align: leading;'>Messages et communiques</div></html>");
+		btnconditionsDeReussite1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListOfMessages lom = new ListOfMessages();
+				lom.setVisible(true);
+			}
+		});
+		btnconditionsDeReussite1.setRadius(15);
+		btnconditionsDeReussite1.setMargin(new Insets(2, 10, 2, 14));
+		btnconditionsDeReussite1.setHorizontalAlignment(SwingConstants.LEADING);
+		btnconditionsDeReussite1.setPreferredSize(new Dimension(300, 40));
+		btnconditionsDeReussite1.setIconTextGap(10);
+		btnconditionsDeReussite1.setForeground(Color.WHITE);
+		btnconditionsDeReussite1.setFont(new Font("Roboto", Font.BOLD, 14));
+		btnconditionsDeReussite1.setFocusPainted(false);
+		btnconditionsDeReussite1.setBorderColor(new Color(255, 255, 255));
+		btnconditionsDeReussite1.setBackground(new Color(40, 40, 40));
+		btnconditionsDeReussite1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(btnconditionsDeReussite1);
+		
+		
+		
 		CustomButton btnconditionsDeReussite = new CustomButton("<html><div style='text-align: leading;'>Conditions de reussite</div></html>");
 		btnconditionsDeReussite.setRadius(15);
 		btnconditionsDeReussite.setMargin(new Insets(2, 10, 2, 14));
 		btnconditionsDeReussite.setHorizontalAlignment(SwingConstants.LEADING);
-		btnconditionsDeReussite.setPreferredSize(new Dimension(320, 40));
+		btnconditionsDeReussite.setPreferredSize(new Dimension(300, 40));
 		btnconditionsDeReussite.setIconTextGap(10);
 		btnconditionsDeReussite.setForeground(Color.WHITE);
 		btnconditionsDeReussite.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -256,11 +322,12 @@ public class ClassInfo extends JPanel {
 		btnconditionsDeReussite.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		add(btnconditionsDeReussite);
 		
-		CustomButton btnelevesSupprimes = new CustomButton("<html><div style='text-align: leading;'>Eleves supprimes</div></html>");
+		
+		CustomButton btnelevesSupprimes = new CustomButton("<html><div style='text-align: leading;'>Supprimer la classe</div></html>");
 		btnelevesSupprimes.setRadius(15);
 		btnelevesSupprimes.setMargin(new Insets(2, 10, 2, 14));
 		btnelevesSupprimes.setHorizontalAlignment(SwingConstants.LEADING);
-		btnelevesSupprimes.setPreferredSize(new Dimension(320, 40));
+		btnelevesSupprimes.setPreferredSize(new Dimension(300, 40));
 		btnelevesSupprimes.setIconTextGap(10);
 		btnelevesSupprimes.setForeground(Color.WHITE);
 		btnelevesSupprimes.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -269,20 +336,6 @@ public class ClassInfo extends JPanel {
 		btnelevesSupprimes.setBackground(new Color(40, 40, 40));
 		btnelevesSupprimes.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		add(btnelevesSupprimes);
-		
-		CustomButton btncoursSupprimes = new CustomButton("<html><div style='text-align: leading;'>Cours supprimes</div></html>");
-		btncoursSupprimes.setRadius(15);
-		btncoursSupprimes.setMargin(new Insets(2, 10, 2, 14));
-		btncoursSupprimes.setHorizontalAlignment(SwingConstants.LEADING);
-		btncoursSupprimes.setPreferredSize(new Dimension(320, 40));
-		btncoursSupprimes.setIconTextGap(10);
-		btncoursSupprimes.setForeground(Color.WHITE);
-		btncoursSupprimes.setFont(new Font("Roboto", Font.BOLD, 14));
-		btncoursSupprimes.setFocusPainted(false);
-		btncoursSupprimes.setBorderColor(new Color(255, 255, 255));
-		btncoursSupprimes.setBackground(new Color(40, 40, 40));
-		btncoursSupprimes.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(btncoursSupprimes);
 		
 
 		for(int i = 0; i< getComponentCount(); i++) {
@@ -302,7 +355,7 @@ public class ClassInfo extends JPanel {
 	
 	public static void loadStudentInfo(String student_id, String classroom_id, String ay_id, String start, String end) {
 		name.setText(Home.getStudentName(student_id));
-		number.setText("No "+StudentStats.loadStudentNumber(student_id, classroom_id, ay_id));
+		number.setText("No "+StudentStats.loadStudentNumber(student_id));
 		
 		List<String> l = new ArrayList();
 		l.add("0");

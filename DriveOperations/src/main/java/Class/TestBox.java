@@ -469,8 +469,8 @@ public static String getShortName(String course_in_classroom_id) {
 					{
 						if(i >0) {
 							JSeparator separator = new JSeparator();
-							separator.setPreferredSize(new Dimension(1000, 1));
-							separator.setForeground(new Color(211, 211, 211, 50));
+							separator.setPreferredSize(new Dimension(1000, 2));
+							separator.setForeground(new Color(250, 250, 250, 100));
 							Application.panelTests.add(separator);
 						}
 						i++;

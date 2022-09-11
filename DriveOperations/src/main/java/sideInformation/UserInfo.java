@@ -31,7 +31,7 @@ public class UserInfo extends JPanel {
 	public UserInfo(String userId) {
 		setBorder(null);
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(320, 750));
+		setPreferredSize(new Dimension(320, 450));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		

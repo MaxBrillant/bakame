@@ -435,20 +435,20 @@ deselect();
 					+ "JOIN courses_in_classroom as cic "
 					+ "JOIN courses AS co "
 					+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cia.cia_id = cic.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"' "
-							+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1");
+							+ "AND sc.cia_id = cic.cia_id AND co.course_id = cic.course_id AND cic.is_active = 1 AND co.is_active = 1 ' ORDER BY sc.start_time ASC");
 			while(rs.next())
 			{
-							JLabel lblNewLabel_2 = new JLabel((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)).replaceAll(":", "h"));
+							JLabel lblNewLabel_2 = new JLabel((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)));
 							lblNewLabel_2.setBorder(new LineBorder(new Color(255, 255, 255)));
 							lblNewLabel_2.setForeground(new Color(255, 255, 255));
-							lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 14));
+							lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 16));
 							lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 							lblNewLabel_2.setPreferredSize(new Dimension(120, 60));
 							
 							
 							boolean exists = false;
 							for(int j = 1; j<sessions.getComponentCount(); j++) {
-								if(((JLabel) sessions.getComponent(j)).getText().equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)).replaceAll(":", "h"))) {
+								if(((JLabel) sessions.getComponent(j)).getText().equals((rs.getString("sc.start_time").substring(0, 5)+" - "+rs.getString("sc.end_time").substring(0, 5)))) {
 									exists = true;
 								}
 							}

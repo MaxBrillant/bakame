@@ -104,50 +104,36 @@ public class App {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					mysql.connectToDB();
-					App window = new App("1");
-					window.frame.setVisible(true);
-					System.gc();
-					Thread.currentThread().setPriority((int) (Thread.MAX_PRIORITY*0.8));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	
-		/*
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * File file = new File("C:/Users/User/Desktop/db_script.sql");
-		 * aws.downloadContent(file.getPath()); FileReader fr; fr = new
-		 * FileReader(file);
-		 * 
-		 * 
-		 * BufferedReader br = new BufferedReader(fr); Object[] lines =
-		 * br.lines().toArray();
-		 * 
-		 * List<String> l = new ArrayList(); int j = 0; for(int i = 0; i< lines.length;
-		 * i++) { if(lines[i].toString().contains("CONSTRAINT")) { j++; String s =
-		 * lines[i].toString().substring(0, lines[i].toString().lastIndexOf("`"))+j+"`";
-		 * l.add(s); }else{ l.add(lines[i].toString()); }}
-		 * 
-		 * 
-		 * if(file.exists()) { file.delete(); }
-		 * 
-		 * file.createNewFile(); for(int i = 0; i< l.toArray().length; i++) {
-		 * 
-		 * PrintWriter pw = new PrintWriter(file); for(int k = 0;
-		 * k<l.toArray().length;k++) { pw.println(l.get(k)); }
-		 * 
-		 * pw.close();}
-		 */}
+		
+		  
+		  
+		  
+		  
+		  
+		  File file = new File("C:/Users/User/Desktop/db_script.sql");
+		  aws.downloadContent(file.getPath()); FileReader fr; fr = new
+		  FileReader(file);
+		  
+		  
+		  BufferedReader br = new BufferedReader(fr); Object[] lines =
+		  br.lines().toArray();
+		  
+		  List<String> l = new ArrayList(); int j = 0; for(int i = 0; i< lines.length;
+		  i++) { if(lines[i].toString().contains("CONSTRAINT")) { j++; String s =
+		  lines[i].toString().substring(0, lines[i].toString().lastIndexOf("`"))+j+"`";
+		  l.add(s); }else{ l.add(lines[i].toString()); }}
+		  
+		  
+		  if(file.exists()) { file.delete(); }
+		  
+		  file.createNewFile(); for(int i = 0; i< l.toArray().length; i++) {
+		  
+		  PrintWriter pw = new PrintWriter(file); for(int k = 0;
+		  k<l.toArray().length;k++) { pw.println(l.get(k)); }
+		  
+		  pw.close();}
+		 }
 
 	/**
 	 * Create the application.
@@ -183,42 +169,7 @@ public class App {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		frame.setMinimumSize(new Dimension(480, 0));
 		
-		panel = new JPanel();
-		panel.setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(0, 0, 0)));
-		panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				deselect(classroom_in_ay_id);
-			}
-		});
-		panel.setBackground(Home.getClassColors(classroom_in_ay_id).get(0));
-		panel.setPreferredSize(new Dimension(10, 45));
-		frame.getContentPane().add(panel, BorderLayout.NORTH);
-		panel.setLayout(new BorderLayout(0, 0));
 		
-		title = new JLabel(Home.getClassName(classroom_in_ay_id)+" - "+Home.getStudentName(App.students.get(App.n)));
-		title.setHorizontalAlignment(SwingConstants.CENTER);
-		title.setForeground(Home.getClassColors(classroom_in_ay_id).get(1));
-		title.setFont(new Font("Roboto", Font.BOLD, 16));
-		panel.add(title, BorderLayout.CENTER);
-		
-		JButton btnAs = new JButton("Eleves");
-		btnAs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				Application app = new Application(classroom_in_ay_id);
-				app.frame.setVisible(true);
-				App.frame.setVisible(false);
-			}
-		});
-		btnAs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
-		//button_2.setPreferredSize(new Dimension(150, 14));
-		btnAs.setForeground(Home.getClassColors(classroom_in_ay_id).get(1));
-		btnAs.setFont(new Font("Roboto", Font.BOLD, 16));
-		btnAs.setFocusPainted(false);
-		btnAs.setBorderPainted(false);
-		btnAs.setBackground(panel.getBackground());
-		panel.add(btnAs, BorderLayout.WEST);
 		
 		btnAjouter = new JButton("");
 		btnAjouter.addMouseListener(new MouseAdapter() {
@@ -295,8 +246,56 @@ public class App {
 		//JPanel lp = new JPanel();
 		//panel_1.add(lp, BorderLayout.CENTER);
 		
+		
+		
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 128, 128));
+		panel.setBackground(new Color(40, 40, 40));
+		panel.setLayout(new BorderLayout(0, 0));
+		frame.add(panel, BorderLayout.CENTER);
+		
+		JPanel panel1 = new JPanel();
+		panel1.setBorder(new MatteBorder(0, 0, 4, 0, (Color) new Color(0, 0, 0)));
+		panel1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deselect(classroom_in_ay_id);
+			}
+		});
+		panel1.setBackground(Home.getClassColors(classroom_in_ay_id).get(0));
+		panel1.setPreferredSize(new Dimension(10, 45));
+		panel.add(panel1, BorderLayout.NORTH);
+		panel1.setLayout(new BorderLayout(0, 0));
+		
+		title = new JLabel(Home.getClassName(classroom_in_ay_id)+" - "+Home.getStudentName(App.students.get(App.n)));
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setForeground(Home.getClassColors(classroom_in_ay_id).get(1));
+		title.setFont(new Font("Roboto", Font.BOLD, 16));
+		panel1.add(title, BorderLayout.CENTER);
+		
+		JButton btnAs = new JButton("Eleves");
+		btnAs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				Application app = new Application(classroom_in_ay_id);
+				app.frame.setVisible(true);
+				App.frame.setVisible(false);
+			}
+		});
+		btnAs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		//button_2.setPreferredSize(new Dimension(150, 14));
+		btnAs.setForeground(Home.getClassColors(classroom_in_ay_id).get(1));
+		btnAs.setFont(new Font("Roboto", Font.BOLD, 16));
+		btnAs.setFocusPainted(false);
+		btnAs.setBorderPainted(false);
+		btnAs.setBackground(panel1.getBackground());
+		panel1.add(btnAs, BorderLayout.WEST);
+		
+		
+		
+		
 		JPanel panel_3 = new JPanel();
-		frame.getContentPane().add(panel_3, BorderLayout.CENTER);
+		panel.add(panel_3, BorderLayout.CENTER);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
 		
@@ -329,6 +328,9 @@ public class App {
 		scrollPane_1.setViewportView(panel_11);
 		panel_11.setLayout(new FlowLayout(FlowLayout.TRAILING, 5, 10));
 		panel_11.setBackground(new Color(40, 40, 40).darker());
+		
+		
+		
 		
 		
 		JPanel panel_41 = new JPanel();
@@ -487,9 +489,33 @@ public class App {
 		
 		panel_5.setLayout(new WrapLayout(WrapLayout.LEFT, 12, 12));
 		
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setPreferredSize(new Dimension(350, 80));
+		frame.add(panel_4, BorderLayout.WEST);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		
+		JPanel logo_panel = new JPanel();
+		logo_panel.setPreferredSize(new Dimension(350, 80));
+		logo_panel.setBackground(new Color(40, 40, 40));
+		panel_4.add(logo_panel, BorderLayout.NORTH);
+		logo_panel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
+		
+		JButton logo1 = new JButton("");
+		logo1.setFocusPainted(false);
+		logo1.setBackground(new Color(40, 40, 40));
+		logo1.setBorder(null);
+		logo_panel.add(logo1);
+		logo1.setHorizontalAlignment(SwingConstants.CENTER);
+		logo1.setHorizontalTextPosition(SwingConstants.CENTER);
+		logo1.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Pictures\\photoshop max\\CG Projects\\Open-ed.png"));
+		logo1.setPreferredSize(new Dimension(220, 70));
+		
+		
+		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setPreferredSize(new Dimension(350, 2));
-		frame.getContentPane().add(scrollPane_2, BorderLayout.WEST);
+		panel_4.add(scrollPane_2, BorderLayout.CENTER);
 		
 		StudentInfo panel_2 = new StudentInfo(classroom_in_ay_id);
 		scrollPane_2.setViewportView(panel_2);
@@ -561,11 +587,6 @@ public class App {
 	public static void deselect(String classroom_in_ay_id) {
 		
 		Cours.isSelected = false;
-		
-		App.delete.setEnabled(false);
-		App.edit.setEnabled(false);
-		App.delete.setBackground(App.panel.getBackground());
-		App.edit.setBackground(App.panel.getBackground());
 		
 		//General g = new General(students.get(n), classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
 		//panel_1.remove(0);

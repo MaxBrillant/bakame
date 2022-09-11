@@ -48,6 +48,7 @@ import Class.OptionsMenu.HomeMenu1;
 import Class.OptionsMenu.HomeMenu3;
 import CloudOperations.aws;
 import CloudOperations.mysql;
+import Schedule.TeacherSchedule;
 import Stats.CourseStats;
 import Stats.StatsPane;
 import Stats.StudentStats;
@@ -70,6 +71,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+
 import java.awt.FlowLayout;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -79,20 +82,7 @@ public class Teacher extends JPanel {
 	public static boolean isSelected;
 
 	public static List <String> classList = new ArrayList();
-	private JPanel panel_1;
-	public static JLabel classes;
-	public static JPanel panel;
-	private JPanel panel_2;
-	private JLabel label_1;
-	private JLabel lblemeEconomique;
-	private JPanel panel_3;
-	private JLabel lblFormationPatriotiqueEt;
-	private JLabel lblMoyenne;
-	private JLabel lblTauxDeReussite;
-	private JLabel label_2;
-	private JLabel label_3;
-	public static JLabel name;
-	public static String selectedTeacher = "";
+	public static Component selectedTeacher;
 	
 
 	/**
@@ -100,47 +90,186 @@ public class Teacher extends JPanel {
 	 */
 	public Teacher() {
 	Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-	setBackground(new Color(60, 60, 60));
-	setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
+	setBackground(new Color(40, 40, 40));
+	//setBorder(new LineBorder(new Color(211, 211, 211)));
 	setPreferredSize(new Dimension(700, 135));
 	setLayout(new BorderLayout(0, 0));
 	
 	
 
-	panel_1 = new JPanel();
-	add(panel_1, BorderLayout.CENTER);
-	panel_1.setLayout(null);
+	JPanel panel_1 = new JPanel();
+	panel_1.setPreferredSize(new Dimension(10, 40));
+	add(panel_1, BorderLayout.NORTH);
 	panel_1.setBackground(panel_1.getParent().getBackground());
+	panel_1.setLayout(new BorderLayout(0, 0));
 	
-	name = new JLabel("Manirambona Ezequias");
+	JPanel panel_4 = new JPanel();
+	panel_1.add(panel_4, BorderLayout.CENTER);
+	panel_4.setBackground(panel_4.getParent().getBackground());
+	panel_4.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 7));
+	
+	JLabel name = new JLabel("Manirambona Ezequias");
+	panel_4.add(name);
 	name.setForeground(Color.WHITE);
-	name.setFont(new Font("Roboto", Font.BOLD, 20));
+	name.setFont(new Font("Roboto", Font.BOLD, 16));
 	name.setBorder(null);
 	name.setBackground(Color.GREEN);
-	name.setBounds(10, 0, 379, 35);
-	panel_1.add(name);
 	
-	classes = new JLabel("7 classes");
+	JLabel label = new JLabel("-");
+	label.setHorizontalAlignment(SwingConstants.CENTER);
+	label.setForeground(Color.WHITE);
+	label.setFont(new Font("Roboto", Font.PLAIN, 14));
+	label.setBorder(null);
+	label.setBackground(Color.GREEN);
+	panel_4.add(label);
+	
+	JLabel classes = new JLabel("7 classes");
+	panel_4.add(classes);
 	classes.setHorizontalAlignment(SwingConstants.CENTER);
 	classes.setForeground(Color.WHITE);
-	classes.setFont(new Font("Roboto", Font.BOLD, 20));
+	classes.setFont(new Font("Roboto", Font.PLAIN, 14));
 	classes.setBorder(null);
 	classes.setBackground(Color.GREEN);
-	classes.setBounds(399, 0, 118, 35);
-	panel_1.add(classes);
 	
-	label_1 = new JLabel("");
+	JLabel label_1 = new JLabel("");
 	label_1.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop2.png"));
 	label_1.setPreferredSize(new Dimension(45, 0));
 	label_1.setHorizontalAlignment(SwingConstants.CENTER);
-	label_1.setBounds(641, 0, 45, 35);
-	panel_1.add(label_1);
+	panel_1.add(label_1, BorderLayout.EAST);
 	
-	panel = new JPanel();
+	JPanel panel1 = new JPanel();
+	panel1.setPreferredSize(new Dimension(35, 40));
+	panel1.setBackground(new Color(40, 40, 40));
+	panel_1.add(panel1, BorderLayout.WEST);
+	panel1.setLayout(new BorderLayout(0, 0));
+	
+	JLabel lblNewLabel_1 = new JLabel("");
+	lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+	lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+	panel1.add(lblNewLabel_1, BorderLayout.CENTER);
+	
+	JPanel panel = new JPanel();
+	panel.setBorder(null);
 	panel.setPreferredSize(new Dimension(10, 95));
-	add(panel, BorderLayout.SOUTH);
+	add(panel, BorderLayout.CENTER);
 	panel.setBackground(panel.getParent().getBackground());
-	panel.setLayout(new WrapLayout(1, 3, 3));
+	panel.setLayout(new FlowLayout(FlowLayout.CENTER, 3, 3));
+	
+	
+	
+	JPanel panel_2 = new JPanel();
+	panel_2.setBackground(new Color(40, 40, 40));
+	(panel).add(panel_2);
+	panel_2.setBorder(null);
+	panel_2.setPreferredSize(new Dimension(panel_2.getParent().getParent().getPreferredSize().width*98/100, 75));
+	panel_2.setLayout(new BorderLayout(0, 0));
+	
+	JPanel panel_5 = new JPanel();
+	panel_5.setPreferredSize(new Dimension(20, 25));
+	panel_2.add(panel_5, BorderLayout.NORTH);
+	panel_5.setBackground(panel_5.getParent().getBackground());
+	panel_5.setLayout(new BorderLayout(0, 0));
+	
+	JLabel lblemeEconomique = new JLabel("3eme PF Economique");
+	panel_5.add(lblemeEconomique);
+	lblemeEconomique.setName("3eme PF Economique");
+	lblemeEconomique.setHorizontalAlignment(SwingConstants.CENTER);
+	lblemeEconomique.setForeground(Color.WHITE);
+	lblemeEconomique.setFont(new Font("Roboto", Font.BOLD, 14));
+	lblemeEconomique.setBorder(null);
+	lblemeEconomique.setBackground(Color.GREEN);
+	lblemeEconomique.setPreferredSize(new Dimension(lblemeEconomique.getParent().getPreferredSize().width, 25));
+	
+	
+	JButton btnRetirer = new JButton("  Voir la classe  ");
+	btnRetirer.setVerticalTextPosition(SwingConstants.BOTTOM);
+	btnRetirer.setHorizontalTextPosition(SwingConstants.CENTER);
+	btnRetirer.setForeground(Color.WHITE);
+	btnRetirer.setFont(new Font("Roboto", Font.PLAIN, 14));
+	btnRetirer.setFocusPainted(false);
+	btnRetirer.setBorder(new LineBorder(new Color(255, 255, 255)));
+	panel_5.add(btnRetirer, BorderLayout.EAST);
+	btnRetirer.setBackground(btnRetirer.getParent().getBackground());
+			
+			JPanel panel_6 = new JPanel();
+			panel_2.add(panel_6);
+			panel_6.setBackground(panel_6.getParent().getBackground());
+			panel_6.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+	
+				
+			JPanel panel_3 = new JPanel();
+			panel_6.add(panel_3);
+			panel_3.setBackground(new Color(40, 40, 40).darker());
+			panel_3.setPreferredSize(new Dimension(panel_2.getPreferredSize().width, 25));
+			panel_3.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 0));
+			
+			JLabel lblFormationPatriotiqueEt = new JLabel("Entrepreneuriat");
+			lblFormationPatriotiqueEt.setName("Entrepreneuriat");
+			lblFormationPatriotiqueEt.setForeground(Color.WHITE);
+			lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.PLAIN, 14));
+			lblFormationPatriotiqueEt.setBorder(null);
+			lblFormationPatriotiqueEt.setBackground(Color.GREEN);
+			panel_3.add(lblFormationPatriotiqueEt);
+			
+			JLabel label_2 = new JLabel("•");
+			label_2.setHorizontalAlignment(SwingConstants.CENTER);
+			label_2.setForeground(Color.WHITE);
+			label_2.setFont(new Font("Roboto", Font.BOLD, 14));
+			label_2.setBorder(null);
+			label_2.setBackground(Color.GREEN);
+			panel_3.add(label_2);
+			
+			JLabel lblMoyenne_1 = new JLabel("Moyenne: 45%");
+			lblMoyenne_1.setName("Entrepreneuriat");
+			lblMoyenne_1.setForeground(Color.WHITE);
+			lblMoyenne_1.setFont(new Font("Roboto", Font.PLAIN, 14));
+			lblMoyenne_1.setBorder(null);
+			lblMoyenne_1.setBackground(Color.GREEN);
+			panel_3.add(lblMoyenne_1);
+			
+			JLabel label_3 = new JLabel("•");
+			label_3.setHorizontalAlignment(SwingConstants.CENTER);
+			label_3.setForeground(Color.WHITE);
+			label_3.setFont(new Font("Roboto", Font.BOLD, 14));
+			label_3.setBorder(null);
+			label_3.setBackground(Color.GREEN);
+			panel_3.add(label_3);
+			
+			JLabel lblReussiteA = new JLabel("Reussite a 56%");
+			lblReussiteA.setName("Entrepreneuriat");
+			lblReussiteA.setForeground(Color.WHITE);
+			lblReussiteA.setFont(new Font("Roboto", Font.PLAIN, 14));
+			lblReussiteA.setBorder(null);
+			lblReussiteA.setBackground(Color.GREEN);
+			panel_3.add(lblReussiteA);
+			
+			JLabel label_4 = new JLabel("\u2022");
+			label_4.setHorizontalAlignment(SwingConstants.CENTER);
+			label_4.setForeground(Color.WHITE);
+			label_4.setFont(new Font("Roboto", Font.BOLD, 14));
+			label_4.setBorder(null);
+			label_4.setBackground(Color.GREEN);
+			panel_3.add(label_4);
+			
+			JButton btnNewButton = new JButton("");
+			btnNewButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnNewButton.setBackground(new Color(20, 148, 198));
+				}
+				public void mouseExited(MouseEvent e) {
+					btnNewButton.setBackground(btnNewButton.getParent().getBackground());
+				}
+			});
+			btnNewButton.setPreferredSize(new Dimension(40, 25));
+			btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+			panel_3.add(btnNewButton);
+			btnNewButton.setFocusPainted(false);
+			btnNewButton.setBorder(null);
+			btnNewButton.setBackground(btnNewButton.getParent().getBackground());
+			Home.addToolTip(btnNewButton, "Modifier");
+			
+
 	}
 	
 	
@@ -153,45 +282,77 @@ public class Teacher extends JPanel {
 			
 			for(int k = 0; k< lines1.length;k++) {
 				
+
+				if(k >0) {
+					JSeparator separator = new JSeparator();
+					separator.setPreferredSize(new Dimension(1000, 2));
+					separator.setForeground(new Color(250, 250, 250, 100));
+					Home.panelProf.add(separator);
+				}
+				
 				Teacher te = new Teacher();
-				te.name.setText(Teacher.getTeacherName(lines1[k].toString()));
+				((JLabel) ((Container) ((Container) te.getComponent(0)).getComponent(0)).getComponent(0)).setText(Teacher.getTeacherName(lines1[k].toString()));
 				te.setName(lines1[k].toString());
 				Home.panelProf.add(te);
-				collapse(k);
-			}
+				collapse(te);
+				((Container) (te).getComponent(1)).removeAll();
 
-		for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
-			
-			int k = i;
 			String classes;
-			int numberOfClasses = loadNumberOfTeacherClasses(ay_id, lines1[k].toString());
+			int numberOfClasses = loadNumberOfTeacherCourses(ay_id, lines1[k].toString());
 			if(numberOfClasses>1) {
-				classes = "classes";
+				classes = "cours";
 			}else {
-				classes = "classe";
+				classes = "cours";
 			}
-			((JLabel) ((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).getComponent(1)).setText(numberOfClasses+" "+classes);
-			((JLabel) ((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).getComponent(2)).addMouseListener(new MouseAdapter() {
+			((JLabel) ((Container) ((Container) te.getComponent(0)).getComponent(0)).getComponent(2)).setText(numberOfClasses+" "+classes);
+			
+			int j = k;
+			((JLabel) ((Container) ((Container) te.getComponent(0)).getComponent(1))).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(((Container) Home.panelProf.getComponent(k)).getComponent(1).getPreferredSize().height>0) {
-					collapse(k);
+					if((te).getPreferredSize().height> 40) {
+					collapse(te);
 				}else {
-					if(((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(1)).getComponentCount()==0) {
-					loadClassesAndCourses(lines1[k].toString(), ay_id, ((Container) Home.panelProf.getComponent(k)).getComponent(1));
-					loadData(((Container) Home.panelProf.getComponent(k)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
+					if(((Container) (te).getComponent(1)).getComponentCount() == 0) {
+					loadClassesAndCourses(lines1[j].toString(), ay_id, (te).getComponent(1));
+					//loadData(((Container) Home.panelProf.getComponent(k)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
 					}
-					expand(k);
+					expand(te);
 					}
 				}
 			});
 			
-			((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).addMouseListener(new MouseAdapter() {
+			((Container) (te).getComponent(0)).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					if(e.getClickCount() == 2) {
+						TeacherSchedule tc = new TeacherSchedule(lines1[j].toString(), ay_id);
+						tc.setVisible(true);
+					}
+					if(selectedTeacher.equals(te)) {
+						collapse(te);
 					deselectAll(ay_id);
-					selectedTeacher = ((JLabel) ((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).getComponent(0)).getText();
-					((JComponent) Home.panelProf.getComponent(k)).setBorder(new LineBorder(new Color(20, 148, 198), 4));
+					}else {
+						deselectAll(ay_id);
+						selectedTeacher = te;
+					(te).setBackground(new Color(20, 148, 198, 50));
+					((Container) te).getComponent(0).setBackground(new Color(20, 148, 198, 0));
+					(te).getComponent(1).setBackground(new Color(20, 148, 198, 0));
+					((Container) (te).getComponent(0)).getComponent(0).setBackground(new Color(20, 148, 198, 0));
+					((Container) (te).getComponent(0)).getComponent(1).setBackground(new Color(20, 148, 198, 0));
+					((Container) (te).getComponent(0)).getComponent(2).setBackground(new Color(20, 148, 198, 0));
+					(te).setBorder(new LineBorder(new Color(20, 148, 198), 2));
+					
+					((Container) te.getComponent(0)).getComponent(2).setVisible(true);
+					
+						if(((Container) (te).getComponent(1)).getComponentCount() == 0) {
+						loadClassesAndCourses(lines1[j].toString(), ay_id, (te).getComponent(1));
+						//loadData(((Container) Home.panelProf.getComponent(k)).getComponent(1), ay_id, Home.termsText.get(Home.selectedTermIndex));
+						}
+						expand(te);
+						}
+					
+					
 					
 					TeacherInfo.selectedClass = 0;
 
@@ -201,24 +362,39 @@ public class Teacher extends JPanel {
 					HomeMenu3.panel.getComponent(5).setVisible(true);
 
 					
-					if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)).getComponent(0)).getComponent(0)).getText().equals(selectedTeacher)) {
+					if((((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)))).equals(te)) {
 
 						HomeMenu3.panel.getComponent(5).setVisible(false);}
-					if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(0)).getComponent(0)).getComponent(0)).getText().equals(selectedTeacher)) {
+					if((((Container) ((Container) Home.panelProf.getComponent(0)))).equals(te)) {
 						HomeMenu3.panel.getComponent(4).setVisible(false);
 						}
 					Home.frame.revalidate();
 					Home.frame.repaint();
 					}
 				public void mouseEntered(MouseEvent e) {
-					if(!selectedTeacher.equals(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).getComponent(0)).getText())) {
-					((JComponent) Home.panelProf.getComponent(k)).setBorder(new LineBorder(Color.white, 2));
+					if(!selectedTeacher.equals(te)) {
+
+						(te).setBackground(new Color(60, 60, 60));
+						((Container) te).getComponent(0).setBackground(new Color(60, 60, 60));
+						(te).getComponent(1).setBackground(new Color(60, 60, 60));
+						((Container) (te).getComponent(0)).getComponent(0).setBackground(new Color(60, 60, 60));
+						((Container) (te).getComponent(0)).getComponent(1).setBackground(new Color(60, 60, 60));
+						((Container) (te).getComponent(0)).getComponent(2).setBackground(new Color(60, 60, 60));
+						(te).setBorder(new LineBorder(new Color(20, 148, 198)));
+					//(te).setBorder(new LineBorder(Color.white, 2));
 					Home.panelProf.revalidate();
 					Home.panelProf.repaint();
 					}
 				}public void mouseExited(MouseEvent e) {
-					if(!selectedTeacher.equals(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(k)).getComponent(0)).getComponent(0)).getText())) {
-					((JComponent) Home.panelProf.getComponent(k)).setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
+					if(!selectedTeacher.equals(te)) {
+						(te).setBackground(new Color(40, 40, 40));
+					((Container) te).getComponent(0).setBackground(new Color(40, 40, 40));
+					(te).getComponent(1).setBackground(new Color(40, 40, 40));
+					((Container) (te).getComponent(0)).getComponent(0).setBackground(new Color(40, 40, 40));
+					((Container) (te).getComponent(0)).getComponent(1).setBackground(new Color(40, 40, 40));
+					((Container) (te).getComponent(0)).getComponent(2).setBackground(new Color(40, 40, 40));
+					(te).setBorder(null);
+					//(te).setBorder(new LineBorder(new Color(211, 211, 211)));
 					Home.panelProf.revalidate();
 					Home.panelProf.repaint();
 				}}
@@ -231,9 +407,9 @@ public class Teacher extends JPanel {
 		deselectAll(ay_id);
 		
 		if(Home.panelProf.getComponentCount() == 0) {
-			JLabel lblNewLabel = new JLabel("Il n'y a actuellement aucun professeur dans cet etablissement.");
+			JLabel lblNewLabel = new JLabel("Il n'y a actuellement aucun professeur enregistre dans cette annee scholaire.");
 			lblNewLabel.setForeground(Color.WHITE);
-			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 18));
+			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
 			Home.panelProf.add(lblNewLabel);
 			
 
@@ -242,47 +418,53 @@ public class Teacher extends JPanel {
 		}
 }
 	
-	public static void collapse(int i) {
-		((Container) Home.panelProf.getComponent(i)).setPreferredSize(new Dimension(((Container) Home.panelProf.getComponent(i)).getPreferredSize().width, 40));
-		((Container) Home.panelProf.getComponent(i)).getComponent(1).setPreferredSize(new Dimension(((Container) Home.panelProf.getComponent(i)).getComponent(1).getPreferredSize().width, 0));
-
+	public static void collapse(Container c) {
+		(c).setPreferredSize(new Dimension((c).getPreferredSize().width, 40));
+		//(c).getComponent(1).setVisible(false);
+		//(c).getComponent(1).setPreferredSize(new Dimension((c).getComponent(1).getPreferredSize().width, 0));
 		Home.panelProf.revalidate();
 		Home.panelProf.repaint();
 	}
-	public static void expand(int i) {
+	public static void expand(Container c) {
+		(c).getComponent(1).setVisible(true);
 		int panelWidth = 0;
-		for(int j = 0; j< ((Container) ((Container) Home.panelProf.getComponent(i)).getComponent(1)).getComponentCount(); j++) {
-			((Container) ((Container) Home.panelProf.getComponent(i)).getComponent(1)).getComponent(j).setPreferredSize(new Dimension(((Container) ((Container) Home.panelProf.getComponent(i)).getComponent(1)).getComponent(j).getPreferredSize().width,
-					((Container) ((Container) ((Container) Home.panelProf.getComponent(i)).getComponent(1)).getComponent(j)).getComponentCount()*25+5));
+		for(int j = 0; j< ((Container) (c).getComponent(1)).getComponentCount(); j++) {
+			((Container) (c).getComponent(1)).getComponent(j).setPreferredSize(new Dimension(((Container) (c).getComponent(1)).getComponent(j).getPreferredSize().width,
+					((Container) ((Container) ((Container) (c).getComponent(1)).getComponent(j)).getComponent(0)).getPreferredSize().height+
+					((Container) ((Container) ((Container) (c).getComponent(1)).getComponent(j)).getComponent(1)).getComponentCount()*25+5));
 			
-		panelWidth = panelWidth+((Container) ((Container) ((Container) Home.panelProf.getComponent(i)).getComponent(1)).getComponent(j)).getComponentCount()*25+5;
+		panelWidth = panelWidth+((Container) ((Container) (c).getComponent(1)).getComponent(j)).getPreferredSize().height;
 		}
-		((Container) Home.panelProf.getComponent(i)).getComponent(1).setPreferredSize(new Dimension(((Container) Home.panelProf.getComponent(i)).getComponent(1).getPreferredSize().width, 
-				panelWidth+(((Container) ((Container) Home.panelProf.getComponent(i)).getComponent(1)).getComponentCount()+1)*3));
+		(c).getComponent(1).setPreferredSize(new Dimension((c).getComponent(1).getPreferredSize().width, 
+				panelWidth+(((Container) (c).getComponent(1)).getComponentCount()+2)*3));
 
-		((Container) Home.panelProf.getComponent(i)).setPreferredSize(new Dimension(((Container) Home.panelProf.getComponent(i)).getPreferredSize().width, 40+((Container) Home.panelProf.getComponent(i)).getComponent(1).getPreferredSize().height));
+		(c).setPreferredSize(new Dimension((c).getPreferredSize().width, (c).getComponent(0).getPreferredSize().height+(c).getComponent(1).getPreferredSize().height));
 	
-		((Container) Home.panelProf.getComponent(i)).revalidate();
-		((Container) Home.panelProf.getComponent(i)).repaint();
+		(c).revalidate();
+		(c).repaint();
 		
 	}
 	
 	public static void deselectAll(String ay_id) {
 		for(int i = 0; i< Home.panelProf.getComponentCount(); i++) {
 			if(((Container) Home.panelProf.getComponent(i)).getComponentCount()>0) {
-				if(((Container) Home.panelProf.getComponent(i)) instanceof Teacher) {	
-			((JComponent) Home.panelProf.getComponent(i)).setBorder(new MatteBorder(1, 2, 4, 2, (Color) new Color(0, 0, 0)));
+				if(((Container) Home.panelProf.getComponent(i)) instanceof Teacher) {
 
-			for(int j = 0; j< ((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(1)).getComponentCount(); j++) {
-
-				((Container) ((Container) ((Container) ((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(1))).getComponent(j))).setBackground(new Color(40, 40, 40));
-				((JComponent) ((Container) ((Container) ((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(1))).getComponent(j))).setBorder(new LineBorder(Color.LIGHT_GRAY));
-				((Container) (((Container) ((Container) ((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(1))).getComponent(j)).getComponent(0))).setForeground(Color.white);
-				Home.panelProf.revalidate();
-				Home.panelProf.repaint();
+					//collapse((Container) (JComponent) Home.panelProf.getComponent(i));
+					((Container) (JComponent) Home.panelProf.getComponent(i)).getComponent(0).setBackground(new Color(40, 40, 40));
+					((JComponent) Home.panelProf.getComponent(i)).setBackground(new Color(40, 40, 40));
+					((JComponent) Home.panelProf.getComponent(i)).getComponent(1).setBackground(new Color(40, 40, 40));
+					((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(0)).getComponent(0).setBackground(new Color(40, 40, 40));
+					((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(0)).getComponent(1).setBackground(new Color(40, 40, 40));
+					((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(0)).getComponent(2).setBackground(new Color(40, 40, 40));
+					
+			((JComponent) Home.panelProf.getComponent(i)).setBorder(null);
+			((Container) ((JComponent) Home.panelProf.getComponent(i)).getComponent(0)).getComponent(2).setVisible(false);
+			if(((Container) Home.panelProf.getComponent(i)).getPreferredSize().height > 40) {
+				
 			}
-		selectedTeacher = "";
-		}}}
+				}}}
+		selectedTeacher = new JLabel();
 		Home.frame.revalidate();
 		Home.frame.repaint();
 		HomeMenu3.deselect();
@@ -297,9 +479,9 @@ public class Teacher extends JPanel {
 			for(int i = 0; i< lines.length; i++) {
 
 				List l = StudentStats.getStudentTestsStats(lines[i].toString(), classroom_id
-						, course_id, "Toute l'annee", "All", "All");
+						, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
 				List l1 = StudentStats.getStudentExamStats(lines[i].toString(), classroom_id
-						, course_id, "Toute l'annee", "All", "All");
+						, course_id, Home.termsText.get(Home.selectedTermIndex), "All", "All");
 				
 				List<String> note = Arrays.asList(l.get(1).toString().split("/"));
 				List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
@@ -357,23 +539,68 @@ public class Teacher extends JPanel {
 						if(!classes.contains(lines[i].toString())) {
 						classes.add(lines[i].toString());
 						
+						
 						JPanel panel_2 = new JPanel();
 						panel_2.setBackground(new Color(40, 40, 40));
-						panel_2.setPreferredSize(new Dimension(685, 75));
 						((JPanel)c).add(panel_2);
-						panel_2.setLayout(new WrapLayout(1, 0, 0));
-						panel_2.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
+						//panel_2.setBorder(new LineBorder(Color.LIGHT_GRAY,1));
+						panel_2.setPreferredSize(new Dimension(panel_2.getParent().getParent().getPreferredSize().width*98/100, 75));
+						panel_2.setLayout(new BorderLayout(0, 0));
+						
+						JPanel panel_5 = new JPanel();
+						panel_5.setPreferredSize(new Dimension(20, 25));
+						panel_2.add(panel_5, BorderLayout.NORTH);
+						panel_5.setBackground(panel_5.getParent().getBackground());
+						panel_5.setLayout(new BorderLayout(0, 0));
 						
 						JLabel lblemeEconomique = new JLabel(Class.getClassName(lines[i].toString()));
+						panel_5.add(lblemeEconomique);
 						lblemeEconomique.setName(lines[i].toString());
 						lblemeEconomique.setHorizontalAlignment(SwingConstants.CENTER);
 						lblemeEconomique.setForeground(Color.WHITE);
-						lblemeEconomique.setFont(new Font("Roboto", Font.BOLD, 20));
+						lblemeEconomique.setFont(new Font("Roboto", Font.BOLD, 14));
 						lblemeEconomique.setBorder(null);
 						lblemeEconomique.setBackground(Color.GREEN);
-						panel_2.add(lblemeEconomique);
 						lblemeEconomique.setPreferredSize(new Dimension(lblemeEconomique.getParent().getPreferredSize().width, 25));
 						
+						
+						JButton btnRetirer = new JButton("  Voir la classe  ");
+						btnRetirer.setVerticalTextPosition(SwingConstants.BOTTOM);
+						btnRetirer.setHorizontalTextPosition(SwingConstants.CENTER);
+						btnRetirer.setForeground(Color.WHITE);
+						btnRetirer.setFont(new Font("Roboto", Font.PLAIN, 14));
+						btnRetirer.setFocusPainted(false);
+						btnRetirer.setBorder(new LineBorder(new Color(255, 255, 255)));
+						panel_5.add(btnRetirer, BorderLayout.EAST);
+						btnRetirer.setBackground(btnRetirer.getParent().getBackground());
+						
+						
+						btnRetirer.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseEntered(MouseEvent e) {
+								btnRetirer.setBackground(new Color(20, 148, 198));
+								}
+							public void mouseExited(MouseEvent e) {
+								btnRetirer.setBackground(btnRetirer.getParent().getBackground());
+								}
+						});
+						int k = i;
+						btnRetirer.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								Application app = new Application(lines[k].toString());
+								app.frame.setVisible(true);
+								
+								Home.frame.setVisible(false);
+							}
+							
+						});
+						
+						
+						
+						JPanel panel_6 = new JPanel();
+						panel_2.add(panel_6);
+						panel_6.setBackground(panel_6.getParent().getBackground());
+						panel_6.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 						
 						List<String> s1 = new ArrayList();
 
@@ -403,96 +630,224 @@ public class Teacher extends JPanel {
 						
 						for(int j = 0; j< lines1.length; j++) {
 									
-								JPanel panel_3 = new JPanel();
-								panel_2.add(panel_3);
-								panel_3.setBackground(new Color(40, 40, 40).darker());
-								panel_3.setPreferredSize(new Dimension(panel_3.getParent().getPreferredSize().width*99/100, 25));
-								panel_3.setLayout(null);
+							
+							JPanel panel_3 = new JPanel();
+							panel_6.add(panel_3);
+							panel_3.setBackground(new Color(40, 40, 40).darker());
+							panel_3.setPreferredSize(new Dimension(panel_2.getPreferredSize().width, 25));
+							panel_3.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 0));
+							
+							JLabel lblFormationPatriotiqueEt = new JLabel(TestBox.getShortName(lines1[j].toString()));
+							lblFormationPatriotiqueEt.setName(lines1[j].toString());
+							lblFormationPatriotiqueEt.setForeground(Color.WHITE);
+							lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.PLAIN, 14));
+							lblFormationPatriotiqueEt.setBorder(null);
+							lblFormationPatriotiqueEt.setBackground(Color.GREEN);
+							panel_3.add(lblFormationPatriotiqueEt);
+							
+							JLabel label_2 = new JLabel("•");
+							label_2.setHorizontalAlignment(SwingConstants.CENTER);
+							label_2.setForeground(Color.WHITE);
+							label_2.setFont(new Font("Roboto", Font.BOLD, 14));
+							label_2.setBorder(null);
+							label_2.setBackground(Color.GREEN);
+							panel_3.add(label_2);
+							
+							JLabel lblMoyenne_1 = new JLabel("Moyenne: 45%");
+							lblMoyenne_1.setName("Entrepreneuriat");
+							lblMoyenne_1.setForeground(Color.WHITE);
+							lblMoyenne_1.setFont(new Font("Roboto", Font.PLAIN, 14));
+							lblMoyenne_1.setBorder(null);
+							lblMoyenne_1.setBackground(Color.GREEN);
+							panel_3.add(lblMoyenne_1);
+							
+							JLabel label_3 = new JLabel("•");
+							label_3.setHorizontalAlignment(SwingConstants.CENTER);
+							label_3.setForeground(Color.WHITE);
+							label_3.setFont(new Font("Roboto", Font.BOLD, 14));
+							label_3.setBorder(null);
+							label_3.setBackground(Color.GREEN);
+							panel_3.add(label_3);
+							
+							JLabel lblReussiteA = new JLabel("Reussite a 56%");
+							lblReussiteA.setName("Entrepreneuriat");
+							lblReussiteA.setForeground(Color.WHITE);
+							lblReussiteA.setFont(new Font("Roboto", Font.PLAIN, 14));
+							lblReussiteA.setBorder(null);
+							lblReussiteA.setBackground(Color.GREEN);
+							panel_3.add(lblReussiteA);
+						
+							JLabel label_4 = new JLabel("\u2022");
+							label_4.setHorizontalAlignment(SwingConstants.CENTER);
+							label_4.setForeground(Color.WHITE);
+							label_4.setFont(new Font("Roboto", Font.BOLD, 14));
+							label_4.setBorder(null);
+							label_4.setBackground(Color.GREEN);
+							panel_3.add(label_4);
+							
+							JButton btnNewButton = new JButton("");
+							btnNewButton.addMouseListener(new MouseAdapter() {
+								@Override
+								public void mouseEntered(MouseEvent e) {
+									btnNewButton.setBackground(new Color(20, 148, 198));
+								}
+								public void mouseExited(MouseEvent e) {
+									btnNewButton.setBackground(btnNewButton.getParent().getBackground());
+								}
+							});
+							btnNewButton.setPreferredSize(new Dimension(40, 25));
+							btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+							panel_3.add(btnNewButton);
+							btnNewButton.setFocusPainted(false);
+							btnNewButton.setBorder(null);
+							btnNewButton.setBackground(btnNewButton.getParent().getBackground());
+							Home.addToolTip(btnNewButton, "Stats");
+							
+							
+							int m = j;
+							btnNewButton.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									StatsPane frame = new StatsPane("All", lines1[m].toString(), lines[k].toString(), Home.termsText.get(Home.selectedTermIndex));
+									frame.setVisible(true);
 								
-								JLabel lblFormationPatriotiqueEt = new JLabel(TestBox.getFullName(lines1[j].toString()));
-								lblFormationPatriotiqueEt.setName(lines1[j].toString());
-								lblFormationPatriotiqueEt.setForeground(Color.WHITE);
-								lblFormationPatriotiqueEt.setFont(new Font("Roboto", Font.BOLD, 18));
-								lblFormationPatriotiqueEt.setBorder(null);
-								lblFormationPatriotiqueEt.setBackground(Color.GREEN);
-								lblFormationPatriotiqueEt.setBounds(10, 0, 287, 25);
-								panel_3.add(lblFormationPatriotiqueEt);
-								
-								
-								JLabel lblMoyenne = new JLabel();
-								lblMoyenne.setHorizontalAlignment(SwingConstants.CENTER);
-								lblMoyenne.setForeground(Color.WHITE);
-								lblMoyenne.setFont(new Font("Roboto", Font.BOLD, 16));
-								lblMoyenne.setBorder(null);
-								lblMoyenne.setBackground(Color.GREEN);
-								lblMoyenne.setBounds(300, 0, 169, 25);
-								panel_3.add(lblMoyenne);
-								
-								JLabel lblTauxDeReussite = new JLabel();
-								lblTauxDeReussite.setHorizontalAlignment(SwingConstants.CENTER);
-								lblTauxDeReussite.setForeground(Color.WHITE);
-								lblTauxDeReussite.setFont(new Font("Roboto", Font.BOLD, 16));
-								lblTauxDeReussite.setBorder(null);
-								lblTauxDeReussite.setBackground(Color.GREEN);
-								lblTauxDeReussite.setBounds(479, 0, 189, 25);
-								panel_3.add(lblTauxDeReussite);
-								
-								JLabel label_2 = new JLabel("•");
-								label_2.setHorizontalAlignment(SwingConstants.CENTER);
-								label_2.setForeground(Color.WHITE);
-								label_2.setFont(new Font("Roboto", Font.BOLD, 18));
-								label_2.setBorder(null);
-								label_2.setBackground(Color.GREEN);
-								label_2.setBounds(460, 0, 22, 25);
-								panel_3.add(label_2);
-								
-								JLabel label_3 = new JLabel("•");
-								label_3.setHorizontalAlignment(SwingConstants.CENTER);
-								label_3.setForeground(Color.WHITE);
-								label_3.setFont(new Font("Roboto", Font.BOLD, 18));
-								label_3.setBorder(null);
-								label_3.setBackground(Color.GREEN);
-								label_3.setBounds(290, 0, 22, 25);
-								panel_3.add(label_3);
+								}
+							});
+							
+
+							List<String> l = new ArrayList();
+							l.add("0");
+							l.add("0/0");
+							List<String> l1 = new ArrayList();
+							l1.add("0");
+							l1.add("0/0");
+							if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
+								l = CourseStats.getStudentTestsStats("All", lines[i].toString()
+										, lines1[j].toString(), Home.termsText.get(Home.selectedTermIndex),"All", "All");
+								}
+
+							if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
+								l1 = CourseStats.getStudentExamStats("All",  lines[i].toString()
+										, lines1[j].toString(), Home.termsText.get(Home.selectedTermIndex),"All", "All");
+								}
+					List<String> note = Arrays.asList(l.get(1).toString().split("/"));
+					List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
+					
+					Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."))+Double.parseDouble(note1.get(0).replaceAll(",", "."));
+					Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", "."));
+					
+					Double percentage;
+					if(points1==0 && maxima==0 ) {
+						percentage = 0.00;
+					}else {
+						percentage = points1*100/maxima;
+					}
+					lblMoyenne_1.setText("Moyenne: "+new DecimalFormat("##.##").format(percentage)+"%");
+						
+						
+						int rate = successRate(ay_id,  lines[i].toString()
+								, lines1[j].toString());
+				
+						lblReussiteA.setText("Reussite a: "+rate+"%");
+						
+						
+						
+						(panel_3).addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+
+									deselectAll(ay_id);
+									selectedTeacher = c.getParent();
+									((JComponent) c.getParent()).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 									
-						}}}
+									HomeMenu3.panel.getComponent(1).setVisible(true);
+									HomeMenu3.panel.getComponent(2).setVisible(true);
+									HomeMenu3.panel.getComponent(4).setVisible(true);
+									HomeMenu3.panel.getComponent(5).setVisible(true);
+
+									
+									if((((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)))).equals(c.getParent())) {
+
+										HomeMenu3.panel.getComponent(5).setVisible(false);
+										}
+									if((((Container) ((Container) Home.panelProf.getComponent(0)))).equals(c.getParent())) {
+										HomeMenu3.panel.getComponent(4).setVisible(false);
+										}
+									
+									((JComponent) (panel_2)).setBackground(new Color(255, 255, 255, 20));
+									//((JComponent) (panel_2)).setBorder(new LineBorder(new Color(0, 255, 153), 2));
+									
+									Home.frame.revalidate();
+									Home.frame.repaint();
+									
+									
+									
+									
+									if(e.getClickCount() == 2) {
+										StatsPane frame = new StatsPane("All", ((((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(0))).getName())), ((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(m)).getComponent(0)).getName(),
+												Login.selectedAcademicYearID);
+										frame.setVisible(true);
+									}
+								}
+								public void mouseEntered(MouseEvent e) {
+									if(((Container) (panel_2)).getBackground().equals(new Color(40, 40, 40))) {
+									((Container) (panel_2)).setBackground(((Container) (panel_2)).getBackground().brighter());
+									//((JComponent) (panel_2)).setBorder(new LineBorder(Color.white,2));
+									Home.panelProf.revalidate();
+									Home.panelProf.repaint();
+									}
+									//((JComponent) ((JComponent) ((Container) ((Container) c).getComponent(k))).getComponent(m)).setBorder(new LineBorder(new Color(20, 148, 198), 2));
+								}public void mouseExited(MouseEvent e) {
+									if(((Container) (panel_2)).getBackground().equals(new Color(40, 40, 40).brighter())) {
+									((Container) (panel_2)).setBackground(new Color(40, 40, 40));
+									//((JComponent) (panel_2)).setBorder(new LineBorder(Color.LIGHT_GRAY));
+									Home.panelProf.revalidate();
+									Home.panelProf.repaint();
+								}
+									//((JComponent) ((JComponent) ((Container) ((Container) c).getComponent(k))).getComponent(m)).setBorder(null);
+									}
+						});
+				
+						
+						
+						
+						
+						
+						}
 				Home.panelProf.revalidate();
 				Home.panelProf.repaint();
 				
-				for(int i = 0; i< ((Container) c).getComponentCount(); i++) {
-					int k = i;
-					((Container) ((Container) ((Container) c).getComponent(i))).addMouseListener(new MouseAdapter() {
+				
+				
+				
+				
+				panel_2.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 
 							deselectAll(ay_id);
-							selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getName();
+							selectedTeacher = c.getParent();
 							((JComponent) c.getParent()).setBorder(new LineBorder(new Color(20, 148, 198), 4));
 							
-							Home.side.removeAll();
+							//Home.side.removeAll();
 							TeacherInfo.selectedClass = 0;
-							TeacherInfo t = new TeacherInfo(teacher_id, ay_id);
-							Home.side.add(t);
+							//TeacherInfo t = new TeacherInfo(teacher_id, ay_id);
+							//Home.side.add(t);
 
 							HomeMenu3.panel.getComponent(1).setVisible(true);
 							HomeMenu3.panel.getComponent(2).setVisible(true);
 							HomeMenu3.panel.getComponent(4).setVisible(true);
 							HomeMenu3.panel.getComponent(5).setVisible(true);
 
-
-
-							TeacherInfo.selectedClass = k;
-							TeacherInfo.loadTeacherInfo(teacher_id, ay_id, TeacherInfo.classes.get(TeacherInfo.selectedClass));
 							
-							if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)).getComponent(0)).getComponent(0)).getName().equals(selectedTeacher)) {
+							if((((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)))).equals(selectedTeacher)) {
 
 								HomeMenu3.panel.getComponent(5).setVisible(false);}
-							if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(0)).getComponent(0)).getComponent(0)).getName().equals(selectedTeacher)) {
+							if((((Container) ((Container) Home.panelProf.getComponent(0)))).equals(selectedTeacher)) {
 								HomeMenu3.panel.getComponent(4).setVisible(false);
 								}
 							
-							((JComponent) ((Container) ((Container) c).getComponent(k))).setBackground(new Color(255, 255, 255, 20));
-							((JComponent) ((Container) ((Container) c).getComponent(k))).setBorder(new LineBorder(new Color(0, 255, 153), 2));
+							(panel_2).setBackground(new Color(255, 255, 255, 20));
+							//(panel_2).setBorder(new LineBorder(new Color(0, 255, 153), 2));
 							
 							Home.frame.revalidate();
 							Home.frame.repaint();
@@ -510,89 +865,22 @@ public class Teacher extends JPanel {
 							}
 						}
 						public void mouseEntered(MouseEvent e) {
-							if(((Container) ((Container) ((Container) c).getComponent(k))).getBackground().equals(new Color(40, 40, 40))) {
-							((Container) ((Container) ((Container) c).getComponent(k))).setBackground(((Container) ((Container) ((Container) c).getComponent(k))).getBackground().brighter());
-							((JComponent) ((Container) ((Container) c).getComponent(k))).setBorder(new LineBorder(Color.white,2));
+							if(((Container) (panel_2)).getBackground().equals(new Color(40, 40, 40))) {
+							((Container) (panel_2)).setBackground(((Container) (panel_2)).getBackground().brighter());
+							//((JComponent) (panel_2)).setBorder(new LineBorder(Color.white,2));
 							Home.panelProf.revalidate();
 							Home.panelProf.repaint();
 							}
 						}public void mouseExited(MouseEvent e) {
-							if(((Container) ((Container) ((Container) c).getComponent(k))).getBackground().equals(new Color(40, 40, 40).brighter())) {
-							((Container) ((Container) ((Container) c).getComponent(k))).setBackground(new Color(40, 40, 40));
-							((JComponent) ((Container) ((Container) c).getComponent(k))).setBorder(new LineBorder(Color.LIGHT_GRAY));
+							if(((Container) (panel_2)).getBackground().equals(new Color(40, 40, 40).brighter())) {
+							((Container) (panel_2)).setBackground(new Color(40, 40, 40));
+							//((JComponent) (panel_2)).setBorder(new LineBorder(Color.LIGHT_GRAY));
 							Home.panelProf.revalidate();
 							Home.panelProf.repaint();
 						}}
 						
 					});
-					
-
-					
-					
-					
-					for(int j = 1; j< ((Container) ((Container) c).getComponent(i)).getComponentCount(); j++) {
-						int m = j;
-						(((Container) ((Container) c).getComponent(i)).getComponent(j)).addMouseListener(new MouseAdapter() {
-							@Override
-							public void mouseClicked(MouseEvent e) {
-
-									deselectAll(ay_id);
-									selectedTeacher = ((JLabel) ((Container) ((Container) c.getParent()).getComponent(0)).getComponent(0)).getName();
-									((JComponent) c.getParent()).setBorder(new LineBorder(new Color(20, 148, 198), 4));
-									
-									Home.side.removeAll();
-									TeacherInfo.selectedClass = 0;
-									TeacherInfo t = new TeacherInfo(teacher_id, ay_id);
-									Home.side.add(t);
-
-									HomeMenu3.panel.getComponent(1).setVisible(true);
-									HomeMenu3.panel.getComponent(2).setVisible(true);
-									HomeMenu3.panel.getComponent(4).setVisible(true);
-									HomeMenu3.panel.getComponent(5).setVisible(true);
-
-									TeacherInfo.selectedClass = k;
-									TeacherInfo.loadTeacherInfo(teacher_id, ay_id, TeacherInfo.classes.get(TeacherInfo.selectedClass));
-									
-									if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(Home.panelProf.getComponentCount()-1)).getComponent(0)).getComponent(0)).getText().equals(selectedTeacher)) {
-
-										HomeMenu3.panel.getComponent(5).setVisible(false);}
-									if(((JLabel) ((Container) ((Container) Home.panelProf.getComponent(0)).getComponent(0)).getComponent(0)).getText().equals(selectedTeacher)) {
-										HomeMenu3.panel.getComponent(4).setVisible(false);
-										}
-									
-									((JComponent) ((Container) ((Container) c).getComponent(k))).setBackground(new Color(255, 255, 255, 20));
-									((JComponent) ((Container) ((Container) c).getComponent(k))).setBorder(new LineBorder(new Color(0, 255, 153), 2));
-									
-									Home.frame.revalidate();
-									Home.frame.repaint();
-									
-									
-									
-									
-									if(e.getClickCount() == 2) {
-										StatsPane frame = new StatsPane("All", ((((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(0))).getName())), ((JLabel) ((Container) ((Container) ((Container) c).getComponent(k)).getComponent(m)).getComponent(0)).getName(),
-												Login.selectedAcademicYearID);
-										frame.setVisible(true);
-									}
-								}
-								public void mouseEntered(MouseEvent e) {
-									if(((Container) ((Container) ((Container) c).getComponent(k))).getBackground().equals(new Color(40, 40, 40))) {
-									((Container) ((Container) ((Container) c).getComponent(k))).setBackground(((Container) ((Container) ((Container) c).getComponent(k))).getBackground().brighter());
-									((JComponent) ((Container) ((Container) c).getComponent(k))).setBorder(new LineBorder(Color.white,2));
-									Home.panelProf.revalidate();
-									Home.panelProf.repaint();
-									}
-									((JComponent) ((JComponent) ((Container) ((Container) c).getComponent(k))).getComponent(m)).setBorder(new LineBorder(new Color(20, 148, 198), 2));
-								}public void mouseExited(MouseEvent e) {
-									if(((Container) ((Container) ((Container) c).getComponent(k))).getBackground().equals(new Color(40, 40, 40).brighter())) {
-									((Container) ((Container) ((Container) c).getComponent(k))).setBackground(new Color(40, 40, 40));
-									((JComponent) ((Container) ((Container) c).getComponent(k))).setBorder(new LineBorder(Color.LIGHT_GRAY));
-									Home.panelProf.revalidate();
-									Home.panelProf.repaint();
-								}
-									((JComponent) ((JComponent) ((Container) ((Container) c).getComponent(k))).getComponent(m)).setBorder(null);}
-						});
-				}
+					}
 					}
 	
 	}
@@ -617,54 +905,9 @@ public class Teacher extends JPanel {
 } 
 	return name;
 	}
-	public static void loadData(Component c, String ay_id, String term_id) {
-		
-			for(int j = 0; j< ((Container) c).getComponentCount(); j++) {
-				for(int m = 1; m<((Container) ((Container) c).getComponent(j)).getComponentCount(); m++) {
-					List<String> l = new ArrayList();
-					l.add("0");
-					l.add("0/0");
-					List<String> l1 = new ArrayList();
-					l1.add("0");
-					l1.add("0/0");
-					if(Home.selectedPeriod == 0 || Home.selectedPeriod == 2) {
-						l = CourseStats.getStudentTestsStats("All", ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getName()
-								, ((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getName(), term_id,"All", "All");
-						}
-
-					if(Home.selectedPeriod == 1 || Home.selectedPeriod == 2) {
-						l1 = CourseStats.getStudentExamStats("All", ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getName()
-								, ((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getName(), term_id,"All", "All");
-						}
-			List<String> note = Arrays.asList(l.get(1).toString().split("/"));
-			List<String> note1 = Arrays.asList(l1.get(1).toString().split("/"));
-			
-			Double points1 = Double.parseDouble(note.get(0).replaceAll(",", "."))+Double.parseDouble(note1.get(0).replaceAll(",", "."));
-			Double maxima = Double.parseDouble(note.get(1).replaceAll(",", "."))+Double.parseDouble(note1.get(1).replaceAll(",", "."));
-			
-			Double percentage;
-			if(points1==0 && maxima==0 ) {
-				percentage = 0.00;
-			}else {
-				percentage = points1*100/maxima;
-			}
-			((JLabel) ((Container) ((Container) ((Container) c).getComponent(j)).getComponent(m)).getComponent(1)).setText("Moyenne: "+new DecimalFormat("##.##").format(percentage)+"%");
-				
-				
-				int rate = successRate(ay_id, ((JLabel) ((Container) (((Container) c).getComponent(j))).getComponent(0)).getName()
-						, ((JLabel) (((Container) (((Container) (((Container) c).getComponent(j))).getComponent(m))).getComponent(0))).getName());
-		
-				((JLabel) ((Container) ((Container) ((Container) c).getComponent(j)).getComponent(m)).getComponent(2)).setText("Taux de reussite: "+rate+"%");
-				
-				}
-			}
-		
-		Home.panelProf.revalidate();
-		Home.panelProf.repaint();
-	}
 	
 	
-	public static int loadNumberOfTeacherClasses(String ay_id, String teacher_id) {
+	public static int loadNumberOfTeacherCourses(String ay_id, String teacher_id) {
 		
 
 		int numberOfclass = 0;
@@ -672,15 +915,14 @@ public class Teacher extends JPanel {
 	try {
 		Statement stmt= mysql.con.createStatement();
 
-		ResultSet rs= stmt.executeQuery("select * from teachers_in_classrooms as tic "
+		ResultSet rs= stmt.executeQuery("select COUNT(*) from teachers_in_classrooms as tic "
 				+ "JOIN courses_in_classroom AS cic "
 				+ "JOIN classrooms as c "
 				+ "JOIN classrooms_in_ay as cia "
 				+ "WHERE cic.courses_in_classroom_id = tic.courses_in_classroom_id AND c.is_active = 1 AND cic.is_active = 1 AND cic.cia_id = cia.cia_id AND cia.is_active = 1 AND c.classroom_id = cia.classroom_id AND cia.ay_id = '"+ay_id+"' AND tic.teacher_id = '"+teacher_id+"'");
-		while(rs.next())
-		{
-			numberOfclass++;
-		}
+		
+		rs.next();
+			numberOfclass = rs.getInt(1);
 	} catch (SQLException e) {
 	// TODO Auto-generated catch block
 	e.printStackTrace();

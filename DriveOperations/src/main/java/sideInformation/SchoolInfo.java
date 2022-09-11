@@ -32,7 +32,7 @@ public class SchoolInfo extends JPanel {
 	public SchoolInfo(String school_id) {
 		setBorder(null);
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(320, 750));
+		setPreferredSize(new Dimension(320, 600));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
@@ -99,7 +99,7 @@ public class SchoolInfo extends JPanel {
 		
 		
 		
-		CustomButton trimestres = new CustomButton("<html><div style='text-align: leading;'>Activite financiere</div></html>");
+		CustomButton trimestres = new CustomButton("<html><div style='text-align: leading;'>Comptabilite</div></html>");
 		trimestres.setRadius(15);
 		trimestres.setAlignmentX(Component.CENTER_ALIGNMENT);
 		trimestres.setMultiClickThreshhold(2000L);
@@ -117,21 +117,38 @@ public class SchoolInfo extends JPanel {
 		
 		
 		
-		CustomButton punitions1 = new CustomButton("<html><div style='text-align: leading;'>Parametres des preferences</div></html>");
-		punitions1.setRadius(15);
-		punitions1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		punitions1.setMultiClickThreshhold(2000L);
-		punitions1.setMargin(new Insets(2, 10, 2, 14));
-		punitions1.setHorizontalAlignment(SwingConstants.LEADING);
-		punitions1.setPreferredSize(new Dimension(300, 40));
-		punitions1.setIconTextGap(10);
-		punitions1.setForeground(Color.WHITE);
-		punitions1.setFont(new Font("Roboto", Font.BOLD, 14));
-		punitions1.setFocusPainted(false);
-		punitions1.setBorderColor(new Color(255, 255, 255));
-		punitions1.setBackground(new Color(40, 40, 40));
-		punitions1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(punitions1);
+		CustomButton punitions111 = new CustomButton("<html><div style='text-align: leading;'>Personnel</div></html>");
+		punitions111.setRadius(15);
+		punitions111.setAlignmentX(Component.CENTER_ALIGNMENT);
+		punitions111.setMultiClickThreshhold(2000L);
+		punitions111.setMargin(new Insets(2, 10, 2, 14));
+		punitions111.setHorizontalAlignment(SwingConstants.LEADING);
+		punitions111.setPreferredSize(new Dimension(300, 40));
+		punitions111.setIconTextGap(10);
+		punitions111.setForeground(Color.WHITE);
+		punitions111.setFont(new Font("Roboto", Font.BOLD, 14));
+		punitions111.setFocusPainted(false);
+		punitions111.setBorderColor(new Color(255, 255, 255));
+		punitions111.setBackground(new Color(40, 40, 40));
+		punitions111.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(punitions111);
+		
+
+		CustomButton punitions1111 = new CustomButton("<html><div style='text-align: leading;'>Biblioteque</div></html>");
+		punitions1111.setRadius(15);
+		punitions1111.setAlignmentX(Component.CENTER_ALIGNMENT);
+		punitions1111.setMultiClickThreshhold(2000L);
+		punitions1111.setMargin(new Insets(2, 10, 2, 14));
+		punitions1111.setHorizontalAlignment(SwingConstants.LEADING);
+		punitions1111.setPreferredSize(new Dimension(300, 40));
+		punitions1111.setIconTextGap(10);
+		punitions1111.setForeground(Color.WHITE);
+		punitions1111.setFont(new Font("Roboto", Font.BOLD, 14));
+		punitions1111.setFocusPainted(false);
+		punitions1111.setBorderColor(new Color(255, 255, 255));
+		punitions1111.setBackground(new Color(40, 40, 40));
+		punitions1111.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(punitions1111);
 		
 		
 		
@@ -153,21 +170,21 @@ public class SchoolInfo extends JPanel {
 		
 		
 		
-		CustomButton punitions111 = new CustomButton("<html><div style='text-align: leading;'>Tresorerie digitale</div></html>");
-		punitions111.setRadius(15);
-		punitions111.setAlignmentX(Component.CENTER_ALIGNMENT);
-		punitions111.setMultiClickThreshhold(2000L);
-		punitions111.setMargin(new Insets(2, 10, 2, 14));
-		punitions111.setHorizontalAlignment(SwingConstants.LEADING);
-		punitions111.setPreferredSize(new Dimension(300, 40));
-		punitions111.setIconTextGap(10);
-		punitions111.setForeground(Color.WHITE);
-		punitions111.setFont(new Font("Roboto", Font.BOLD, 14));
-		punitions111.setFocusPainted(false);
-		punitions111.setBorderColor(new Color(255, 255, 255));
-		punitions111.setBackground(new Color(40, 40, 40));
-		punitions111.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(punitions111);
+		CustomButton punitions1 = new CustomButton("<html><div style='text-align: leading;'>Parametres des preferences</div></html>");
+		punitions1.setRadius(15);
+		punitions1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		punitions1.setMultiClickThreshhold(2000L);
+		punitions1.setMargin(new Insets(2, 10, 2, 14));
+		punitions1.setHorizontalAlignment(SwingConstants.LEADING);
+		punitions1.setPreferredSize(new Dimension(300, 40));
+		punitions1.setIconTextGap(10);
+		punitions1.setForeground(Color.WHITE);
+		punitions1.setFont(new Font("Roboto", Font.BOLD, 14));
+		punitions1.setFocusPainted(false);
+		punitions1.setBorderColor(new Color(255, 255, 255));
+		punitions1.setBackground(new Color(40, 40, 40));
+		punitions1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(punitions1);
 		
 		
 		

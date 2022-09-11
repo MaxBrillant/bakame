@@ -26,11 +26,14 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -281,6 +284,27 @@ public class Login extends JFrame {
 	contentPane.add(notice);
 
 	setLocationRelativeTo(null);
+	}
+	
+
+	public static void setAsPopup(JFrame s) {
+	s.addComponentListener(new ComponentAdapter() {
+		@Override
+		public void componentShown(ComponentEvent e) {
+			popup(s);
+		}
+	});
+	}
+	public static void popup(JFrame s) {
+		  JDialog jd = new JDialog(s);
+
+	        jd.setLayout(new BorderLayout(0, 0));
+
+	        jd.setModal(true);
+	        jd.setBounds(s.getX(), s.getY(), s.getWidth(), s.getHeight());
+	        jd.add(s.getContentPane());
+	        jd.setVisible(true);
+	        s.setVisible(false);
 	}
 	
 	public static boolean verifyAccount(String username, String passWord) {

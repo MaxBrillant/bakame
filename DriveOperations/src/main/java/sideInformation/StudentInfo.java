@@ -71,7 +71,7 @@ public class StudentInfo extends JPanel {
 	public StudentInfo(String classroom_in_ay_id) {
 		setBorder(null);
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(350, 750));
+		setPreferredSize(new Dimension(320, 700));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		RoundLabel btnNewButton = new RoundLabel(100, 100, "C:\\Users\\User\\Pictures\\photoshop max\\CG Projects\\cartoonproject.jpg");
@@ -87,7 +87,7 @@ public class StudentInfo extends JPanel {
 		JPanel panelName = new JPanel();
 		panelName.setBackground(new Color(60, 60, 60));
 		add(panelName, BorderLayout.NORTH);
-		panelName.setPreferredSize(new Dimension(320, 50));
+		panelName.setPreferredSize(new Dimension(300, 50));
 		panelName.setLayout(new BorderLayout(0, 0));
 		
 		name = new JLabel("UMUHOZA Chris Koen Michael");
@@ -309,7 +309,7 @@ public class StudentInfo extends JPanel {
 		
 		separator = new JSeparator();
 		separator.setForeground(new Color(211, 211, 211));
-		separator.setPreferredSize(new Dimension(320, 1));
+		separator.setPreferredSize(new Dimension(300, 1));
 		add(separator);
 		
 
@@ -317,7 +317,7 @@ public class StudentInfo extends JPanel {
 		btnstatistiquesAvances.setRadius(15);
 		btnstatistiquesAvances.setMargin(new Insets(0, 10, 0, 0));
 		btnstatistiquesAvances.setHorizontalAlignment(SwingConstants.LEADING);
-		btnstatistiquesAvances.setPreferredSize(new Dimension(320, 40));
+		btnstatistiquesAvances.setPreferredSize(new Dimension(300, 40));
 		btnstatistiquesAvances.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StatsPane frame = new StatsPane("All", "All", classroom_in_ay_id, Home.termsText.get(Home.selectedTermIndex));
@@ -326,7 +326,7 @@ public class StudentInfo extends JPanel {
 		});
 		
 		JLabel lblRolestitres = new JLabel("Roles/titres");
-		lblRolestitres.setPreferredSize(new Dimension(320, 25));
+		lblRolestitres.setPreferredSize(new Dimension(300, 25));
 		lblRolestitres.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRolestitres.setForeground(Color.WHITE);
 		lblRolestitres.setFont(new Font("Roboto", Font.PLAIN, 14));
@@ -357,13 +357,13 @@ public class StudentInfo extends JPanel {
 		add(btnNewButton_111);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setPreferredSize(new Dimension(320, 1));
+		separator_1.setPreferredSize(new Dimension(300, 1));
 		separator_1.setForeground(new Color(211, 211, 211));
 		add(separator_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Parents/Tuteurs");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setPreferredSize(new Dimension(320, 25));
+		lblNewLabel_2.setPreferredSize(new Dimension(300, 25));
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Roboto", Font.PLAIN, 14));
 		add(lblNewLabel_2);
@@ -387,7 +387,7 @@ public class StudentInfo extends JPanel {
 		
 		JSeparator separator2 = new JSeparator();
 		separator2.setForeground(new Color(211, 211, 211));
-		separator2.setPreferredSize(new Dimension(320, 1));
+		separator2.setPreferredSize(new Dimension(300, 1));
 		add(separator2);
 		
 		
@@ -404,7 +404,7 @@ public class StudentInfo extends JPanel {
 		btnhoraireDeClasse.setRadius(15);
 		btnhoraireDeClasse.setMargin(new Insets(2, 10, 2, 14));
 		btnhoraireDeClasse.setHorizontalAlignment(SwingConstants.LEADING);
-		btnhoraireDeClasse.setPreferredSize(new Dimension(320, 40));
+		btnhoraireDeClasse.setPreferredSize(new Dimension(300, 40));
 		btnhoraireDeClasse.setIconTextGap(10);
 		btnhoraireDeClasse.setForeground(Color.WHITE);
 		btnhoraireDeClasse.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -419,7 +419,7 @@ public class StudentInfo extends JPanel {
 		btnstructuresDeLhoraire.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnstructuresDeLhoraire.setMargin(new Insets(2, 10, 2, 14));
 		btnstructuresDeLhoraire.setHorizontalAlignment(SwingConstants.LEADING);
-		btnstructuresDeLhoraire.setPreferredSize(new Dimension(320, 40));
+		btnstructuresDeLhoraire.setPreferredSize(new Dimension(300, 40));
 		btnstructuresDeLhoraire.setIconTextGap(10);
 		btnstructuresDeLhoraire.setForeground(Color.WHITE);
 		btnstructuresDeLhoraire.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -433,7 +433,7 @@ public class StudentInfo extends JPanel {
 		btnbulletinScolaire.setRadius(15);
 		btnbulletinScolaire.setMargin(new Insets(2, 10, 2, 14));
 		btnbulletinScolaire.setHorizontalAlignment(SwingConstants.LEADING);
-		btnbulletinScolaire.setPreferredSize(new Dimension(320, 40));
+		btnbulletinScolaire.setPreferredSize(new Dimension(300, 40));
 		btnbulletinScolaire.setIconTextGap(10);
 		btnbulletinScolaire.setForeground(Color.WHITE);
 		btnbulletinScolaire.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -447,7 +447,7 @@ public class StudentInfo extends JPanel {
 		btnpaiementDuMinerval.setRadius(15);
 		btnpaiementDuMinerval.setMargin(new Insets(2, 10, 2, 14));
 		btnpaiementDuMinerval.setHorizontalAlignment(SwingConstants.LEADING);
-		btnpaiementDuMinerval.setPreferredSize(new Dimension(320, 40));
+		btnpaiementDuMinerval.setPreferredSize(new Dimension(300, 40));
 		btnpaiementDuMinerval.setIconTextGap(10);
 		btnpaiementDuMinerval.setForeground(Color.WHITE);
 		btnpaiementDuMinerval.setFont(new Font("Roboto", Font.BOLD, 14));

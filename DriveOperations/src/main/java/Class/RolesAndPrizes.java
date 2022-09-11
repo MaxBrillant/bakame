@@ -144,14 +144,14 @@ public class RolesAndPrizes extends JFrame {
 	
 	
 	JPanel panel_1 = new JPanel();
-	panel_1.setPreferredSize(new Dimension(390, 60));
+	panel_1.setPreferredSize(new Dimension(390, 50));
 	panel_1.setBackground(new Color(60, 60, 60));;
 			
-			JLabel lblNewLabel_1 = new JLabel("Responsabilites");
-			lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 14));
-			lblNewLabel_1.setForeground(Color.WHITE);
+			JLabel lblNewLabel_1 = new JLabel("New label");
+			lblNewLabel_1.setPreferredSize(new Dimension(390, 50));
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_1.setPreferredSize(new Dimension(390, 40));
+			lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 16));
+			lblNewLabel_1.setForeground(Color.WHITE);
 			panel.add(lblNewLabel_1);
 	
 			panel.add(panel_1);
@@ -159,46 +159,53 @@ public class RolesAndPrizes extends JFrame {
 			
 			JLabel lblMaxBrillant = new JLabel("  Delegue de classe");
 			lblMaxBrillant.setMaximumSize(new Dimension(300, 14));
-			lblMaxBrillant.setPreferredSize(new Dimension(100, 20));
+			lblMaxBrillant.setPreferredSize(new Dimension(100, 30));
 			lblMaxBrillant.setForeground(Color.WHITE);
-			lblMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 14));
-			panel_1.add(lblMaxBrillant, BorderLayout.NORTH);
+			lblMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 16));
+			panel_1.add(lblMaxBrillant, BorderLayout.CENTER);
 			
-			JLabel lblNewLabel = new JLabel("<html><div style='text-align: leading;'>Cet eleve est responsable d'administrer toutes les activites de la classe</div></html>");
+			JLabel lblNewLabel = new JLabel("<html><div style='text-align: leading;'>"+"ksjlksklsj lkj sjl sksj jlksjkls lskssj k jskl jskljs"+"</div></html>");
 			lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 			lblNewLabel.setPreferredSize(new Dimension(317, 20));
 			lblNewLabel.setMinimumSize(new Dimension(317, 20));
-			panel_1.add(lblNewLabel, BorderLayout.CENTER);
+			panel_1.add(lblNewLabel, BorderLayout.SOUTH);
 			lblNewLabel.setMaximumSize(new Dimension(300, 14));
-			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 12));
-			lblNewLabel.setForeground(Color.white);
+			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
+			lblNewLabel.setForeground(new Color(211, 211, 211));
 			
-			JLabel label = new JLabel(" 14:08 ");
-			label.setMaximumSize(new Dimension(300, 14));
-			label.setForeground(Color.WHITE);
-			label.setFont(new Font("Roboto", Font.PLAIN, 14));
-			panel_1.add(label, BorderLayout.EAST);
+			
 		
 		JPanel panel_3 = new JPanel();
 		panel_1.add(panel_3, BorderLayout.EAST);
 		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
 		panel_3.setBackground(panel_3.getParent().getBackground());
+
+		panel_3.setVisible(false);
 		
 		
 		
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+					lblNewLabel.setText("<html><u>"+lblNewLabel.getText().replaceAll("<html><div style='text-align: leading;'>", "").replaceAll("</div></html>", "")+"</u></html>");
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+					lblNewLabel.setText("<html><div style='text-align: leading;'>"+lblNewLabel.getText().replaceAll("<u>", "").replaceAll("</u>", "")+"</div></html>");
+			}
+		});
 
 
 		
-		JButton button11 = new JButton("");
+		JButton button11 = new JButton(" 23 eleves ");
 		panel_3.add(button11);
-		button11.setPreferredSize(new Dimension(40, 40));
-		button11.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\student.png"));
+		//button11.setPreferredSize(new Dimension(40, 30));
 		button11.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button11.setIconTextGap(0);
-		button11.setHorizontalTextPosition(SwingConstants.CENTER);
+		button11.setHorizontalTextPosition(SwingConstants.RIGHT);
 		button11.setForeground(Color.WHITE);
-		button11.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		button11.setFont(new Font("Roboto", Font.PLAIN, 14));
 		button11.setFocusPainted(false);
 		button11.setBorder(null);
 		button11.setBackground(button11.getParent().getBackground());
@@ -207,7 +214,7 @@ public class RolesAndPrizes extends JFrame {
 		
 		JButton button = new JButton("");
 		panel_3.add(button);
-		button.setPreferredSize(new Dimension(40, 40));
+		button.setPreferredSize(new Dimension(40, 30));
 		button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setIconTextGap(0);
@@ -223,7 +230,7 @@ public class RolesAndPrizes extends JFrame {
 		
 		JButton button1 = new JButton("");
 		panel_3.add(button1);
-		button1.setPreferredSize(new Dimension(40, 40));
+		button1.setPreferredSize(new Dimension(40, 30));
 		button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
 		button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button1.setIconTextGap(0);
@@ -235,7 +242,13 @@ public class RolesAndPrizes extends JFrame {
 		button1.setBackground(button1.getParent().getBackground());
 		Home.addToolTip(button1, "Supprimer");
 		
+		JLabel label = new JLabel("New label");
+		label.setBounds(-16, 137, 46, 14);
+		contentPane.add(label);
 		
+	
+	
+	
 		load(ay_id);
 	}
 	
@@ -251,12 +264,13 @@ public class RolesAndPrizes extends JFrame {
 		
 		
 		
-		JLabel lblNewLabel_1 = new JLabel("Responsabilites");
+		JLabel lblNewLabel_1 = new JLabel("Roles/Responsabilites");
+		lblNewLabel_1.setPreferredSize(new Dimension(390, 50));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setPreferredSize(new Dimension(390, 40));
 		panel.add(lblNewLabel_1);
+		
 		
 		
 		int i = 0;
@@ -272,7 +286,7 @@ public class RolesAndPrizes extends JFrame {
 				
 				JPanel panel_1 = new JPanel();
 				panel_1.setName(rs.getString("role_id"));
-				panel_1.setPreferredSize(new Dimension(390, 60));
+				panel_1.setPreferredSize(new Dimension(390, 50));
 				panel_1.setBackground(new Color(60, 60, 60));;
 				
 						panel.add(panel_1);
@@ -285,13 +299,13 @@ public class RolesAndPrizes extends JFrame {
 						lblMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 16));
 						panel_1.add(lblMaxBrillant, BorderLayout.CENTER);
 						
-						JLabel lblNewLabel = new JLabel("<html><div style='text-align: leading;'>"+rs.getString("description")+"</div></html>");
+						JLabel lblNewLabel = new JLabel(" "+rs.getString("description"));
 						lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-						lblNewLabel.setPreferredSize(new Dimension(317, 30));
+						lblNewLabel.setPreferredSize(new Dimension(317, 20));
 						lblNewLabel.setMinimumSize(new Dimension(317, 20));
 						panel_1.add(lblNewLabel, BorderLayout.SOUTH);
 						lblNewLabel.setMaximumSize(new Dimension(300, 14));
-						lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 12));
+						lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
 						lblNewLabel.setForeground(new Color(211, 211, 211));
 						
 						
@@ -309,25 +323,28 @@ public class RolesAndPrizes extends JFrame {
 					lblNewLabel.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseEntered(MouseEvent e) {
-								lblNewLabel.setText("<html><u>"+lblNewLabel.getText().replaceAll("<html><div style='text-align: leading;'>", "").replaceAll("</div></html>", "")+"</u></html>");
+								lblNewLabel.setText("<html><u>"+lblNewLabel.getText()+"</u></html>");
 						}
 						@Override
 						public void mouseExited(MouseEvent e) {
-								lblNewLabel.setText("<html><div style='text-align: leading;'>"+lblNewLabel.getText().replaceAll("<u>", "").replaceAll("</u>", "")+"</div></html>");
+								lblNewLabel.setText(lblNewLabel.getText().replaceAll("<html><u>", "").replaceAll("</u></html>", ""));
 						}
 					});
 
 
-					
-					JButton button11 = new JButton("");
+					int count = StudentRoles.loadNumberOfStudents(rs.getString("role_id"));
+					String s = "eleves";
+					if(count == 1) {
+						s = "eleve";
+					}
+					JButton button11 = new JButton(" "+count+" "+s+" ");
 					panel_3.add(button11);
-					button11.setPreferredSize(new Dimension(40, 30));
-					button11.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\student.png"));
+					//button11.setPreferredSize(new Dimension(40, 30));
 					button11.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button11.setIconTextGap(0);
-					button11.setHorizontalTextPosition(SwingConstants.CENTER);
+					button11.setHorizontalTextPosition(SwingConstants.RIGHT);
 					button11.setForeground(Color.WHITE);
-					button11.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					button11.setFont(new Font("Roboto", Font.PLAIN, 14));
 					button11.setFocusPainted(false);
 					button11.setBorder(null);
 					button11.setBackground(button11.getParent().getBackground());
@@ -390,15 +407,13 @@ public class RolesAndPrizes extends JFrame {
 					});
 					
 					button11.addMouseListener(new MouseAdapter() {
-						@Override
 						public void mouseEntered(MouseEvent e) {
-							button11.setBackground(new Color(20, 148, 198));
-						}
-						@Override
-						public void mouseExited(MouseEvent e) {
-
-							button11.setBackground(button11.getParent().getBackground());
-						}
+					button11.setText("<html><u>"+button11.getText()+"</u></html>");
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+					button11.setText(button11.getText().replaceAll("<html><u>", "").replaceAll("</u></html>", ""));
+					}
 					});
 					
 
@@ -472,15 +487,12 @@ public class RolesAndPrizes extends JFrame {
 	
 	public static void loadPrizes(String ay_id) {
 		
-		
-		
-		JLabel lblNewLabel_1 = new JLabel("Titres/Prix");
+		JLabel lblNewLabel_1 = new JLabel("Prix/Titres");
+		lblNewLabel_1.setPreferredSize(new Dimension(390, 50));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 16));
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setPreferredSize(new Dimension(390, 40));
 		panel.add(lblNewLabel_1);
-		
 		
 		int i = 0;
 		try {
@@ -495,7 +507,7 @@ public class RolesAndPrizes extends JFrame {
 				
 				JPanel panel_1 = new JPanel();
 				panel_1.setName(rs.getString("prize_id"));
-				panel_1.setPreferredSize(new Dimension(390, 60));
+				panel_1.setPreferredSize(new Dimension(390, 50));
 				panel_1.setBackground(new Color(60, 60, 60));;
 				
 						panel.add(panel_1);
@@ -508,13 +520,13 @@ public class RolesAndPrizes extends JFrame {
 						lblMaxBrillant.setFont(new Font("Roboto", Font.BOLD, 16));
 						panel_1.add(lblMaxBrillant, BorderLayout.CENTER);
 						
-						JLabel lblNewLabel = new JLabel("<html><div style='text-align: leading;'>"+rs.getString("description")+"</div></html>");
+						JLabel lblNewLabel = new JLabel(" "+rs.getString("description"));
 						lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-						lblNewLabel.setPreferredSize(new Dimension(317, 30));
+						lblNewLabel.setPreferredSize(new Dimension(317, 20));
 						lblNewLabel.setMinimumSize(new Dimension(317, 20));
 						panel_1.add(lblNewLabel, BorderLayout.SOUTH);
 						lblNewLabel.setMaximumSize(new Dimension(300, 14));
-						lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 12));
+						lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
 						lblNewLabel.setForeground(new Color(211, 211, 211));
 						
 						
@@ -532,25 +544,29 @@ public class RolesAndPrizes extends JFrame {
 					lblNewLabel.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseEntered(MouseEvent e) {
-								lblNewLabel.setText("<html><u>"+lblNewLabel.getText().replaceAll("<html><div style='text-align: leading;'>", "").replaceAll("</div></html>", "")+"</u></html>");
+								lblNewLabel.setText("<html><u>"+lblNewLabel.getText()+"</u></html>");
 						}
 						@Override
 						public void mouseExited(MouseEvent e) {
-								lblNewLabel.setText("<html><div style='text-align: leading;'>"+lblNewLabel.getText().replaceAll("<u>", "").replaceAll("</u>", "")+"</div></html>");
+								lblNewLabel.setText(lblNewLabel.getText().replaceAll("<u>", "").replaceAll("</u>", ""));
 						}
 					});
 
 
 					
-					JButton button11 = new JButton("");
+					int count = StudentPrizes.loadNumberOfStudents(rs.getString("prize_id"));
+					String s = "eleves";
+					if(count == 1) {
+						s = "eleve";
+					}
+					JButton button11 = new JButton(" "+count+" "+s+" ");
 					panel_3.add(button11);
-					button11.setPreferredSize(new Dimension(40, 30));
-					button11.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\student.png"));
+					//button11.setPreferredSize(new Dimension(40, 30));
 					button11.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button11.setIconTextGap(0);
-					button11.setHorizontalTextPosition(SwingConstants.CENTER);
+					button11.setHorizontalTextPosition(SwingConstants.RIGHT);
 					button11.setForeground(Color.WHITE);
-					button11.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					button11.setFont(new Font("Roboto", Font.PLAIN, 14));
 					button11.setFocusPainted(false);
 					button11.setBorder(null);
 					button11.setBackground(button11.getParent().getBackground());
@@ -613,15 +629,13 @@ public class RolesAndPrizes extends JFrame {
 					});
 					
 					button11.addMouseListener(new MouseAdapter() {
-						@Override
 						public void mouseEntered(MouseEvent e) {
-							button11.setBackground(new Color(20, 148, 198));
-						}
-						@Override
-						public void mouseExited(MouseEvent e) {
-
-							button11.setBackground(button11.getParent().getBackground());
-						}
+					button11.setText("<html><u>"+button11.getText()+"</u></html>");
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+					button11.setText(button11.getText().replaceAll("<html><u>", "").replaceAll("</u></html>", ""));
+					}
 					});
 					
 

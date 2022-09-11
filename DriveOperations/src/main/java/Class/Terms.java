@@ -353,5 +353,24 @@ public class Terms extends JFrame {
 	
 	
 	}
+	
+	
+	public static double getTermFees(String term_id) {
+		double fees = 0;
+		try {
+			Statement stmt= mysql.con.createStatement();
+
+			ResultSet rs =stmt.executeQuery("select * from terms "
+					+ "WHERE term_id = '"+term_id+"'");
+			while(rs.next())
+			{
+				fees = rs.getDouble("fees_amount");
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+			}
+		return fees;
+	}
 
 }

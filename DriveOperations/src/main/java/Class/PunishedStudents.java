@@ -42,6 +42,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +64,7 @@ import Application.NewPunishment;
 import Application.ResizeImages;
 import Class.NewCourse;
 import CloudOperations.aws;
+import CloudOperations.mysql;
 import Publishing.getInternetDateAndTime;
 import accounts.NewEstablishment;
 import accounts.ScholarYears;
@@ -79,7 +83,6 @@ public class PunishedStudents extends JFrame {
 
 	public static JPanel contentPane;
 	public static JButton actualiser;
-	private JButton btnFermer;
 	public static boolean isEmpty = false;
 	private JLabel lblajoutezLesClasses;
 	public static JPanel panel;
@@ -106,7 +109,7 @@ public class PunishedStudents extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PunishedStudents(String pi_id, String classroom_in_ay_id, List students) {
+	public PunishedStudents(String pi_id, String classroom_in_ay_id) {
 		setResizable(false);
 		setPreferredSize(new Dimension(400, 400));
 	setTitle("");
@@ -130,20 +133,6 @@ public class PunishedStudents extends JFrame {
 	actualiser.setBackground(new Color(171, 145, 0));
 	contentPane.add(actualiser);
 	
-	btnFermer = new JButton("Fermer");
-	btnFermer.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			setVisible(false);
-		}
-	});
-	btnFermer.setForeground(Color.WHITE);
-	btnFermer.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-	btnFermer.setFocusPainted(false);
-	btnFermer.setBorderPainted(false);
-	btnFermer.setBackground(new Color(171, 0, 0));
-	btnFermer.setBounds(295, 519, 129, 31);
-	contentPane.add(btnFermer);
-	
 	lblajoutezLesClasses = new JLabel(Punish.getPunishmentName(Punish.getPunishmentOriginalId(pi_id)));
 	lblajoutezLesClasses.setHorizontalAlignment(SwingConstants.CENTER);
 	lblajoutezLesClasses.setForeground(Color.WHITE);
@@ -158,7 +147,7 @@ public class PunishedStudents extends JFrame {
 	
 	tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	tabbedPane.setFont(new Font("Roboto", Font.PLAIN, 17));
-	tabbedPane.setBounds(10, 74, 414, 434);
+	tabbedPane.setBounds(10, 118, 414, 432);
 	contentPane.add(tabbedPane);
 	
 	JScrollPane scrollPane = new JScrollPane();
@@ -190,6 +179,7 @@ public class PunishedStudents extends JFrame {
 	lblLe.setBounds(137, 42, 160, 31);
 	contentPane.add(lblLe);
 	
+	List<String> students = getPunishedStudents(pi_id, classroom_in_ay_id);
 	JLabel lblEleves = new JLabel(students.toArray().length+" eleves");
 	if(students.toArray().length==1) {
 		lblEleves.setText(students.toArray().length+" eleve");
@@ -199,6 +189,15 @@ public class PunishedStudents extends JFrame {
 	lblEleves.setFont(new Font("Roboto", Font.PLAIN, 16));
 	lblEleves.setBounds(331, 42, 93, 31);
 	contentPane.add(lblEleves);
+	
+	JButton btnToutPardonner = new JButton("Tout pardonner");
+	btnToutPardonner.setForeground(Color.WHITE);
+	btnToutPardonner.setFont(new Font("Roboto", Font.BOLD, 14));
+	btnToutPardonner.setFocusPainted(false);
+	btnToutPardonner.setBorderPainted(false);
+	btnToutPardonner.setBackground(new Color(0, 171, 89));
+	btnToutPardonner.setBounds(279, 84, 145, 31);
+	contentPane.add(btnToutPardonner);
 	setLocationRelativeTo(null);
 	loadPunishedStudents(pi_id, classroom_in_ay_id, students);
 	}
@@ -337,5 +336,30 @@ public class PunishedStudents extends JFrame {
 			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
 			panel.add(lblNewLabel, 0);
 		}
+	}
+	
+	
+public static List<String> getPunishedStudents(String punishment_id, String classroom_in_ay_id) {
+		
+		List<String> students = new ArrayList();
+		try {
+			Statement stmt= mysql.con.createStatement();
+			Object[] s = Home.loadActiveStudents(classroom_in_ay_id);
+
+			ResultSet rs=stmt.executeQuery("select * from student_punishments "
+					+ "WHERE pi_id = '"+punishment_id+"'");
+			while(rs.next())
+			{
+				for(int i = 0; i< s.length; i++) {
+					if(rs.getString("sic_id").equals(s[i].toString())) {
+						students.add(rs.getString("sic_id"));
+					}
+				}
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return students;
 	}
 }

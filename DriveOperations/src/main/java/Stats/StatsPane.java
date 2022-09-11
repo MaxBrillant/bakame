@@ -112,6 +112,7 @@ public class StatsPane extends JFrame {
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		Login.setAsPopup(this);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(60, 60, 60));

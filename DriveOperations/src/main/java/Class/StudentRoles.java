@@ -255,6 +255,29 @@ public static void loadStudents (String role_id) {
 			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 14));
 			panel.add(lblNewLabel, 0);
 		}
-	}
+}
+
+
+public static int loadNumberOfStudents (String role_id) {
+	
+	int count = 0;
+	try {
+		Statement stmt= mysql.con.createStatement();
+
+		ResultSet rs=stmt.executeQuery("select COUNT(*) from student_roles AS sr "
+				+ "JOIN students AS s "
+				+ "JOIN students_in_classrooms AS sic "
+				+ "WHERE sr.role_id = '"+role_id+"' AND sr.sic_id = sic.sic_id AND s.student_id = sic.student_id AND s.is_active = 1 AND sic.is_active = 1");
+		
+		rs.next();
+		count = rs.getInt(1);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	return count;
+
+}
+
 
 }

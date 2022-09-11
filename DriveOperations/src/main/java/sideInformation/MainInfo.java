@@ -13,12 +13,14 @@ import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+import Application.DeletedEntities;
 import Application.EducationFrame;
 import Application.Home;
 import Application.ResizeImages;
 import Application.UserHistory;
 import Application.Users;
 import Class.CustomVerticalScrollBarUI;
+import Class.ListOfMessages;
 import Class.RolesAndPrizes;
 import Class.StudentRoles;
 import Class.Terms;
@@ -56,7 +58,7 @@ public class MainInfo extends JPanel {
 	public MainInfo(String ay_id) {
 		setBorder(null);
 		setBackground(new Color(40, 40, 40));
-		setPreferredSize(new Dimension(320, 750));
+		setPreferredSize(new Dimension(320, 800));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
@@ -294,24 +296,15 @@ public class MainInfo extends JPanel {
 		studentRoles.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		add(studentRoles);
 		
-		CustomButton Accounting = new CustomButton("<html><div style='text-align: leading;'>Comptabilite</div></html>");
-		Accounting.setRadius(15);
-		Accounting.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Accounting.setMargin(new Insets(2, 10, 2, 14));
-		Accounting.setHorizontalAlignment(SwingConstants.LEADING);
-		Accounting.setPreferredSize(new Dimension(300, 40));
-		Accounting.setIconTextGap(10);
-		Accounting.setForeground(Color.WHITE);
-		Accounting.setFont(new Font("Roboto", Font.BOLD, 14));
-		Accounting.setFocusPainted(false);
-		Accounting.setBorderColor(new Color(255, 255, 255));
-		Accounting.setBackground(new Color(40, 40, 40));
-		Accounting.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
-		add(Accounting);
-		
 		
 
-		CustomButton communication = new CustomButton("<html><div style='text-align: leading;'>Historique de communication</div></html>");
+		CustomButton communication = new CustomButton("<html><div style='text-align: leading;'>Messages et communiques</div></html>");
+		communication.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListOfMessages s = new ListOfMessages();
+				s.setVisible(true);
+			}
+		});
 		communication.setRadius(15);
 		communication.setAlignmentX(Component.CENTER_ALIGNMENT);
 		communication.setMultiClickThreshhold(2000L);
@@ -329,6 +322,12 @@ public class MainInfo extends JPanel {
 		
 		
 		CustomButton deletedClasses = new CustomButton("<html><div style='text-align: leading;'>Classes supprimees</div></html>");
+		deletedClasses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeletedEntities d = new DeletedEntities(ay_id, 0);
+				d.setVisible(true);
+			}
+		});
 		deletedClasses.setRadius(15);
 		deletedClasses.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deletedClasses.setMargin(new Insets(2, 10, 2, 14));
@@ -344,7 +343,13 @@ public class MainInfo extends JPanel {
 		add(deletedClasses);
 
 		
-		CustomButton deletedStudents = new CustomButton("<html><div style='text-align: leading;'>Eleves supprimees</div></html>");
+		CustomButton deletedStudents = new CustomButton("<html><div style='text-align: leading;'>Eleves supprimes</div></html>");
+		deletedStudents.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeletedEntities d = new DeletedEntities(ay_id, 1);
+				d.setVisible(true);
+			}
+		});
 		deletedStudents.setRadius(15);
 		deletedStudents.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deletedStudents.setMargin(new Insets(2, 10, 2, 14));
@@ -360,7 +365,38 @@ public class MainInfo extends JPanel {
 		add(deletedStudents);
 		
 		
-		CustomButton deletedTeachers = new CustomButton("<html><div style='text-align: leading;'>Professeurs supprimees</div></html>");
+		
+		CustomButton deletedCourses = new CustomButton("<html><div style='text-align: leading;'>Cours supprimes</div></html>");
+		deletedCourses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeletedEntities d = new DeletedEntities(ay_id, 2);
+				d.setVisible(true);
+			
+			}
+		});
+		deletedCourses.setRadius(15);
+		deletedCourses.setAlignmentX(Component.CENTER_ALIGNMENT);
+		deletedCourses.setMargin(new Insets(2, 10, 2, 14));
+		deletedCourses.setHorizontalAlignment(SwingConstants.LEADING);
+		deletedCourses.setPreferredSize(new Dimension(300, 40));
+		deletedCourses.setIconTextGap(10);
+		deletedCourses.setForeground(Color.WHITE);
+		deletedCourses.setFont(new Font("Roboto", Font.BOLD, 14));
+		deletedCourses.setFocusPainted(false);
+		deletedCourses.setBorderColor(new Color(255, 255, 255));
+		deletedCourses.setBackground(new Color(40, 40, 40));
+		deletedCourses.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(deletedCourses);
+		
+		
+		
+		CustomButton deletedTeachers = new CustomButton("<html><div style='text-align: leading;'>Professeurs supprimes</div></html>");
+		deletedTeachers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeletedEntities d = new DeletedEntities(ay_id, 3);
+				d.setVisible(true);
+			}
+		});
 		deletedTeachers.setRadius(15);
 		deletedTeachers.setAlignmentX(Component.CENTER_ALIGNMENT);
 		deletedTeachers.setMargin(new Insets(2, 10, 2, 14));
@@ -374,6 +410,21 @@ public class MainInfo extends JPanel {
 		deletedTeachers.setBackground(new Color(40, 40, 40));
 		deletedTeachers.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
 		add(deletedTeachers);
+		
+		CustomButton Accounting = new CustomButton("<html><div style='text-align: leading;'>Supprimer l'annee scholaire</div></html>");
+		Accounting.setRadius(15);
+		Accounting.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Accounting.setMargin(new Insets(2, 10, 2, 14));
+		Accounting.setHorizontalAlignment(SwingConstants.LEADING);
+		Accounting.setPreferredSize(new Dimension(300, 40));
+		Accounting.setIconTextGap(10);
+		Accounting.setForeground(Color.WHITE);
+		Accounting.setFont(new Font("Roboto", Font.BOLD, 14));
+		Accounting.setFocusPainted(false);
+		Accounting.setBorderColor(new Color(255, 255, 255));
+		Accounting.setBackground(new Color(40, 40, 40));
+		Accounting.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		add(Accounting);
 		
 		
 

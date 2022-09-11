@@ -28,6 +28,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -54,6 +56,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import Class.NewCourse;
+import accounts.Login;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.FlowLayout;
@@ -104,6 +108,8 @@ public class NewSession extends JFrame {
 	setContentPane(contentPane);
 	contentPane.setLayout(null);
 	setLocationRelativeTo(null);
+
+	Login.setAsPopup(this);
 	
 	create = new JButton("Continuer");
 	create.setBorderPainted(false);
@@ -429,7 +435,7 @@ public class NewSession extends JFrame {
 		}
 	});
 	
-	
+
 	}
 	
 	public static void refresh() {

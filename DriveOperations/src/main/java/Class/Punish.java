@@ -160,7 +160,7 @@ public class Punish extends JFrame {
 	contentPane.add(separator);
 	
 	tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-	tabbedPane.setFont(new Font("Roboto", Font.PLAIN, 17));
+	tabbedPane.setFont(new Font("Roboto", Font.PLAIN, 14));
 	tabbedPane.setBounds(10, 109, 414, 399);
 	contentPane.add(tabbedPane);
 	
@@ -220,7 +220,7 @@ public class Punish extends JFrame {
 	text.setHorizontalAlignment(SwingConstants.CENTER);
 	text.setForeground(new Color(211, 211, 211));
 	text.setFont(new Font("Roboto", Font.PLAIN, 14));
-	text.setBounds(10, 34, 403, 54);
+	text.setBounds(10, 34, 414, 54);
 	contentPane.add(text);
 	
 	
@@ -589,28 +589,22 @@ public class Punish extends JFrame {
 		}
 	}
 	
-	public static List<String> getPunishedStudents(String punishment_id, String classroom_in_ay_id) {
+	public static int getNumberOfPunishedStudents(String punishment_id, String classroom_in_ay_id) {
 		
-		List<String> students = new ArrayList();
+		int count = 0;
 		try {
 			Statement stmt= mysql.con.createStatement();
 			Object[] s = Home.loadActiveStudents(classroom_in_ay_id);
 
-			ResultSet rs=stmt.executeQuery("select * from student_punishments "
+			ResultSet rs=stmt.executeQuery("select COUNT(*) from student_punishments "
 					+ "WHERE pi_id = '"+punishment_id+"'");
-			while(rs.next())
-			{
-				for(int i = 0; i< s.length; i++) {
-					if(rs.getString("sic_id").equals(s[i].toString())) {
-						students.add(rs.getString("sic_id"));
-					}
-				}
-			}
+			rs.next();
+			count = rs.getInt(1);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		return students;
+		return count;
 	}
 	
 	
@@ -627,8 +621,6 @@ public class Punish extends JFrame {
 					+ "AND pi.term_id = '"+term_id+"'");
 			while(rs.next())
 			{
-
-				List students = getPunishedStudents(rs.getString("pi.pi_id"), classroom_in_ay_id);
 				
 
 				JPanel panel_3 = new JPanel();
@@ -656,11 +648,14 @@ public class Punish extends JFrame {
 				label1.setFont(new Font("Roboto", Font.PLAIN, 14));
 				panel2.add(label1);
 				
+				
+
+				int students = getNumberOfPunishedStudents(rs.getString("pi.pi_id"), classroom_in_ay_id);
 				String eleves = "eleves";
-				if(students.toArray().length==1) {
+				if(students == 1) {
 					eleves = "eleve";
 				}
-				JLabel label_2 = new JLabel(rs.getString("pi.date")+" \u2022 "+students.toArray().length+" "+eleves);
+				JLabel label_2 = new JLabel(rs.getString("pi.date")+" \u2022 "+students+" "+eleves);
 				label_2.setHorizontalAlignment(SwingConstants.CENTER);
 				label_2.setForeground(Color.WHITE);
 				label_2.setFont(new Font("Roboto", Font.PLAIN, 14));
@@ -677,14 +672,14 @@ public class Punish extends JFrame {
 				panel_4.setBackground(panel_4.getParent().getBackground());
 				
 				
-				JButton btnRetirer = new JButton("Tout pardonner");
+				JButton btnRetirer = new JButton("Voir");
 				btnRetirer.setVerticalTextPosition(SwingConstants.BOTTOM);
 				btnRetirer.setHorizontalTextPosition(SwingConstants.CENTER);
 				btnRetirer.setForeground(Color.WHITE);
 				btnRetirer.setFont(new Font("Roboto", Font.PLAIN, 14));
 				btnRetirer.setFocusPainted(false);
 				btnRetirer.setBorder(new LineBorder(new Color(255, 255, 255)));
-				btnRetirer.setPreferredSize(new Dimension(110, 25));
+				btnRetirer.setPreferredSize(new Dimension(60, 25));
 				panel_4.add(btnRetirer);
 				btnRetirer.setBackground(btnRetirer.getParent().getBackground());
 				
@@ -704,10 +699,8 @@ public class Punish extends JFrame {
 
 				btnRetirer.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						forgiveAll(className, btnRetirer.getParent().getName());
-						loadClassPunishments(classroom_in_ay_id, term_id);
-						
+						PunishedStudents ps = new PunishedStudents(panel_3.getName(), classroom_in_ay_id);
+						ps.setVisible(true);
 					}
 				});
 				
@@ -721,13 +714,6 @@ public class Punish extends JFrame {
 					
 					panel_3.setBackground(new Color(20, 142, 192));
 					panel_3.getComponent(0).setBackground(panel_3.getBackground());
-					
-				
-					
-					if(e.getClickCount()==2) {
-						PunishedStudents ps = new PunishedStudents(panel_3.getName(), classroom_in_ay_id, students);
-						ps.setVisible(true);
-					}
 				}
 					@Override
 					public void mouseEntered(MouseEvent e) {

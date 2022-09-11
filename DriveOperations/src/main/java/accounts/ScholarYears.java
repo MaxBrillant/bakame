@@ -181,17 +181,20 @@ public class ScholarYears extends JFrame {
 		setMinimumSize(new Dimension(720, 0));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
+		
+		
 		JPanel panel = new JPanel();
-		panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		panel.setForeground(new Color(0, 128, 128));
+		panel.setBackground(new Color(40, 40, 40));
+		panel.setLayout(new BorderLayout(0, 0));
+		getContentPane().add(panel, BorderLayout.CENTER);
+		
+		
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(20, 148, 198));
+		panel_1.setBackground(new Color(40, 40, 40));
 		panel_1.setPreferredSize(new Dimension(10, 45));
-		getContentPane().add(panel_1, BorderLayout.NORTH);
+		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		JLabel classe = new JLabel();
@@ -216,15 +219,17 @@ public class ScholarYears extends JFrame {
 		btnBack.setFont(new Font("Roboto", Font.BOLD, 16));
 		btnBack.setFocusPainted(false);
 		btnBack.setBorderPainted(false);
-		btnBack.setBackground(new Color(20, 148, 198));
+		btnBack.setBackground(new Color(40, 40, 40));
 		panel_1.add(btnBack, BorderLayout.WEST);
+		
+		
 		
 		
 		JPanel p = new JPanel();
 		p.setForeground(new Color(0, 128, 128));
 		p.setBackground(new Color(40, 40, 40));
 		p.setLayout(new BorderLayout(0, 0));
-		getContentPane().add(p, BorderLayout.CENTER);
+		panel.add(p, BorderLayout.CENTER);
 		
 		
 		JPanel p2 = new JPanel();
@@ -316,15 +321,15 @@ public class ScholarYears extends JFrame {
 		panel_5.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 		
 		
-		JButton logo = new JButton("");
-		logo.setMultiClickThreshhold(1000L);
-		logo.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
-		logo.setPreferredSize(new Dimension(70, 50));
-		logo.setFont(new Font("Arial", Font.PLAIN, 27));
-		logo.setFocusPainted(false);
-		logo.setBorder(null);
-		logo.setBackground(new Color(40, 40, 40));
-		panel_5.add(logo);
+		JButton menu = new JButton("");
+		menu.setMultiClickThreshhold(1000L);
+		menu.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		menu.setPreferredSize(new Dimension(70, 50));
+		menu.setFont(new Font("Arial", Font.PLAIN, 27));
+		menu.setFocusPainted(false);
+		menu.setBorder(null);
+		menu.setBackground(new Color(40, 40, 40));
+		panel_5.add(menu);
 		
 		
 		JButton btnAs = new JButton("An. scholaires");
@@ -612,9 +617,31 @@ public class ScholarYears extends JFrame {
 		panelYear.add(btnNewButton_1);
 		btnNewButton_1.setBackground(new Color(60, 60, 60));
 		
+		
+		JPanel panel_41 = new JPanel();
+		panel_41.setPreferredSize(new Dimension(350, 80));
+		getContentPane().add(panel_41, BorderLayout.WEST);
+		panel_41.setLayout(new BorderLayout(0, 0));
+		
+		JPanel logo_panel = new JPanel();
+		logo_panel.setPreferredSize(new Dimension(350, 80));
+		logo_panel.setBackground(new Color(40, 40, 40));
+		panel_41.add(logo_panel, BorderLayout.NORTH);
+		logo_panel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 5));
+		
+		JButton logo = new JButton("");
+		logo.setFocusPainted(false);
+		logo.setBackground(new Color(40, 40, 40));
+		logo.setBorder(null);
+		logo_panel.add(logo);
+		logo.setHorizontalAlignment(SwingConstants.CENTER);
+		logo.setHorizontalTextPosition(SwingConstants.CENTER);
+		logo.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Pictures\\photoshop max\\CG Projects\\Open-ed.png"));
+		logo.setPreferredSize(new Dimension(220, 70));
+		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setPreferredSize(new Dimension(350, 2));
-		getContentPane().add(scrollPane_2, BorderLayout.WEST);
+		panel_41.add(scrollPane_2, BorderLayout.WEST);
 		
 		
 		

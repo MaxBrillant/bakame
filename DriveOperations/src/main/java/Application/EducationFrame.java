@@ -168,7 +168,7 @@ public class EducationFrame extends JFrame {
 	lblajouterModifierouSupprimer = new JLabel("<html><div style='text-align: center;'>Ajoutez, modifiez ou supprimez les punitions appliquees par cet etablissement.</div></html>");
 	lblajouterModifierouSupprimer.setForeground(new Color(211, 211, 211));
 	lblajouterModifierouSupprimer.setFont(new Font("Roboto", Font.PLAIN, 14));
-	lblajouterModifierouSupprimer.setBounds(10, 34, 404, 51);
+	lblajouterModifierouSupprimer.setBounds(10, 34, 414, 51);
 	contentPane.add(lblajouterModifierouSupprimer);
 	
 	JButton btnAjouter = new JButton("Ajouter");

@@ -98,6 +98,7 @@ public class ExamBox extends JPanel {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(getParent().equals(Application.panelExams)) {
 				ExamMenu.deselect();
 				if((MouseEvent.CTRL_MASK & e.getModifiers())!=0) {
 					if(!selectedExams.contains(getComponent(0).getParent())) {
@@ -141,16 +142,16 @@ public class ExamBox extends JPanel {
 					ExamMenu.stats.setVisible(true);
 				if(selectedExams.toArray().length==0) {
 					deselectAll();
-				}
+				}}
 				}
 			public void mouseEntered(MouseEvent e) {
-				if(!selectedExams.contains(getComponent(0).getParent())) {
+				if(!selectedExams.contains(getComponent(0).getParent()) && getParent().equals(Application.panelExams)) {
 					((Container) getComponent(1)).getComponent(0).setBackground(new Color(60, 60, 60));
 					((Container) getComponent(1)).getComponent(1).setBackground(new Color(60, 60, 60));
 					//setBorder(new LineBorder(new Color(20, 148, 198)));
 				}
 			}public void mouseExited(MouseEvent e) {
-				if(!selectedExams.contains(getComponent(0).getParent())) {
+				if(!selectedExams.contains(getComponent(0).getParent()) && getParent().equals(Application.panelExams)) {
 					((Container) getComponent(1)).getComponent(0).setBackground(new Color(40, 40, 40));
 					((Container) getComponent(1)).getComponent(1).setBackground(new Color(40, 40, 40));
 					setBorder(null);
@@ -313,8 +314,8 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 
 			if(i >0) {
 				JSeparator separator = new JSeparator();
-				separator.setPreferredSize(new Dimension(1000, 1));
-				separator.setForeground(new Color(211, 211, 211, 50));
+				separator.setPreferredSize(new Dimension(1000, 2));
+				separator.setForeground(new Color(250, 250, 250, 100));
 				Application.panelExams.add(separator);
 			}
 			i++;
