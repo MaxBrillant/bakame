@@ -86,7 +86,7 @@ public class TestMenu extends JPanel {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
 		add = new JButton("");
-		add.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
+		add.setIcon(ResizeImages.resize(37, 37, "Icons\\AddIcon.png"));
 		add.setPreferredSize(new Dimension(50, 50));
 		add.setVerticalTextPosition(SwingConstants.BOTTOM);
 		add.setIconTextGap(0);
@@ -113,7 +113,7 @@ public class TestMenu extends JPanel {
 				nt.setVisible(true);
 			}
 		});
-		newTest.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-Exam.png"));
+		newTest.setIcon(ResizeImages.resize(37, 37, "Icons\\new-Exam.png"));
 		newTest.setPreferredSize(new Dimension(50, 50));
 		newTest.setVerticalTextPosition(SwingConstants.BOTTOM);
 		newTest.setIconTextGap(0);
@@ -147,7 +147,7 @@ public class TestMenu extends JPanel {
 		});
 		publish.setHorizontalTextPosition(SwingConstants.CENTER);
 		publish.setVerticalTextPosition(SwingConstants.BOTTOM);
-		publish.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Send.png"));
+		publish.setIcon(ResizeImages.resize(37, 37, "Icons\\Send.png"));
 		publish.setIconTextGap(-4);
 		publish.setForeground(new Color(255, 255, 255));
 		publish.setPreferredSize(new Dimension(50, 50));
@@ -166,7 +166,7 @@ public class TestMenu extends JPanel {
 			
 			}
 		});
-		edit.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		edit.setIcon(ResizeImages.resize(37, 37, "Icons\\iconedit.png"));
 		edit.setPreferredSize(new Dimension(50, 50));
 		edit.setVerticalTextPosition(SwingConstants.BOTTOM);
 		edit.setIconTextGap(0);
@@ -185,7 +185,7 @@ public class TestMenu extends JPanel {
 				TestBox.deleteTest();
 			}
 		});
-		delete.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
+		delete.setIcon(ResizeImages.resize(37, 37, "Icons\\icondelete.png"));
 		delete.setPreferredSize(new Dimension(50, 50));
 		delete.setVerticalTextPosition(SwingConstants.BOTTOM);
 		delete.setIconTextGap(0);

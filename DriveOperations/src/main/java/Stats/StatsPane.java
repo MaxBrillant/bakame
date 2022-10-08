@@ -137,7 +137,7 @@ public class StatsPane extends JFrame {
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		JButton left1 = new JButton("");
-		left1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		left1.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		left1.setPreferredSize(new Dimension(30, 30));
 		left1.setFocusPainted(false);
 		left1.setBorderPainted(false);
@@ -146,7 +146,7 @@ public class StatsPane extends JFrame {
 		panel_4.add(left1, BorderLayout.WEST);
 		
 		JButton right1 = new JButton("");
-		right1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		right1.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		right1.setPreferredSize(new Dimension(30, 30));
 		right1.setFocusPainted(false);
 		right1.setBorderPainted(false);
@@ -167,7 +167,7 @@ public class StatsPane extends JFrame {
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
 		JButton left2 = new JButton("");
-		left2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		left2.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		left2.setPreferredSize(new Dimension(30, 30));
 		left2.setFocusPainted(false);
 		left2.setBorderPainted(false);
@@ -192,7 +192,7 @@ public class StatsPane extends JFrame {
 		panel_8.setLayout(new WrapLayout(1, 3, 3));
 		
 		JButton right2 = new JButton("");
-		right2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		right2.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		right2.setPreferredSize(new Dimension(30, 30));
 		right2.setFocusPainted(false);
 		right2.setBorderPainted(false);
@@ -213,7 +213,7 @@ public class StatsPane extends JFrame {
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
 		JButton left3 = new JButton("");
-		left3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		left3.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		left3.setPreferredSize(new Dimension(30, 30));
 		left3.setFocusPainted(false);
 		left3.setBorderPainted(false);
@@ -239,7 +239,7 @@ public class StatsPane extends JFrame {
 		panel_5.setLayout(new WrapLayout(1, 3, 3));
 		
 		JButton right3 = new JButton("");
-		right3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		right3.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		right3.setPreferredSize(new Dimension(30, 30));
 		right3.setFocusPainted(false);
 		right3.setBorderPainted(false);
@@ -260,7 +260,7 @@ public class StatsPane extends JFrame {
 		panel_10.setLayout(new BorderLayout(0, 0));
 		
 		JButton left4 = new JButton("");
-		left4.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		left4.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		left4.setPreferredSize(new Dimension(30, 30));
 		left4.setFocusPainted(false);
 		left4.setBorderPainted(false);
@@ -269,7 +269,7 @@ public class StatsPane extends JFrame {
 		panel_10.add(left4, BorderLayout.WEST);
 		
 		JButton right4 = new JButton("");
-		right4.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		right4.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		right4.setPreferredSize(new Dimension(30, 30));
 		right4.setFocusPainted(false);
 		right4.setBorderPainted(false);

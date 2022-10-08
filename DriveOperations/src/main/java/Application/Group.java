@@ -114,7 +114,7 @@ public class Group extends JPanel {
 		groupName = new JLabel("Section Economique");
 		panel_2.add(groupName);
 		groupName.setForeground(new Color(255, 255, 255));
-		groupName.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		groupName.setIcon(ResizeImages.resize(20, 20, "Icons\\drop1.png"));
 		groupName.setFont(new Font("Roboto", Font.BOLD, 14));
 		
 		classNumber = new JLabel("20 classes");

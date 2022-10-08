@@ -283,7 +283,7 @@ public class DeletedEntities extends JFrame {
 		JButton btnRestaurer = new JButton();
 		panel_3.add(btnRestaurer);
 		btnRestaurer.setPreferredSize(new Dimension(40, 25));
-		btnRestaurer.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		btnRestaurer.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 		btnRestaurer.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnRestaurer.setIconTextGap(0);
 		btnRestaurer.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -298,7 +298,7 @@ public class DeletedEntities extends JFrame {
 		JButton button1 = new JButton("");
 		panel_3.add(button1);
 		button1.setPreferredSize(new Dimension(40, 25));
-		button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+		button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 		button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button1.setIconTextGap(0);
 		button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -447,7 +447,7 @@ public static void loadClasses(String ay_id) {
 					JButton button = new JButton("");
 					panel_3.add(button);
 					button.setPreferredSize(new Dimension(40, 25));
-					button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+					button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 					button.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button.setIconTextGap(0);
 					button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -462,7 +462,7 @@ public static void loadClasses(String ay_id) {
 					JButton button1 = new JButton("");
 					panel_3.add(button1);
 					button1.setPreferredSize(new Dimension(40, 25));
-					button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+					button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 					button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button1.setIconTextGap(0);
 					button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -617,7 +617,7 @@ public static void loadStudents(String classroom_in_ay_id) {
 				JButton button = new JButton("");
 				panel_3.add(button);
 				button.setPreferredSize(new Dimension(40, 25));
-				button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+				button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 				button.setVerticalTextPosition(SwingConstants.BOTTOM);
 				button.setIconTextGap(0);
 				button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -632,7 +632,7 @@ public static void loadStudents(String classroom_in_ay_id) {
 				JButton button1 = new JButton("");
 				panel_3.add(button1);
 				button1.setPreferredSize(new Dimension(40, 25));
-				button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+				button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 				button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 				button1.setIconTextGap(0);
 				button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -783,7 +783,7 @@ public static void loadCourses(String classroom_in_ay_id) {
 				JButton button = new JButton("");
 				panel_3.add(button);
 				button.setPreferredSize(new Dimension(40, 25));
-				button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+				button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 				button.setVerticalTextPosition(SwingConstants.BOTTOM);
 				button.setIconTextGap(0);
 				button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -798,7 +798,7 @@ public static void loadCourses(String classroom_in_ay_id) {
 				JButton button1 = new JButton("");
 				panel_3.add(button1);
 				button1.setPreferredSize(new Dimension(40, 25));
-				button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+				button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 				button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 				button1.setIconTextGap(0);
 				button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -950,7 +950,7 @@ public static void loadProfs(String ay_id) {
 				JButton button = new JButton("");
 				panel_3.add(button);
 				button.setPreferredSize(new Dimension(40, 25));
-				button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+				button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 				button.setVerticalTextPosition(SwingConstants.BOTTOM);
 				button.setIconTextGap(0);
 				button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -965,7 +965,7 @@ public static void loadProfs(String ay_id) {
 				JButton button1 = new JButton("");
 				panel_3.add(button1);
 				button1.setPreferredSize(new Dimension(40, 25));
-				button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+				button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 				button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 				button1.setIconTextGap(0);
 				button1.setHorizontalTextPosition(SwingConstants.CENTER);

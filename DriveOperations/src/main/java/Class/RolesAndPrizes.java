@@ -215,7 +215,7 @@ public class RolesAndPrizes extends JFrame {
 		JButton button = new JButton("");
 		panel_3.add(button);
 		button.setPreferredSize(new Dimension(40, 30));
-		button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setIconTextGap(0);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -231,7 +231,7 @@ public class RolesAndPrizes extends JFrame {
 		JButton button1 = new JButton("");
 		panel_3.add(button1);
 		button1.setPreferredSize(new Dimension(40, 30));
-		button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+		button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 		button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button1.setIconTextGap(0);
 		button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -354,7 +354,7 @@ public class RolesAndPrizes extends JFrame {
 					JButton button = new JButton("");
 					panel_3.add(button);
 					button.setPreferredSize(new Dimension(40, 30));
-					button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+					button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 					button.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button.setIconTextGap(0);
 					button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -370,7 +370,7 @@ public class RolesAndPrizes extends JFrame {
 					JButton button1 = new JButton("");
 					panel_3.add(button1);
 					button1.setPreferredSize(new Dimension(40, 30));
-					button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+					button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 					button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button1.setIconTextGap(0);
 					button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -576,7 +576,7 @@ public class RolesAndPrizes extends JFrame {
 					JButton button = new JButton("");
 					panel_3.add(button);
 					button.setPreferredSize(new Dimension(40, 30));
-					button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+					button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 					button.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button.setIconTextGap(0);
 					button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -592,7 +592,7 @@ public class RolesAndPrizes extends JFrame {
 					JButton button1 = new JButton("");
 					panel_3.add(button1);
 					button1.setPreferredSize(new Dimension(40, 30));
-					button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+					button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 					button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button1.setIconTextGap(0);
 					button1.setHorizontalTextPosition(SwingConstants.CENTER);

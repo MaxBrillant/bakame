@@ -124,7 +124,7 @@ public class ClassInfo extends JPanel {
 		changePhoto.setFocusPainted(false);
 		changePhoto.setBorderColor(new Color(255, 255, 255));
 		changePhoto.setBackground(new Color(40, 40, 40));
-		changePhoto.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		changePhoto.setIcon(ResizeImages.resize(15, 15, "Icons\\iconedit.png"));
 		add(changePhoto);
 		
 		
@@ -151,7 +151,7 @@ public class ClassInfo extends JPanel {
 		btnstructuresDeLhoraire.setFocusPainted(false);
 		btnstructuresDeLhoraire.setBorderColor(new Color(255, 255, 255));
 		btnstructuresDeLhoraire.setBackground(new Color(40, 40, 40));
-		btnstructuresDeLhoraire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnstructuresDeLhoraire.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnstructuresDeLhoraire);
 		
 		CustomButton btnhoraireDeClasse = new CustomButton("<html><div style='text-align: leading;'>Horaire de classe</div></html>");
@@ -171,7 +171,7 @@ public class ClassInfo extends JPanel {
 		btnhoraireDeClasse.setFocusPainted(false);
 		btnhoraireDeClasse.setBorderColor(new Color(255, 255, 255));
 		btnhoraireDeClasse.setBackground(new Color(40, 40, 40));
-		btnhoraireDeClasse.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnhoraireDeClasse.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnhoraireDeClasse);
 		
 
@@ -187,7 +187,7 @@ public class ClassInfo extends JPanel {
 				}
 		});
 		btnstatistiquesAvances.setIconTextGap(10);
-		btnstatistiquesAvances.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnstatistiquesAvances.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		btnstatistiquesAvances.setForeground(Color.WHITE);
 		btnstatistiquesAvances.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnstatistiquesAvances.setFocusPainted(false);
@@ -212,7 +212,7 @@ public class ClassInfo extends JPanel {
 		btnlisteDesPresences.setFocusPainted(false);
 		btnlisteDesPresences.setBorderColor(new Color(255, 255, 255));
 		btnlisteDesPresences.setBackground(new Color(40, 40, 40));
-		btnlisteDesPresences.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnlisteDesPresences.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnlisteDesPresences);
 		
 		
@@ -233,7 +233,7 @@ public class ClassInfo extends JPanel {
 		classDiary.setFocusPainted(false);
 		classDiary.setBorderColor(new Color(255, 255, 255));
 		classDiary.setBackground(new Color(40, 40, 40));
-		classDiary.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		classDiary.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(classDiary);
 		
 		CustomButton btnpaiementDuMinerval = new CustomButton("<html><div style='text-align: leading;'>Paiement du minerval</div></html>");
@@ -253,7 +253,7 @@ public class ClassInfo extends JPanel {
 		btnpaiementDuMinerval.setFocusPainted(false);
 		btnpaiementDuMinerval.setBorderColor(new Color(255, 255, 255));
 		btnpaiementDuMinerval.setBackground(new Color(40, 40, 40));
-		btnpaiementDuMinerval.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnpaiementDuMinerval.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnpaiementDuMinerval);
 		
 		CustomButton btnhistoriqueDeConduite = new CustomButton("<html><div style='text-align: leading;'>Historique de conduite</div></html>");
@@ -267,7 +267,7 @@ public class ClassInfo extends JPanel {
 		btnhistoriqueDeConduite.setFocusPainted(false);
 		btnhistoriqueDeConduite.setBorderColor(new Color(255, 255, 255));
 		btnhistoriqueDeConduite.setBackground(new Color(40, 40, 40));
-		btnhistoriqueDeConduite.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnhistoriqueDeConduite.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnhistoriqueDeConduite);
 		
 		CustomButton btnbulletinScolaire = new CustomButton("<html><div style='text-align: leading;'>Bulletin scolaire</div></html>");
@@ -281,7 +281,7 @@ public class ClassInfo extends JPanel {
 		btnbulletinScolaire.setFocusPainted(false);
 		btnbulletinScolaire.setBorderColor(new Color(255, 255, 255));
 		btnbulletinScolaire.setBackground(new Color(40, 40, 40));
-		btnbulletinScolaire.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnbulletinScolaire.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnbulletinScolaire);
 		
 		
@@ -303,7 +303,7 @@ public class ClassInfo extends JPanel {
 		btnconditionsDeReussite1.setFocusPainted(false);
 		btnconditionsDeReussite1.setBorderColor(new Color(255, 255, 255));
 		btnconditionsDeReussite1.setBackground(new Color(40, 40, 40));
-		btnconditionsDeReussite1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnconditionsDeReussite1.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnconditionsDeReussite1);
 		
 		
@@ -319,7 +319,7 @@ public class ClassInfo extends JPanel {
 		btnconditionsDeReussite.setFocusPainted(false);
 		btnconditionsDeReussite.setBorderColor(new Color(255, 255, 255));
 		btnconditionsDeReussite.setBackground(new Color(40, 40, 40));
-		btnconditionsDeReussite.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnconditionsDeReussite.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnconditionsDeReussite);
 		
 		
@@ -334,7 +334,7 @@ public class ClassInfo extends JPanel {
 		btnelevesSupprimes.setFocusPainted(false);
 		btnelevesSupprimes.setBorderColor(new Color(255, 255, 255));
 		btnelevesSupprimes.setBackground(new Color(40, 40, 40));
-		btnelevesSupprimes.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		btnelevesSupprimes.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(btnelevesSupprimes);
 		
 

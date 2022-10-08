@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import static javax.swing.ScrollPaneConstants.*;
 
-import javax.mail.MessagingException;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -284,7 +283,7 @@ public class Home {
 				s.setVisible(true);
 			}
 		});
-		btnAs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnAs.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		//button_2.setPreferredSize(new Dimension(150, 14));
 		btnAs.setForeground(Color.WHITE);
 		btnAs.setFont(new Font("Roboto", Font.BOLD, 16));
@@ -491,7 +490,7 @@ public class Home {
 		btnNewButton.setBackground(panel_31.getBackground());
 		btnNewButton.setBorder(null);
 		btnNewButton.setPreferredSize(new Dimension(30, 30));
-		btnNewButton.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnNewButton.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		panel_31.add(btnNewButton, BorderLayout.WEST);
 		
 		JButton button_1 = new JButton("");
@@ -520,7 +519,7 @@ public class Home {
 		button_1.setBorderPainted(false);
 		button_1.setBackground(panel_31.getBackground());
 		button_1.setBorder(null);
-		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_1.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_1.setPreferredSize(new Dimension(30, 30));
 		panel_31.add(button_1, BorderLayout.EAST);
 		
@@ -587,7 +586,7 @@ public class Home {
 		button_21.setBorderPainted(false);
 		button_21.setBackground(panel_41.getBackground());
 		button_21.setBorder(null);
-		button_21.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button_21.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button_21.setPreferredSize(new Dimension(30, 30));
 		panel_41.add(button_21, BorderLayout.WEST);
 		
@@ -637,7 +636,7 @@ public class Home {
 		button_3.setBorderPainted(false);
 		button_3.setBackground(panel_41.getBackground());
 		button_3.setBorder(null);
-		button_3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_3.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_3.setPreferredSize(new Dimension(30, 30));
 		panel_41.add(button_3, BorderLayout.EAST);
 		
@@ -716,7 +715,7 @@ public class Home {
 		
 		JButton menu = new JButton("");
 		menu.setMultiClickThreshhold(1000L);
-		menu.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		menu.setIcon(ResizeImages.resize(50, 50, "Icons\\Bakame.png"));
 		menu.setPreferredSize(new Dimension(70, 50));
 		menu.setFont(new Font("Arial", Font.PLAIN, 27));
 		menu.setFocusPainted(false);
@@ -733,7 +732,7 @@ public class Home {
 		btnNewButton1.setIconTextGap(10);
 		btnNewButton1.setVerticalTextPosition(SwingConstants.CENTER);
 		btnNewButton1.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnNewButton1.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+		btnNewButton1.setIcon(ResizeImages.resize(37, 37, "Icons\\class.png"));
 		btnNewButton1.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnNewButton1.setBackground(new Color(60, 60, 60));
 		btnNewButton1.setForeground(new Color(255, 255, 255));
@@ -748,7 +747,7 @@ public class Home {
 		button.setIconTextGap(10);
 		button.setVerticalTextPosition(SwingConstants.CENTER);
 		button.setHorizontalTextPosition(SwingConstants.RIGHT);
-		button.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-student.png"));
+		button.setIcon(ResizeImages.resize(37, 37, "Icons\\new-student.png"));
 		button.setForeground(Color.LIGHT_GRAY);
 		button.setFont(new Font("Roboto", Font.BOLD, 14));
 		button.setFocusPainted(false);
@@ -760,7 +759,7 @@ public class Home {
 		btnProfesseurs.setMultiClickThreshhold(1000L);
 		btnProfesseurs.setPreferredSize(new Dimension(150, 50));
 		btnProfesseurs.setBorder(null);
-		btnProfesseurs.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+		btnProfesseurs.setIcon(ResizeImages.resize(37, 37, "Icons\\class1.png"));
 		btnProfesseurs.setVerticalTextPosition(SwingConstants.CENTER);
 		btnProfesseurs.setIconTextGap(10);
 		btnProfesseurs.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -823,7 +822,7 @@ public class Home {
 		btnNewButton1.setForeground(Color.white);
 		btnNewButton1.setBackground(new Color(60, 60, 60));
 		btnNewButton1.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-		btnNewButton1.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+		btnNewButton1.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 		panel_6.getComponent(1).setVisible(false);
 		panel_6.getComponent(2).setVisible(true);
 		panel_6.getComponent(3).setVisible(false);
@@ -851,7 +850,7 @@ public class Home {
 				btnNewButton1.setForeground(Color.white);
 				btnNewButton1.setBackground(new Color(60, 60, 60));
 				btnNewButton1.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnNewButton1.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnNewButton1.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				if(panel_2.getComponentCount()>0) {
 				panel_2.remove(0);
@@ -895,7 +894,7 @@ public class Home {
 				button.setForeground(Color.white);
 				button.setBackground(new Color(60, 60, 60));
 				button.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				button.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-student.png"));
+				button.setIcon(ResizeImages.resize(30, 30, "Icons\\new-student.png"));
 				
 
 				if(panel_2.getComponentCount()>0) {
@@ -942,7 +941,7 @@ public class Home {
 				btnProfesseurs.setForeground(Color.white);
 				btnProfesseurs.setBackground(new Color(60, 60, 60));
 				btnProfesseurs.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnProfesseurs.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+				btnProfesseurs.setIcon(ResizeImages.resize(30, 30, "Icons\\class1.png"));
 				
 
 				if(panel_2.getComponentCount()>0) {
@@ -1000,14 +999,14 @@ public class Home {
 	public static void collapseAll() {
 		for(int k = 0; k< Home.panelClasses.getComponentCount(); k++) {
 			if(Home.panelClasses.getComponent(k) instanceof Class) {
-			((JButton) ((Container) Home.panelClasses.getComponent(k)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+			((JButton) ((Container) Home.panelClasses.getComponent(k)).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 			((Container) Home.panelClasses.getComponent(k)).getComponent(1).setVisible(false);
 			Home.panelClasses.getComponent(k).setPreferredSize(new Dimension(310-310*49/100, 120));
 			Home.panelClasses.getComponent(k).revalidate();
 			Home.panelClasses.getComponent(k).repaint();
 		}else{
 			for(int i = 0; i< ((Container) ((Container) Home.panelClasses.getComponent(k)).getComponent(0)).getComponentCount(); i++) {
-			((JButton) ((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+			((JButton) ((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).getComponent(1).setVisible(true);
 			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).setPreferredSize(new Dimension(310-310*49/100, 120));
 			((Container) (((Container) (((Container) Home.panelClasses.getComponent(k)).getComponent(0))).getComponent(i))).revalidate();
@@ -1016,7 +1015,7 @@ public class Home {
 		}}
 	}
 	public static void collapse(Component c) {
-		((AbstractButton) ((Container) c).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		((AbstractButton) ((Container) c).getComponent(2)).setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 			((Container) c).getComponent(1).setVisible(false);
 			((Container) c).setPreferredSize(new Dimension(310-310*49/100, 120));
 			((Container) c).revalidate();

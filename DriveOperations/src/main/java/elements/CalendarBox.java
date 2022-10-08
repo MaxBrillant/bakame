@@ -77,7 +77,7 @@ public class CalendarBox extends JButton {
 		setText("Sam. 26/07/2022");
 		setIconTextGap(7);
 		setHorizontalTextPosition(SwingConstants.LEADING);
-		setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		setIcon(ResizeImages.resize(20, 20, "Icons\\r_arrow.png"));
 		setFont(new Font("Roboto", Font.PLAIN, 14));
 		
 		this.setSelectedDay(day);

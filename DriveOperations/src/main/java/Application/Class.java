@@ -151,7 +151,7 @@ public class Class extends JPanel {
 	lblNewLabel = new JLabel("");
 	lblNewLabel.setIconTextGap(0);
 	lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-	lblNewLabel.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+	lblNewLabel.setIcon(ResizeImages.resize(20, 20, "Icons\\check.png"));
 	lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	panel.add(lblNewLabel, BorderLayout.CENTER);
 	

@@ -111,7 +111,7 @@ public class App {
 		  
 		  
 		  
-		  File file = new File("C:/Users/User/Desktop/db_script.sql");
+		  File file = new File("C:/Users/HP/Desktop/db_script.sql");
 		  aws.downloadContent(file.getPath()); FileReader fr; fr = new
 		  FileReader(file);
 		  
@@ -185,7 +185,7 @@ public class App {
 		btnAjouter.setBorder(null);
 		btnAjouter.setFocusPainted(false);
 		btnAjouter.setBackground(new Color(0, 150, 150));
-		btnAjouter.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
+		btnAjouter.setIcon(ResizeImages.resize(70, 70, "Icons\\AddIcon.png"));
 		btnAjouter.setFont(new Font("Arial", Font.PLAIN, 27));
 		btnAjouter.setBounds(235, 11, 118, 116);
 		
@@ -205,7 +205,7 @@ public class App {
 		delete.setBorder(null);
 		delete.setFocusPainted(false);
 		delete.setBackground(new Color(0, 150, 150));
-		delete.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
+		delete.setIcon(ResizeImages.resize(70, 70, "Icons\\icondelete.png"));
 		delete.setBounds(385, 11, 118, 116);
 	//	panel.add(delete);
 		
@@ -227,7 +227,7 @@ public class App {
 				
 			}
 		});
-		edit.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		edit.setIcon(ResizeImages.resize(70, 70, "Icons\\iconedit.png"));
 		edit.setFocusPainted(false);
 		edit.setBorder(null);
 		edit.setBackground(new Color(0, 150, 150));
@@ -282,7 +282,7 @@ public class App {
 				App.frame.setVisible(false);
 			}
 		});
-		btnAs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnAs.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		//button_2.setPreferredSize(new Dimension(150, 14));
 		btnAs.setForeground(Home.getClassColors(classroom_in_ay_id).get(1));
 		btnAs.setFont(new Font("Roboto", Font.BOLD, 16));
@@ -309,7 +309,7 @@ public class App {
 
 		JButton logo = new JButton("");
 		logo.setMultiClickThreshhold(1000L);
-		logo.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		logo.setIcon(ResizeImages.resize(50, 50, "Icons\\Bakame.png"));
 		logo.setPreferredSize(new Dimension(70, 50));
 		logo.setFont(new Font("Arial", Font.PLAIN, 27));
 		logo.setFocusPainted(false);
@@ -401,7 +401,7 @@ public class App {
 		button_21.setBorderPainted(false);
 		button_21.setBackground(panel_41.getBackground());
 		button_21.setBorder(null);
-		button_21.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button_21.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button_21.setPreferredSize(new Dimension(30, 30));
 		panel_41.add(button_21, BorderLayout.WEST);
 		
@@ -457,7 +457,7 @@ public class App {
 		button_3.setBorderPainted(false);
 		button_3.setBackground(panel_41.getBackground());
 		button_3.setBorder(null);
-		button_3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_3.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_3.setPreferredSize(new Dimension(30, 30));
 		panel_41.add(button_3, BorderLayout.EAST);
 		

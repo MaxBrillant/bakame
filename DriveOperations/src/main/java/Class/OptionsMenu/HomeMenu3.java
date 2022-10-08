@@ -84,7 +84,7 @@ public class HomeMenu3 extends JPanel {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
 		JButton add = new JButton("");
-		add.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
+		add.setIcon(ResizeImages.resize(37, 37, "Icons\\AddIcon.png"));
 		add.setPreferredSize(new Dimension(50, 50));
 		add.setVerticalTextPosition(SwingConstants.BOTTOM);
 		add.setIconTextGap(0);
@@ -134,7 +134,7 @@ public class HomeMenu3 extends JPanel {
 				}
 			}
 		});
-		edit.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		edit.setIcon(ResizeImages.resize(37, 37, "Icons\\iconedit.png"));
 		edit.setPreferredSize(new Dimension(50, 50));
 		edit.setVerticalTextPosition(SwingConstants.BOTTOM);
 		edit.setIconTextGap(0);
@@ -148,7 +148,7 @@ public class HomeMenu3 extends JPanel {
 		Home.addToolTip(edit, "Modifier");
 		
 		JButton delete = new JButton("");
-		delete.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
+		delete.setIcon(ResizeImages.resize(37, 37, "Icons\\icondelete.png"));
 		delete.setPreferredSize(new Dimension(50, 50));
 		delete.setVerticalTextPosition(SwingConstants.BOTTOM);
 		delete.setIconTextGap(0);
@@ -162,7 +162,7 @@ public class HomeMenu3 extends JPanel {
 		Home.addToolTip(delete, "Supprimer");
 		
 		JButton publish = new JButton("");
-		publish.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Send.png"));
+		publish.setIcon(ResizeImages.resize(37, 37, "Icons\\Send.png"));
 		publish.setHorizontalTextPosition(SwingConstants.CENTER);
 		publish.setVerticalTextPosition(SwingConstants.BOTTOM);
 		publish.addActionListener(new ActionListener() {
@@ -183,7 +183,7 @@ public class HomeMenu3 extends JPanel {
 		Home.addToolTip(publish, "Publier");
 		
 		JButton button_5 = new JButton("");
-		button_5.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\go_up.png"));
+		button_5.setIcon(ResizeImages.resize(37, 37, "Icons\\go_up.png"));
 		button_5.setHorizontalTextPosition(SwingConstants.CENTER);
 		button_5.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button_5.addActionListener(new ActionListener() {
@@ -203,7 +203,7 @@ public class HomeMenu3 extends JPanel {
 		Home.addToolTip(button_5, "Monter");
 		
 		JButton button_4 = new JButton("");
-		button_4.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\go_down.png"));
+		button_4.setIcon(ResizeImages.resize(37, 37, "Icons\\go_down.png"));
 		button_4.setHorizontalTextPosition(SwingConstants.CENTER);
 		button_4.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button_4.addActionListener(new ActionListener() {

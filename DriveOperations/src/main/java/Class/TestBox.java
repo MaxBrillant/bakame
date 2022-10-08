@@ -175,7 +175,7 @@ public class TestBox extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "Icons\\check.png"));
 		panel1.add(lblNewLabel_1, BorderLayout.CENTER);
 		
 		JLabel lblUmuhozaChrisKoen = new JLabel();
@@ -188,7 +188,7 @@ public class TestBox extends JPanel {
 		JButton stats = new JButton();
 		stats.setFocusPainted(false);
 		stats.setBorder(null);
-		stats.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		stats.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		stats.setBackground(new Color(40, 40, 40));
 		panel.add(stats, BorderLayout.EAST);
 		
@@ -540,7 +540,7 @@ public static String getShortName(String course_in_classroom_id) {
 						
 						JLabel lblNewLabel_2 = new JLabel("");
 						lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-						lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_welcome.png"));
+						lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "Icons\\cg_welcome.png"));
 						lblNewLabel_2.setBackground(new Color(0, 0, 0));
 						lblNewLabel_2.setBounds(0, 0, 300, 235);
 						panel_10.add(lblNewLabel_2);

@@ -129,7 +129,7 @@ public class SendAccessRequest extends JFrame {
 	btnNewButton_1.setIconTextGap(0);
 	btnNewButton_1.setVerticalTextPosition(SwingConstants.BOTTOM);
 	btnNewButton_1.setHorizontalTextPosition(SwingConstants.CENTER);
-	btnNewButton_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+	btnNewButton_1.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 	btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	btnNewButton_1.setBounds(0, 0, 74, 40);
 	panel_1.add(btnNewButton_1);

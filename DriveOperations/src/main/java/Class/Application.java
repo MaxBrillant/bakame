@@ -206,7 +206,7 @@ public class Application {
 				label.setBackground(panel_1.getBackground());
 			}
 		});
-		label.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		label.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		label.setForeground(Color.WHITE);
 		label.setFont(new Font("Roboto", Font.BOLD, 16));
 		panel_1.add(label, BorderLayout.WEST);
@@ -229,7 +229,7 @@ public class Application {
 		
 		JButton menu = new JButton("");
 		menu.setMultiClickThreshhold(1000L);
-		menu.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		menu.setIcon(ResizeImages.resize(50, 50, "Icons\\Bakame.png"));
 		menu.setPreferredSize(new Dimension(70, 50));
 		menu.setFont(new Font("Arial", Font.PLAIN, 27));
 		menu.setFocusPainted(false);
@@ -246,7 +246,7 @@ public class Application {
 		btnStudents.setIconTextGap(10);
 		btnStudents.setVerticalTextPosition(SwingConstants.CENTER);
 		btnStudents.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnStudents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+		btnStudents.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 		btnStudents.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnStudents.setBackground(new Color(60, 60, 60));
 		btnStudents.setForeground(new Color(255, 255, 255));
@@ -261,7 +261,7 @@ public class Application {
 		btnCours.setIconTextGap(10);
 		btnCours.setVerticalTextPosition(SwingConstants.CENTER);
 		btnCours.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnCours.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-student.png"));
+		btnCours.setIcon(ResizeImages.resize(30, 30, "Icons\\new-student.png"));
 		btnCours.setForeground(Color.LIGHT_GRAY);
 		btnCours.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnCours.setFocusPainted(false);
@@ -273,7 +273,7 @@ public class Application {
 		btnTests.setMultiClickThreshhold(1000L);
 		btnTests.setPreferredSize(new Dimension(150, 50));
 		btnTests.setBorder(null);
-		btnTests.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+		btnTests.setIcon(ResizeImages.resize(30, 30, "Icons\\class1.png"));
 		btnTests.setVerticalTextPosition(SwingConstants.CENTER);
 		btnTests.setIconTextGap(10);
 		btnTests.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -289,7 +289,7 @@ public class Application {
 		btnExams.setMultiClickThreshhold(1000L);
 		btnExams.setPreferredSize(new Dimension(150, 50));
 		btnExams.setBorder(null);
-		btnExams.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+		btnExams.setIcon(ResizeImages.resize(30, 30, "Icons\\class1.png"));
 		btnExams.setVerticalTextPosition(SwingConstants.CENTER);
 		btnExams.setIconTextGap(10);
 		btnExams.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -406,7 +406,7 @@ public class Application {
 		btnNewButton.setBackground(panel_31.getBackground());
 		btnNewButton.setBorder(null);
 		btnNewButton.setPreferredSize(new Dimension(30, 30));
-		btnNewButton.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnNewButton.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		panel_31.add(btnNewButton, BorderLayout.WEST);
 		
 		JButton button_1 = new JButton("");
@@ -430,7 +430,7 @@ public class Application {
 		button_1.setBorderPainted(false);
 		button_1.setBackground(panel_31.getBackground());
 		button_1.setBorder(null);
-		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_1.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_1.setPreferredSize(new Dimension(30, 30));
 		panel_31.add(button_1, BorderLayout.EAST);
 		
@@ -486,7 +486,7 @@ public class Application {
 		button_2.setBorderPainted(false);
 		button_2.setBackground(panel_41.getBackground());
 		button_2.setBorder(null);
-		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button_2.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button_2.setPreferredSize(new Dimension(30, 30));
 		panel_41.add(button_2, BorderLayout.WEST);
 		
@@ -523,7 +523,7 @@ public class Application {
 		button_3.setBorderPainted(false);
 		button_3.setBackground(panel_41.getBackground());
 		button_3.setBorder(null);
-		button_3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_3.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_3.setPreferredSize(new Dimension(30, 30));
 		panel_41.add(button_3, BorderLayout.EAST);
 		
@@ -672,7 +672,7 @@ public class Application {
 		btnStudents.setForeground(Color.white);
 		btnStudents.setBackground(new Color(60, 60, 60));
 		btnStudents.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-		btnStudents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+		btnStudents.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 		
 		btnStudents.addActionListener(new ActionListener() {
 			boolean areLoaded = true;
@@ -695,7 +695,7 @@ public class Application {
 				btnStudents.setForeground(Color.white);
 				btnStudents.setBackground(new Color(60, 60, 60));
 				btnStudents.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnStudents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnStudents.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				if(panel_10.getComponentCount()>0) {
 				panel_10.remove(0);
@@ -744,7 +744,7 @@ public class Application {
 				btnCours.setForeground(Color.white);
 				btnCours.setBackground(new Color(60, 60, 60));
 				btnCours.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnCours.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnCours.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				if(panel_10.getComponentCount()>0) {
 				panel_10.remove(0);
@@ -792,7 +792,7 @@ public class Application {
 				btnTests.setForeground(Color.white);
 				btnTests.setBackground(new Color(60, 60, 60));
 				btnTests.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnTests.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnTests.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				if(panel_10.getComponentCount()>0) {
 				panel_10.remove(0);
@@ -840,7 +840,7 @@ public class Application {
 				btnExams.setForeground(Color.white);
 				btnExams.setBackground(new Color(60, 60, 60));
 				btnExams.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnExams.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnExams.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				if(panel_10.getComponentCount()>0) {
 				panel_10.remove(0);

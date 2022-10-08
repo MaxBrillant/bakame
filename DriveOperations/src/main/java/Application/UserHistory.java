@@ -120,7 +120,7 @@ public class UserHistory extends JFrame {
 			
 			JLabel lblMaxBrillant = new JLabel("  Max Brillant");
 			lblMaxBrillant.setHorizontalTextPosition(SwingConstants.LEADING);
-			lblMaxBrillant.setIcon(ResizeImages.resize(10, 10, "C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\drop1.png"));
+			lblMaxBrillant.setIcon(ResizeImages.resize(10, 10, "Icons\\drop1.png"));
 			lblMaxBrillant.setMaximumSize(new Dimension(300, 14));
 			lblMaxBrillant.setPreferredSize(new Dimension(100, 20));
 			lblMaxBrillant.setForeground(Color.WHITE);
@@ -152,7 +152,7 @@ public class UserHistory extends JFrame {
 			});
 			btnNewButton.setHorizontalTextPosition(SwingConstants.LEADING);
 			btnNewButton.setFocusPainted(false);
-			btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\drop2.png"));
+			btnNewButton.setIcon(ResizeImages.resize(20, 20, "Icons\\drop2.png"));
 			btnNewButton.setForeground(new Color(255, 255, 255));
 			btnNewButton.setBorder(new LineBorder(new Color(255, 255, 255)));
 			btnNewButton.setBackground(new Color(60, 60, 60));

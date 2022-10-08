@@ -114,8 +114,8 @@ public class Login extends JFrame {
 		mysql.connectToDB();
 		
 		
-		setResizable(false);
-		setPreferredSize(new Dimension(400, 400));
+	setResizable(false);
+	setPreferredSize(new Dimension(400, 400));
 	setTitle("");
 	setBounds(100, 100, 440, 474);
 	contentPane = new JPanel();
@@ -245,7 +245,7 @@ public class Login extends JFrame {
 	
 	
 	JLabel lblNewLabel = new JLabel("");
-	lblNewLabel.setIcon(ResizeImages.resize(110, 110, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+	lblNewLabel.setIcon(ResizeImages.resize(110, 110, "Icons\\Bakame.png"));
 	lblNewLabel.setBounds(153, 11, 117, 90);
 	contentPane.add(lblNewLabel);
 	
@@ -306,6 +306,7 @@ public class Login extends JFrame {
 	        jd.setVisible(true);
 	        s.setVisible(false);
 	}
+	//C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\
 	
 	public static boolean verifyAccount(String username, String passWord) {
 		boolean granted = false;

@@ -137,7 +137,7 @@ public class Transcript extends JFrame {
 		btnNewButton.setBackground(new Color(40, 40, 40));
 		btnNewButton.setBorder(new LineBorder(new Color(255, 255, 255)));
 		btnNewButton.setFocusPainted(false);
-		btnNewButton.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\up.png"));
+		btnNewButton.setIcon(ResizeImages.resize(15, 15,"Icons\\up.png"));
 		panel_34.add(btnNewButton);
 		btnNewButton.setPreferredSize(new Dimension(20, 30));
 		
@@ -146,12 +146,12 @@ public class Transcript extends JFrame {
 		button.setBackground(new Color(40, 40, 40));
 		button.setBorder(new LineBorder(new Color(255, 255, 255)));
 		button.setFocusPainted(false);
-		button.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\down.png"));
+		button.setIcon(ResizeImages.resize(15, 15, "Icons\\down.png"));
 		panel_34.add(button);
 		button.setPreferredSize(new Dimension(20, 30));
 		
 		JButton button_1 = new JButton("");
-		button_1.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\check.png"));
+		button_1.setIcon(ResizeImages.resize(15, 15,"Icons\\check.png"));
 		button_1.setPreferredSize(new Dimension(20, 30));
 		button_1.setFocusPainted(false);
 		button_1.setBorderPainted(false);
@@ -764,7 +764,7 @@ public class Transcript extends JFrame {
 		btnNewButton.setBackground(new Color(40, 40, 40));
 		//btnNewButton.setBorder(new LineBorder(new Color(255, 255, 255)));
 		btnNewButton.setFocusPainted(false);
-		btnNewButton.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\up.png"));
+		btnNewButton.setIcon(ResizeImages.resize(15, 15,"Icons\\up.png"));
 		((Container) ((Container) panel_1.getComponent(1)).getComponent(0)).add(btnNewButton);
 		btnNewButton.setPreferredSize(new Dimension(20, 30));
 		if(i == 0) {
@@ -776,7 +776,7 @@ public class Transcript extends JFrame {
 		button.setBackground(new Color(40, 40, 40));
 		//button.setBorder(new LineBorder(new Color(255, 255, 255)));
 		button.setFocusPainted(false);
-		button.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\down.png"));
+		button.setIcon(ResizeImages.resize(15, 15,"Icons\\down.png"));
 		((Container) ((Container) panel_1.getComponent(1)).getComponent(0)).add(button);
 		button.setPreferredSize(new Dimension(20, 30));
 		if(i == ((Container) ((Container) panel_1.getComponent(1)).getComponent(1)).getComponentCount()-1) {
@@ -784,7 +784,7 @@ public class Transcript extends JFrame {
 		}
 	
 		JButton button_1 = new JButton("");
-		button_1.setIcon(ResizeImages.resize(15, 15,"C:\\Users\\User\\git\\bakame\\DriveOperations\\Icons\\check.png"));
+		button_1.setIcon(ResizeImages.resize(15, 15,"Icons\\check.png"));
 		button_1.setPreferredSize(new Dimension(20, 30));
 		button_1.setFocusPainted(false);
 		button_1.setBorderPainted(false);

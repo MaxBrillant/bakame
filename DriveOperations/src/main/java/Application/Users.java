@@ -208,7 +208,7 @@ public class Users extends JFrame {
 		JButton button = new JButton("");
 		panel_3.add(button);
 		button.setPreferredSize(new Dimension(40, 25));
-		button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setIconTextGap(0);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -224,7 +224,7 @@ public class Users extends JFrame {
 		JButton button1 = new JButton("");
 		panel_3.add(button1);
 		button1.setPreferredSize(new Dimension(40, 25));
-		button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+		button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 		button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button1.setIconTextGap(0);
 		button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -308,7 +308,7 @@ public class Users extends JFrame {
 					JButton button = new JButton("");
 					panel_3.add(button);
 					button.setPreferredSize(new Dimension(40, 25));
-					button.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+					button.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 					button.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button.setIconTextGap(0);
 					button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -323,7 +323,7 @@ public class Users extends JFrame {
 					JButton button1 = new JButton("");
 					panel_3.add(button1);
 					button1.setPreferredSize(new Dimension(40, 25));
-					button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+					button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 					button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 					button1.setIconTextGap(0);
 					button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -474,7 +474,7 @@ public class Users extends JFrame {
 		 * Arrays.asList(time.get(1).toString().split(":"));
 		 * 
 		 * //JLabel label_3 = new
-		 * JLabel("Le "+time.get(0).toString()+" à "+hours.get(0).toString()+"h"+hours.
+		 * JLabel("Le "+time.get(0).toString()+" ï¿½ "+hours.get(0).toString()+"h"+hours.
 		 * get(1).toString()); JLabel label_3 = new
 		 * JLabel(rs.getString("r.date_and_time"));
 		 * label_3.setHorizontalAlignment(SwingConstants.LEFT);
@@ -536,7 +536,7 @@ public class Users extends JFrame {
 		 * btnRefuser.setForeground(Color.white); } }); } } catch (SQLException e) { //
 		 * TODO Auto-generated catch block e.printStackTrace(); }
 		 * if(panel.getComponentCount()==0) { JLabel lblNewLabel_2 = new
-		 * JLabel("Cet établissement n'a actuellement aucune demande d'accès");
+		 * JLabel("Cet ï¿½tablissement n'a actuellement aucune demande d'accï¿½s");
 		 * lblNewLabel_2.setForeground(Color.WHITE); lblNewLabel_2.setFont(new
 		 * Font("Tahoma", Font.PLAIN, 15)); panel.add(lblNewLabel_2); }
 		 * panel.revalidate(); panel.repaint();

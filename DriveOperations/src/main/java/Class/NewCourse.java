@@ -318,7 +318,7 @@ public class NewCourse extends JFrame {
 				
 				JLabel lblNewLabel_2 = new JLabel("");
 				lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-				lblNewLabel_2.setIcon(ResizeImages.resize(250, 250, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\empty_shelf.png"));
+				lblNewLabel_2.setIcon(ResizeImages.resize(250, 250, "Icons\\empty_shelf.png"));
 				lblNewLabel_2.setBackground(new Color(0, 0, 0));
 				lblNewLabel_2.setBounds(0, 0, 300, 235);
 				panel_10.add(lblNewLabel_2);

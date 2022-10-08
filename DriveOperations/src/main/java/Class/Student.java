@@ -178,7 +178,7 @@ public class Student extends JPanel {
 		
 		JLabel lblNewLabel_11 = new JLabel("");
 		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_11.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		lblNewLabel_11.setIcon(ResizeImages.resize(20, 20, "Icons\\check.png"));
 		panel12.add(lblNewLabel_11, BorderLayout.CENTER);
 		
 		
@@ -204,7 +204,7 @@ public class Student extends JPanel {
 		JButton stats = new JButton();
 		stats.setFocusPainted(false);
 		stats.setBorder(null);
-		stats.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		stats.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		stats.setBackground(new Color(40, 40, 40));
 		panel.add(stats, BorderLayout.EAST);
 		

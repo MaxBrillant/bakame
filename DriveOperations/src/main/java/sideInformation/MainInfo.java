@@ -89,7 +89,7 @@ public class MainInfo extends JPanel {
 		changePhoto.setFocusPainted(false);
 		changePhoto.setBorderColor(new Color(255, 255, 255));
 		changePhoto.setBackground(new Color(40, 40, 40));
-		changePhoto.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		changePhoto.setIcon(ResizeImages.resize(15, 15, "Icons\\iconedit.png"));
 		add(changePhoto);
 		
 		
@@ -198,7 +198,7 @@ public class MainInfo extends JPanel {
 		trimestres.setFocusPainted(false);
 		trimestres.setBorderColor(new Color(255, 255, 255));
 		trimestres.setBackground(new Color(40, 40, 40));
-		trimestres.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		trimestres.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(trimestres);
 		
 		
@@ -221,7 +221,7 @@ public class MainInfo extends JPanel {
 		punitions.setFocusPainted(false);
 		punitions.setBorderColor(new Color(255, 255, 255));
 		punitions.setBackground(new Color(40, 40, 40));
-		punitions.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		punitions.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(punitions);
 		
 		
@@ -245,7 +245,7 @@ public class MainInfo extends JPanel {
 		utilisateurs.setFocusPainted(false);
 		utilisateurs.setBorderColor(new Color(255, 255, 255));
 		utilisateurs.setBackground(new Color(40, 40, 40));
-		utilisateurs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		utilisateurs.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(utilisateurs);
 		
 		
@@ -269,7 +269,7 @@ public class MainInfo extends JPanel {
 		historique.setFocusPainted(false);
 		historique.setBorderColor(new Color(255, 255, 255));
 		historique.setBackground(new Color(40, 40, 40));
-		historique.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		historique.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(historique);
 		
 		
@@ -293,7 +293,7 @@ public class MainInfo extends JPanel {
 		studentRoles.setFocusPainted(false);
 		studentRoles.setBorderColor(new Color(255, 255, 255));
 		studentRoles.setBackground(new Color(40, 40, 40));
-		studentRoles.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		studentRoles.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(studentRoles);
 		
 		
@@ -317,7 +317,7 @@ public class MainInfo extends JPanel {
 		communication.setFocusPainted(false);
 		communication.setBorderColor(new Color(255, 255, 255));
 		communication.setBackground(new Color(40, 40, 40));
-		communication.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		communication.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(communication);
 		
 		
@@ -339,7 +339,7 @@ public class MainInfo extends JPanel {
 		deletedClasses.setFocusPainted(false);
 		deletedClasses.setBorderColor(new Color(255, 255, 255));
 		deletedClasses.setBackground(new Color(40, 40, 40));
-		deletedClasses.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		deletedClasses.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(deletedClasses);
 
 		
@@ -361,7 +361,7 @@ public class MainInfo extends JPanel {
 		deletedStudents.setFocusPainted(false);
 		deletedStudents.setBorderColor(new Color(255, 255, 255));
 		deletedStudents.setBackground(new Color(40, 40, 40));
-		deletedStudents.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		deletedStudents.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(deletedStudents);
 		
 		
@@ -385,7 +385,7 @@ public class MainInfo extends JPanel {
 		deletedCourses.setFocusPainted(false);
 		deletedCourses.setBorderColor(new Color(255, 255, 255));
 		deletedCourses.setBackground(new Color(40, 40, 40));
-		deletedCourses.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		deletedCourses.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(deletedCourses);
 		
 		
@@ -408,7 +408,7 @@ public class MainInfo extends JPanel {
 		deletedTeachers.setFocusPainted(false);
 		deletedTeachers.setBorderColor(new Color(255, 255, 255));
 		deletedTeachers.setBackground(new Color(40, 40, 40));
-		deletedTeachers.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		deletedTeachers.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(deletedTeachers);
 		
 		CustomButton Accounting = new CustomButton("<html><div style='text-align: leading;'>Supprimer l'annee scholaire</div></html>");
@@ -423,7 +423,7 @@ public class MainInfo extends JPanel {
 		Accounting.setFocusPainted(false);
 		Accounting.setBorderColor(new Color(255, 255, 255));
 		Accounting.setBackground(new Color(40, 40, 40));
-		Accounting.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		Accounting.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(Accounting);
 		
 		

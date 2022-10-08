@@ -92,7 +92,7 @@ public class CustomCalendar extends JPanel {
 		
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setBorder(null);
-		btnNewButton.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnNewButton.setIcon(ResizeImages.resize(15, 15, "Icons\\l_arrow.png"));
 		btnNewButton.setBackground(panel.getBackground());
 		btnNewButton.setFocusPainted(false);
 		btnNewButton.setPreferredSize(new Dimension(40, 23));
@@ -100,7 +100,7 @@ public class CustomCalendar extends JPanel {
 		
 		JButton button = new JButton("");
 		button.setBorder(null);
-		button.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button.setIcon(ResizeImages.resize(15, 15, "Icons\\r_arrow.png"));
 		button.setBackground(panel.getBackground());
 		button.setPreferredSize(new Dimension(40, 23));
 		button.setFocusPainted(false);

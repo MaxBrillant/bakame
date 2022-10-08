@@ -693,7 +693,7 @@ isEmpty = false;
 			
 			JLabel lblNewLabel_2 = new JLabel("");
 			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_welcome.png"));
+			lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "Icons\\cg_welcome.png"));
 			lblNewLabel_2.setBackground(new Color(0, 0, 0));
 			lblNewLabel_2.setBounds(0, 0, 300, 235);
 			panel_10.add(lblNewLabel_2);

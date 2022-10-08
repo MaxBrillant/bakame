@@ -87,7 +87,7 @@ public class Session extends JPanel {
 		
 		inverse = new JLabel("");
 		inverse.setOpaque(true);
-		inverse.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		inverse.setIcon(ResizeImages.resize(20, 20, "Icons\\l_arrow.png"));
 		inverse.setPreferredSize(new Dimension(20, 35));
 		panel_1.add(inverse, BorderLayout.EAST);
 		inverse.setBackground(new Color(40, 40, 40));

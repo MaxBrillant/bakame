@@ -58,7 +58,7 @@ public class SchoolMenu extends JPanel {
 		scrollPane.getHorizontalScrollBar().setBackground(panel.getBackground());
 		
 		JButton add = new JButton("");
-		add.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
+		add.setIcon(ResizeImages.resize(37, 37, "Icons\\AddIcon.png"));
 		add.setPreferredSize(new Dimension(50, 50));
 		add.setVerticalTextPosition(SwingConstants.BOTTOM);
 		add.setIconTextGap(0);
@@ -79,7 +79,7 @@ public class SchoolMenu extends JPanel {
 		edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {}
 		});
-		edit.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		edit.setIcon(ResizeImages.resize(37, 37, "Icons\\iconedit.png"));
 		edit.setPreferredSize(new Dimension(50, 50));
 		edit.setVerticalTextPosition(SwingConstants.BOTTOM);
 		edit.setIconTextGap(0);
@@ -93,7 +93,7 @@ public class SchoolMenu extends JPanel {
 		Home.addToolTip(edit, "Modifier");
 		
 		JButton delete = new JButton("");
-		delete.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
+		delete.setIcon(ResizeImages.resize(37, 37, "Icons\\icondelete.png"));
 		delete.setPreferredSize(new Dimension(50, 50));
 		delete.setVerticalTextPosition(SwingConstants.BOTTOM);
 		delete.setIconTextGap(0);

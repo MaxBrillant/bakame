@@ -69,7 +69,7 @@ public class UserInfo extends JPanel {
 		changePhoto.setFocusPainted(false);
 		changePhoto.setBorderColor(new Color(255, 255, 255));
 		changePhoto.setBackground(new Color(40, 40, 40));
-		changePhoto.setIcon(ResizeImages.resize(15, 15, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		changePhoto.setIcon(ResizeImages.resize(15, 15, "Icons\\iconedit.png"));
 		add(changePhoto);
 		
 		
@@ -93,7 +93,7 @@ public class UserInfo extends JPanel {
 		communication.setFocusPainted(false);
 		communication.setBorderColor(new Color(255, 255, 255));
 		communication.setBackground(new Color(40, 40, 40));
-		communication.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		communication.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(communication);
 		
 		
@@ -111,7 +111,7 @@ public class UserInfo extends JPanel {
 		trimestres.setFocusPainted(false);
 		trimestres.setBorderColor(new Color(255, 255, 255));
 		trimestres.setBackground(new Color(40, 40, 40));
-		trimestres.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		trimestres.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(trimestres);
 		
 		
@@ -128,7 +128,7 @@ public class UserInfo extends JPanel {
 		punitions.setFocusPainted(false);
 		punitions.setBorderColor(new Color(255, 255, 255));
 		punitions.setBackground(new Color(40, 40, 40));
-		punitions.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		punitions.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(punitions);
 		
 		
@@ -146,7 +146,7 @@ public class UserInfo extends JPanel {
 		punitions1.setFocusPainted(false);
 		punitions1.setBorderColor(new Color(255, 255, 255));
 		punitions1.setBackground(new Color(40, 40, 40));
-		punitions1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		punitions1.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(punitions1);
 		
 		
@@ -164,7 +164,7 @@ public class UserInfo extends JPanel {
 		utilisateurs.setFocusPainted(false);
 		utilisateurs.setBorderColor(new Color(255, 255, 255));
 		utilisateurs.setBackground(new Color(40, 40, 40));
-		utilisateurs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		utilisateurs.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		add(utilisateurs);
 		
 		

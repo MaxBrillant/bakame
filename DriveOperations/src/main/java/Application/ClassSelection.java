@@ -246,7 +246,7 @@ public class ClassSelection extends JFrame {
 		panel_4.add(label, BorderLayout.CENTER);
 		
 		JButton button_1 = new JButton("");
-		button_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+		button_1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 		button_1.setPreferredSize(new Dimension(30, 9));
 		button_1.setFocusPainted(false);
 		button_1.setBorderPainted(false);

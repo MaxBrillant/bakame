@@ -73,7 +73,7 @@ public class NewPane extends JFrame {
 		panel_1.setLayout(null);
 		
 		JButton newTest = new JButton("<html><div style='text-align: center;'>Ajouter une interrogation</html>");
-		newTest.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\test.png"));
+		newTest.setIcon(ResizeImages.resize(90, 90, "Icons\\test.png"));
 		newTest.setVerticalTextPosition(SwingConstants.BOTTOM);
 		newTest.setIconTextGap(0);
 		newTest.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -86,7 +86,7 @@ public class NewPane extends JFrame {
 		panel_1.add(newTest);
 		
 		JButton newStudent = new JButton("<html><div style='text-align: center;'>Ajouter un eleve</html>");
-		newStudent.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-student.png"));
+		newStudent.setIcon(ResizeImages.resize(90, 90, "Icons\\new-student.png"));
 		newStudent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		newStudent.setIconTextGap(0);
 		newStudent.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -99,7 +99,7 @@ public class NewPane extends JFrame {
 		panel_1.add(newStudent);
 		
 		JButton newCourse = new JButton("<html><div style='text-align: center;'>Ajouter un cours</html>");
-		newCourse.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\book.png"));
+		newCourse.setIcon(ResizeImages.resize(90, 90, "Icons\\book.png"));
 		newCourse.setVerticalTextPosition(SwingConstants.BOTTOM);
 		newCourse.setIconTextGap(0);
 		newCourse.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -120,7 +120,7 @@ public class NewPane extends JFrame {
 				setVisible(false);
 			}
 		});
-		newExam.setIcon(ResizeImages.resize(90, 90, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-Exam.png"));
+		newExam.setIcon(ResizeImages.resize(90, 90, "Icons\\new-Exam.png"));
 		newExam.setVerticalTextPosition(SwingConstants.BOTTOM);
 		newExam.setIconTextGap(0);
 		newExam.setHorizontalTextPosition(SwingConstants.CENTER);

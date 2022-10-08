@@ -96,7 +96,7 @@ public class StudentMenu extends JPanel {
 		panel.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
 		
 		add = new JButton("");
-		add.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
+		add.setIcon(ResizeImages.resize(37, 37, "Icons\\AddIcon.png"));
 		add.setPreferredSize(new Dimension(50, 50));
 		add.setVerticalTextPosition(SwingConstants.BOTTOM);
 		add.setIconTextGap(0);
@@ -128,7 +128,7 @@ public class StudentMenu extends JPanel {
 				
 				}}
 		});
-		stats.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		stats.setIcon(ResizeImages.resize(37, 37, "Icons\\stats.png"));
 		stats.setPreferredSize(new Dimension(50, 50));
 		stats.setVerticalTextPosition(SwingConstants.BOTTOM);
 		stats.setIconTextGap(0);
@@ -149,7 +149,7 @@ public class StudentMenu extends JPanel {
 				nt.add.setVisible(false);
 			}
 		});
-		edit.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		edit.setIcon(ResizeImages.resize(37, 37, "Icons\\iconedit.png"));
 		edit.setPreferredSize(new Dimension(50, 50));
 		edit.setVerticalTextPosition(SwingConstants.BOTTOM);
 		edit.setIconTextGap(0);
@@ -177,7 +177,7 @@ public class StudentMenu extends JPanel {
 		        }.execute();
 			}
 		});
-		delete.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
+		delete.setIcon(ResizeImages.resize(37, 37, "Icons\\icondelete.png"));
 		delete.setPreferredSize(new Dimension(50, 50));
 		delete.setVerticalTextPosition(SwingConstants.BOTTOM);
 		delete.setIconTextGap(0);
@@ -200,7 +200,7 @@ public class StudentMenu extends JPanel {
 				p.setVisible(true);
 			}
 		});
-		retirer.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\discipline.png"));
+		retirer.setIcon(ResizeImages.resize(37, 37, "Icons\\discipline.png"));
 		retirer.setVerticalTextPosition(SwingConstants.BOTTOM);
 		retirer.setPreferredSize(new Dimension(50, 50));
 		retirer.setIconTextGap(0);
@@ -215,7 +215,7 @@ public class StudentMenu extends JPanel {
 		publish = new JButton("");
 		publish.setHorizontalTextPosition(SwingConstants.CENTER);
 		publish.setVerticalTextPosition(SwingConstants.BOTTOM);
-		publish.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Send.png"));
+		publish.setIcon(ResizeImages.resize(37, 37, "Icons\\Send.png"));
 		publish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewPublication np = new NewPublication();
@@ -243,7 +243,7 @@ public class StudentMenu extends JPanel {
 			}
 			
 		});
-		settings2.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\settingsicon.png"));
+		settings2.setIcon(ResizeImages.resize(50, 50, "Icons\\settingsicon.png"));
 		settings2.setVerticalTextPosition(SwingConstants.BOTTOM);
 		settings2.setPreferredSize(new Dimension(100, 100));
 		settings2.setIconTextGap(-4);

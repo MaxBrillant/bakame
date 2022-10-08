@@ -167,7 +167,7 @@ public class GenerateKey extends JFrame {
 	contentPane.add(students);
 	
 	JLabel label = new JLabel("");
-	label.setIcon(ResizeImages.resize(110, 110, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+	label.setIcon(ResizeImages.resize(110, 110, "Icons\\Bakame.png"));
 	label.setBounds(157, 20, 110, 90);
 	contentPane.add(label);
 	

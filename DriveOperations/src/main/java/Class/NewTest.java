@@ -127,7 +127,7 @@ public class NewTest extends JFrame {
 			}
 		});
 		right.setFocusPainted(false);
-		right.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		right.setIcon(ResizeImages.resize(50, 50, "Icons\\r_arrow.png"));
 		right.setBorderPainted(false);
 		right.setBackground(Color.GRAY);
 		right.setBounds(313, 21, 61, 55);
@@ -160,7 +160,7 @@ public class NewTest extends JFrame {
 			}
 		});
 		left.setFocusPainted(false);
-		left.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		left.setIcon(ResizeImages.resize(50, 50, "Icons\\l_arrow.png"));
 		left.setBorderPainted(false);
 		left.setBackground(Color.GRAY);
 		left.setBounds(10, 21, 61, 55);
@@ -186,7 +186,7 @@ public class NewTest extends JFrame {
 		name.setForeground(new Color(255, 255, 255));
 		name.setVerticalTextPosition(SwingConstants.BOTTOM);
 		name.setHorizontalTextPosition(SwingConstants.CENTER);
-		name.setIcon(ResizeImages.resize(65, 65, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\student.png"));
+		name.setIcon(ResizeImages.resize(65, 65, "Icons\\student.png"));
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		name.setFont(new Font("Roboto", Font.BOLD, 20));
 		

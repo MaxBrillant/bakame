@@ -179,7 +179,7 @@ public class HomeMenu2 extends JPanel {
 			Home.deselect();
 		
 		settings = new JButton("");
-		settings.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\settingsicon.png"));
+		settings.setIcon(ResizeImages.resize(70, 70, "Icons\\settingsicon.png"));
 		settings.setVerticalTextPosition(SwingConstants.BOTTOM);
 		settings.setPreferredSize(new Dimension(100, 100));
 		settings.setIconTextGap(0);
@@ -207,7 +207,7 @@ public class HomeMenu2 extends JPanel {
 			}
 			
 		});
-		settings2.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\settingsicon.png"));
+		settings2.setIcon(ResizeImages.resize(50, 50, "Icons\\settingsicon.png"));
 		settings2.setVerticalTextPosition(SwingConstants.BOTTOM);
 		settings2.setPreferredSize(new Dimension(100, 100));
 		settings2.setIconTextGap(-4);
@@ -256,7 +256,7 @@ public class HomeMenu2 extends JPanel {
 		button_2.setBorderPainted(false);
 		button_2.setBackground(panel_4.getBackground());
 		button_2.setBorder(null);
-		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button_2.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button_2.setPreferredSize(new Dimension(30, 30));
 		panel_4.add(button_2, BorderLayout.WEST);
 		
@@ -284,7 +284,7 @@ public class HomeMenu2 extends JPanel {
 		button_3.setBorderPainted(false);
 		button_3.setBackground(panel_4.getBackground());
 		button_3.setBorder(null);
-		button_3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_3.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_3.setPreferredSize(new Dimension(30, 30));
 		panel_4.add(button_3, BorderLayout.EAST);
 		Home.deselect();

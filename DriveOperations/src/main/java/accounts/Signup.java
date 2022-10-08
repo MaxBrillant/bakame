@@ -264,7 +264,7 @@ public class Signup extends JFrame {
 	contentPane.add(pass1);
 	
 	JLabel label = new JLabel("");
-	label.setIcon(ResizeImages.resize(110, 110, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_colored.png"));
+	label.setIcon(ResizeImages.resize(110, 110, "Icons\\cg_colored.png"));
 	label.setBounds(157, 5, 110, 90);
 	contentPane.add(label);
 	

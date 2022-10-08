@@ -192,7 +192,7 @@ public class ListOfMessages extends JFrame {
 			JButton button1 = new JButton("");
 			panel_3.add(button1);
 			button1.setPreferredSize(new Dimension(40, 30));
-			button1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+			button1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 			button1.setVerticalTextPosition(SwingConstants.BOTTOM);
 			button1.setIconTextGap(0);
 			button1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -206,7 +206,7 @@ public class ListOfMessages extends JFrame {
 			JLabel lblNewLabel_2 = new JLabel("");
 			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2.setPreferredSize(new Dimension(30, 30));
-			lblNewLabel_2.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+			lblNewLabel_2.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 			panel_1.add(lblNewLabel_2, BorderLayout.WEST);
 			
 			JLabel label = new JLabel("New label");

@@ -87,7 +87,7 @@ public class PublicationsList extends JFrame {
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
 		JButton button = new JButton("");
-		button.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button.setPreferredSize(new Dimension(30, 30));
 		button.setFocusPainted(false);
 		button.setBorderPainted(false);
@@ -96,7 +96,7 @@ public class PublicationsList extends JFrame {
 		panel_6.add(button, BorderLayout.WEST);
 		
 		JButton button_2 = new JButton("");
-		button_2.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button_2.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button_2.setPreferredSize(new Dimension(30, 30));
 		button_2.setFocusPainted(false);
 		button_2.setBorderPainted(false);
@@ -117,7 +117,7 @@ public class PublicationsList extends JFrame {
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
 		JButton button_1 = new JButton("");
-		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button_1.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button_1.setPreferredSize(new Dimension(30, 30));
 		button_1.setFocusPainted(false);
 		button_1.setBorderPainted(false);
@@ -126,7 +126,7 @@ public class PublicationsList extends JFrame {
 		panel_7.add(button_1, BorderLayout.WEST);
 		
 		JButton button_3 = new JButton("");
-		button_3.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_3.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_3.setPreferredSize(new Dimension(30, 30));
 		button_3.setFocusPainted(false);
 		button_3.setBorderPainted(false);

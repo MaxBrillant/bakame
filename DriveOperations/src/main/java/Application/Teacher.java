@@ -132,7 +132,7 @@ public class Teacher extends JPanel {
 	classes.setBackground(Color.GREEN);
 	
 	JLabel label_1 = new JLabel("");
-	label_1.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop2.png"));
+	label_1.setIcon(ResizeImages.resize(30, 30, "Icons\\drop2.png"));
 	label_1.setPreferredSize(new Dimension(45, 0));
 	label_1.setHorizontalAlignment(SwingConstants.CENTER);
 	panel_1.add(label_1, BorderLayout.EAST);
@@ -145,7 +145,7 @@ public class Teacher extends JPanel {
 	
 	JLabel lblNewLabel_1 = new JLabel("");
 	lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+	lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "Icons\\check.png"));
 	panel1.add(lblNewLabel_1, BorderLayout.CENTER);
 	
 	JPanel panel = new JPanel();
@@ -211,7 +211,7 @@ public class Teacher extends JPanel {
 			lblFormationPatriotiqueEt.setBackground(Color.GREEN);
 			panel_3.add(lblFormationPatriotiqueEt);
 			
-			JLabel label_2 = new JLabel("•");
+			JLabel label_2 = new JLabel("ï¿½");
 			label_2.setHorizontalAlignment(SwingConstants.CENTER);
 			label_2.setForeground(Color.WHITE);
 			label_2.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -227,7 +227,7 @@ public class Teacher extends JPanel {
 			lblMoyenne_1.setBackground(Color.GREEN);
 			panel_3.add(lblMoyenne_1);
 			
-			JLabel label_3 = new JLabel("•");
+			JLabel label_3 = new JLabel("ï¿½");
 			label_3.setHorizontalAlignment(SwingConstants.CENTER);
 			label_3.setForeground(Color.WHITE);
 			label_3.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -262,7 +262,7 @@ public class Teacher extends JPanel {
 				}
 			});
 			btnNewButton.setPreferredSize(new Dimension(40, 25));
-			btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+			btnNewButton.setIcon(ResizeImages.resize(20, 20, "Icons\\stats.png"));
 			panel_3.add(btnNewButton);
 			btnNewButton.setFocusPainted(false);
 			btnNewButton.setBorder(null);
@@ -645,7 +645,7 @@ public class Teacher extends JPanel {
 							lblFormationPatriotiqueEt.setBackground(Color.GREEN);
 							panel_3.add(lblFormationPatriotiqueEt);
 							
-							JLabel label_2 = new JLabel("•");
+							JLabel label_2 = new JLabel("ï¿½");
 							label_2.setHorizontalAlignment(SwingConstants.CENTER);
 							label_2.setForeground(Color.WHITE);
 							label_2.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -661,7 +661,7 @@ public class Teacher extends JPanel {
 							lblMoyenne_1.setBackground(Color.GREEN);
 							panel_3.add(lblMoyenne_1);
 							
-							JLabel label_3 = new JLabel("•");
+							JLabel label_3 = new JLabel("ï¿½");
 							label_3.setHorizontalAlignment(SwingConstants.CENTER);
 							label_3.setForeground(Color.WHITE);
 							label_3.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -696,7 +696,7 @@ public class Teacher extends JPanel {
 								}
 							});
 							btnNewButton.setPreferredSize(new Dimension(40, 25));
-							btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+							btnNewButton.setIcon(ResizeImages.resize(20, 20, "Icons\\stats.png"));
 							panel_3.add(btnNewButton);
 							btnNewButton.setFocusPainted(false);
 							btnNewButton.setBorder(null);

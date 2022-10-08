@@ -88,7 +88,7 @@ public class CourseMenu extends JPanel {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
 		add = new JButton("");
-		add.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\AddIcon.png"));
+		add.setIcon(ResizeImages.resize(37, 37, "Icons\\AddIcon.png"));
 		add.setPreferredSize(new Dimension(50, 50));
 		add.setVerticalTextPosition(SwingConstants.BOTTOM);
 		add.setIconTextGap(0);
@@ -122,7 +122,7 @@ public class CourseMenu extends JPanel {
 			}
 			}
 		});
-		stats.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		stats.setIcon(ResizeImages.resize(37, 37, "Icons\\stats.png"));
 		stats.setPreferredSize(new Dimension(50, 50));
 		stats.setVerticalTextPosition(SwingConstants.BOTTOM);
 		stats.setIconTextGap(-4);
@@ -145,7 +145,7 @@ public class CourseMenu extends JPanel {
 		});
 		publish.setHorizontalTextPosition(SwingConstants.CENTER);
 		publish.setVerticalTextPosition(SwingConstants.BOTTOM);
-		publish.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Send.png"));
+		publish.setIcon(ResizeImages.resize(37, 37, "Icons\\Send.png"));
 		publish.setIconTextGap(-4);
 		publish.setForeground(new Color(255, 255, 255));
 		publish.setPreferredSize(new Dimension(50, 50));
@@ -172,7 +172,7 @@ public class CourseMenu extends JPanel {
 			
 			}
 		});
-		goForward.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\go_up.png"));
+		goForward.setIcon(ResizeImages.resize(37, 37, "Icons\\go_up.png"));
 		goForward.setVerticalTextPosition(SwingConstants.BOTTOM);
 		goForward.setPreferredSize(new Dimension(50, 50));
 		goForward.setIconTextGap(0);
@@ -203,7 +203,7 @@ public class CourseMenu extends JPanel {
 			
 			}
 		});
-		goBackward.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\go_down.png"));
+		goBackward.setIcon(ResizeImages.resize(37, 37, "Icons\\go_down.png"));
 		goBackward.setVerticalTextPosition(SwingConstants.BOTTOM);
 		goBackward.setPreferredSize(new Dimension(50, 50));
 		goBackward.setIconTextGap(0);
@@ -229,7 +229,7 @@ public class CourseMenu extends JPanel {
 				nt.TP.setSelectedItem(l.get(2).toString());
 			}
 		});
-		edit.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		edit.setIcon(ResizeImages.resize(37, 37, "Icons\\iconedit.png"));
 		edit.setPreferredSize(new Dimension(50, 50));
 		edit.setVerticalTextPosition(SwingConstants.BOTTOM);
 		edit.setIconTextGap(0);
@@ -257,7 +257,7 @@ public class CourseMenu extends JPanel {
 			
 			}
 		});
-		delete.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\icondelete.png"));
+		delete.setIcon(ResizeImages.resize(37, 37, "Icons\\icondelete.png"));
 		delete.setPreferredSize(new Dimension(50, 50));
 		delete.setVerticalTextPosition(SwingConstants.BOTTOM);
 		delete.setIconTextGap(0);

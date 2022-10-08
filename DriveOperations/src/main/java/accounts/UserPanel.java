@@ -184,7 +184,7 @@ public class UserPanel extends JFrame {
 			
 			}
 		});
-		btnAs.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnAs.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		//button_2.setPreferredSize(new Dimension(150, 14));
 		btnAs.setForeground(Color.WHITE);
 		btnAs.setFont(new Font("Roboto", Font.BOLD, 16));
@@ -262,7 +262,7 @@ public class UserPanel extends JFrame {
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setIcon(ResizeImages.resize(100, 100, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\book.png"));
+		lblNewLabel_3.setIcon(ResizeImages.resize(100, 100, "Icons\\book.png"));
 		lblNewLabel_3.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_3.setPreferredSize(new Dimension(46, 100));
 		panel_4.add(lblNewLabel_3, BorderLayout.NORTH);
@@ -324,7 +324,7 @@ public class UserPanel extends JFrame {
 		
 		JButton menu = new JButton("");
 		menu.setMultiClickThreshhold(1000L);
-		menu.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		menu.setIcon(ResizeImages.resize(50, 50, "Icons\\Bakame.png"));
 		menu.setPreferredSize(new Dimension(70, 70));
 		menu.setFont(new Font("Arial", Font.PLAIN, 27));
 		menu.setFocusPainted(false);
@@ -351,7 +351,7 @@ public class UserPanel extends JFrame {
 		btnNewButton1.setIconTextGap(10);
 		btnNewButton1.setVerticalTextPosition(SwingConstants.CENTER);
 		btnNewButton1.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnNewButton1.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\New_School.png"));
+		btnNewButton1.setIcon(ResizeImages.resize(37, 37, "Icons\\New_School.png"));
 		btnNewButton1.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnNewButton1.setBackground(new Color(40, 40, 40));
 		btnNewButton1.setForeground(Color.white);
@@ -376,7 +376,7 @@ public class UserPanel extends JFrame {
 		btnJoindreUneEcole.setIconTextGap(10);
 		btnJoindreUneEcole.setVerticalTextPosition(SwingConstants.CENTER);
 		btnJoindreUneEcole.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnJoindreUneEcole.setIcon(ResizeImages.resize(37, 37, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Enter_School.png"));
+		btnJoindreUneEcole.setIcon(ResizeImages.resize(37, 37, "Icons\\Enter_School.png"));
 		btnJoindreUneEcole.setForeground(Color.white);
 		btnJoindreUneEcole.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnJoindreUneEcole.setFocusPainted(false);
@@ -450,7 +450,7 @@ loadEstablishment(userID);
 				
 				JLabel lblNewLabel_3 = new JLabel("");
 				lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-				lblNewLabel_3.setIcon(ResizeImages.resize(100, 100, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\book.png"));
+				lblNewLabel_3.setIcon(ResizeImages.resize(100, 100, "Icons\\book.png"));
 				lblNewLabel_3.setHorizontalTextPosition(SwingConstants.CENTER);
 				lblNewLabel_3.setPreferredSize(new Dimension(46, 100));
 				panel_4.add(lblNewLabel_3, BorderLayout.NORTH);

@@ -146,7 +146,7 @@ public class NewExam extends JFrame {
 			}
 		});
 		right.setFocusPainted(false);
-		right.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		right.setIcon(ResizeImages.resize(50, 50, "Icons\\r_arrow.png"));
 		right.setBorderPainted(false);
 		right.setBackground(Color.GRAY);
 		right.setBounds(313, 21, 61, 55);
@@ -181,7 +181,7 @@ public class NewExam extends JFrame {
 			}
 		});
 		left.setFocusPainted(false);
-		left.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		left.setIcon(ResizeImages.resize(50, 50, "Icons\\l_arrow.png"));
 		left.setBorderPainted(false);
 		left.setBackground(Color.GRAY);
 		left.setBounds(10, 21, 61, 55);
@@ -207,7 +207,7 @@ public class NewExam extends JFrame {
 		name.setForeground(new Color(255, 255, 255));
 		name.setVerticalTextPosition(SwingConstants.BOTTOM);
 		name.setHorizontalTextPosition(SwingConstants.CENTER);
-		name.setIcon(ResizeImages.resize(65, 65, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\student.png"));
+		name.setIcon(ResizeImages.resize(65, 65, "Icons\\student.png"));
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		name.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
 		
@@ -352,7 +352,7 @@ public class NewExam extends JFrame {
 			}
 		});
 		down.setBorder(new LineBorder(new Color(255, 255, 255)));
-		down.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\down.png"));
+		down.setIcon(ResizeImages.resize(20, 20, "Icons\\down.png"));
 		down.setFocusPainted(false);
 		down.setBackground(contentPane.getBackground());
 		down.setPreferredSize(new Dimension(30, 9));
@@ -390,7 +390,7 @@ public class NewExam extends JFrame {
 		up.setBorder(new LineBorder(new Color(255, 255, 255)));
 		up.setFocusPainted(false);
 		up.setBackground(contentPane.getBackground());
-		up.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\up.png"));
+		up.setIcon(ResizeImages.resize(20, 20, "Icons\\up.png"));
 		up.setPreferredSize(new Dimension(30, 9));
 		panel_1.add(up, BorderLayout.CENTER);
 		

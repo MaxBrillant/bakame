@@ -123,7 +123,7 @@ public class Exam extends JPanel {
 		JLabel pasfait = new JLabel("N'as pas encore fait l'examen");
 		pasfait.setVisible(false);
 		pasfait.setIconTextGap(15);
-		pasfait.setIcon(ResizeImages.resize(46, 26, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\missing.png"));
+		pasfait.setIcon(ResizeImages.resize(46, 26, "Icons\\missing.png"));
 		pasfait.setHorizontalTextPosition(SwingConstants.RIGHT);
 		pasfait.setForeground(new Color(255, 255, 255));
 		pasfait.setHorizontalAlignment(SwingConstants.CENTER);

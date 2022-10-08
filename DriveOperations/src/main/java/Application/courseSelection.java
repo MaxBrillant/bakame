@@ -152,7 +152,7 @@ public class courseSelection extends JFrame {
 					btnNewButton_1.setFocusPainted(false);
 					btnNewButton_1.setBorderPainted(false);
 					btnNewButton_1.setPreferredSize(new Dimension(30, 9));
-					btnNewButton_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+					btnNewButton_1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 					btnNewButton_1.setBounds(345, 0, 35, 25);
 					panel_3.add(btnNewButton_1);
 					btnNewButton_1.setBackground(btnNewButton_1.getParent().getBackground());

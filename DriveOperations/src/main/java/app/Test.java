@@ -127,7 +127,7 @@ public class Test extends JPanel {
 		
 		JLabel pasfait = new JLabel("N'as pas fait l'interrogation");
 		pasfait.setIconTextGap(15);
-		pasfait.setIcon(ResizeImages.resize(46, 26, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\missing.png"));
+		pasfait.setIcon(ResizeImages.resize(46, 26, "Icons\\missing.png"));
 		pasfait.setHorizontalTextPosition(SwingConstants.RIGHT);
 		pasfait.setForeground(Color.WHITE);
 		pasfait.setHorizontalAlignment(SwingConstants.CENTER);

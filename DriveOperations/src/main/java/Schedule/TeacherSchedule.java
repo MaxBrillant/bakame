@@ -232,7 +232,7 @@ public class TeacherSchedule extends JFrame {
 	
 	ext = new JButton("Extraire");
 	ext.setBounds(35, 16, 130, 42);
-	ext.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\down.png"));
+	ext.setIcon(ResizeImages.resize(20, 20, "Icons\\down.png"));
 	ext.setForeground(Color.WHITE);
 	ext.setFocusPainted(false);
 	ext.setBorder(new LineBorder(new Color(255, 255, 255), 2));

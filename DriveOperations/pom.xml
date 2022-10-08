@@ -22,12 +22,6 @@
 			<version>4.0.5</version>
 		</dependency>
 		
-		
-		<dependency>
-  <groupId>mysql</groupId>
-  <artifactId>mysql-connector-java</artifactId>
-  <version>8.0.28</version>
-</dependency>
 
 		<dependency>
 			<groupId>com.formdev</groupId>
@@ -44,6 +38,73 @@
 			<artifactId>sentry</artifactId>
 			<version>5.5.2</version>
 		</dependency>
+		<dependency>
+    <groupId>com.jgoodies</groupId>
+    <artifactId>jgoodies-common</artifactId>
+    <version>1.8.1</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-swing -->
+<dependency>
+    <groupId>com.miglayout</groupId>
+    <artifactId>miglayout-swing</artifactId>
+    <version>11.0</version>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.30</version>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
+<dependency>
+    <groupId>org.jfree</groupId>
+    <artifactId>jfreechart</artifactId>
+    <version>1.5.3</version>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/com.toedter/jcalendar -->
+<dependency>
+    <groupId>com.toedter</groupId>
+    <artifactId>jcalendar</artifactId>
+    <version>1.4</version>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms -->
+<dependency>
+    <groupId>com.jgoodies</groupId>
+    <artifactId>jgoodies-forms</artifactId>
+    <version>1.9.0</version>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+<dependency>
+    <groupId>commons-net</groupId>
+    <artifactId>commons-net</artifactId>
+    <version>3.8.0</version>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/com.jtattoo/JTattoo -->
+<dependency>
+    <groupId>com.jtattoo</groupId>
+    <artifactId>JTattoo</artifactId>
+    <version>1.6.13</version>
+</dependency>
+
+
+		<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.12.0</version>
+</dependency>
 	</dependencies>
     <properties>
         <maven.compiler.source>13</maven.compiler.source>

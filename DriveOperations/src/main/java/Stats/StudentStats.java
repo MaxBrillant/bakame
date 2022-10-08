@@ -121,7 +121,7 @@ public class StudentStats extends JPanel {
 		panel.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JLabel label_7 = new JLabel("");
-		label_7.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		label_7.setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 		label_7.setHorizontalAlignment(SwingConstants.CENTER);
 		label_7.setForeground(Color.WHITE);
 		label_7.setFont(new Font("Arial", Font.BOLD, 30));
@@ -157,7 +157,7 @@ public class StudentStats extends JPanel {
 		panel_1.add(lblPoints, BorderLayout.NORTH);
 		
 		JLabel label_12 = new JLabel("");
-		label_12.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		label_12.setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 		label_12.setHorizontalAlignment(SwingConstants.CENTER);
 		label_12.setForeground(Color.WHITE);
 		label_12.setFont(new Font("Arial", Font.BOLD, 30));
@@ -212,7 +212,7 @@ public class StudentStats extends JPanel {
 		panel_3.add(lblEchecs, BorderLayout.NORTH);
 		
 		JLabel label_5 = new JLabel("");
-		label_5.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		label_5.setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
 		label_5.setForeground(Color.WHITE);
 		label_5.setFont(new Font("Arial", Font.BOLD, 30));
@@ -248,7 +248,7 @@ public class StudentStats extends JPanel {
 		panel_10.add(lblInterrogationsNonFaites, BorderLayout.NORTH);
 		
 		JLabel label_8 = new JLabel("");
-		label_8.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		label_8.setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 		label_8.setHorizontalAlignment(SwingConstants.CENTER);
 		label_8.setForeground(Color.WHITE);
 		label_8.setFont(new Font("Arial", Font.BOLD, 30));
@@ -286,7 +286,7 @@ public class StudentStats extends JPanel {
 		panel_4.add(interros, BorderLayout.NORTH);
 		
 		JLabel label_9 = new JLabel("");
-		label_9.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		label_9.setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 		label_9.setHorizontalAlignment(SwingConstants.CENTER);
 		label_9.setForeground(Color.WHITE);
 		label_9.setFont(new Font("Arial", Font.BOLD, 30));
@@ -337,7 +337,7 @@ public class StudentStats extends JPanel {
 		panel_2.add(lblCoursLePlus, BorderLayout.NORTH);
 		
 		JLabel label_10 = new JLabel("");
-		label_10.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		label_10.setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 		label_10.setHorizontalAlignment(SwingConstants.CENTER);
 		label_10.setForeground(Color.WHITE);
 		label_10.setFont(new Font("Arial", Font.BOLD, 30));
@@ -376,7 +376,7 @@ public class StudentStats extends JPanel {
 		panel_5.add(lblLinterroLaMoins, BorderLayout.NORTH);
 		
 		JLabel label_11 = new JLabel("");
-		label_11.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		label_11.setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 		label_11.setHorizontalAlignment(SwingConstants.CENTER);
 		label_11.setForeground(Color.WHITE);
 		label_11.setFont(new Font("Arial", Font.BOLD, 30));

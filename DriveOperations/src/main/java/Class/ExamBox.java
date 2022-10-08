@@ -191,7 +191,7 @@ public class ExamBox extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "Icons\\check.png"));
 		panel1.add(lblNewLabel_1, BorderLayout.CENTER);
 		
 		JLabel lblUmuhozaChrisKoen = new JLabel();
@@ -204,7 +204,7 @@ public class ExamBox extends JPanel {
 		JButton stats = new JButton();
 		stats.setFocusPainted(false);
 		stats.setBorder(null);
-		stats.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+		stats.setIcon(ResizeImages.resize(25, 25, "Icons\\drop1.png"));
 		stats.setBackground(new Color(40, 40, 40));
 		panel2.add(stats, BorderLayout.EAST);
 		
@@ -346,7 +346,7 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 								((JPanel)eb.getComponent(0)).repaint();
 								}
 							if(((Container) eb.getComponent(0)).getComponentCount()>0) {
-						((((AbstractButton) ((Container) (((Container) eb.getComponent(1)).getComponent(0))).getComponent(2)))).setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop1.png"));
+						((((AbstractButton) ((Container) (((Container) eb.getComponent(1)).getComponent(0))).getComponent(2)))).setIcon(ResizeImages.resize(30, 30, "Icons\\drop1.png"));
 					}else{
 						((((AbstractButton) ((Container) (((Container) eb.getComponent(1)).getComponent(0))).getComponent(2)))).setIcon(null);
 					}
@@ -412,7 +412,7 @@ public static void loadExams(String classroom_in_ay_id, String term_id) {
 					
 					JLabel lblNewLabel_2 = new JLabel("");
 					lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-					lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\cg_welcome.png"));
+					lblNewLabel_2.setIcon(ResizeImages.resize(80, 80, "Icons\\cg_welcome.png"));
 					lblNewLabel_2.setBackground(new Color(0, 0, 0));
 					lblNewLabel_2.setBounds(0, 0, 300, 235);
 					panel_10.add(lblNewLabel_2);

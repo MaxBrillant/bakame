@@ -106,7 +106,7 @@ public class TranscriptSelection extends JFrame {
 		btnNewButton.setBackground(panel_3.getBackground());
 		btnNewButton.setBorder(null);
 		btnNewButton.setPreferredSize(new Dimension(30, 30));
-		btnNewButton.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnNewButton.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		panel_3.add(btnNewButton, BorderLayout.WEST);
 		
 		JButton button_1 = new JButton("");
@@ -119,7 +119,7 @@ public class TranscriptSelection extends JFrame {
 		button_1.setBorderPainted(false);
 		button_1.setBackground(panel_3.getBackground());
 		button_1.setBorder(null);
-		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button_1.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button_1.setPreferredSize(new Dimension(30, 30));
 		panel_3.add(button_1, BorderLayout.EAST);
 		

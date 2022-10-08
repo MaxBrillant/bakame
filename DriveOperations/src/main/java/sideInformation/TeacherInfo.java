@@ -148,7 +148,7 @@ public class TeacherInfo extends JPanel {
 		panel_3.setBackground(panel_3.getParent().getBackground());
 		
 		JButton button = new JButton("");
-		button.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\r_arrow.png"));
+		button.setIcon(ResizeImages.resize(25, 25, "Icons\\r_arrow.png"));
 		button.setPreferredSize(new Dimension(40, 30));
 		button.setFocusPainted(false);
 		button.setBorderPainted(false);
@@ -189,7 +189,7 @@ public class TeacherInfo extends JPanel {
 				}
 			}
 		});
-		button_1.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		button_1.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		button_1.setPreferredSize(new Dimension(40, 30));
 		button_1.setFocusPainted(false);
 		button_1.setBorderPainted(false);
@@ -253,7 +253,7 @@ public class TeacherInfo extends JPanel {
 		panel_5.add(classNumber, BorderLayout.CENTER);
 		
 		JButton btnclassesEtCours = new JButton("<html><div style='text-align: center;'>Classes et cours</div></html>");
-		btnclassesEtCours.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\book.png"));
+		btnclassesEtCours.setIcon(ResizeImages.resize(50, 50, "Icons\\book.png"));
 		btnclassesEtCours.setIconTextGap(0);
 		btnclassesEtCours.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnclassesEtCours.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -285,7 +285,7 @@ public class TeacherInfo extends JPanel {
 		btnhorairePersonnel.setIconTextGap(0);
 		btnhorairePersonnel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnhorairePersonnel.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnhorairePersonnel.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\calendar.png"));
+		btnhorairePersonnel.setIcon(ResizeImages.resize(50, 50, "Icons\\calendar.png"));
 		btnhorairePersonnel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TeacherSchedule t = new TeacherSchedule(teacher_id, ay_id);

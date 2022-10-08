@@ -213,7 +213,7 @@ public class ScholarYears extends JFrame {
 			
 			}
 		});
-		btnBack.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\l_arrow.png"));
+		btnBack.setIcon(ResizeImages.resize(25, 25, "Icons\\l_arrow.png"));
 		//button_2.setPreferredSize(new Dimension(150, 14));
 		btnBack.setForeground(Color.WHITE);
 		btnBack.setFont(new Font("Roboto", Font.BOLD, 16));
@@ -323,7 +323,7 @@ public class ScholarYears extends JFrame {
 		
 		JButton menu = new JButton("");
 		menu.setMultiClickThreshhold(1000L);
-		menu.setIcon(ResizeImages.resize(50, 50, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Bakame.png"));
+		menu.setIcon(ResizeImages.resize(50, 50, "Icons\\Bakame.png"));
 		menu.setPreferredSize(new Dimension(70, 50));
 		menu.setFont(new Font("Arial", Font.PLAIN, 27));
 		menu.setFocusPainted(false);
@@ -340,7 +340,7 @@ public class ScholarYears extends JFrame {
 		btnAs.setIconTextGap(10);
 		btnAs.setVerticalTextPosition(SwingConstants.CENTER);
 		btnAs.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnAs.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+		btnAs.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 		btnAs.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnAs.setBackground(new Color(60, 60, 60));
 		btnAs.setForeground(new Color(255, 255, 255));
@@ -355,7 +355,7 @@ public class ScholarYears extends JFrame {
 		btnStudents.setIconTextGap(10);
 		btnStudents.setVerticalTextPosition(SwingConstants.CENTER);
 		btnStudents.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnStudents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\new-student.png"));
+		btnStudents.setIcon(ResizeImages.resize(30, 30, "Icons\\new-student.png"));
 		btnStudents.setForeground(Color.LIGHT_GRAY);
 		btnStudents.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnStudents.setFocusPainted(false);
@@ -367,7 +367,7 @@ public class ScholarYears extends JFrame {
 		btnClasses.setMultiClickThreshhold(1000L);
 		btnClasses.setPreferredSize(new Dimension(150, 50));
 		btnClasses.setBorder(null);
-		btnClasses.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+		btnClasses.setIcon(ResizeImages.resize(30, 30, "Icons\\class1.png"));
 		btnClasses.setVerticalTextPosition(SwingConstants.CENTER);
 		btnClasses.setIconTextGap(10);
 		btnClasses.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -381,7 +381,7 @@ public class ScholarYears extends JFrame {
 		btnProfs.setMultiClickThreshhold(1000L);
 		btnProfs.setPreferredSize(new Dimension(150, 50));
 		btnProfs.setBorder(null);
-		btnProfs.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+		btnProfs.setIcon(ResizeImages.resize(30, 30, "Icons\\class1.png"));
 		btnProfs.setVerticalTextPosition(SwingConstants.CENTER);
 		btnProfs.setIconTextGap(10);
 		btnProfs.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -395,7 +395,7 @@ public class ScholarYears extends JFrame {
 		btnParents.setMultiClickThreshhold(1000L);
 		btnParents.setPreferredSize(new Dimension(150, 50));
 		btnParents.setBorder(null);
-		btnParents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class1.png"));
+		btnParents.setIcon(ResizeImages.resize(30, 30, "Icons\\class1.png"));
 		btnParents.setVerticalTextPosition(SwingConstants.CENTER);
 		btnParents.setIconTextGap(10);
 		btnParents.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -426,7 +426,7 @@ public class ScholarYears extends JFrame {
 				btnAs.setForeground(Color.white);
 				btnAs.setBackground(new Color(60, 60, 60));
 				btnAs.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnAs.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnAs.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				
 				if(!areLoaded) {
@@ -460,7 +460,7 @@ public class ScholarYears extends JFrame {
 				btnStudents.setForeground(Color.white);
 				btnStudents.setBackground(new Color(60, 60, 60));
 				btnStudents.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnStudents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnStudents.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				
 				if(!areLoaded) {
@@ -494,7 +494,7 @@ public class ScholarYears extends JFrame {
 				btnClasses.setForeground(Color.white);
 				btnClasses.setBackground(new Color(60, 60, 60));
 				btnClasses.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnClasses.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnClasses.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				
 				if(!areLoaded) {
@@ -528,7 +528,7 @@ public class ScholarYears extends JFrame {
 				btnProfs.setForeground(Color.white);
 				btnProfs.setBackground(new Color(60, 60, 60));
 				btnProfs.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnProfs.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnProfs.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				
 				if(!areLoaded) {
@@ -562,7 +562,7 @@ public class ScholarYears extends JFrame {
 				btnParents.setForeground(Color.white);
 				btnParents.setBackground(new Color(60, 60, 60));
 				btnParents.setBorder(new MatteBorder(0, 0, 6, 0, (Color) new Color(20, 148, 198)));
-				btnParents.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\class.png"));
+				btnParents.setIcon(ResizeImages.resize(30, 30, "Icons\\class.png"));
 				
 				
 				if(!areLoaded) {

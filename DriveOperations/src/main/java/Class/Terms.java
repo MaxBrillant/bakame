@@ -169,7 +169,7 @@ public class Terms extends JFrame {
 		
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setFocusPainted(false);
-		btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+		btnNewButton.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 		btnNewButton.setPreferredSize(new Dimension(40, 25));
 		btnNewButton.setFont(new Font("Roboto", Font.BOLD, 14));
 		btnNewButton.setBorder(null);
@@ -188,7 +188,7 @@ public class Terms extends JFrame {
 		
 		JButton button_1 = new JButton("");
 		button_1.setPreferredSize(new Dimension(40, 25));
-		button_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+		button_1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 		button_1.setFont(new Font("Roboto", Font.BOLD, 14));
 		button_1.setFocusPainted(false);
 		button_1.setBorder(null);
@@ -210,7 +210,7 @@ public class Terms extends JFrame {
 		btnNewButton_1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNewButton_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnNewButton_1.setFocusPainted(false);
-		btnNewButton_1.setIcon(ResizeImages.resize(70, 70, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\Addicon.png"));
+		btnNewButton_1.setIcon(ResizeImages.resize(70, 70, "Icons\\Addicon.png"));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setBackground(new Color(60, 60, 60));
 		btnNewButton_1.setForeground(Color.WHITE);
@@ -298,7 +298,7 @@ public class Terms extends JFrame {
 				
 				JButton btnNewButton = new JButton("");
 				btnNewButton.setFocusPainted(false);
-				btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\iconedit.png"));
+				btnNewButton.setIcon(ResizeImages.resize(20, 20, "Icons\\iconedit.png"));
 				btnNewButton.setPreferredSize(new Dimension(40, 25));
 				btnNewButton.setFont(new Font("Roboto", Font.BOLD, 14));
 				btnNewButton.setBorder(null);
@@ -317,7 +317,7 @@ public class Terms extends JFrame {
 				
 				JButton button_1 = new JButton("");
 				button_1.setPreferredSize(new Dimension(40, 25));
-				button_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\delete.png"));
+				button_1.setIcon(ResizeImages.resize(20, 20, "Icons\\delete.png"));
 				button_1.setFont(new Font("Roboto", Font.BOLD, 14));
 				button_1.setFocusPainted(false);
 				button_1.setBorder(null);

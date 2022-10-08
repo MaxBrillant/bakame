@@ -135,7 +135,7 @@ public class ClassStudents extends JPanel {
 	combo3.setFont(new Font("Roboto", Font.PLAIN, 15));
 	
 	JLabel label_1 = new JLabel("");
-	label_1.setIcon(ResizeImages.resize(30, 30, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\drop2.png"));
+	label_1.setIcon(ResizeImages.resize(30, 30, "Icons\\drop2.png"));
 	label_1.setPreferredSize(new Dimension(45, 0));
 	label_1.setHorizontalAlignment(SwingConstants.CENTER);
 	panel_1.add(label_1, BorderLayout.EAST);
@@ -199,7 +199,7 @@ public class ClassStudents extends JPanel {
 	reverse.setFont(new Font("Roboto", Font.PLAIN, 14));
 	reverse.setFocusPainted(false);
 	reverse.setBorderPainted(false);
-	reverse.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\up.png"));
+	reverse.setIcon(ResizeImages.resize(20, 20, "Icons\\up.png"));
 	panel_4.add(reverse, BorderLayout.EAST);
 	reverse.setBackground(reverse.getParent().getBackground().brighter());
 
@@ -272,7 +272,7 @@ public class ClassStudents extends JPanel {
 		}
 	});
 	btnNewButton.setPreferredSize(new Dimension(40, 25));
-	btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+	btnNewButton.setIcon(ResizeImages.resize(20, 20, "Icons\\stats.png"));
 	panel_51.add(btnNewButton);
 	btnNewButton.setFocusPainted(false);
 	btnNewButton.setBorder(null);
@@ -625,7 +625,7 @@ public class ClassStudents extends JPanel {
 					}
 				});
 				btnNewButton.setPreferredSize(new Dimension(40, 25));
-				btnNewButton.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+				btnNewButton.setIcon(ResizeImages.resize(20, 20, "Icons\\stats.png"));
 				panel_5.add(btnNewButton);
 				btnNewButton.setFocusPainted(false);
 				btnNewButton.setBorder(null);

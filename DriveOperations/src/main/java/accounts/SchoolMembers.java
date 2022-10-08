@@ -119,7 +119,7 @@ public class SchoolMembers extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\check.png"));
+		lblNewLabel_1.setIcon(ResizeImages.resize(20, 20, "Icons\\check.png"));
 		panel1.add(lblNewLabel_1, BorderLayout.CENTER);
 		
 		JLabel lblUmuhozaChrisKoen = new JLabel();
@@ -138,7 +138,7 @@ public class SchoolMembers extends JPanel {
 		users.setPreferredSize(new Dimension(40, 40));
 		users.setFocusPainted(false);
 		users.setBorder(null);
-		users.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		users.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		users.setBackground(new Color(40, 40, 40));
 		panel_1.add(users);
 		Home.addToolTip(users, "Utilisateurs");
@@ -148,7 +148,7 @@ public class SchoolMembers extends JPanel {
 		Students.setPreferredSize(new Dimension(40, 40));
 		Students.setFocusPainted(false);
 		Students.setBorder(null);
-		Students.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		Students.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		Students.setBackground(new Color(40, 40, 40));
 		panel_1.add(Students);
 		Home.addToolTip(Students, "Eleves sous tutelle");
@@ -158,7 +158,7 @@ public class SchoolMembers extends JPanel {
 		parents.setPreferredSize(new Dimension(40, 40));
 		parents.setFocusPainted(false);
 		parents.setBorder(null);
-		parents.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		parents.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		parents.setBackground(new Color(40, 40, 40));
 		panel_1.add(parents);
 		Home.addToolTip(parents, "Parents/tuteurs");
@@ -168,7 +168,7 @@ public class SchoolMembers extends JPanel {
 		Open.setPreferredSize(new Dimension(40, 40));
 		Open.setFocusPainted(false);
 		Open.setBorder(null);
-		Open.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		Open.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		Open.setBackground(new Color(40, 40, 40));
 		panel_1.add(Open);
 		Home.addToolTip(Open, "Ouvrir");
@@ -177,7 +177,7 @@ public class SchoolMembers extends JPanel {
 		Edit.setPreferredSize(new Dimension(40, 40));
 		Edit.setFocusPainted(false);
 		Edit.setBorder(null);
-		Edit.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		Edit.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		Edit.setBackground(new Color(40, 40, 40));
 		panel_1.add(Edit);
 		Home.addToolTip(Edit, "Modifier");
@@ -187,7 +187,7 @@ public class SchoolMembers extends JPanel {
 		info.setPreferredSize(new Dimension(40, 40));
 		info.setFocusPainted(false);
 		info.setBorder(null);
-		info.setIcon(ResizeImages.resize(25, 25, "C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\stats.png"));
+		info.setIcon(ResizeImages.resize(25, 25, "Icons\\stats.png"));
 		info.setBackground(new Color(40, 40, 40));
 		panel_1.add(info);
 		Home.addToolTip(info, "Infos");

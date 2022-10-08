@@ -85,7 +85,7 @@ public class Loading extends JFrame {
 		lblNewLabel.setForeground(Color.LIGHT_GRAY);
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Programmes\\Java\\Workspace\\DriveOperations\\Icons\\loading.gif"));
+		lblNewLabel.setIcon(new ImageIcon("Icons\\loading.gif"));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 20));
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
